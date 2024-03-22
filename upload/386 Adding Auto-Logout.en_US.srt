@@ -1,0 +1,260 @@
+1
+00:00:02,270 --> 00:00:08,510
+We're almost done with the NgRx effects for authentication, which is quite complex because it involves
+
+2
+00:00:08,510 --> 00:00:10,250
+many different things
+
+3
+00:00:10,250 --> 00:00:14,180
+and the missing piece now is the invalidation of the token.
+
+4
+00:00:14,480 --> 00:00:20,030
+We're doing this with auto logout, which in the end just takes an expiration duration and where we then
+
+5
+00:00:20,030 --> 00:00:24,580
+set a timer to basically call logout once it's done.
+
+6
+00:00:24,590 --> 00:00:31,610
+Now you could come up with setups where you do this all inside of @ngrx/effects but I'm not actually
+
+7
+00:00:31,610 --> 00:00:37,160
+biggest fan of this because in the end, my goal here is just to dispatch the logout effect once a
+
+8
+00:00:37,160 --> 00:00:38,150
+timer expired.
+
+9
+00:00:38,150 --> 00:00:44,210
+So once we could certainly come up with some observable magic to yield that effect, I think it's easiest
+
+10
+00:00:44,720 --> 00:00:54,590
+if we simply clean up our auth service quite a bit, remove auto login, remove logout, remove these injections
+
+11
+00:00:54,590 --> 00:01:02,480
+which we don't need anymore, leave the store injection, leave the token expiration timer, remove that, remove
+
+12
+00:01:02,510 --> 00:01:04,850
+all these unused imports here,
+
+13
+00:01:10,910 --> 00:01:13,820
+so all that stuff which we won't need anymore,
+
+14
+00:01:16,440 --> 00:01:23,160
+remove handle authentication and remove handle error so that in there, it's really just a service that
+
+15
+00:01:23,160 --> 00:01:34,050
+is about managing that logout timer. I have auto logout and I will rename it to set logout timer because
+
+16
+00:01:34,050 --> 00:01:41,430
+that is what I ultimately want to do here and in here, I want to simply call dispatch and dispatch a
+
+17
+00:01:41,430 --> 00:01:50,640
+new auth action, the logout action because that is handled through NgRx and @ngrx/effects and
+
+18
+00:01:50,690 --> 00:01:58,320
+I want to add a second method, clear logout timer and there, all I do is I check if this token expiration
+
+19
+00:01:58,320 --> 00:02:05,220
+timer is set and if it is set, then I will call clear timeout for this token expiration timer and then
+
+20
+00:02:05,220 --> 00:02:08,750
+set this token expiration timer equal to null.
+
+21
+00:02:08,910 --> 00:02:16,260
+Now that's a way leaner service here and how can we use that service? We can use it from inside auth effects.
+
+22
+00:02:17,010 --> 00:02:20,160
+There, I can now inject my auth service,
+
+23
+00:02:23,920 --> 00:02:29,920
+just as you're used to it, of course make sure to add an import to auth service therefore,
+
+24
+00:02:32,920 --> 00:02:39,010
+here it is and now in all the places where you want to set a timer, you do it. That would be in handle
+
+25
+00:02:39,010 --> 00:02:46,120
+authentication but that is a function, not part of our class hence we can't access the injected object
+
+26
+00:02:46,120 --> 00:02:54,470
+here, we could turn it into a class method but if we can also simply go to our map method here for example,
+
+27
+00:02:54,530 --> 00:02:59,210
+where we handle authentication, add a tab,
+
+28
+00:02:59,420 --> 00:03:05,210
+operator first which is imported from rxjs/operator, where I also get my response data but
+
+29
+00:03:05,270 --> 00:03:12,890
+which does not change it and then call this auth service in here and set the logout timer equal to
+
+30
+00:03:12,890 --> 00:03:14,330
+response data
+
+31
+00:03:17,060 --> 00:03:25,800
+expires in, add a plus here though and we need it in milliseconds in the auth service. 
+
+32
+00:03:26,250 --> 00:03:31,320
+If you have a look, we set the expiration duration here, set timeout takes the amount in milliseconds
+
+33
+00:03:31,350 --> 00:03:38,580
+though, this however will be in seconds so we need to multiply this with 1000 and I do just the same, add
+
+34
+00:03:38,580 --> 00:03:42,660
+the exact same step here for signing up,
+
+35
+00:03:42,660 --> 00:03:51,420
+so before we map let's also set the logout timer here. Let's also set it when we logged in automatically,
+
+36
+00:03:51,420 --> 00:04:01,960
+so here where we know that we have a user and we do authenticate the user, we use the auth service and
+
+37
+00:04:01,980 --> 00:04:04,110
+call set logout timer
+
+38
+00:04:07,160 --> 00:04:13,040
+and simply forward our expiration duration which we're calculating down there,
+
+39
+00:04:13,060 --> 00:04:14,600
+so let's reactivate
+
+40
+00:04:14,620 --> 00:04:19,200
+that code here, like this,
+
+41
+00:04:19,420 --> 00:04:24,020
+forward the expiration duration here to set that timer.
+
+42
+00:04:24,090 --> 00:04:27,980
+And last but not least, when logging out here,
+
+43
+00:04:27,990 --> 00:04:31,240
+of course now I will call this auth service
+
+44
+00:04:31,350 --> 00:04:32,570
+clear logout
+
+45
+00:04:32,580 --> 00:04:35,840
+timer like that.
+
+46
+00:04:35,950 --> 00:04:39,740
+That should do the trick and to see if it really does the trick,
+
+47
+00:04:39,760 --> 00:04:41,290
+let's go to the login
+
+48
+00:04:41,300 --> 00:04:44,030
+effect, this one here
+
+49
+00:04:44,150 --> 00:04:51,070
+and let's not multiply this with 1000 so that it should expire after 3.6 seconds effectively
+
+50
+00:04:52,760 --> 00:04:56,720
+and let's try logging in and let's see if we are logged out thereafter.
+
+51
+00:04:56,720 --> 00:05:03,250
+So this works and now let's wait for the 3.6 seconds and it's a bit hard to see because we stayed
+
+52
+00:05:03,250 --> 00:05:08,080
+on the same page here but we were actually logged out,
+
+53
+00:05:08,080 --> 00:05:14,230
+just a redirection, didn't really work. The reason for that behavior is that we do have our redirection logic
+
+54
+00:05:14,230 --> 00:05:14,980
+here
+
+55
+00:05:14,980 --> 00:05:22,660
+but actually we have kind of a race condition between our logout in the reducer, where we do clean up
+
+56
+00:05:22,660 --> 00:05:30,610
+our data which is important for the auth guard which decides which page we ultimately see and our effect.
+
+57
+00:05:30,610 --> 00:05:38,500
+Now the easiest solution to avoid this problem is to simply remove the logout action here from the
+
+58
+00:05:38,500 --> 00:05:44,620
+filter for this general redirection and instead, go to our separate logout action
+
+59
+00:05:44,800 --> 00:05:54,520
+and then here, add a new redirection where we specifically target /auth. And now with that, if we wait
+
+60
+00:05:54,520 --> 00:06:02,670
+for this to reload and we login again, now this should redirect us after 3.6 seconds, logout
+
+61
+00:06:02,730 --> 00:06:11,850
+was already working. So this now works and with that, let's revert this little hack here and let's
+
+62
+00:06:11,850 --> 00:06:16,140
+multiply expires in with 1000 again to have the correct logout timer.
+
+63
+00:06:16,400 --> 00:06:21,850
+And with that finally, our effects setup for authentication is done
+
+64
+00:06:21,960 --> 00:06:27,660
+and now we have a really lean auth service which only manages our timer in the end and all the rest is
+
+65
+00:06:27,660 --> 00:06:29,160
+managed by NgRx.
+

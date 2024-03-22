@@ -1,0 +1,328 @@
+1
+00:00:02,530 --> 00:00:05,940
+In the last lecture, we learned how we can retrieve our route params.
+
+2
+00:00:06,100 --> 00:00:10,720
+That's awesome and this is super important and something you will probably use a lot.
+
+3
+00:00:10,720 --> 00:00:14,020
+Now there are more things you can add to your URL though.
+
+4
+00:00:14,590 --> 00:00:17,090
+You might have query parameters,
+
+5
+00:00:17,140 --> 00:00:24,510
+these are the parameters separated by a question mark, like mode equals editing, anything
+
+6
+00:00:24,520 --> 00:00:27,790
+and you can have multiple ones separated with @ signs.
+
+7
+00:00:27,790 --> 00:00:32,130
+The question now is how you can pass them using Angular links,
+
+8
+00:00:32,170 --> 00:00:33,100
+routerLinks
+
+9
+00:00:33,160 --> 00:00:35,000
+and how can you then retrieve them?
+
+10
+00:00:35,290 --> 00:00:37,060
+You might also have a hash fragment,
+
+11
+00:00:37,090 --> 00:00:45,220
+so separated with the hash sign to jump to a specific place in your app, loading for example or maybe you
+
+12
+00:00:45,220 --> 00:00:47,390
+don't really want to use this to jump there,
+
+13
+00:00:47,430 --> 00:00:51,430
+you would have to add this scroll down there behavior on your own,
+
+14
+00:00:51,430 --> 00:00:56,340
+maybe you just want to retrieve it to use it as some extra information.
+
+15
+00:00:56,410 --> 00:01:02,950
+Let's take a closer look at how we can pass this extra information on our links, both when using the
+
+16
+00:01:02,950 --> 00:01:08,960
+routerLink directive and the navigate method in code and how we can then retrieve that information.
+
+17
+00:01:09,070 --> 00:01:16,210
+Let's start by passing it first. Let's say in our app module, we want to add more routes. For our servers
+
+18
+00:01:16,210 --> 00:01:17,280
+here,
+
+19
+00:01:17,290 --> 00:01:24,730
+we also want to add one other route and that would be the route which allows us to edit a certain server,
+
+20
+00:01:24,760 --> 00:01:31,030
+so we might load a server with some ID and then have slash added at the end to describe in the URL
+
+21
+00:01:31,060 --> 00:01:32,760
+what will happen in this component
+
+22
+00:01:32,800 --> 00:01:40,890
+and here it would be the edit-server.component we want to load. So we added this new route which should
+
+23
+00:01:40,890 --> 00:01:45,010
+load this component in this edit server file,
+
+24
+00:01:45,110 --> 00:01:52,750
+now to be able to load this route on my servers component here, I want to hook up these links here in
+
+25
+00:01:52,750 --> 00:01:53,600
+this list,
+
+26
+00:01:53,660 --> 00:01:56,360
+we still have to do the same for the users component later.
+
+27
+00:01:56,710 --> 00:02:03,580
+So here, I will add my routerLink and I will use the square brackets syntax again so that I
+
+28
+00:02:03,580 --> 00:02:07,640
+can pass an array here because I want to go to /servers,
+
+29
+00:02:07,960 --> 00:02:10,290
+then let's say a server with ID 5,
+
+30
+00:02:10,380 --> 00:02:12,880
+we will soon learn how to make this more dynamic
+
+31
+00:02:13,360 --> 00:02:20,620
+and then also add it, so this is this newly created route I
+
+32
+00:02:20,640 --> 00:02:22,730
+want to call in this case.
+
+33
+00:02:23,040 --> 00:02:30,780
+If we save this and we go to servers and click on this, you'll see we loaded servers/5/edit and the
+
+34
+00:02:30,780 --> 00:02:32,270
+same for every link of course,
+
+35
+00:02:32,280 --> 00:02:34,680
+again I will change this soon.
+
+36
+00:02:34,680 --> 00:02:40,460
+Now let's say we also want to have some query parameter deciding on whether we are allowed to edit the
+
+37
+00:02:40,470 --> 00:02:42,680
+server or not.
+
+38
+00:02:42,690 --> 00:02:49,180
+So we want to add this questionmark and we don't do it by adding questionmark equals something here
+
+39
+00:02:49,240 --> 00:02:57,000
+as another element in this array, instead when using a link in the template, we add a new property of this 
+
+40
+00:02:57,000 --> 00:02:57,930
+routerLink directive
+
+41
+00:02:58,150 --> 00:03:02,430
+we can bind to the query params property.
+
+42
+00:03:02,440 --> 00:03:05,180
+Now query params and that's important is not a new directive,
+
+43
+00:03:05,200 --> 00:03:09,840
+it's just another bindable property of the routerLink directive
+
+44
+00:03:09,840 --> 00:03:17,470
+and here we have to pass a Javascript object and on query params, we can now define key-value pairs
+
+45
+00:03:17,620 --> 00:03:19,990
+of the parameters we want to edit.
+
+46
+00:03:19,990 --> 00:03:26,720
+So for example say allowEdit here and set this to one,
+
+47
+00:03:26,740 --> 00:03:33,100
+now let's see what happens if we now click this link. If we now click any link here, you'll see we have questionmark
+
+48
+00:03:33,160 --> 00:03:34,770
+allowEdit 1 here,
+
+49
+00:03:34,810 --> 00:03:36,620
+so that's the key-value pair
+
+50
+00:03:36,790 --> 00:03:41,530
+we set up in this object and of course you could have more key-value pairs here which would then be
+
+51
+00:03:41,530 --> 00:03:44,030
+separated with an and sign in between
+
+52
+00:03:44,110 --> 00:03:45,020
+in your link.
+
+53
+00:03:45,070 --> 00:03:47,950
+So that's the query params property,
+
+54
+00:03:47,980 --> 00:03:54,250
+we also have the fragment property and that is only fragment because you may only have one fragment.
+
+55
+00:03:54,630 --> 00:03:55,270
+Here,
+
+56
+00:03:55,390 --> 00:04:02,050
+you could simply pass a string with single quotation marks or therefore, omit the square brackets and
+
+57
+00:04:02,050 --> 00:04:04,600
+set this to let's say loading.
+
+58
+00:04:04,930 --> 00:04:09,000
+So if we now save this and we go back to the servers page,
+
+59
+00:04:09,010 --> 00:04:11,260
+now you see we have hash loading at the end,
+
+60
+00:04:11,270 --> 00:04:12,940
+this is how you can add a fragment.
+
+61
+00:04:12,940 --> 00:04:18,080
+So super easy to add in our routerLink here in our template,
+
+62
+00:04:18,190 --> 00:04:21,570
+let's now see how we can do the same programmatically.
+
+63
+00:04:21,760 --> 00:04:25,710
+So in our home component where we already have this load service button,
+
+64
+00:04:25,870 --> 00:04:28,680
+let's say we want to load server 1.
+
+65
+00:04:29,050 --> 00:04:35,360
+So here I will change this name to load server and pass one as an argument maybe, adjust this method here,
+
+66
+00:04:35,500 --> 00:04:39,570
+load server and the ID will be passed as an argument as we just saw
+
+67
+00:04:39,820 --> 00:04:44,020
+and here I therefore want to navigate to servers, pass the ID,
+
+68
+00:04:44,080 --> 00:04:46,120
+we're already seeing how this gets more dynamic,
+
+69
+00:04:46,120 --> 00:04:50,730
+now we're not hardcoding 5 or something like this, we're using this argument here instead
+
+70
+00:04:51,040 --> 00:04:53,180
+and then as a last argument, edit.
+
+71
+00:04:53,180 --> 00:04:57,160
+Now again, we still want to add query params and this fragment.
+
+72
+00:04:57,220 --> 00:05:04,080
+So here in the navigate method, we use this object we already saw where we already added relativeTo.
+
+73
+00:05:04,090 --> 00:05:06,070
+Now I don't need relativeTo here,
+
+74
+00:05:06,250 --> 00:05:12,940
+instead here I can also set up my query params and that again is then just a Javascript object where
+
+75
+00:05:12,940 --> 00:05:20,820
+we say allowEdit and set this to one maybe and just as I add query params, I can also add the fragment
+
+76
+00:05:20,820 --> 00:05:23,820
+here and set this to loading.
+
+77
+00:05:23,820 --> 00:05:29,650
+Now with this if we save this and we go back to our home page and click load server, you'll see we add
+
+78
+00:05:29,650 --> 00:05:36,110
+the query parameter, allowEdit and set it equal to one and the hash fragment here.
+
+79
+00:05:36,300 --> 00:05:42,410
+So that is how we can use query parameters and fragments on both the programmatical routing approach,
+
+80
+00:05:42,420 --> 00:05:47,490
+calling it from the TypeScript code or on the routerLink, like here.
+
+81
+00:05:47,490 --> 00:05:50,130
+Now let's also learn how we can retrieve the data
+
+82
+00:05:50,130 --> 00:05:50,820
+thereafter.
+

@@ -1,0 +1,288 @@
+1
+00:00:02,250 --> 00:00:07,110
+So now that we talked about deployment, let me come back to the browser's list, I mentioned that this
+
+2
+00:00:07,110 --> 00:00:10,140
+is important for telling ANGULAR which browsers you want to support.
+
+3
+00:00:10,140 --> 00:00:12,200
+And this, of course, is related to deployment.
+
+4
+00:00:12,660 --> 00:00:19,380
+ANGULAR will take the information here to auto prefix your Sears's code correctly, but also so that
+
+5
+00:00:19,380 --> 00:00:26,760
+it knows which poorly fields to load and which different versions of bundles it should generate.
+
+6
+00:00:26,880 --> 00:00:28,380
+And what do I mean by that?
+
+7
+00:00:28,740 --> 00:00:31,780
+Angular has a built in feature called Differential Loading.
+
+8
+00:00:32,040 --> 00:00:38,280
+Now we have our Angella app and we're hosting this, let's say on Firebase or HWC as free or any other
+
+9
+00:00:38,280 --> 00:00:39,150
+hosting provider.
+
+10
+00:00:39,150 --> 00:00:45,600
+No matter if we used energy apply or not, we're hosting it somewhere and now our app hopefully gets
+
+11
+00:00:45,600 --> 00:00:46,770
+visited by users.
+
+12
+00:00:47,190 --> 00:00:51,500
+We might have user AI who has a modern browser and user B who has a legacy.
+
+13
+00:00:51,510 --> 00:00:52,870
+So an older browser.
+
+14
+00:00:53,520 --> 00:00:59,760
+Now the thing is user A with a modern browser, let's say the latest version of Chrome or Firefox needs
+
+15
+00:00:59,760 --> 00:01:01,800
+no or less polie fills.
+
+16
+00:01:01,800 --> 00:01:08,010
+All the features we use will work there just fine and therefore we could ship a smaller code bundle
+
+17
+00:01:08,010 --> 00:01:14,550
+to the user because our code doesn't have to be compiled down to super old versions of JavaScript and
+
+18
+00:01:14,550 --> 00:01:17,430
+we might not need any or all polie filters.
+
+19
+00:01:17,430 --> 00:01:24,120
+So these packages which enable certain features in a browser user, on the other hand, needs a version
+
+20
+00:01:24,120 --> 00:01:31,490
+which is compiled down to way older code, and he or she needs all or at least more polie fildes add.
+
+21
+00:01:31,590 --> 00:01:33,630
+So a bigger bundle needs to be shipped.
+
+22
+00:01:33,630 --> 00:01:34,490
+It is what it is.
+
+23
+00:01:35,160 --> 00:01:41,550
+The problem is, of course, we can always ship a bigger bundle so that we support both B and A if we
+
+24
+00:01:41,550 --> 00:01:46,350
+always ship the most optimized and smallest bundle possible, we ignore a user.
+
+25
+00:01:46,350 --> 00:01:49,890
+B there just just won't run with differential loading.
+
+26
+00:01:49,890 --> 00:01:50,670
+We do both.
+
+27
+00:01:51,060 --> 00:01:56,460
+The Angler's Seelie actually produces multiple versions of your app when it builds it for production,
+
+28
+00:01:56,460 --> 00:02:03,840
+you could say, and it produces a small code file which runs first when a user visits your page to identify
+
+29
+00:02:03,840 --> 00:02:05,730
+which browser does user is using.
+
+30
+00:02:05,940 --> 00:02:11,250
+And then this small initial code file determines which bundle gets served to the user.
+
+31
+00:02:11,730 --> 00:02:18,840
+So with differential loading user using, a modern browser has to download less code than a user using
+
+32
+00:02:18,840 --> 00:02:19,950
+an older browser.
+
+33
+00:02:19,950 --> 00:02:22,050
+And this gives you the best of both worlds.
+
+34
+00:02:22,230 --> 00:02:28,470
+You support all users, but you make sure that every user just has to download the code it really needs.
+
+35
+00:02:28,980 --> 00:02:31,050
+And this is built into ANGULAR.
+
+36
+00:02:31,530 --> 00:02:38,370
+In our disk folder, we actually see two versions of every file, right to main to polie files and to
+
+37
+00:02:38,370 --> 00:02:39,330
+runtime files.
+
+38
+00:02:39,570 --> 00:02:41,040
+And you see the names are different.
+
+39
+00:02:41,340 --> 00:02:45,150
+IA's five basically is the word before the users with the older browsers.
+
+40
+00:02:45,270 --> 00:02:48,840
+E 2015 sounds similar, but it's totally different.
+
+41
+00:02:48,990 --> 00:02:54,720
+Uses way more recent JavaScript and Dhafer also will be smaller for polie fills.
+
+42
+00:02:54,720 --> 00:02:56,370
+It's the same, of course, here.
+
+43
+00:02:56,370 --> 00:03:01,440
+They both look very cryptic and large, but actually the more modern version will be smaller and the
+
+44
+00:03:01,440 --> 00:03:02,820
+same for the runtime here.
+
+45
+00:03:03,510 --> 00:03:10,530
+So these are all files that you deploy and they will be executed automatically and indexed HTML indeed
+
+46
+00:03:10,530 --> 00:03:17,010
+to runtime file executes first and there it then decides which Aybar files it needs to load.
+
+47
+00:03:17,010 --> 00:03:18,240
+So that's how this works.
+
+48
+00:03:18,690 --> 00:03:24,450
+So desistance differential loading feature, which you get out of the box and you do partly configure
+
+49
+00:03:24,450 --> 00:03:31,200
+it here with the browser list there you tell Angella which browsers you want to support and distils
+
+50
+00:03:31,200 --> 00:03:35,430
+angular how it should build an optimized these different bundles.
+
+51
+00:03:35,880 --> 00:03:41,970
+In addition, you have a setting in TIAs config, Jason, where you specify to target JavaScript where
+
+52
+00:03:42,090 --> 00:03:46,230
+you want to compile for, and here it's compiling for modern JavaScript.
+
+53
+00:03:46,440 --> 00:03:51,600
+If you set this to an older one, then you force are all users to use this older one.
+
+54
+00:03:52,230 --> 00:03:57,480
+So differential loading really just is a feature to be aware of, not something where you need to do
+
+55
+00:03:57,480 --> 00:03:57,900
+much.
+
+56
+00:03:58,200 --> 00:04:00,180
+You have it out of the box.
+
+57
+00:04:00,180 --> 00:04:07,530
+And this allows you to ship code that works for all users but does not force all users to download all
+
+58
+00:04:07,530 --> 00:04:08,460
+available code.
+
+59
+00:04:09,000 --> 00:04:10,860
+All in one word about polie files.
+
+60
+00:04:10,860 --> 00:04:13,080
+You've got this polie Felicitas file now.
+
+61
+00:04:13,080 --> 00:04:17,100
+Crucial polie fildes like this one are included by default.
+
+62
+00:04:17,370 --> 00:04:20,850
+Simply by having this import statement here, Angella will do the rest.
+
+63
+00:04:21,210 --> 00:04:27,510
+If you are using certain features like, let's say, animations, and you need to support browsers which
+
+64
+00:04:27,510 --> 00:04:34,550
+don't natively support them, specifically Internet Explorer or Safari, then you would need to comment,
+
+65
+00:04:34,560 --> 00:04:41,340
+as in and Ronda's NPM install command to make sure your angular animations all work in those browsers.
+
+66
+00:04:41,580 --> 00:04:44,790
+So it always comes down to which browsers you want to support.
+
+67
+00:04:45,300 --> 00:04:49,080
+And you see detailed instructions here inside of this Polli Felicitas file.
+
+68
+00:04:49,650 --> 00:04:55,110
+So this is how you ensure that your app works for everyone and how you automatically take advantage
+
+69
+00:04:55,290 --> 00:04:56,940
+of this differential loading.
+
+70
+00:04:57,210 --> 00:05:01,650
+Of course, as always, you learn a bit more about this here.
+
+71
+00:05:01,910 --> 00:05:07,310
+The official talks under deployment, you can learn more about the French loading and how it works and
+
+72
+00:05:07,310 --> 00:05:08,390
+why it's awesome.
+

@@ -1,0 +1,156 @@
+1
+00:00:02,790 --> 00:00:07,410
+There are of course many attribute directives and throughout this course, we will see different ones,
+
+2
+00:00:07,500 --> 00:00:11,460
+two we already learned about are ngClass and ngStyle.
+
+3
+00:00:11,610 --> 00:00:15,300
+Now just to quickly refresh how they work,
+
+4
+00:00:15,510 --> 00:00:18,230
+let's add a class to our CSS file here,
+
+5
+00:00:18,240 --> 00:00:20,820
+let's maybe name it odd
+
+6
+00:00:21,010 --> 00:00:26,130
+and here I simply want to set the color to red.
+
+7
+00:00:26,740 --> 00:00:31,110
+Now in my template, I want to assign this class if it is odd.
+
+8
+00:00:31,330 --> 00:00:37,210
+So here of course, I could always assign the class since we already made sure that this list item list
+
+9
+00:00:37,210 --> 00:00:40,700
+is only displayed if onlyOdd is checked.
+
+10
+00:00:40,810 --> 00:00:48,840
+Still, we could also use ngClass here, like this and make sure that we assign the odd CSS class,
+
+11
+00:00:48,850 --> 00:00:55,420
+therefore we define it here as a property name, only if the number we currently look at divided by two
+
+12
+00:00:55,480 --> 00:01:01,010
+with the modulo sign equals something else than zero,
+
+13
+00:01:01,030 --> 00:01:03,170
+so not equal to zero.
+
+14
+00:01:03,190 --> 00:01:07,750
+That means we have a remainder for this division which means it's odd.
+
+15
+00:01:07,750 --> 00:01:10,870
+Now we can copy this to the even list
+
+16
+00:01:10,870 --> 00:01:16,510
+and again, I know that this will never be odd here because we already make sure that this is only rendered
+
+17
+00:01:16,510 --> 00:01:18,880
+if we are not displaying odd items,
+
+18
+00:01:18,880 --> 00:01:22,360
+we don't have any odd items in the even numbers array.
+
+19
+00:01:22,360 --> 00:01:24,910
+So just to show how this works,
+
+20
+00:01:24,910 --> 00:01:26,880
+of course we have to check even here,
+
+21
+00:01:27,010 --> 00:01:31,300
+now you see even numbers are black, odd numbers are red.
+
+22
+00:01:31,360 --> 00:01:37,860
+Again, not super surprising but just a brief refresher on how ngClass worked and important, I mentioned it
+
+23
+00:01:37,930 --> 00:01:45,130
+before, the square brackets here indicate that we are binding to some property on our ngClass directive.
+
+24
+00:01:46,090 --> 00:01:50,380
+Now ngStyle was the other famous directive
+
+25
+00:01:50,390 --> 00:01:52,010
+we had a look at thus far,
+
+26
+00:01:52,220 --> 00:01:59,440
+ngStyle allows us to also pass an object to some property which is also named ngStyle on the same
+
+27
+00:01:59,440 --> 00:02:00,380
+directive
+
+28
+00:02:00,910 --> 00:02:08,420
+and here, we could simply set the backgroundColor and we could set it to red like this.
+
+29
+00:02:08,420 --> 00:02:13,510
+Now it would always be red but of course, we can also set a dynamic value here, so we could simply
+
+30
+00:02:13,510 --> 00:02:15,460
+repeat our check from up here
+
+31
+00:02:15,490 --> 00:02:26,240
+if it's an odd number, in which case I want to give this let's say a backgroundColor of yellow,
+
+32
+00:02:26,480 --> 00:02:29,630
+otherwise it's transparent.
+
+33
+00:02:29,680 --> 00:02:34,390
+Now I'll quickly copy this over to our other list, here of course
+
+34
+00:02:34,390 --> 00:02:39,150
+I check if even is basically even and guess what, I think it will be.
+
+35
+00:02:39,220 --> 00:02:42,190
+And now the even number is, still no styling at all
+
+36
+00:02:42,250 --> 00:02:44,990
+and the odd numbers are really ugly now to be honest
+
+37
+00:02:45,280 --> 00:02:48,490
+but that means our directives here are working.
+
+38
+00:02:48,490 --> 00:02:52,150
+Now let's build our own ones because that is something we can do too,
+
+39
+00:02:52,240 --> 00:02:54,730
+let's start with our own attributes directives.
+

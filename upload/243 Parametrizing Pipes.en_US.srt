@@ -1,0 +1,108 @@
+1
+00:00:02,230 --> 00:00:09,020
+In the last video, we added a couple of pipes, the uppercase pipe to transform the instance type and the
+
+2
+00:00:09,020 --> 00:00:11,170
+date type to transform the type
+
+3
+00:00:11,210 --> 00:00:16,880
+but as I mentioned at the end of the last video, it would be nice if we could configure a pipe because
+
+4
+00:00:17,240 --> 00:00:24,920
+this layout here, this way of displaying the date might not be the layout, the format of the data you
+
+5
+00:00:24,920 --> 00:00:29,900
+want to output. So it would be nice if we could parameterize a pipe
+
+6
+00:00:29,990 --> 00:00:37,430
+and we can. For example on the date here, we can add a parameter to configure the pipe by adding a
+
+7
+00:00:37,430 --> 00:00:38,060
+colon
+
+8
+00:00:38,090 --> 00:00:43,480
+and this is the case for any pipe, you configure it, you pass a parameter to it by adding a colon,
+
+9
+00:00:43,490 --> 00:00:46,570
+of course the pipe needs to be able to handle a parameter
+
+10
+00:00:46,580 --> 00:00:53,840
+and again I will come back to where to find out how these pipes work or what the built-in pipes do,
+
+11
+00:00:53,840 --> 00:00:59,210
+how they can be configured in a second. The date pipe can take a parameter and we simply add it
+
+12
+00:00:59,270 --> 00:01:00,760
+after this colon.
+
+13
+00:01:00,980 --> 00:01:04,940
+Now the date pipe expects to receive a string parameter,
+
+14
+00:01:04,970 --> 00:01:10,380
+so let's pass a string and there, you basically set up the date.
+
+15
+00:01:10,400 --> 00:01:13,340
+I'll come back to the options you have in a second,
+
+16
+00:01:13,340 --> 00:01:17,390
+now for the moment let's just enter fullDate, camel case,
+
+17
+00:01:17,390 --> 00:01:18,890
+so a capital D.
+
+18
+00:01:19,310 --> 00:01:27,100
+Let's save this and go back to our application and you see, now we get a better formatted date.
+
+19
+00:01:27,170 --> 00:01:31,930
+Now might still not be what you want but again I will come back to other options in a second,
+
+20
+00:01:31,940 --> 00:01:39,260
+it is what I like to see here and this is how easy you can parameterize a pipe. You can pass parameters
+
+21
+00:01:39,470 --> 00:01:45,480
+by simply adding a colon and then the parameter. As a side note, if you would have multiple parameters
+
+22
+00:01:45,500 --> 00:01:49,110
+here, you simply separate them with additional colons.
+
+23
+00:01:49,130 --> 00:01:54,470
+So the date pipe doesn't take an additional parameter but if it would, you could pass it by adding another
+
+24
+00:01:54,480 --> 00:01:57,110
+colon and then the second parameter.
+
+25
+00:01:57,140 --> 00:02:03,320
+Now with this basic functionality set, let's have a look at where you can learn more about the built-in
+
+26
+00:02:03,320 --> 00:02:06,530
+pipes and how you can configure them.
+
+27
+00:02:06,740 --> 00:02:08,520
+Let's dive into this in the next lecture.
+

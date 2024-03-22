@@ -1,0 +1,52 @@
+1
+00:00:02,570 --> 00:00:07,000
+Time to practice the things we learned thus far in our course project.
+
+2
+00:00:07,040 --> 00:00:09,940
+Now what is our course project?
+
+3
+00:00:09,980 --> 00:00:15,230
+My goal in this project which we will build throuhout the course, to which we will come back after the individual
+
+4
+00:00:15,230 --> 00:00:20,470
+sections of this course, is to build a recipe book and shopping list app,
+
+5
+00:00:20,510 --> 00:00:23,330
+you saw it in the intro video of the course.
+
+6
+00:00:23,360 --> 00:00:28,070
+Basically there, we're going to have two sections, shopping list and recipe book and we will be able to
+
+7
+00:00:28,070 --> 00:00:34,760
+manage our recipes, view them in detail and also to manage our shopping list and even push ingredients
+
+8
+00:00:34,760 --> 00:00:37,400
+from a recipe directly to the shopping list.
+
+9
+00:00:37,430 --> 00:00:42,380
+This application will use a lot of the features we learned throughout the course and therefore I think it's
+
+10
+00:00:42,380 --> 00:00:47,000
+perfect to practice these things and see them come together in a real app.
+
+11
+00:00:47,000 --> 00:00:52,820
+First of all though, let's try to plan the application because before creating the app, you of course need
+
+12
+00:00:52,820 --> 00:00:58,820
+to have a plan and therefore in the next lecture, we're going to think about which components we will
+
+13
+00:00:58,820 --> 00:01:02,310
+need for the different features of this application.
+

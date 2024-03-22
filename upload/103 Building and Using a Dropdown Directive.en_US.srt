@@ -1,0 +1,332 @@
+1
+00:00:02,470 --> 00:00:04,190
+Welcome back to the recipe book.
+
+2
+00:00:04,340 --> 00:00:08,960
+We already use ngIf and ngFor in the sections, so we're already using directives
+
+3
+00:00:09,320 --> 00:00:16,730
+but now I want to enhance this project by adding our own directive which allows us to open the drop
+
+4
+00:00:16,730 --> 00:00:20,070
+downs which don't work as of now if you click them.
+
+5
+00:00:20,300 --> 00:00:25,550
+They don't work because we didn't import Bootstrap's Javascript code and I don't want to import
+
+6
+00:00:25,610 --> 00:00:29,930
+this because Angular should be the only thing interacting with my DOM
+
+7
+00:00:30,110 --> 00:00:36,660
+but now with the directive knowledge, we can create our own directive which will manipulate these buttons.
+
+8
+00:00:37,460 --> 00:00:46,710
+I'll add the directive in the shared folder and I will name it dropdown.directive,
+
+9
+00:00:46,730 --> 00:00:49,980
+so the file is named dropdown.directive.ts.
+
+10
+00:00:50,350 --> 00:00:56,620
+Of course you could use the CLI to create it and you could even point to the shared folder in the command
+
+11
+00:00:56,650 --> 00:01:00,950
+to automatically generate it in this shared folder.
+
+12
+00:01:01,000 --> 00:01:02,080
+I'll do it manually though,
+
+13
+00:01:02,080 --> 00:01:08,810
+always a good practice and here, the name should be DropdownDirective like this 
+
+14
+00:01:09,040 --> 00:01:14,600
+and of course, we need to add a decorator to turn this into a directive.
+
+15
+00:01:14,890 --> 00:01:21,270
+So it's the @directive decorator which needs to be imported from @angular/core
+
+16
+00:01:21,640 --> 00:01:25,870
+and here there is one thing I need to set up on the selector,
+
+17
+00:01:25,960 --> 00:01:31,130
+I want to define how I can add my directive and I will use an attribute selector,
+
+18
+00:01:31,150 --> 00:01:39,160
+therefore I'll enclose the name in square brackets. The name now will be appDropdown to have a unique
+
+19
+00:01:39,160 --> 00:01:45,040
+name which doesn't accidentally interfere with an officially existing attribute name or anything like
+
+20
+00:01:45,040 --> 00:01:46,420
+that.
+
+21
+00:01:46,420 --> 00:01:48,720
+Now what should this directive do?
+
+22
+00:01:48,970 --> 00:01:56,080
+I want to add some functionality to it which allows us to add a certain CSS class to the element it
+
+23
+00:01:56,110 --> 00:01:58,530
+sits on once it is clicked,
+
+24
+00:01:58,570 --> 00:02:03,050
+so once this element the directive sits on is clicked and removes the class
+
+25
+00:02:03,070 --> 00:02:05,360
+once we click again let's say.
+
+26
+00:02:05,890 --> 00:02:07,510
+So this is your challenge,
+
+27
+00:02:07,510 --> 00:02:13,750
+try implementing such a method which basically listens to clicks and then toggles some property which
+
+28
+00:02:13,750 --> 00:02:19,630
+determines whether some class is attached or not and also try implementing some code which dynamically
+
+29
+00:02:19,690 --> 00:02:23,550
+attaches a CSS class or not. Before you actually start though,
+
+30
+00:02:23,670 --> 00:02:26,690
+let's find out which class we need to attach.
+
+31
+00:02:26,890 --> 00:02:34,060
+If you go to the recipe detail component here, if you attach the open CSS class to the div which
+
+32
+00:02:34,060 --> 00:02:40,430
+holds the button group and you go to your application and select a recipe, you see now it looks like
+
+33
+00:02:40,430 --> 00:02:42,500
+the dropdown was opened.
+
+34
+00:02:42,560 --> 00:02:46,500
+So it's this open CSS class, the same for the usage in the header
+
+35
+00:02:46,520 --> 00:02:47,630
+we need to attach.
+
+36
+00:02:47,840 --> 00:02:49,280
+So that's your challenge,
+
+37
+00:02:49,280 --> 00:02:50,600
+build a dropdown directive
+
+38
+00:02:50,630 --> 00:02:52,160
+which attaches this class
+
+39
+00:02:52,250 --> 00:02:54,240
+whenever we click on it or removes it
+
+40
+00:02:54,260 --> 00:03:00,690
+once we click a second time. Let's build this directive together now.
+
+41
+00:03:01,010 --> 00:03:05,790
+So as explained, I want to toggle it upon clicking this.
+
+42
+00:03:06,170 --> 00:03:09,530
+So to listen to a click, I should add
+
+43
+00:03:09,560 --> 00:03:14,270
+@HostListener which is to be imported from @angular/core
+
+44
+00:03:14,510 --> 00:03:22,130
+and I want to listen to a click event. Then I want to execute toggle open which looks like or sounds like
+
+45
+00:03:22,130 --> 00:03:24,560
+a fitting name because that is what I want to do,
+
+46
+00:03:24,680 --> 00:03:27,680
+I want to toggle whether this should be opened or not.
+
+47
+00:03:29,050 --> 00:03:37,500
+Well then, I will add an isOpen directive which I'll set to false initially and in my @HostListener, I'll
+
+48
+00:03:37,510 --> 00:03:40,460
+simply set open or isOpen to
+
+49
+00:03:40,510 --> 00:03:44,560
+what it is currently not. So if isOpen was true,
+
+50
+00:03:44,560 --> 00:03:46,060
+it will now be set to false
+
+51
+00:03:46,090 --> 00:03:48,520
+and the other way around.
+
+52
+00:03:48,540 --> 00:03:58,500
+So with that, I'm toggling that property. Now to dynamically attach or detach a CSS class depending
+
+53
+00:03:58,500 --> 00:03:59,640
+on this,
+
+54
+00:03:59,760 --> 00:04:07,110
+all I have to do is, I'll add @HostBinding which needs to be imported from @angular/core and allows us to
+
+55
+00:04:07,110 --> 00:04:09,890
+bind to properties of the element
+
+56
+00:04:09,900 --> 00:04:13,500
+the directive is placed on and here,
+
+57
+00:04:13,620 --> 00:04:22,260
+I want to bind to the class property of that component, of that element, class simply is an array of
+
+58
+00:04:22,320 --> 00:04:27,340
+all the classes and here, it's all about this open class.
+
+59
+00:04:27,780 --> 00:04:32,110
+As you learned, that's the CSS class we need to attach dynamically or detach
+
+60
+00:04:32,280 --> 00:04:37,330
+and now the rest will be handled by Angular since I bind to isOpen,
+
+61
+00:04:37,530 --> 00:04:41,980
+this will not be attached initially, whenever isOpen switches to true,
+
+62
+00:04:42,000 --> 00:04:46,060
+it will be attached and whenever it switches to false, it will be removed
+
+63
+00:04:46,140 --> 00:04:48,500
+and that's our entire directive.
+
+64
+00:04:49,140 --> 00:04:57,020
+Now to be able to use it, I need to go to app module and add it here, add the dropdown directive and add
+
+65
+00:04:57,040 --> 00:05:06,180
+the import pointing to the shared folder and with that imported now, I can use it. I can use it in the
+
+66
+00:05:06,180 --> 00:05:08,530
+detail component, here
+
+67
+00:05:08,550 --> 00:05:13,470
+I have to use it on the div or on the element where open should be attached to in the end,
+
+68
+00:05:13,470 --> 00:05:19,360
+so in this case the div with the btn-group class and here, I'll add my own appDropdown directive,
+
+69
+00:05:19,530 --> 00:05:25,200
+without square brackets, without assigning any value because I don't need to configure anything
+
+70
+00:05:25,200 --> 00:05:32,100
+on this directive and now in the header, here the place where I need to add it is this list item with
+
+71
+00:05:32,100 --> 00:05:39,000
+the class of dropdown, here this is what will actually need the open class to show something. With that
+
+72
+00:05:39,000 --> 00:05:41,110
+in place and and ng serve still running,
+
+73
+00:05:41,250 --> 00:05:45,830
+let's save this and view this in our application, see if this works the way it should.
+
+74
+00:05:46,080 --> 00:05:48,280
+Let's test it in the header,
+
+75
+00:05:48,300 --> 00:05:49,610
+looks pretty good,
+
+76
+00:05:49,650 --> 00:05:54,620
+we close it by clicking again and here on a recipe, 
+
+77
+00:05:54,660 --> 00:05:56,480
+that looks awesome too.
+
+78
+00:05:56,790 --> 00:05:59,650
+So that's working exactly the way I want it to work
+
+79
+00:05:59,940 --> 00:06:03,570
+and with that in place, that already is everything I wanted to build,
+
+80
+00:06:03,570 --> 00:06:07,170
+so a relatively short recipe book section here.
+
+81
+00:06:07,260 --> 00:06:14,490
+Now we can move on to services, a very powerful tool and then we will add services in this app here to
+
+82
+00:06:14,490 --> 00:06:21,390
+greatly enhance it and fix some things which we had to do kind of complicated thus far.
+
+83
+00:06:21,390 --> 00:06:23,370
+We'll also add some new features.
+

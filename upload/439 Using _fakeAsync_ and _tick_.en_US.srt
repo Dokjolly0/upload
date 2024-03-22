@@ -1,0 +1,120 @@
+1
+00:00:01,980 --> 00:00:08,700
+We do have an alternative to using this set up here censored kind of hapless synchronously anyways and
+
+2
+00:00:08,700 --> 00:00:10,740
+only theoretically is asynchronous.
+
+3
+00:00:10,740 --> 00:00:13,650
+You noticed we didn't wait one and a half seconds here.
+
+4
+00:00:13,710 --> 00:00:23,050
+We can also copy this test copy it down here and call fake async or use fake async as a wrapper.
+
+5
+00:00:23,160 --> 00:00:25,860
+This needs to be imported from the inlet to testing packet.
+
+6
+00:00:25,860 --> 00:00:26,210
+Yes.
+
+7
+00:00:26,210 --> 00:00:34,770
+Well what this allows me to do is it allows me to get rid of the when stable function here like this
+
+8
+00:00:34,780 --> 00:00:35,480
+.
+
+9
+00:00:36,120 --> 00:00:39,510
+So instead I execute expected and so on instantly.
+
+10
+00:00:39,720 --> 00:00:48,720
+But I call tick in between now tick all needs to be imported from the English huge testing package and
+
+11
+00:00:48,730 --> 00:00:56,310
+tech basically means in a fake asynchronous environment finish all asynchronous tasks.
+
+12
+00:00:56,310 --> 00:01:02,790
+Now when Tich is executed asynchronous tasks are finished we can finish them immediately since we resolve
+
+13
+00:01:02,790 --> 00:01:03,500
+it immediately.
+
+14
+00:01:03,510 --> 00:01:05,130
+We don't wait one and a half seconds.
+
+15
+00:01:05,130 --> 00:01:08,060
+That is why we wrote it this way we don't want to wait.
+
+16
+00:01:08,070 --> 00:01:09,790
+That's time when testing.
+
+17
+00:01:10,110 --> 00:01:13,560
+So we finished it immediately and we should have access to the data.
+
+18
+00:01:13,560 --> 00:01:18,590
+So let's see if this works if I saved this indeed we get a successful test here too.
+
+19
+00:01:18,750 --> 00:01:21,970
+And this is how we now also use fake async.
+
+20
+00:01:22,140 --> 00:01:28,530
+So you could use either async with this set up when stable and then on the callback your expectation
+
+21
+00:01:28,860 --> 00:01:31,510
+or fake async it takes the same time.
+
+22
+00:01:31,530 --> 00:01:39,010
+It's just a different philosophy here you more like fake or behave like it was really asynchronous and
+
+23
+00:01:39,010 --> 00:01:42,670
+here you just use tick to say yeah let's go on.
+
+24
+00:01:43,080 --> 00:01:45,900
+This is how you can use services and components.
+
+25
+00:01:45,900 --> 00:01:53,040
+I picked this task or these two building pieces as they are very important they're probably amongst
+
+26
+00:01:53,040 --> 00:01:57,490
+the most complex especially with the injection and asynchronous tasks.
+
+27
+00:01:57,510 --> 00:01:59,260
+I hope this was helpful.
+
+28
+00:01:59,280 --> 00:02:03,440
+Again I do have a document where you can dive a lot deeper into that.
+
+29
+00:02:03,690 --> 00:02:10,190
+I wanna finish this module by having a look at isolated and non isolated testing cases.
+
+30
+00:02:10,290 --> 00:02:13,360
+Let's have a look at this and learn what this is.
+

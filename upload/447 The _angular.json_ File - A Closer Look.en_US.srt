@@ -1,0 +1,652 @@
+1
+00:00:02,230 --> 00:00:04,910
+So what's inside of the Angler Jason file?
+
+2
+00:00:05,080 --> 00:00:10,360
+This is a file which is generated automatically when you generate a new angle, a project, and this
+
+3
+00:00:10,360 --> 00:00:17,890
+is used by the CSI behind the scenes to run different Seelie commands and to know how to run these commands.
+
+4
+00:00:17,980 --> 00:00:24,850
+Basically here you can set some defaults for all these flags you could otherwise add manually to every
+
+5
+00:00:24,850 --> 00:00:25,480
+command.
+
+6
+00:00:25,690 --> 00:00:30,850
+And of course, setting defaults is more appropriate because it saves the hassle of having to add all
+
+7
+00:00:30,850 --> 00:00:31,930
+these flags all the time.
+
+8
+00:00:32,440 --> 00:00:34,840
+So what do we have in their notice?
+
+9
+00:00:34,840 --> 00:00:40,510
+Angler Jason File uses, well, the Jason data format to well store its information.
+
+10
+00:00:40,660 --> 00:00:45,610
+And there it follows a certain schema which is developed by the Angler team, and it's stored in this
+
+11
+00:00:45,610 --> 00:00:48,750
+folder, not something we should change, just some information.
+
+12
+00:00:49,540 --> 00:00:51,700
+The wording here, you can leave this the way it is.
+
+13
+00:00:51,730 --> 00:00:55,240
+This is just the wording of this file format here.
+
+14
+00:00:55,240 --> 00:01:03,460
+Basically interesting is the new project route entry into this controls where new projects in your project
+
+15
+00:01:03,460 --> 00:01:05,330
+here in the end are added.
+
+16
+00:01:05,740 --> 00:01:11,350
+This might not tell you much what our project will come back to that it turns out that you can manage
+
+17
+00:01:11,350 --> 00:01:15,280
+more than one project in an Angler Project folder.
+
+18
+00:01:15,370 --> 00:01:19,270
+And thus far, for the entire course, we always had just one project, one app.
+
+19
+00:01:19,450 --> 00:01:22,180
+While you can manage more, that will show you how later.
+
+20
+00:01:22,180 --> 00:01:24,520
+And of course, for now, let's go with that one project.
+
+21
+00:01:25,180 --> 00:01:27,070
+So next, we have this project's entry.
+
+22
+00:01:27,400 --> 00:01:31,210
+And dear, you have one nested entry per project.
+
+23
+00:01:31,210 --> 00:01:33,160
+Now, as I mentioned, we have one project here.
+
+24
+00:01:33,400 --> 00:01:37,870
+And therefore, if I make the smaller we see, there only is one entry.
+
+25
+00:01:38,020 --> 00:01:43,210
+And that also, you see, is the default project against which our SEAL commands will run.
+
+26
+00:01:43,990 --> 00:01:48,760
+If you had multiple projects, again, something that will show you later, then you could specify here
+
+27
+00:01:49,060 --> 00:01:53,710
+which project the Seelie commands like Engy generations on will run against.
+
+28
+00:01:53,900 --> 00:01:55,110
+But here we only have one.
+
+29
+00:01:55,120 --> 00:01:56,340
+So let's expand this again.
+
+30
+00:01:57,070 --> 00:01:58,960
+Now we see which project type does this.
+
+31
+00:01:58,960 --> 00:02:00,250
+And here it's an application.
+
+32
+00:02:00,520 --> 00:02:01,990
+Now you have multiple types.
+
+33
+00:02:01,990 --> 00:02:04,360
+Here you have application and library.
+
+34
+00:02:04,360 --> 00:02:09,130
+And by the way, you get all the completion, you're either automatically or by hitting controlled space.
+
+35
+00:02:09,610 --> 00:02:13,300
+The default is application, which is a regular angler web application.
+
+36
+00:02:13,570 --> 00:02:18,490
+But you could change this to library and it will show you what a library is later in this module.
+
+37
+00:02:18,490 --> 00:02:22,570
+For now, let's leave it at application that we get the schematics here.
+
+38
+00:02:22,630 --> 00:02:24,340
+Schematics doesn't tell us much about.
+
+39
+00:02:24,340 --> 00:02:30,280
+Schematics actually is a really cool feature of the angular ecosystem, you could say.
+
+40
+00:02:30,490 --> 00:02:32,770
+And we'll come back to what schematics are for now.
+
+41
+00:02:32,770 --> 00:02:33,430
+Let's ignore it.
+
+42
+00:02:34,210 --> 00:02:39,850
+Route basically tells the angular Seelie what the root folder of this project is.
+
+43
+00:02:39,850 --> 00:02:43,090
+And here it's the file folder here itself.
+
+44
+00:02:43,090 --> 00:02:46,690
+So the entire folder and then where our source files live in.
+
+45
+00:02:46,690 --> 00:02:52,730
+And you could change this if you want to store your code in a different folder than source, but I will,
+
+46
+00:02:52,750 --> 00:02:54,190
+of course, leave it at source.
+
+47
+00:02:54,190 --> 00:02:56,350
+But you can change this here.
+
+48
+00:02:56,350 --> 00:02:59,680
+You set the default prefix, which is added in front of every component.
+
+49
+00:02:59,740 --> 00:03:02,380
+So if you don't want to use app, you can use a different one here.
+
+50
+00:03:03,160 --> 00:03:08,530
+And then you get this architect command here it is architect area, which is the rest of our project
+
+51
+00:03:08,530 --> 00:03:09,400
+specific settings.
+
+52
+00:03:09,970 --> 00:03:14,260
+Now here to different commands you can execute can be configured.
+
+53
+00:03:14,710 --> 00:03:16,540
+For example, the build command.
+
+54
+00:03:17,140 --> 00:03:20,350
+There you see which tool gets used under the hood.
+
+55
+00:03:20,620 --> 00:03:25,930
+And this is a tool which is part of the angular deficit package, which is one of the third party.
+
+56
+00:03:27,350 --> 00:03:29,030
+Dependencies, we have added.
+
+57
+00:03:30,980 --> 00:03:37,760
+And this basically is just the tool, the configuration to code, which knows how to build an angle,
+
+58
+00:03:37,760 --> 00:03:40,970
+a project so which steps to execute and so on.
+
+59
+00:03:41,300 --> 00:03:44,670
+And this tool can be configured with options.
+
+60
+00:03:44,990 --> 00:03:45,950
+These are options.
+
+61
+00:03:45,960 --> 00:03:52,390
+You also, at least partly, can set with these extra configuration flags on Seelie commands.
+
+62
+00:03:52,400 --> 00:03:58,970
+So on energy build, dash, dash Iot, for example, controls that should be built with ahead of time
+
+63
+00:03:58,970 --> 00:04:01,180
+compilation and by default, as is true.
+
+64
+00:04:01,400 --> 00:04:06,080
+So you would only need to set this if you want to set it to false, but you can set this with a flag
+
+65
+00:04:06,200 --> 00:04:09,410
+or if you notice, should always be the case here.
+
+66
+00:04:09,560 --> 00:04:13,310
+For example, with that Iot option there you see the default is true.
+
+67
+00:04:13,580 --> 00:04:21,410
+But if I set it to false now, all bills would be done with the Iot computation turned off.
+
+68
+00:04:22,910 --> 00:04:28,280
+We see where the project should be output into, and here we see that is to this folder and then the
+
+69
+00:04:28,280 --> 00:04:32,660
+angle of conflict subfolder we see what our route entry Phylis.
+
+70
+00:04:32,660 --> 00:04:37,420
+And you could change this, of course, what the route entry filed for the angular application is.
+
+71
+00:04:37,430 --> 00:04:41,490
+And you could change this as well where the poley fields are managed.
+
+72
+00:04:41,750 --> 00:04:42,720
+You can change this as well.
+
+73
+00:04:42,740 --> 00:04:43,880
+You can change everything here.
+
+74
+00:04:44,180 --> 00:04:46,070
+And what's your project?
+
+75
+00:04:46,070 --> 00:04:49,430
+Specific configuration, faulty conflict configuration files.
+
+76
+00:04:50,530 --> 00:04:57,790
+Assets allows you to configure which files or folders should be copied over in the output in the source
+
+77
+00:04:57,790 --> 00:04:58,130
+folder.
+
+78
+00:04:58,150 --> 00:04:59,930
+We have a assets folder in there.
+
+79
+00:04:59,980 --> 00:05:01,150
+I have nothing in there.
+
+80
+00:05:01,150 --> 00:05:06,520
+But if you would store, let's say, an image in there, which I always want to be able to use in my
+
+81
+00:05:06,520 --> 00:05:12,160
+application, I could store it here, reference it from inside my components, for example, by rendering
+
+82
+00:05:12,250 --> 00:05:18,370
+image tag there and it would be copied over into the disk folder so that it is available in the served
+
+83
+00:05:18,370 --> 00:05:19,120
+app as well.
+
+84
+00:05:20,020 --> 00:05:24,770
+The styles node is one we use for all this, of course, project to include bootstrap.
+
+85
+00:05:25,030 --> 00:05:31,990
+Here you can set up which S.O.S files ever your old ones or third party package files should be included
+
+86
+00:05:31,990 --> 00:05:33,790
+in the application by default.
+
+87
+00:05:34,130 --> 00:05:37,300
+Of course, every component has its own style file, as you learned.
+
+88
+00:05:37,480 --> 00:05:41,350
+But if you have some global application wide styles, you would add them here.
+
+89
+00:05:41,440 --> 00:05:48,430
+And these style files are also then used and evaluated by the build workflow and in the end optimized
+
+90
+00:05:48,430 --> 00:05:49,290
+and copied over.
+
+91
+00:05:49,300 --> 00:05:54,610
+For example, here you find you copied over Styles's as file, which is empty for the Stiefel project.
+
+92
+00:05:54,700 --> 00:05:58,960
+But where you could add your default styles here is to file where you would add your styles.
+
+93
+00:05:59,950 --> 00:06:01,030
+So that is something.
+
+94
+00:06:01,210 --> 00:06:06,430
+And if you have some scripts, some Java scripts, some JavaScript files which should be copied over,
+
+95
+00:06:06,610 --> 00:06:08,050
+you could specify them as well.
+
+96
+00:06:08,230 --> 00:06:13,450
+Now, you might not need this very often because you will write most of your logic inside of your angular
+
+97
+00:06:13,450 --> 00:06:15,550
+files, of your angular components and so on.
+
+98
+00:06:15,880 --> 00:06:20,710
+But if you would be using a third party package like, let's say, Google Maps or Lodish or anything
+
+99
+00:06:20,710 --> 00:06:28,120
+like this, where you may be downloaded, already optimized script file, well, then you can just specify
+
+100
+00:06:28,120 --> 00:06:32,110
+it here and it will be copied over and included in your application.
+
+101
+00:06:32,680 --> 00:06:38,590
+Now a side note already more about all these configuration options, of course, can again be learned
+
+102
+00:06:38,590 --> 00:06:42,730
+in the official docs there under workspace configuration.
+
+103
+00:06:42,940 --> 00:06:50,140
+You learn about all these settings in great detail and what you can set there and why and in which different
+
+104
+00:06:50,140 --> 00:06:51,980
+ways you can configure things here.
+
+105
+00:06:52,330 --> 00:06:57,820
+So in addition to watching this lecture, this is a resource you also might want to check out to learn
+
+106
+00:06:57,850 --> 00:07:00,870
+everything about what you could possibly do here.
+
+107
+00:07:02,280 --> 00:07:08,070
+Now, besides the options for the command, you also find configurations this might sound like it's
+
+108
+00:07:08,070 --> 00:07:13,020
+the same, but the difference is that options basically are default options, which are always applied
+
+109
+00:07:13,350 --> 00:07:14,640
+with configurations.
+
+110
+00:07:14,850 --> 00:07:18,750
+You can configure different environments for your options.
+
+111
+00:07:18,750 --> 00:07:24,540
+So you could say, I want to have some steps or some options which are only taken into account if I
+
+112
+00:07:24,540 --> 00:07:30,360
+build for production, for example, or if I build for development.
+
+113
+00:07:31,200 --> 00:07:36,610
+So here we got some production specific settings, for example, that a file should be replaced.
+
+114
+00:07:36,810 --> 00:07:38,430
+This isn't the environments folder.
+
+115
+00:07:38,730 --> 00:07:43,950
+And in the end, this simply tells you, Seelie, that it should swap the environment useful for the
+
+116
+00:07:43,950 --> 00:07:44,430
+environment.
+
+117
+00:07:44,610 --> 00:07:46,940
+Proteus file when it builds for production.
+
+118
+00:07:47,430 --> 00:07:52,920
+This allows you to specify different environment variables in the end for the different productions
+
+119
+00:07:52,920 --> 00:07:53,750
+you're building for.
+
+120
+00:07:54,030 --> 00:08:00,540
+So let's say you're using Google Maps and you have a Google API key and you have one key for development
+
+121
+00:08:00,540 --> 00:08:05,390
+and one key, which is more locked down and restricted for production.
+
+122
+00:08:05,790 --> 00:08:11,310
+Then you would store the development Key India Environments File and the production key in the environment
+
+123
+00:08:11,310 --> 00:08:12,690
+of Proteus file.
+
+124
+00:08:13,110 --> 00:08:19,680
+And thanks to this setting here, once you built for production, which you do with energy Bill Dash
+
+125
+00:08:19,680 --> 00:08:20,100
+Dash.
+
+126
+00:08:21,360 --> 00:08:27,720
+Brought this configuration will be used and the files will be swapped so that for your production code,
+
+127
+00:08:27,720 --> 00:08:34,010
+your production key will be used, a little side note dashed as broad as just a shortcut to target production.
+
+128
+00:08:34,320 --> 00:08:38,540
+The long form is stashed at configuration equals production.
+
+129
+00:08:39,000 --> 00:08:42,930
+Now, for production just doesn't make much sense because you have the shortcut.
+
+130
+00:08:43,260 --> 00:08:47,220
+But you can add your own configurations here like a staging configuration.
+
+131
+00:08:47,460 --> 00:08:52,890
+You can add it and overwrite your own options here if you want to with staging.
+
+132
+00:08:53,490 --> 00:08:59,220
+So now here I could set my own options like a hottie to falls if I'm building for staging.
+
+133
+00:08:59,490 --> 00:09:07,950
+And I could target this custom option with configuration staging now so you can add your own configuration
+
+134
+00:09:07,950 --> 00:09:11,340
+stear besides the default ones which are included.
+
+135
+00:09:12,090 --> 00:09:17,960
+And as you just saw here with the Atik sample, you can override any default options configured up there.
+
+136
+00:09:18,210 --> 00:09:22,230
+So these defaults are always used unless they're overwritten down there.
+
+137
+00:09:22,830 --> 00:09:28,260
+And here you see for production, there are quite some overwrites or some extra settings.
+
+138
+00:09:28,530 --> 00:09:33,450
+For example, here we have the maximum amount of optimizations and so on.
+
+139
+00:09:33,450 --> 00:09:38,220
+And you can, of course, find you tweaked us all to your personal liking.
+
+140
+00:09:38,430 --> 00:09:43,920
+You can add more environments as you learned, and you can configure which options are adjusted, in
+
+141
+00:09:43,920 --> 00:09:45,690
+which way, for which environment.
+
+142
+00:09:45,700 --> 00:09:47,340
+It's a really, really powerful.
+
+143
+00:09:47,850 --> 00:09:52,410
+Now, this is all still for the build command right now.
+
+144
+00:09:52,410 --> 00:09:55,370
+Let's close this and move on to the server command.
+
+145
+00:09:56,010 --> 00:10:00,780
+Now, there you see options is much shorter because here we have one main option where we basically
+
+146
+00:10:00,780 --> 00:10:05,760
+tell these Seelie that for Disserve option, we want to use to build options.
+
+147
+00:10:05,760 --> 00:10:08,610
+So all these options should be used for a serve as well.
+
+148
+00:10:09,180 --> 00:10:12,480
+And then we also have this production specific configuration.
+
+149
+00:10:12,480 --> 00:10:15,930
+If we would if we would run engy serve Dasht as Pirot.
+
+150
+00:10:16,440 --> 00:10:21,240
+Now, in case you're wondering how you should ever know which options exist, for one, as I mentioned,
+
+151
+00:10:21,240 --> 00:10:22,920
+you get all the completion here.
+
+152
+00:10:22,950 --> 00:10:27,390
+If you add new empty quotes, you see which settings you can set there.
+
+153
+00:10:27,840 --> 00:10:32,940
+And in addition to the official docs I mentioned guide you through that and you can learn more about
+
+154
+00:10:32,940 --> 00:10:34,320
+the different options there.
+
+155
+00:10:35,760 --> 00:10:39,280
+Now, then we got an option for internationalization, which I'll ignore.
+
+156
+00:10:39,300 --> 00:10:45,550
+Here we got the test options for running your tests and how your code should be compiled and used there.
+
+157
+00:10:46,080 --> 00:10:50,780
+We can configure lintang end to end testing and then we're done.
+
+158
+00:10:51,060 --> 00:10:53,340
+And this is the angular jasen file.
+
+159
+00:10:53,340 --> 00:10:58,260
+It can look intimidating, but as always, the defaults are fine for most use cases.
+
+160
+00:10:58,500 --> 00:11:01,500
+And if you need to tweak something, you got all the completion.
+
+161
+00:11:01,750 --> 00:11:04,920
+You can check out the official docs to learn more about that.
+
+162
+00:11:05,700 --> 00:11:12,000
+Now, I want to come back to something I mentioned earlier schematics because it turns out that schematics
+
+163
+00:11:12,000 --> 00:11:16,350
+this term is super important and helps us build amazing applications.
+

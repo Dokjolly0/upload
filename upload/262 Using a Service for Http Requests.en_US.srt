@@ -1,0 +1,328 @@
+1
+00:00:02,290 --> 00:00:06,070
+The code we have thus far is not bad and it does its job
+
+2
+00:00:06,070 --> 00:00:11,150
+and if our application were as simple as it is here, it would be perfectly fine
+
+3
+00:00:11,320 --> 00:00:18,580
+but in bigger applications and maybe even in this one, we already have a quite big component with a lot
+
+4
+00:00:18,580 --> 00:00:22,720
+of code that is only indirectly related to the user interface.
+
+5
+00:00:22,720 --> 00:00:26,860
+Of course, we want to send a request when a button is clicked then we want to display that response
+
+6
+00:00:26,860 --> 00:00:27,400
+data
+
+7
+00:00:27,490 --> 00:00:33,340
+but for example, transforming the result, transforming the data, we can do it here,
+
+8
+00:00:33,340 --> 00:00:41,080
+it's not inherently bad but it is a nice practice to outsource that into services, so that services are
+
+9
+00:00:41,080 --> 00:00:47,920
+the parts in your Angular application that do the heavy lifting, the dirty work and your components are
+
+10
+00:00:47,920 --> 00:00:55,420
+relatively lean, as lean as they can be and are mostly concerned with template related work,
+
+11
+00:00:55,450 --> 00:01:01,960
+so with things like the is fetching property and so on and therefore, let's create a new service now, the
+
+12
+00:01:01,960 --> 00:01:10,600
+post service here and I'll create it by exporting a class, post service. Now we need to provide that and
+
+13
+00:01:10,600 --> 00:01:16,840
+for that, we can use two approaches, we can use @injectable which you need to import from 
+
+14
+00:01:16,840 --> 00:01:23,200
+@angular/core and there we can pass an object and set provided in to root which is the more modern and recommended
+
+15
+00:01:23,200 --> 00:01:23,860
+approach
+
+16
+00:01:23,980 --> 00:01:29,350
+but you could also provide it here in the providers array of the app module and this also wouldn't
+
+17
+00:01:29,350 --> 00:01:31,510
+be bad or a problem. Here
+
+18
+00:01:31,510 --> 00:01:38,280
+however, I will use this approach. Now what's my idea behind that service? In this service, I want to have
+
+19
+00:01:38,280 --> 00:01:46,740
+my HTTP request methods, so the methods that do the HTTP requests and I only want to get the responses
+
+20
+00:01:47,010 --> 00:01:51,440
+or the message whether we're done with the request in my front-end.
+
+21
+00:01:51,570 --> 00:02:00,940
+So therefore in this service, I will add a new method, create and store post, you can of course name this
+
+22
+00:02:00,940 --> 00:02:02,600
+however you want it and there,
+
+23
+00:02:02,620 --> 00:02:08,940
+I expect to get a title which is a string and the content which is a string as an argument let's say
+
+24
+00:02:08,980 --> 00:02:12,070
+and here I want to send my HTTP request.
+
+25
+00:02:12,340 --> 00:02:19,060
+Now of course, I also want to be able to fetch my post, so I'll add fetch posts here and there,
+
+26
+00:02:19,060 --> 00:02:21,110
+I also want to send a request.
+
+27
+00:02:21,270 --> 00:02:25,120
+Now of course, I only want to move my code over, that's in the end what I want to do here.
+
+28
+00:02:25,450 --> 00:02:32,570
+So let's grab that HTTP request here from onCreatePost and let's move it into the post service here.
+
+29
+00:02:32,590 --> 00:02:34,820
+Now we're sending the HTTP request here,
+
+30
+00:02:34,870 --> 00:02:39,440
+however for this to work, we need to inject the HTTP service into this post service.
+
+31
+00:02:39,790 --> 00:02:46,570
+So let's add a constructor and with the help of that constructor, we inject the HttpClient and we
+
+32
+00:02:46,570 --> 00:02:53,620
+store it in a property named HTTP and the HttpClient is imported from
+
+33
+00:02:53,710 --> 00:02:56,310
+@angular/common/http.
+
+34
+00:02:56,350 --> 00:03:00,480
+Now of course here, we have no post data property anymore,
+
+35
+00:03:00,490 --> 00:03:08,440
+I can create it here though and this will in the end be of type post and therefore, it will have a
+
+36
+00:03:08,450 --> 00:03:09,130
+title and so on
+
+37
+00:03:09,130 --> 00:03:12,180
+but we first of all need to import our own post model.
+
+38
+00:03:12,640 --> 00:03:18,230
+So let's import post from ./post.model
+
+39
+00:03:18,610 --> 00:03:25,450
+and now to be a real post, we need to set a title property here which is equal to our title we're getting
+
+40
+00:03:25,450 --> 00:03:30,460
+as an argument and we need to set a content property which is equal to the content we're getting his
+
+41
+00:03:30,460 --> 00:03:31,150
+argument,
+
+42
+00:03:31,150 --> 00:03:34,900
+so the right side of the colon refers to these arguments here.
+
+43
+00:03:34,900 --> 00:03:42,260
+Now that's the post data we're sending and now we can call create and store post to send that request.
+
+44
+00:03:42,490 --> 00:03:52,320
+So back in the app component, I now need to inject my own post service, private post service, like this
+
+45
+00:03:52,800 --> 00:03:56,380
+and make sure to add that import path here at the top,
+
+46
+00:03:56,430 --> 00:03:58,870
+you need to import post service from there
+
+47
+00:03:59,040 --> 00:04:04,230
+and now in onCreatePost, I simply call this post service
+
+48
+00:04:04,500 --> 00:04:10,820
+create and store post. I get an error here because I need to pass some data to that method,
+
+49
+00:04:10,930 --> 00:04:13,270
+I need to pass the title and the content.
+
+50
+00:04:13,270 --> 00:04:20,140
+Now I get my post data here, so I access postData.title and my second argument I send is
+
+51
+00:04:20,200 --> 00:04:21,880
+postData.content
+
+52
+00:04:21,880 --> 00:04:24,610
+and with that, we should be able to create new posts.
+
+53
+00:04:24,700 --> 00:04:29,120
+Let's add a new post here,
+
+54
+00:04:29,280 --> 00:04:33,070
+the best Angular course, which this one hopefully is,
+
+55
+00:04:33,160 --> 00:04:38,340
+I'm of course interested in your feedback, so I hope so.
+
+56
+00:04:38,520 --> 00:04:39,780
+Send that post,
+
+57
+00:04:39,780 --> 00:04:44,390
+now we have no logic to automatically update our list of posts down there but that's fine,
+
+58
+00:04:44,430 --> 00:04:50,640
+we can click fetch posts again and now we see our post here. So that now still works
+
+59
+00:04:50,640 --> 00:04:54,650
+but now the logic was outsourced into the post service.
+
+60
+00:04:54,780 --> 00:04:57,150
+Let's do the same for fetching posts,
+
+61
+00:04:57,150 --> 00:05:03,490
+let's grab this logic here and we'll have a problem with is fetching but I'll come back to this.
+
+62
+00:05:03,540 --> 00:05:08,210
+Let's grab this logic here and move it into fetch posts in the posts
+
+63
+00:05:08,250 --> 00:05:09,610
+service like that.
+
+64
+00:05:10,320 --> 00:05:16,410
+Now let's remove is fetching and let's remove this loaded posts because we don't have these
+
+65
+00:05:16,410 --> 00:05:21,600
+properties here and we don't really need them here in the post service, is fetching and the loaded
+
+66
+00:05:21,600 --> 00:05:26,260
+posts clearly belong into our app component and not into the service
+
+67
+00:05:26,280 --> 00:05:31,170
+because the component is where we use them, where we want to display them or where we need them to change
+
+68
+00:05:31,170 --> 00:05:33,470
+what we display in the template.
+
+69
+00:05:33,510 --> 00:05:38,220
+Let's focus on the rest of this code for now. We're missing the map operator,
+
+70
+00:05:38,220 --> 00:05:40,400
+so let's make sure we import that here,
+
+71
+00:05:40,470 --> 00:05:45,570
+let's import map from rxjs/operators
+
+72
+00:05:45,570 --> 00:05:52,940
+and with that, we have a request that should work but will still need to fine tune this later.
+
+73
+00:05:52,950 --> 00:05:56,830
+At the moment, we can't get rid of that private method here of course
+
+74
+00:05:57,000 --> 00:06:03,120
+and instead where we previously called this fetch posts, we can now use the post service and call fetch
+
+75
+00:06:03,120 --> 00:06:04,330
+posts there.
+
+76
+00:06:04,350 --> 00:06:08,070
+So we do that here in onFetchPosts and in ngOnInit.
+
+77
+00:06:08,880 --> 00:06:15,810
+However what you will see of course is that now we have no posts available because whilst we're running
+
+78
+00:06:15,810 --> 00:06:22,260
+that code in the service and indeed, you can see that if I click fetch posts, an HTTP request
+
+79
+00:06:22,320 --> 00:06:27,130
+is sent and we are fetching the posts, whilst all of that is happening,
+
+80
+00:06:27,270 --> 00:06:33,240
+we're not seeing the posts here because we lost the connection between the data we fetched in the service
+
+81
+00:06:33,510 --> 00:06:34,890
+and our template.
+
+82
+00:06:34,890 --> 00:06:35,550
+Let's fix that.
+

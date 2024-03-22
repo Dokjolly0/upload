@@ -1,0 +1,344 @@
+1
+00:00:02,890 --> 00:00:05,620
+In the last lecture, we created our own pipe
+
+2
+00:00:05,680 --> 00:00:08,750
+and we also allow the user to pass a parameter.
+
+3
+00:00:08,800 --> 00:00:15,940
+Now I want to create another new pipe because I want to show you something which might look strange
+
+4
+00:00:15,940 --> 00:00:17,480
+at the beginning.
+
+5
+00:00:17,710 --> 00:00:24,710
+Let's add a new element here above our unordered list and this should be an input field,
+
+6
+00:00:24,850 --> 00:00:27,120
+so input of type text.
+
+7
+00:00:27,220 --> 00:00:33,640
+I want to allow the user to filter our servers, for example by status so that once you type stable
+
+8
+00:00:33,640 --> 00:00:37,750
+in there, you'll see servers with the status stable.
+
+9
+00:00:38,110 --> 00:00:44,790
+So therefore, I need this input text field and I want to use two-way data binding to bind it,
+
+10
+00:00:44,800 --> 00:00:50,500
+so ngModel and bind this to filteredStatus
+
+11
+00:00:50,500 --> 00:00:57,610
+for example, this of course would be a new property I set up here in my component,
+
+12
+00:00:57,640 --> 00:01:06,040
+so below all my servers, I have filteredStatus which is an empty string at the beginning, filteredStatus
+
+13
+00:01:06,040 --> 00:01:07,680
+like this.
+
+14
+00:01:07,690 --> 00:01:11,770
+So if we save this, we should see this new input field here at the top,
+
+15
+00:01:11,920 --> 00:01:16,440
+let's maybe add a horizontal line below it just for styling reasons
+
+16
+00:01:16,810 --> 00:01:18,930
+and with that, we can enter something here
+
+17
+00:01:18,940 --> 00:01:21,220
+but of course, this does not do anything.
+
+18
+00:01:21,220 --> 00:01:28,390
+Now I want to build a pipe which I can apply to this list somehow, which allows me to then only view
+
+19
+00:01:28,510 --> 00:01:33,020
+the servers which do indeed fulfill the requirements here.
+
+20
+00:01:33,400 --> 00:01:43,420
+So to do this, I will add a new pipe here and for this, I will now use the CLI, so ng generate pipe would
+
+21
+00:01:43,420 --> 00:01:51,230
+be the shortcut here or just g p and then the name of your pipe and I will name it filter, filter pipe.
+
+22
+00:01:51,250 --> 00:01:57,190
+So by typing filter, this gives me also a testing file which I don't need but then the filter pipe here
+
+23
+00:01:57,490 --> 00:02:03,940
+and there you can see it also pre-populates the name here in my @Pipe decorator and it gives me this
+
+24
+00:02:03,940 --> 00:02:09,400
+interface and gives me this transform method in its most basic form.
+
+25
+00:02:09,760 --> 00:02:14,980
+So in here, I want to allow the user to filter and I will indeed get an argument,
+
+26
+00:02:15,100 --> 00:02:19,550
+the first argument of this list of arguments and this will be what the user entered,
+
+27
+00:02:19,600 --> 00:02:24,710
+so the filter string you could say and this will be a string.
+
+28
+00:02:25,180 --> 00:02:30,070
+Well and then here, I want to implement some logic which allows me to only return the elements of the
+
+29
+00:02:30,070 --> 00:02:36,790
+array which fulfill this argument or which fulfill this filter string here where the status of
+
+30
+00:02:36,790 --> 00:02:40,110
+the server matches this filter string to be precise.
+
+31
+00:02:40,150 --> 00:02:41,830
+For this, I will
+
+32
+00:02:41,830 --> 00:02:47,080
+first of all check if value.length and value will here be the array of servers,
+
+33
+00:02:47,080 --> 00:02:48,870
+it doesn't have to be a string,
+
+34
+00:02:48,880 --> 00:02:51,490
+this is the first important take away, it can also be an array
+
+35
+00:02:51,500 --> 00:02:54,950
+here, it can be any data you output in the end.
+
+36
+00:02:54,970 --> 00:03:01,690
+So here, I want to check if the value.length is zero, so if it's empty, in which case I will just return
+
+37
+00:03:01,690 --> 00:03:02,130
+values, so
+
+38
+00:03:02,130 --> 00:03:03,540
+I will basically just quit,
+
+39
+00:03:03,550 --> 00:03:05,070
+there is nothing to display.
+
+40
+00:03:05,380 --> 00:03:06,850
+And now after checking this,
+
+41
+00:03:06,850 --> 00:03:09,520
+the interesting part happens here.
+
+42
+00:03:09,520 --> 00:03:17,590
+I simply want to check where I want to loop through all my items in my value and value here will
+
+43
+00:03:17,590 --> 00:03:18,100
+be an array,
+
+44
+00:03:18,100 --> 00:03:27,490
+keep this in mind and then I want to check if my status of each server matches the filter string up
+
+45
+00:03:27,490 --> 00:03:28,160
+here.
+
+46
+00:03:28,480 --> 00:03:32,020
+So for this, I can simply check if item.status
+
+47
+00:03:32,080 --> 00:03:38,220
+and of course you could write this more generic and pass the to be filtered property here as a second argument,
+
+48
+00:03:38,350 --> 00:03:46,940
+like propName which is a string and then you could simply say item propName in square brackets,
+
+49
+00:03:47,200 --> 00:03:57,510
+so if this equals my filter string. Only if this is equal, only in this case I want to return it.
+
+50
+00:03:57,550 --> 00:04:00,440
+So I should add a new result array,
+
+51
+00:04:00,490 --> 00:04:06,780
+this is an array I will use temporarily here and I will push new items on this result array.
+
+52
+00:04:06,910 --> 00:04:13,600
+So I will push any items on this array which fulfill my criteria here, which are or which have a
+
+53
+00:04:13,600 --> 00:04:17,560
+status or a propName in general equal to my filter string.
+
+54
+00:04:17,560 --> 00:04:23,410
+So here I will then push item on this array and return this result array in the end and therefore, this
+
+55
+00:04:23,410 --> 00:04:30,260
+result array will only hold the items where the propName I pass as a second argument here or as a
+
+56
+00:04:30,250 --> 00:04:31,060
+third argument
+
+57
+00:04:31,070 --> 00:04:37,410
+actually, where this propName or this value of the propName is actually equal to my filtered string.
+
+58
+00:04:37,420 --> 00:04:43,000
+Now with this, pipe is finished. You have to make sure that it has been added to app module, the CLI did this
+
+59
+00:04:43,000 --> 00:04:44,500
+automatically here for me,
+
+60
+00:04:44,500 --> 00:04:50,050
+if you created it manually, make sure that you add filter pipe to declarations and add your import at
+
+61
+00:04:50,050 --> 00:04:52,860
+the top and then in the app component,
+
+62
+00:04:52,960 --> 00:04:55,980
+we apply it here in the ngFor loop.
+
+63
+00:04:56,410 --> 00:05:01,170
+And this might sound strange because before we only used it in string interpolation
+
+64
+00:05:01,270 --> 00:05:07,060
+but keep in mind that I said at the beginning of this module that pipes transform your output and an
+
+65
+00:05:07,060 --> 00:05:10,040
+ngFor loop is simply part of your output.
+
+66
+00:05:10,070 --> 00:05:18,220
+Therefore of course you can add a pipe here too, to my servers and then I simply say filter, of course
+
+67
+00:05:18,260 --> 00:05:20,360
+we need to pass two parameters here.
+
+68
+00:05:20,410 --> 00:05:29,460
+The first parameter is the filteredStatus, this property which holds my string for which I want to filter
+
+69
+00:05:29,680 --> 00:05:31,780
+and the second argument is my propName,
+
+70
+00:05:31,780 --> 00:05:38,550
+so this will be a string and the string be status because I want to filter on the status property.
+
+71
+00:05:38,560 --> 00:05:44,770
+Now if we save this and reload the app, you see no servers are displayed by default because no servers
+
+72
+00:05:44,770 --> 00:05:46,260
+match this criteria.
+
+73
+00:05:46,540 --> 00:05:53,070
+If I type stable here, you'll see we see the stable server but that doesn't look correct because we should
+
+74
+00:05:53,070 --> 00:05:55,300
+have more than one stable server.
+
+75
+00:05:55,460 --> 00:05:59,390
+If we have a look at our app component, we get three stable servers,
+
+76
+00:05:59,430 --> 00:06:06,540
+so we only viewed the first one and the reason for this is simply that right now, here I am returning
+
+77
+00:06:06,540 --> 00:06:07,880
+inside of this for loop,
+
+78
+00:06:07,890 --> 00:06:10,450
+so this is a little logical mistake here,
+
+79
+00:06:10,470 --> 00:06:16,140
+we should of course return outside of it and also create this array outside of it, like this.
+
+80
+00:06:16,380 --> 00:06:22,920
+So with this change in place, now we should see that once we add stable, we see all stable servers and
+
+81
+00:06:22,920 --> 00:06:30,460
+once we add offline, we see the offline server. So our filter pipe is now working as expected.
+
+82
+00:06:30,540 --> 00:06:38,070
+Now if we wanted to see all servers, we need to adjust this code that in case our filter string is empty,
+
+83
+00:06:38,070 --> 00:06:40,800
+so we could add this here as an or condition at the top,
+
+84
+00:06:41,010 --> 00:06:50,480
+if filterString equals an empty string, that then we see all servers and now we are able to filter
+
+85
+00:06:50,540 --> 00:06:53,900
+for whichever servers we want to see.
+
+86
+00:06:53,900 --> 00:06:58,930
+This works great but there is one issue we will dive into in the next video.
+

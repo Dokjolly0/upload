@@ -1,0 +1,152 @@
+1
+00:00:02,720 --> 00:00:07,790
+So we saw two examples for directive now and the better approach definitely is a good approach but
+
+2
+00:00:07,790 --> 00:00:10,150
+it's not very interactive, right?
+
+3
+00:00:10,160 --> 00:00:13,480
+It always gives us a blue background
+
+4
+00:00:13,760 --> 00:00:15,230
+and I want to change this.
+
+5
+00:00:15,230 --> 00:00:21,160
+I only want to style this blue or give this a blue background if I hover over it and if I move my mouse
+
+6
+00:00:21,200 --> 00:00:24,350
+away, it should go back to transparent.
+
+7
+00:00:24,410 --> 00:00:27,780
+So let's improve the better-highlight here a bit.
+
+8
+00:00:27,860 --> 00:00:33,110
+We need to react to some events occurring on the element the directive sits on
+
+9
+00:00:33,110 --> 00:00:40,870
+and a quick and easy way to do this inside of this directive is to simply add a new decorator and this
+
+10
+00:00:40,860 --> 00:00:48,440
+is the @HostListener decorator which needs to be imported from @angular/core and add it to some
+
+11
+00:00:48,440 --> 00:00:50,030
+method we want to execute,
+
+12
+00:00:50,210 --> 00:00:54,350
+so the method here could be mouseover.
+
+13
+00:00:54,380 --> 00:01:01,080
+Now I'll move this from the top of the file below ngOnInit here,
+
+14
+00:01:01,160 --> 00:01:07,880
+so now this can be triggered whenever some event occurs and that event is specified here as an argument,
+
+15
+00:01:08,120 --> 00:01:16,450
+as a string. @HostListener here takes the argument name as an input and that would be mouseenter 
+
+16
+00:01:16,450 --> 00:01:22,720
+let's say. That is one of the events supported by the DOM elements
+
+17
+00:01:22,720 --> 00:01:24,130
+this directive sits on,
+
+18
+00:01:24,140 --> 00:01:29,370
+so you have basically all events available you could also use event binding before.
+
+19
+00:01:29,420 --> 00:01:32,860
+So that's my @HostListener targeting this event
+
+20
+00:01:33,050 --> 00:01:35,690
+and we could also receive the event data here,
+
+21
+00:01:35,960 --> 00:01:39,920
+so event data of type event would be passed to us here,
+
+22
+00:01:39,950 --> 00:01:41,090
+so that works.
+
+23
+00:01:41,090 --> 00:01:44,120
+You can also listen to custom events here and retrieve that data, 
+
+24
+00:01:44,120 --> 00:01:50,090
+so that's just like the method you execute when you add a click listener or whatever your event is and
+
+25
+00:01:50,090 --> 00:01:53,420
+then pass the method between quotation marks,
+
+26
+00:01:53,420 --> 00:01:54,980
+so that's happening here,
+
+27
+00:01:55,010 --> 00:01:59,560
+@HostListener is just a convenient way of listening to events on that element.
+
+28
+00:01:59,960 --> 00:02:05,480
+So with that, we listen to the mouseenter event, we get the event data which I don't need here
+
+29
+00:02:05,660 --> 00:02:12,190
+but what I want to do in this case is I want to change the backgroundColor of the element.
+
+30
+00:02:12,320 --> 00:02:19,640
+So what I can do is, I can copy this code from ngOnInit and comment it out and now set the style here
+
+31
+00:02:19,730 --> 00:02:21,020
+on mouse enter
+
+32
+00:02:21,200 --> 00:02:30,500
+and now I can quickly copy this and add another method which I'll name mouseleave maybe where I will
+
+33
+00:02:30,500 --> 00:02:35,460
+listen to the mouseleave event, another officially event I can listen to
+
+34
+00:02:35,750 --> 00:02:40,460
+and then I want to set the backgroundColor to transparent maybe.
+
+35
+00:02:40,760 --> 00:02:44,570
+Now with this in place, we should have a reactive directive.
+
+36
+00:02:44,900 --> 00:02:49,110
+So now, no background color and if I hover over it,
+
+37
+00:02:49,190 --> 00:02:50,170
+it gets blue.
+
+38
+00:02:50,390 --> 00:02:57,600
+So that is working as intended, now with @HostListener reacting to user event or to any events.
+

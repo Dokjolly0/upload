@@ -1,0 +1,264 @@
+1
+00:00:02,460 --> 00:00:10,320
+So we learned that we can use property binding to bind to our own properties, properties of our components,
+
+2
+00:00:10,320 --> 00:00:12,020
+now this is what I'll start with.
+
+3
+00:00:12,180 --> 00:00:19,050
+So to temporarily prevent my app from crashing, I will simply comment out the code in the cockpit so
+
+4
+00:00:19,050 --> 00:00:21,130
+that this doesn't give us any errors anymore
+
+5
+00:00:21,150 --> 00:00:25,810
+for now, we won't be able to use it but it will not crash.
+
+6
+00:00:26,010 --> 00:00:32,440
+Now in the server components, server-element component, if we have a look at its TypeScript, at its HTML file,
+
+7
+00:00:32,470 --> 00:00:38,850
+excuse me, you'll see that we try to access the element, the single element, the single server element and
+
+8
+00:00:38,850 --> 00:00:45,430
+therefore, we should create a property in this TypeScript file, element which represents our server.
+
+9
+00:00:45,690 --> 00:00:51,050
+We can even assign a type by adding a colon and then simply defining the type which will be a Javascript
+
+10
+00:00:51,130 --> 00:00:53,490
+object hence the curly braces
+
+11
+00:00:53,640 --> 00:01:00,030
+and just because it's important, this is not the value, this is TypeScript syntax for defining the type
+
+12
+00:01:00,030 --> 00:01:07,800
+to make sure that element may only have this type and we then know that an element will have what
+
+13
+00:01:07,800 --> 00:01:09,000
+we're trying to access here,
+
+14
+00:01:09,030 --> 00:01:15,940
+a type, a name and a content. So we'll have a type and type on its own will be of type string,
+
+15
+00:01:15,990 --> 00:01:21,430
+we will then have a name which will be a string and we'll have a content which will be a string.
+
+16
+00:01:21,480 --> 00:01:29,820
+So that is all now our type definition for a property we want to use in our HTML code, we use here
+
+17
+00:01:29,880 --> 00:01:38,070
+in all these places. Now still this element, this property is part of this component only, of the server
+
+18
+00:01:38,130 --> 00:01:39,450
+element component,
+
+19
+00:01:39,450 --> 00:01:41,810
+we can't access it from outside.
+
+20
+00:01:41,850 --> 00:01:49,320
+Now it would be great if in our app component where we manage our server or our array of serverElements
+
+21
+00:01:49,320 --> 00:01:55,500
+I should say, if we could somehow access this property because let's say just so that we can see something,
+
+22
+00:01:55,890 --> 00:02:06,670
+we start with one server here which is of type server, has a name of test server and a content of just
+
+23
+00:02:07,030 --> 00:02:07,750
+a test
+
+24
+00:02:07,810 --> 00:02:12,660
+and just to be super clear, these colons here are not type definitions,
+
+25
+00:02:12,670 --> 00:02:14,730
+we're on the right side of the equals sign,
+
+26
+00:02:14,770 --> 00:02:20,140
+so here we are assigning a value and the value here simply is a Javascript object and in Javascript
+
+27
+00:02:20,140 --> 00:02:26,470
+objects, we simply assign key-value pairs or we create key-value pairs by having the key, then the colon
+
+28
+00:02:26,560 --> 00:02:27,430
+and then the value,
+
+29
+00:02:27,490 --> 00:02:30,190
+so normal Javascript syntax here.
+
+30
+00:02:30,220 --> 00:02:32,510
+So now, we get our serverElements array,
+
+31
+00:02:32,590 --> 00:02:38,440
+we're looping through this array here on the app-server-element in the app-server-element,
+
+32
+00:02:38,440 --> 00:02:41,190
+we have our element property,
+
+33
+00:02:41,230 --> 00:02:43,640
+so a property in that component.
+
+34
+00:02:43,850 --> 00:02:47,610
+Now we want to access this component from outside,
+
+35
+00:02:47,950 --> 00:02:53,700
+so it would be great if we could bind to it, just like we were able to bind to disabled.
+
+36
+00:02:53,890 --> 00:02:59,980
+So maybe add square brackets, enter the name of the property in between,
+
+37
+00:03:00,130 --> 00:03:09,390
+so the name of the property in the component, here this name and then assign the server element, so simply
+
+38
+00:03:09,390 --> 00:03:15,370
+the element we store for each iteration in this variable here. It would be great if we could do this
+
+39
+00:03:15,450 --> 00:03:22,710
+and if we try this and our app reloads, we see that we get an error that we can't bind to element because
+
+40
+00:03:22,710 --> 00:03:26,930
+it isn't a known property of app-server-element.
+
+41
+00:03:26,940 --> 00:03:29,150
+Now you would say that is not true,
+
+42
+00:03:29,280 --> 00:03:32,490
+it is a property of server element. Here
+
+43
+00:03:32,520 --> 00:03:34,140
+we defined it as a property,
+
+44
+00:03:34,140 --> 00:03:35,640
+it's even public right,
+
+45
+00:03:35,640 --> 00:03:38,040
+we didn't add private in front of it or anything like that,
+
+46
+00:03:38,040 --> 00:03:48,000
+so why can't we access it? Simple answer, because by default, all properties of components are only accessible
+
+47
+00:03:48,000 --> 00:03:50,830
+inside these components, not from outside
+
+48
+00:03:50,940 --> 00:03:53,730
+and that generally is a good thing.
+
+49
+00:03:53,760 --> 00:03:58,360
+You don't want to make all your properties bindable from outside.
+
+50
+00:03:58,800 --> 00:04:05,710
+So you have to be explicit about which properties you want to expose to the world so to say.
+
+51
+00:04:06,040 --> 00:04:12,970
+So if you want to allow parent components to be able to bind to this property,
+
+52
+00:04:13,170 --> 00:04:15,980
+you need to add something to that element property,
+
+53
+00:04:16,080 --> 00:04:18,210
+you need to add a decorator.
+
+54
+00:04:18,210 --> 00:04:22,600
+Remember, I said that decorators are not only available for classes,
+
+55
+00:04:22,740 --> 00:04:31,620
+here we're going to add onto this property, the decorator we need to add is @input and here important, you
+
+56
+00:04:31,620 --> 00:04:33,550
+need to execute it,
+
+57
+00:04:33,570 --> 00:04:35,340
+it's like a function in the end,
+
+58
+00:04:35,460 --> 00:04:43,350
+so add parentheses and input now needs to be imported from @angular/core.
+
+59
+00:04:43,350 --> 00:04:51,870
+With this in place, now we are successfully exposing this property to the world,
+
+60
+00:04:51,870 --> 00:04:59,880
+so now any parent component, any component hosting our server element component, so implementing it through
+
+61
+00:04:59,880 --> 00:05:08,190
+its selector like we do here, is now able to bind to element and I can demonstrate this if we save this,
+
+62
+00:05:08,620 --> 00:05:15,530
+you now see just the test here, you see our component because now we replicate this component for
+
+63
+00:05:15,600 --> 00:05:25,710
+each element in the array and we successfully can pass the element, the property down to that component
+
+64
+00:05:25,860 --> 00:05:29,360
+and bind to the element property in that component.
+
+65
+00:05:29,670 --> 00:05:36,330
+And this is how you can set up custom property binding on your own events, exposing your own properties
+
+66
+00:05:36,570 --> 00:05:40,950
+to the components where you implement these components through the selector.
+

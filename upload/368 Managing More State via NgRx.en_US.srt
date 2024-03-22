@@ -1,0 +1,475 @@
+1
+00:00:02,370 --> 00:00:08,620
+Now to manage the editedIngredient here, we need new actions, to be precise,
+ 
+00:00:08,670 --> 00:00:15,010
+we need actions for starting the editing process and also for cancelling or stopping it.
+
+2
+00:00:15,090 --> 00:00:18,330
+Hence I'll export new constants,
+
+3
+00:00:18,510 --> 00:00:26,190
+START_EDIT which holds a value of start edit and also an exported constant, STOP_EDIT
+
+4
+00:00:26,190 --> 00:00:29,780
+which holds
+
+5
+00:00:29,800 --> 00:00:30,410
+stop
+
+6
+00:00:30,430 --> 00:00:36,030
+edit as a value. Now these are just the string types as you learned,
+
+7
+00:00:36,040 --> 00:00:43,270
+we need classes as actions or for our action objects and I'll name the first class StartEdit
+
+8
+00:00:43,270 --> 00:00:50,620
+and of course it implements action and then I'll copy that because obviously we also need a 
+
+9
+00:00:50,690 --> 00:00:52,320
+StopEdit class.
+
+10
+00:00:52,540 --> 00:00:53,820
+Now let's start with the StartEdit,
+
+11
+00:00:53,830 --> 00:01:01,030
+it needs to be readonly type property which of course is referring to start edit and StopEdit
+
+12
+00:01:01,120 --> 00:01:02,860
+needs that as well
+
+13
+00:01:02,860 --> 00:01:06,150
+but of course here we refer to stop edit.
+
+14
+00:01:06,190 --> 00:01:06,880
+Now stop
+
+15
+00:01:06,880 --> 00:01:08,500
+edit actually can stay as it is,
+
+16
+00:01:08,500 --> 00:01:12,980
+it needs no payload because if we want to stop, I just want to reset the
+
+17
+00:01:13,150 --> 00:01:19,120
+editedIngredient and the editedIngredientIndex to their initial values, so we don't need to change
+
+18
+00:01:19,120 --> 00:01:20,370
+anything.
+
+19
+00:01:20,380 --> 00:01:22,540
+Start edit however needs a payload,
+
+20
+00:01:22,570 --> 00:01:29,590
+I need to know which ingredient we're editing. So I'll add a constructor with my public payload and that
+
+21
+00:01:29,590 --> 00:01:33,640
+payload can just be the number of the ingredient I want to edit,
+
+22
+00:01:33,910 --> 00:01:36,620
+again stop edit doesn't require anything.
+
+23
+00:01:36,930 --> 00:01:43,120
+Now just as before, these new actions should be added to this union action type here at the bottom so
+
+24
+00:01:43,120 --> 00:01:49,660
+that TypeScript is aware of these actions as available actions inside of the shopping list reducer.
+
+25
+00:01:49,660 --> 00:01:57,500
+So with the pipe symbol, let's add StartEdit and let's also add StopEdit here.
+
+26
+00:01:57,670 --> 00:01:59,680
+Now that's the actions,
+
+27
+00:01:59,680 --> 00:02:04,180
+next on to the shopping list reducer, there we got two new cases to handle,
+
+28
+00:02:04,180 --> 00:02:05,660
+we got start and stop
+
+29
+00:02:05,660 --> 00:02:13,930
+edit. So the first case which we get from shopping list actions is START_EDIT, take the string, so all
+
+30
+00:02:13,960 --> 00:02:20,890
+uppercase and the other case is of course from the shopping list actions file, STOP_EDIT.
+
+31
+00:02:20,890 --> 00:02:25,900
+Now in start edit and in stop edit,
+
+32
+00:02:25,900 --> 00:02:34,660
+in both cases we of course return a new object and in start edit, I want to set my editedIngredientIndex
+
+33
+00:02:34,690 --> 00:02:35,820
+to the index
+
+34
+00:02:35,830 --> 00:02:44,180
+I'm getting as a payload and the editedIngredient to the ingredient that belongs to that index. So if
+
+35
+00:02:44,180 --> 00:02:50,430
+we go down to start edit here, first of all I copy the existing state and this is now where this is
+
+36
+00:02:50,430 --> 00:02:55,150
+important by the way. I mentioned all the time that I would recommend that you do this all the time,
+
+37
+00:02:55,170 --> 00:03:01,680
+now it's more important than ever because now our state is more than just ingredients or than just
+
+38
+00:03:01,870 --> 00:03:03,640
+editedIngredientIndex and
+
+39
+00:03:03,720 --> 00:03:10,470
+for example here where we only edit the ingredients, if we don't copy the state first, we lose the
+
+40
+00:03:10,470 --> 00:03:13,830
+editedIngredient and the editedIngredientIndex information,
+
+41
+00:03:13,830 --> 00:03:19,020
+we don't want to lose that, hence copying the state is important.
+
+42
+00:03:19,020 --> 00:03:25,170
+Now here, I am copying the state and now I want to store the editedIngredientIndex,
+
+43
+00:03:25,200 --> 00:03:32,070
+now that's part of my action, it's in the payload because the payload for start edit is just a number,
+
+44
+00:03:32,070 --> 00:03:37,680
+the index of the ingredient I want to edit and of course the editedIngredient itself should also be
+
+45
+00:03:37,680 --> 00:03:38,410
+stored.
+
+46
+00:03:38,430 --> 00:03:43,980
+Now that's not part of the payload but we can get it from our state because in this part of our application
+
+47
+00:03:43,980 --> 00:03:44,500
+state,
+
+48
+00:03:44,520 --> 00:03:50,460
+we're storing all our ingredients, so of course we can also get our ingredients from there and I get
+
+49
+00:03:50,460 --> 00:03:57,510
+this editedIngredient by accessing my state ingredients for the action.payload because that's the
+
+50
+00:03:57,510 --> 00:03:58,470
+index of the ingredient
+
+51
+00:03:58,470 --> 00:04:04,370
+I want to edit. However if I would return the ingredient like this, this would not be that good,
+
+52
+00:04:04,380 --> 00:04:04,880
+why?
+
+53
+00:04:06,260 --> 00:04:12,530
+Because this is a reference to the ingredient in my ingredients array and objects and arrays are reference
+
+54
+00:04:12,530 --> 00:04:13,160
+types,
+
+55
+00:04:13,220 --> 00:04:19,400
+so if I now pass this on to let's say the shopping-edit component and I start changing properties on
+
+56
+00:04:19,400 --> 00:04:25,120
+this ingredient, I do it right in my store because this data is right from the store.
+
+57
+00:04:25,370 --> 00:04:32,870
+I instead need to create a new object which can then be edited without problems by using curly braces
+
+58
+00:04:33,140 --> 00:04:34,720
+and the spread operator
+
+59
+00:04:34,820 --> 00:04:39,780
+and this now copies that ingredient which I'm getting from my ingredients array,
+
+60
+00:04:39,800 --> 00:04:44,800
+this is then what I store here in editedIngredient. Now for stop
+
+61
+00:04:44,840 --> 00:04:51,620
+edit, I again copy all existing state and then the idea here simply is to reset editedIngredient
+
+62
+00:04:51,620 --> 00:04:55,130
+to null and editedIngredientIndex to minus one,
+
+63
+00:04:55,130 --> 00:04:58,510
+so to the initial values we had before.
+
+64
+00:04:58,710 --> 00:04:59,160
+All right.
+
+65
+00:04:59,670 --> 00:05:03,300
+So now we got these two cases set up in the reducer,
+
+66
+00:05:03,300 --> 00:05:04,830
+they should work correctly,
+
+67
+00:05:04,830 --> 00:05:10,530
+now of course we also need to take advantage of them by dispatching the right actions.
+
+68
+00:05:10,620 --> 00:05:15,210
+So first of all in the shopping list component, there in onEditItem,
+
+69
+00:05:15,210 --> 00:05:20,370
+let's no longer use the shopping list service but instead the store which we already have injected
+
+70
+00:05:20,370 --> 00:05:20,960
+here
+
+71
+00:05:21,180 --> 00:05:24,620
+and let's dispatch a new action and for that,
+
+72
+00:05:24,630 --> 00:05:26,950
+we need to import these actions first,
+
+73
+00:05:27,090 --> 00:05:36,670
+so as shopping list actions from store, shopping list actions.
+
+74
+00:05:36,670 --> 00:05:38,980
+So there I access all my actions,
+
+75
+00:05:39,130 --> 00:05:46,690
+I create a new action here based on my StartEdit class and StartEdit takes the index which I'm conveniently
+
+76
+00:05:46,690 --> 00:05:48,640
+getting as an argument here,
+
+77
+00:05:48,640 --> 00:05:53,210
+so now we're dispatching this action. In the shopping-edit component,
+
+78
+00:05:53,350 --> 00:06:03,010
+we can of course cancel editing here with onClear and I want to let my store know about that.
+
+79
+00:06:04,120 --> 00:06:09,040
+So besides resetting the form and resetting edit mode,
+
+80
+00:06:09,200 --> 00:06:18,700
+I here also want to reach out to my store and dispatch a new action, a new action from shopping list actions
+
+81
+00:06:19,060 --> 00:06:22,980
+and that would be my stop, not start, my stop
+
+82
+00:06:22,990 --> 00:06:23,690
+edit action
+
+83
+00:06:23,690 --> 00:06:29,570
+and here we don't need to pass in any data because stop edit requires no payload.
+
+84
+00:06:29,690 --> 00:06:39,160
+Now I'll also copy that and dispatch the same when we destroy our shopping-edit component so that if we get
+
+85
+00:06:39,160 --> 00:06:44,380
+rid of that page whilst we are editing an ingredient, I also reset this
+
+86
+00:06:44,410 --> 00:06:49,860
+otherwise we'll get strange behaviors the next time we revisit this shopping-edit components,
+
+87
+00:06:49,870 --> 00:06:52,090
+so the next time we try to edit an ingredient.
+
+88
+00:06:52,540 --> 00:06:55,610
+So I'll dispatch this here in ngOnDestroy as well
+
+89
+00:06:55,750 --> 00:07:03,220
+and also here, onClear and with that, the only missing thing is that we adjust how we fetch our data
+
+90
+00:07:03,310 --> 00:07:06,520
+when we start editing up here in ngOnInit.
+
+91
+00:07:09,200 --> 00:07:16,160
+There, instead of using the shopping list service and listening to started editing,
+
+92
+00:07:16,160 --> 00:07:24,530
+we should use our store and select the shopping list slice but now instead of using the async pipe in
+
+93
+00:07:24,530 --> 00:07:30,020
+the template, I'll set up my own subscription which I can of course because it is just an observable
+
+94
+00:07:31,360 --> 00:07:38,390
+and what we get here is our state data for this part of our store.
+
+95
+00:07:38,450 --> 00:07:44,540
+So the shopping list relevant state, to be precise, the state defined here,
+
+96
+00:07:44,540 --> 00:07:50,370
+this is the type of data we get. Now in that subscription here,
+
+97
+00:07:50,370 --> 00:07:52,080
+I then want to use this data.
+
+98
+00:07:52,080 --> 00:07:58,390
+First of all, I want to check if in my state data, the editedIngredientIndex
+
+99
+00:07:58,470 --> 00:08:04,800
+and here I'm getting nice auto completion because TypeScript understands this entire type setup,
+
+100
+00:08:05,040 --> 00:08:11,490
+if this editedIngredientIndex is greater than minus one, because if it's not, then I have some kind
+
+101
+00:08:11,490 --> 00:08:12,960
+of weird setup.
+
+102
+00:08:12,960 --> 00:08:19,470
+So in the else case, I haven't really selected anything and therefore we should set the edit mode to false
+
+103
+00:08:19,470 --> 00:08:20,580
+here.
+
+104
+00:08:20,580 --> 00:08:24,310
+Now if we do have a valid index, then the edit mode should be true
+
+105
+00:08:25,790 --> 00:08:33,980
+and I also want to set my edited item equal to my state data editedIngredient.
+
+106
+00:08:37,350 --> 00:08:45,370
+Now last but not least, then I also want to update my shopping list form as I did it down there in my old
+
+107
+00:08:45,370 --> 00:08:48,470
+subscription of which I now can get rid by the way.
+
+108
+00:08:49,420 --> 00:08:54,660
+So now we're initializing the shopping list form with data from that edited item which we get from
+
+109
+00:08:54,670 --> 00:08:55,510
+NgRx,
+
+110
+00:08:55,630 --> 00:08:58,420
+so now the NgRx flow is complete.
+
+111
+00:08:58,570 --> 00:09:05,650
+We dispatched the start and stop edit actions and we now also get the data for editing from NgRx and
+
+112
+00:09:05,650 --> 00:09:09,200
+then once we're done, we also dispatch our update
+
+113
+00:09:09,200 --> 00:09:17,410
+action back to NgRx and now we got everything managed with NgRx. Now one remaining thing, the subscription
+
+114
+00:09:17,410 --> 00:09:23,620
+here, I would recommend that you also manage this on your own, so store it in this subscription which we
+
+115
+00:09:23,620 --> 00:09:29,120
+used for the shopping list service subscription before and therefore, this is still managed here in
+
+116
+00:09:29,120 --> 00:09:37,310
+ngOnDestroy and unsubscribe from when we don't need it anymore. With all of that, let me save that,
+
+117
+00:09:37,540 --> 00:09:47,180
+let me go back to the application and reload it and now let's try editing the apple. It's not really reflecting
+
+118
+00:09:47,180 --> 00:09:50,570
+my changes back to NgRx, so something is still wrong.
+

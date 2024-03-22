@@ -1,0 +1,204 @@
+1
+00:00:02,200 --> 00:00:07,020
+With the action added, back to the shopping list reducer. Here I'm already handling the
+
+2
+00:00:07,030 --> 00:00:11,060
+add ingredient case which I'm importing from the shopping list actions.
+
+3
+00:00:11,290 --> 00:00:16,000
+Now we can also rewrite this import which is not a must but kind of a convention you also see in a lot
+
+4
+00:00:16,000 --> 00:00:22,310
+of demos and tutorials. Since we export more than just this constant here,
+
+5
+00:00:22,320 --> 00:00:28,980
+we also export this class here, this add ingredient class into action file, we can import everything from
+
+6
+00:00:28,980 --> 00:00:36,330
+that file with the star and I don't just want to import it like this but we always have to add an as
+
+7
+00:00:36,330 --> 00:00:42,690
+keyword and give this an alias to group all the things that are imported from that file into one object
+
+8
+00:00:42,840 --> 00:00:45,270
+under which we can access them in this file
+
+9
+00:00:45,430 --> 00:00:50,510
+and here, I'll simply name this shopping list actions.
+
+10
+00:00:50,550 --> 00:00:53,870
+So this is my shopping lists actions object here,
+
+11
+00:00:54,240 --> 00:01:00,050
+of course you could name this differently if you wanted to and now we get an error here for add ingredient
+
+12
+00:01:00,050 --> 00:01:03,010
+because I'm not directly importing this anymore,
+
+13
+00:01:03,080 --> 00:01:05,990
+so here we can now just say shopping list action.
+
+14
+00:01:06,080 --> 00:01:12,800
+add ingredient, this is the case we want to check for, this is the constant that holds this identifier.
+
+15
+00:01:13,010 --> 00:01:16,870
+We also can be more specific about the action we're getting here now,
+
+16
+00:01:16,910 --> 00:01:25,480
+the action here would be our add ingredient action, so we can set this equal to the type of shopping
+
+17
+00:01:26,910 --> 00:01:28,280
+list actions.
+
+18
+00:01:28,410 --> 00:01:34,410
+add ingredient and therefore we can get rid of that action import here in the reducer,
+
+19
+00:01:34,410 --> 00:01:36,700
+so now we changed the type of the action.
+
+20
+00:01:36,900 --> 00:01:42,270
+And now here when we want to add a new ingredient, that's not just the action,
+
+21
+00:01:42,570 --> 00:01:48,810
+instead our action now has a payload and we get auto completion here in TypeScript support because
+
+22
+00:01:48,810 --> 00:01:51,170
+we are pretty clear about the type of our action.
+
+23
+00:01:51,180 --> 00:01:58,220
+It's not just the action interface NgRx forces because that only requires us to have a type,
+
+24
+00:01:58,290 --> 00:01:59,730
+we are more specific,
+
+25
+00:01:59,820 --> 00:02:05,370
+we have an action which is of type add ingredient which does not just have the type but which also has
+
+26
+00:02:05,370 --> 00:02:11,430
+a payload and therefore we can access this here without TypeScript yelling at us.
+
+27
+00:02:11,430 --> 00:02:20,310
+So now with that all done, how can we now use the reducer and our nice setup action to finally setup
+
+28
+00:02:20,360 --> 00:02:23,070
+that application store which it is all about
+
+29
+00:02:23,130 --> 00:02:29,100
+to then also use that? Because thus far, we spend a lot of work on implementing something which has no
+
+30
+00:02:29,100 --> 00:02:29,730
+effect,
+
+31
+00:02:30,180 --> 00:02:35,390
+well that's about to change. To add our application store,
+
+32
+00:02:35,490 --> 00:02:41,790
+let's go to our app module and in there, I can remove the login service by the way but that does not
+
+33
+00:02:41,790 --> 00:02:43,080
+matter too much,
+
+34
+00:02:43,080 --> 00:02:52,020
+let's import something from @ngrx/store and that something is the store module, that helps
+
+35
+00:02:52,020 --> 00:02:59,520
+us with setting up that application-wide @ngrx/store. Now store module as the name suggests is an Angular
+
+36
+00:02:59,610 --> 00:03:06,270
+module and therefore we should add it here, maybe below the other Angular modules we add the store module.
+
+37
+00:03:06,750 --> 00:03:13,250
+We don't just add it like this though, we also need to tell the store module, we need to tell NgRx
+
+38
+00:03:13,890 --> 00:03:22,440
+what makes up our store, which reducers are involved and for that, we call for root here and to for root,
+
+39
+00:03:22,620 --> 00:03:29,460
+we pass a so-called action reducer map. Now that sounds more complicated than it is, in the end it's a Javascript
+
+40
+00:03:29,520 --> 00:03:37,650
+object where you can define any identifier of your choice, so maybe shopping list and then the reducer
+
+41
+00:03:37,740 --> 00:03:44,430
+that belongs to that identifier and in my case that's the shopping list reducer function which needs
+
+42
+00:03:44,430 --> 00:03:50,130
+to be imported from the shopping list folder, there the store folder and there, the shopping list reducer
+
+43
+00:03:50,130 --> 00:03:57,150
+file, so that shopping list reducer function we worked on over the past lectures. This function is now
+
+44
+00:03:57,150 --> 00:04:02,640
+assigned as a value to this shopping list key and that key name is totally up to you but of course it
+
+45
+00:04:02,640 --> 00:04:08,940
+should be descriptive about which feature of the app this reducer belongs to and it is the reducer
+
+46
+00:04:08,940 --> 00:04:13,700
+for our shopping list part of the app, therefore it makes sense to name this shopping list as well.
+
+47
+00:04:17,740 --> 00:04:26,130
+With that, we told NgRx where to find our reducer and therefore now when the app restarts, even though
+
+48
+00:04:26,130 --> 00:04:32,850
+we don't see it yet, NgRx will take that reducer into account and set up an application store
+
+49
+00:04:32,850 --> 00:04:35,720
+for us where it registers this reducer,
+
+50
+00:04:35,790 --> 00:04:42,510
+so now any actions that are dispatched will reach that reducer and to see that initial application
+
+51
+00:04:42,510 --> 00:04:45,990
+state, we can now start fetching some data from that state.
+

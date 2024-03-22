@@ -1,0 +1,280 @@
+1
+00:00:03,050 --> 00:00:08,750
+Let's start with dispatching and for that, of course for the moment, I wanted dispatch from inside my
+
+2
+00:00:08,840 --> 00:00:10,650
+auth service. Now
+
+3
+00:00:10,720 --> 00:00:17,210
+previously with the shopping list, we mainly dispatched from inside components, though the recipe service
+
+4
+00:00:17,210 --> 00:00:21,000
+and the add multiple ingredients case was an exception.
+
+5
+00:00:21,050 --> 00:00:24,950
+In general, you can dispatch from wherever you want and need to,
+
+6
+00:00:25,090 --> 00:00:32,090
+now that being said, we will restructure that service later to also handle these async HTTP requests with
+
+7
+00:00:32,120 --> 00:00:33,040
+NgRx
+
+8
+00:00:33,080 --> 00:00:37,910
+but for the moment since we do it in that service, I will dispatch from inside that service once we're
+
+9
+00:00:37,910 --> 00:00:45,590
+done with the HTTP request and therefore, let's inject our store here. I'll store it in a store property and
+
+10
+00:00:45,590 --> 00:00:55,520
+the type is of course store, where store is imported from @ngrx/store here and with that store imported,
+
+11
+00:00:55,560 --> 00:00:57,520
+this is a generic type as you learned
+
+12
+00:00:57,630 --> 00:01:05,100
+and again, I want to get the type definition of my application store. So I will import everything as from
+
+13
+00:01:05,190 --> 00:01:11,750
+app, by pointing it from store app reducer
+
+14
+00:01:11,750 --> 00:01:18,020
+and then here, we can use fromApp.AppState.
+
+15
+00:01:18,140 --> 00:01:21,950
+Now that's the store injected, now with the store injected here,
+
+16
+00:01:21,970 --> 00:01:30,250
+let's go to all the places where we call this user next because that is where we currently update
+
+17
+00:01:30,250 --> 00:01:36,580
+our state because we emit a new value to the world and that would be here in auto login for example.
+
+18
+00:01:37,000 --> 00:01:45,610
+So instead of using this user next, here I want to use this store dispatch and I want to login here
+
+19
+00:01:45,610 --> 00:01:48,100
+right because that's effectively what happened here,
+
+20
+00:01:48,190 --> 00:01:53,990
+we have a loaded user with a token, that simply means that we want to log that user in now,
+
+21
+00:01:54,040 --> 00:01:59,520
+we want to treat that user as logged in and therefore, we need access to our actions.
+
+22
+00:01:59,800 --> 00:02:05,860
+Hence let's scroll up and import everything as auth actions from
+
+23
+00:02:09,600 --> 00:02:12,170
+store auth actions here
+
+24
+00:02:13,520 --> 00:02:19,540
+and now back to that part where we just worked on, let's dispatch a new action here, a new object has
+
+25
+00:02:19,540 --> 00:02:26,230
+to be created because the action is an object and let's refer to auth actions and then use the login
+
+26
+00:02:26,230 --> 00:02:27,550
+class here.
+
+27
+00:02:27,550 --> 00:02:29,440
+Now this requires a bunch of data,
+
+28
+00:02:29,500 --> 00:02:34,120
+it requires an object with a couple of keys, with the e-mail key for example,
+
+29
+00:02:34,150 --> 00:02:35,650
+we get that from the loaded user,
+
+30
+00:02:35,800 --> 00:02:38,020
+so here we access the e-mail,
+
+31
+00:02:38,050 --> 00:02:42,690
+we also need to set the user ID which we also get from the loaded user data, there
+
+32
+00:02:42,690 --> 00:02:48,850
+we have an ID and the same for the token, we set this equal to loaded user token.
+
+33
+00:02:48,850 --> 00:02:51,210
+Now for the date, it's a bit more tricky,
+
+34
+00:02:51,340 --> 00:02:56,950
+we can get that from our user data though with this code. So I can just copy that code,
+
+35
+00:02:56,950 --> 00:03:02,920
+of course we could have also stored it in a separate constant to avoid copying it and then simply set
+
+36
+00:03:02,980 --> 00:03:08,630
+expiration date equal to new date of user data token expiration date.
+
+37
+00:03:08,650 --> 00:03:15,880
+Now we dispatch or we create an object which we then dispatch here in our auto login, for logging a
+
+38
+00:03:15,880 --> 00:03:23,260
+user in. Before we test this, let's handle all the other parts as well, for example for logging out, we
+
+39
+00:03:23,260 --> 00:03:28,350
+want to use the store and dispatch a new action, so a new auth action
+
+40
+00:03:28,360 --> 00:03:32,590
+and here it's the logout action which does not require any additional data,
+
+41
+00:03:32,740 --> 00:03:35,060
+so here we don't need to pass anything.
+
+42
+00:03:35,320 --> 00:03:41,050
+And last but not least, if we scroll down to handle authentication, here where I call user next,
+
+43
+00:03:41,050 --> 00:03:50,950
+just as before, I'll comment this out and instead call this store dispatch new auth actions login and
+
+44
+00:03:50,950 --> 00:03:53,080
+again, we need to pass in data here,
+
+45
+00:03:53,230 --> 00:03:55,420
+we need to pass in the e-mail of the user
+
+46
+00:03:55,720 --> 00:03:57,840
+and here I already created a user object, this
+
+47
+00:03:57,850 --> 00:03:58,960
+is of course redundant,
+
+48
+00:03:58,960 --> 00:04:03,310
+so let's remove that and let's instead forward the data we're getting as arguments here.
+
+49
+00:04:03,490 --> 00:04:06,690
+So let's forward e-mail, for the
+
+50
+00:04:06,700 --> 00:04:13,060
+user ID let's use user ID, for the token let's use the token argument we're getting,
+
+51
+00:04:13,110 --> 00:04:17,460
+so I'm just passing on these arguments and we're deriving the expiration date here,
+
+52
+00:04:17,680 --> 00:04:21,810
+so let's forward this as well, like that.
+
+53
+00:04:22,060 --> 00:04:29,500
+Now we're dispatching our new login action with all the data we're getting here inside of handle authentication.
+
+54
+00:04:31,350 --> 00:04:33,420
+Now last but not least, here
+
+55
+00:04:33,520 --> 00:04:41,810
+I'm storing a user object in local storage and therefore, it's not that good that I removed it, until
+
+56
+00:04:41,810 --> 00:04:43,620
+we handle that differently,
+
+57
+00:04:43,640 --> 00:04:49,130
+I'll therefore will bring back my user creation, deleted it too early,
+
+58
+00:04:49,160 --> 00:04:55,280
+again this is just temporary though, we will find a better solution for this later but for now, we need
+
+59
+00:04:55,550 --> 00:05:01,070
+the user object here because we do access local storage and that is something you should not do from inside
+
+60
+00:05:01,070 --> 00:05:02,000
+your reducer,
+
+61
+00:05:02,000 --> 00:05:08,540
+it's not asynchronous code but it's a so-called side effect still, so it is something that is not directly
+
+62
+00:05:08,540 --> 00:05:11,300
+connected to your state,
+
+63
+00:05:11,360 --> 00:05:18,200
+it's something you do besides updating your AppState and therefore this should not go into the reducer,
+
+64
+00:05:18,200 --> 00:05:23,150
+it wouldn't break the reducer but it would be considered a bad practice and I will show you how to handle
+
+65
+00:05:23,150 --> 00:05:26,120
+such side effects with NgRx later.
+
+66
+00:05:26,120 --> 00:05:31,820
+So for the moment, let's have this extra bit of redundancy here where we create a user even though we
+
+67
+00:05:31,820 --> 00:05:36,770
+then create it again in a login action or in the auth reducer to be precise,
+
+68
+00:05:36,770 --> 00:05:41,350
+we will tackle this later. With all of that,
+
+69
+00:05:41,570 --> 00:05:48,950
+we do dispatch all these actions but now of course, we also need to make sure that we use our auth state.
+
+70
+00:05:48,950 --> 00:05:50,870
+That's the next thing we'll take care of.
+

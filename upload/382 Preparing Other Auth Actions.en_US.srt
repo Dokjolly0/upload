@@ -1,0 +1,172 @@
+1
+00:00:02,300 --> 00:00:09,650
+With the login effect added, let's also add an effect for signing up because that's of course the other
+
+2
+00:00:09,650 --> 00:00:12,680
+big thing we can do in our application and for that
+
+3
+00:00:12,710 --> 00:00:18,650
+in auth effects, let's add auth sign-up where we also use this actions
+
+4
+00:00:18,830 --> 00:00:23,580
+pipe and add the @effect decorator
+
+5
+00:00:23,790 --> 00:00:31,650
+and now here in pipe, of course I want to use ofType to filter for auth actions,
+
+6
+00:00:31,710 --> 00:00:32,930
+what?
+
+7
+00:00:32,940 --> 00:00:35,890
+Well we haven't created the actions for this yet.
+
+8
+00:00:36,180 --> 00:00:44,400
+So let's go back here into our auth actions file and let's export a constant, sign-up start which holds
+
+9
+00:00:44,400 --> 00:00:48,840
+a value of auth sign-up start
+
+10
+00:00:49,160 --> 00:01:02,270
+and also a constant for sign-up, like this, for the success case and then also for failing or do we
+
+11
+00:01:02,270 --> 00:01:02,870
+need that?
+
+12
+00:01:03,380 --> 00:01:09,110
+I would argue that we only need sign-up start actually because when we then succeed or we fail, we do
+
+13
+00:01:09,110 --> 00:01:10,150
+essentially the same,
+
+14
+00:01:10,160 --> 00:01:16,220
+we run the same error handling logic and we run the same login logic, which is why in the auth service,
+
+15
+00:01:16,520 --> 00:01:22,100
+we had our handle error and handle authentication functions that we used for both signing up and logging
+
+16
+00:01:22,100 --> 00:01:22,970
+in,
+
+17
+00:01:23,030 --> 00:01:30,130
+so it's the same here in the actions. Rather than double creating everything,
+
+18
+00:01:30,200 --> 00:01:35,540
+I just want to have a sign-up start action because that is a different kind of action, we send a request
+
+19
+00:01:35,540 --> 00:01:42,650
+to a different URL but login fail and login can be recycled for sign-up and therefore maybe, we
+
+20
+00:01:42,650 --> 00:01:51,890
+want to rename them to authenticate success and authenticate fail here
+
+21
+00:01:51,900 --> 00:01:54,990
+which means we need to adjust it in a couple of other files as well
+
+22
+00:01:55,140 --> 00:02:03,300
+but here, I also will adjust this class name here to authenticate success and give it that identifier
+
+23
+00:02:03,690 --> 00:02:04,050
+and
+
+24
+00:02:04,050 --> 00:02:11,580
+this of course should be authenticate success in pascal case and down there, for login fail,
+
+25
+00:02:11,590 --> 00:02:18,220
+that will be authenticate fail here and then our uppercase identifier
+
+26
+00:02:18,370 --> 00:02:25,230
+and down there, it's now authenticate success and authenticate fail
+
+27
+00:02:25,330 --> 00:02:29,470
+and we also now need a new class here,
+
+28
+00:02:29,470 --> 00:02:37,450
+sign-up start which implements action which is a readonly or which has a readonly type which is sign
+
+29
+00:02:37,450 --> 00:02:45,310
+up start and then of course here, we also have a constructor with a public payload that should in the
+
+30
+00:02:45,310 --> 00:02:50,740
+end hold e-mail and password so we can copy that from login start. The payload is the same, just what we
+
+31
+00:02:50,740 --> 00:02:57,900
+do is not the same and therefore we can also add sign-up start to our union type down there now.
+
+32
+00:02:57,970 --> 00:03:00,400
+So these are the restructured actions,
+
+33
+00:03:00,400 --> 00:03:03,300
+this of course has an impact on the rest of the application.
+
+34
+00:03:03,460 --> 00:03:08,080
+When we refer to login, we now mean authenticate success,
+
+35
+00:03:08,080 --> 00:03:15,150
+when we referred to login fail, we now mean authenticate fail, the same down there
+
+36
+00:03:15,180 --> 00:03:19,530
+of course and here, for auth actions login,
+
+37
+00:03:19,590 --> 00:03:26,340
+we now are waiting for authenticate success. In the reducer, it's the same,
+
+38
+00:03:26,540 --> 00:03:33,170
+we don't have login fail we have authenticate fail instead and we don't have login, we have authenticate
+
+39
+00:03:33,170 --> 00:03:34,880
+success instead.
+
+40
+00:03:35,360 --> 00:03:44,560
+And in the auth service, there we're not dispatching the login action but authenticate success and also
+
+41
+00:03:44,560 --> 00:03:51,340
+the same down there, though we'll work on that service a bit more later anyways and clean that up.
+
+42
+00:03:51,420 --> 00:04:03,220
+So with that restructured, back in the auth effects, we can now listen to the sign-up start action here
+
+43
+00:04:03,820 --> 00:04:07,480
+because that is the action where we now want to kick off the sign-up process.
+

@@ -1,0 +1,80 @@
+1
+00:00:02,420 --> 00:00:07,040
+In this module, you learned about two ways of creating a component dynamically.
+
+2
+00:00:07,190 --> 00:00:11,120
+The simpler approach is by using ngIf and as I mentioned already,
+
+3
+00:00:11,210 --> 00:00:14,760
+I recommend using that approach as often as possible.
+
+4
+00:00:14,780 --> 00:00:20,240
+If you have no strong reason for managing this in code, for example you're creating a third-party library
+
+5
+00:00:20,450 --> 00:00:22,910
+and want to give users of your library an in-code
+
+6
+00:00:22,910 --> 00:00:25,220
+way of showing an alert, that would be a good reason
+
+7
+00:00:25,340 --> 00:00:28,180
+but if you have no strong reason, definitely consider this,
+
+8
+00:00:28,220 --> 00:00:31,510
+it's way easier and Angular does all the heavy lifting for us
+
+9
+00:00:31,850 --> 00:00:34,550
+and remember, this doesn't render anything in the DOM
+
+10
+00:00:34,550 --> 00:00:40,130
+if this condition here is false, so you're also not cluttering your DOM with unused or unnecessary content,
+
+11
+00:00:40,460 --> 00:00:42,820
+so strongly consider using ngIf.
+
+12
+00:00:42,950 --> 00:00:48,290
+But if you got another use case or you absolutely just want to do it programmatically,
+
+13
+00:00:48,290 --> 00:00:49,490
+this is how you do it.
+
+14
+00:00:49,640 --> 00:00:54,680
+You create your own component factory and then you use a view container reference, which you can get
+
+15
+00:00:54,680 --> 00:01:01,520
+access to with the help of a helper directive for example, you use that to then dynamically create and
+
+16
+00:01:01,520 --> 00:01:07,760
+render your component with the help of Angular. Important for that approach is that any component you
+
+17
+00:01:07,850 --> 00:01:13,940
+are rendering like this needs to be added to the entry components array in your module, in your
+
+18
+00:01:13,940 --> 00:01:15,140
+NgModule,
+
+19
+00:01:15,140 --> 00:01:19,610
+otherwise you will get an error. Now these are the two different approaches,
+
+20
+00:01:19,610 --> 00:01:22,640
+I hope this helps you with your future projects.
+

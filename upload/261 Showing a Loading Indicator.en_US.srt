@@ -1,0 +1,116 @@
+1
+00:00:02,240 --> 00:00:04,490
+We're now outputting our loaded post,
+
+2
+00:00:04,490 --> 00:00:06,660
+we can re-fetch them here by clicking fetch, though
+
+3
+00:00:06,710 --> 00:00:12,080
+we of course don't really see a difference here because we fetched the same posts and we have no indicator
+
+4
+00:00:12,080 --> 00:00:15,710
+for whether a request is currently on its way or not
+
+5
+00:00:15,710 --> 00:00:21,470
+whilst we're waiting for the response. Would be nice to have such an indicator and that can be easily
+
+6
+00:00:21,470 --> 00:00:26,900
+implemented by adding a new property, which you could name isLoading which initially is false and you
+
+7
+00:00:26,900 --> 00:00:28,460
+want to set is loading
+
+8
+00:00:28,460 --> 00:00:33,290
+or maybe let's name it is fetching because I only want to use it for fetching posts and you can use
+
+9
+00:00:33,290 --> 00:00:36,610
+is fetching and set it to true whenever you start fetching posts,
+
+10
+00:00:36,620 --> 00:00:42,470
+so here at the beginning of this fetch posts. There, you can set this is fetching to true because now
+
+11
+00:00:42,470 --> 00:00:48,500
+we are starting to fetch posts and once we're done, so here in the subscribe function, we can set
+
+12
+00:00:48,500 --> 00:00:50,770
+this is fetching back to false.
+
+13
+00:00:50,780 --> 00:00:52,810
+Now what's the advantage of this?
+
+14
+00:00:52,820 --> 00:00:56,870
+Well we can show a loading indicator whilst we are fetching posts.
+
+15
+00:00:56,900 --> 00:01:05,050
+So back here in our template, we want to show no posts available if we have no posts and also important,
+
+16
+00:01:05,120 --> 00:01:10,490
+if we're not currently fetching because if we are fetching posts, then we want to wait for that result
+
+17
+00:01:10,670 --> 00:01:14,510
+and not show no posts available too early.
+
+18
+00:01:14,510 --> 00:01:18,700
+Of course, we also only want to output posts if we're currently not fetching too.
+
+19
+00:01:18,740 --> 00:01:24,440
+So here, I also will output this only if we have posts and we're not fetching.
+
+20
+00:01:24,440 --> 00:01:29,990
+This of course means we have a third scenario now, that we are fetching and we don't care about whether
+
+21
+00:01:29,990 --> 00:01:31,630
+we have posts or not
+
+22
+00:01:31,850 --> 00:01:39,140
+and for this, you could output simply loading or display a nice CSS spinner if you wanted to, by using
+
+23
+00:01:39,170 --> 00:01:43,060
+ngIf equal is fetching.
+
+24
+00:01:43,190 --> 00:01:44,690
+Now let's have a look at that,
+
+25
+00:01:44,750 --> 00:01:46,770
+let's reload and you see loading here
+
+26
+00:01:46,790 --> 00:01:49,280
+and if I click fetch post, again you see loading.
+
+27
+00:01:49,340 --> 00:01:55,370
+Now unfortunately kind of, Firebase is really fast and therefore, you only see this for a fraction of
+
+28
+00:01:55,370 --> 00:01:57,720
+a second but you see it does work
+
+29
+00:01:57,770 --> 00:02:01,670
+and if you had a slower server, you would of course see it a bit longer.
+

@@ -1,0 +1,196 @@
+1
+00:00:02,420 --> 00:00:08,560
+So let's get started and let's get started by installing some additional dependencies, let's just copy
+
+2
+00:00:08,570 --> 00:00:14,660
+that command here, go back to the project and let's quit the energy search process and instead run
+
+3
+00:00:14,660 --> 00:00:16,330
+that NPM install command.
+
+4
+00:00:16,850 --> 00:00:21,800
+This will install additional packages which we need for the server side rendering to work.
+
+5
+00:00:22,190 --> 00:00:28,850
+The packages we do install are mainly the platform server package provided by the angular framework
+
+6
+00:00:29,000 --> 00:00:30,770
+and then some helper utilities.
+
+7
+00:00:30,770 --> 00:00:34,810
+We need to write to the server side code, which will do the pre rendering.
+
+8
+00:00:35,720 --> 00:00:37,910
+Let's go back to our step by step guide.
+
+9
+00:00:37,910 --> 00:00:42,450
+Then the first step is to adjust our app module.
+
+10
+00:00:43,100 --> 00:00:52,580
+Well, there in our source folder we have the browser module and we should now call with server transition
+
+11
+00:00:52,610 --> 00:00:58,760
+on that module, pass a JavaScript, object to that and set an app ID here.
+
+12
+00:00:59,030 --> 00:01:00,980
+That can be any string of your choice.
+
+13
+00:01:01,010 --> 00:01:03,160
+Like my dash app, for example.
+
+14
+00:01:03,470 --> 00:01:10,100
+This will be used by angular universal to basically correctly transition from the server side to decline
+
+15
+00:01:10,100 --> 00:01:14,960
+side and with transition, I mean things like continuing the app in the state.
+
+16
+00:01:14,960 --> 00:01:16,610
+You got it from the server.
+
+17
+00:01:16,760 --> 00:01:24,170
+So if, for example, on the server you already fetched some recipes from a database, then you of course
+
+18
+00:01:24,170 --> 00:01:30,680
+want to continue with that state on the client and therefore does make sure that we keep that state
+
+19
+00:01:30,680 --> 00:01:32,810
+and that the transition is done correctly.
+
+20
+00:01:33,260 --> 00:01:34,700
+OK, so that's the first step.
+
+21
+00:01:35,030 --> 00:01:36,820
+We call with server transition.
+
+22
+00:01:37,430 --> 00:01:44,960
+Now we need to create a new module, a new engie module for the server side, because there we start
+
+23
+00:01:44,960 --> 00:01:47,770
+the app a bit differently than we do on the client side.
+
+24
+00:01:48,440 --> 00:01:53,090
+You can copy that code you find here and I will walk you through it step by step.
+
+25
+00:01:53,360 --> 00:01:59,090
+So let's copy it and let's create a new module next to the app module here.
+
+26
+00:01:59,240 --> 00:02:05,830
+I will create the app server DOT module to file and paste in that code we just copied.
+
+27
+00:02:06,140 --> 00:02:07,970
+Now, what do we find in this file?
+
+28
+00:02:08,810 --> 00:02:15,080
+We do import to the server module from at Angular Platform Server and we add that to imports.
+
+29
+00:02:15,590 --> 00:02:22,490
+This is a crucial module which is required by angular universal to render your angular app on the server.
+
+30
+00:02:23,120 --> 00:02:29,360
+You can also see that we import the base app module, which we also use in a client to we import it
+
+31
+00:02:29,360 --> 00:02:32,440
+from our app module file and we add it to imports.
+
+32
+00:02:33,110 --> 00:02:39,700
+Last but not least, we have that module map loader module here, which has a very complex name but
+
+33
+00:02:39,700 --> 00:02:41,270
+does just one important thing.
+
+34
+00:02:41,630 --> 00:02:48,830
+It ensures that our lazy loaded routes, all the work on the server and with that our module here is
+
+35
+00:02:48,830 --> 00:02:49,340
+finished.
+
+36
+00:02:50,180 --> 00:02:57,100
+Now we just need to make sure that we also have an entry funnel for our suicide code, a main Dotts
+
+37
+00:02:57,140 --> 00:03:01,250
+file for the server and therefore named Main not server Dotts.
+
+38
+00:03:02,240 --> 00:03:09,410
+Let's edit next to our client side, main doctor's file here, let's add mainboard server dots, and
+
+39
+00:03:09,410 --> 00:03:13,520
+in there, we just have to do one thing, we'll export something.
+
+40
+00:03:13,820 --> 00:03:21,950
+We'll export our app server module, which we, of course, find in the app folder and there in the
+
+41
+00:03:21,950 --> 00:03:23,860
+app server module file.
+
+42
+00:03:24,590 --> 00:03:30,140
+This allows us to point at this file and then indirectly, automatically point at that file.
+
+43
+00:03:30,290 --> 00:03:31,700
+And that is all we need to do.
+
+44
+00:03:31,730 --> 00:03:36,050
+We just need to pass on that reference to the Apsara module, so to say.
+
+45
+00:03:37,460 --> 00:03:45,620
+With that were done regarding our module set up in the next videos, we'll tweak our typescript compilation
+
+46
+00:03:45,620 --> 00:03:51,230
+configuration because we need to compile typescript code a bit differently for it to run on the server.
+
+47
+00:03:51,680 --> 00:03:58,010
+And then we'll actually set up that simple note just server, which will do the pre rendering and already
+
+48
+00:03:58,010 --> 00:03:58,950
+see that in action.
+
+49
+00:03:59,180 --> 00:04:00,050
+So let's continue.
+

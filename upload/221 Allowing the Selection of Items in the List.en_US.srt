@@ -1,0 +1,228 @@
+1
+00:00:02,380 --> 00:00:09,620
+So time to make our items editable by clicking them. In our shopping list component where we have our
+
+2
+00:00:09,620 --> 00:00:16,800
+items, I want to add a click listener to the item, so that we can click it. Here,
+
+3
+00:00:16,880 --> 00:00:19,230
+I want to call onEditItem,
+
+4
+00:00:19,230 --> 00:00:23,690
+of course any name you like, simply copy it.
+
+5
+00:00:23,690 --> 00:00:29,000
+Now here though, I also want to get the ID of the ingredient and I need the ID so that I'm later
+
+6
+00:00:29,030 --> 00:00:34,330
+able to replace the correct one in the array of ingredients which is managed in a service.
+
+7
+00:00:34,670 --> 00:00:37,210
+So let's extract the ID like this,
+
+8
+00:00:37,220 --> 00:00:44,670
+i equals index to get the index of the current iteration and let's pass it here as an argument.
+
+9
+00:00:45,080 --> 00:00:49,420
+Now I can copy this name and go into my TypeScript code, here
+
+10
+00:00:49,430 --> 00:00:56,160
+I want to add onEditItem and I know that I will get the index here which will be a number
+
+11
+00:00:56,270 --> 00:00:59,390
+and now there are a couple of ways of getting this information,
+
+12
+00:00:59,390 --> 00:01:05,180
+this index to the shopping edit component which is in the end where I want to get it to because that
+
+13
+00:01:05,180 --> 00:01:07,310
+is where we are editing.
+
+14
+00:01:07,460 --> 00:01:13,260
+I will use the service or specifically, a subject in that service to which I can listen in the shopping
+
+15
+00:01:13,260 --> 00:01:14,690
+edit component.
+
+16
+00:01:15,020 --> 00:01:21,320
+So I will add a new subject in the shopping lists service and that I'll name startedEditing,
+
+17
+00:01:21,320 --> 00:01:23,150
+sounds like a fitting name.
+
+18
+00:01:23,150 --> 00:01:27,530
+It'll be a new subject and subject is a generic type,
+
+19
+00:01:27,530 --> 00:01:29,510
+it will hold a number in the end,
+
+20
+00:01:29,840 --> 00:01:36,980
+that's all I need to change here. With this subject created in onEditItem, I can reach out to the
+
+21
+00:01:36,980 --> 00:01:44,930
+shopping list service which we already inject and then use startedEditing and emit a new value, my index,
+
+22
+00:01:45,170 --> 00:01:50,460
+which will make sure that now we pass on this index
+
+23
+00:01:50,520 --> 00:01:58,310
+to our subject for now so that I can listen to it in some other place, that other place is going to be in
+
+24
+00:01:58,310 --> 00:02:02,130
+the shopping edit component. Here in ngOnInit,
+
+25
+00:02:02,140 --> 00:02:05,880
+this sounds like a good place to do the listening.
+
+26
+00:02:05,940 --> 00:02:14,490
+I'm already injecting the shopping list service, so here I will subscribe to my startedEditing subject and
+
+27
+00:02:14,490 --> 00:02:16,350
+of course I should clean up the subscription
+
+28
+00:02:16,350 --> 00:02:25,300
+if we destroy this component, so I will store it in a property named subscription which is of type subscription
+
+29
+00:02:25,570 --> 00:02:31,630
+which I should import from rxjs/subscription and I'll move up
+
+30
+00:02:31,630 --> 00:02:35,590
+both these imports here to the top of the file.
+
+31
+00:02:35,910 --> 00:02:42,270
+So with that, we got our subscription property. As I just said, I want to store my subscription in this
+
+32
+00:02:42,330 --> 00:02:43,340
+property
+
+33
+00:02:43,530 --> 00:02:46,360
+and now I will implement onDestroy,
+
+34
+00:02:46,380 --> 00:02:52,890
+therefore you should import this interface from @angular/core and then also implement ngOnDestroy
+
+35
+00:02:53,100 --> 00:02:55,110
+to clean up the subscription,
+
+36
+00:02:55,290 --> 00:02:58,500
+just to be sure that you don't create a memory leak.
+
+37
+00:02:58,500 --> 00:02:59,630
+So that's the clean up work
+
+38
+00:02:59,640 --> 00:03:02,170
+but what should happen inside of this?
+
+39
+00:03:02,550 --> 00:03:10,500
+Well here we know that we will receive the number of the item we're about to edit and this will be triggered
+
+40
+00:03:10,800 --> 00:03:15,590
+whenever we submit the startedEditing information.
+
+41
+00:03:15,600 --> 00:03:17,660
+We also know something else,
+
+42
+00:03:17,850 --> 00:03:21,250
+we only get here into this anonymous function
+
+43
+00:03:21,410 --> 00:03:23,190
+if startedEditing was triggered,
+
+44
+00:03:23,190 --> 00:03:24,890
+so if we are editing.
+
+45
+00:03:25,230 --> 00:03:30,450
+So that is an important information when it comes to what we should do once the form is submitted, should
+
+46
+00:03:30,450 --> 00:03:33,570
+we create a new item or edit an existing one?
+
+47
+00:03:33,570 --> 00:03:39,220
+So I want to store the mode we're in here in a property, I'll name it editMode and by default,
+
+48
+00:03:39,270 --> 00:03:41,520
+it's false. Here
+
+49
+00:03:41,520 --> 00:03:46,740
+however I will set editMode to true because we are editing, right?
+
+50
+00:03:47,400 --> 00:03:51,060
+So with this, we now get the index and we are editing,
+
+51
+00:03:51,060 --> 00:03:56,510
+I also want to store the index of the item we're editing. So edited
+
+52
+00:03:56,520 --> 00:03:59,490
+item index could be a property name,
+
+53
+00:03:59,610 --> 00:04:04,010
+it will be a number in the end and it will get initialized here,
+
+54
+00:04:04,050 --> 00:04:09,630
+editedItemIndex will be the index we're getting here as an argument.
+
+55
+00:04:10,530 --> 00:04:13,980
+So with that, we got a lot of important information.
+
+56
+00:04:14,520 --> 00:04:21,510
+Now with that information, I want to load the item we're about to edit, so that is something I'll do in
+
+57
+00:04:21,510 --> 00:04:22,730
+the next lecture.
+

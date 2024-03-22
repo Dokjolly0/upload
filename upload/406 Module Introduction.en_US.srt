@@ -1,0 +1,76 @@
+1
+00:00:02,110 --> 00:00:09,550
+Welcome to this module, in this module, we'll dive into angular universal, which is a tool provided
+
+2
+00:00:09,550 --> 00:00:16,870
+by the angular team basically and strongly built into the Seelie, which allows you to pre render your
+
+3
+00:00:16,870 --> 00:00:20,140
+angular application on the fly on the server.
+
+4
+00:00:20,410 --> 00:00:22,010
+Now, why is that interesting?
+
+5
+00:00:22,630 --> 00:00:24,040
+Here's our recipe book.
+
+6
+00:00:24,460 --> 00:00:30,910
+And if we inspect the page source here, we see that there actually is not that much to be found.
+
+7
+00:00:30,910 --> 00:00:31,280
+Right.
+
+8
+00:00:31,510 --> 00:00:38,770
+We got a bunch of script imports, some information in our hit section, but then mainly we got nothing.
+
+9
+00:00:39,010 --> 00:00:41,140
+We got our app route and that is it.
+
+10
+00:00:41,470 --> 00:00:47,830
+Now, the reason for this is that angular, of course, is a CLI insight framework and all our content
+
+11
+00:00:47,830 --> 00:00:53,900
+is rendered in the browser after this app has been bootstrapped, which is done by these script files.
+
+12
+00:00:54,370 --> 00:01:00,070
+Now, there is nothing wrong with that in general, but of course the user sees that.
+
+13
+00:01:00,580 --> 00:01:08,080
+But search engines see that and therefore it might be worth exploring a different way of rendering.
+
+14
+00:01:08,080 --> 00:01:16,030
+Our angular app and angular universe is a tool which basically provides a nice bridge from the awesomeness
+
+15
+00:01:16,030 --> 00:01:17,790
+we have with Angular in the browser.
+
+16
+00:01:17,830 --> 00:01:26,050
+This high reactivity to the pre rendering of pages so that the HTML we get back from the server actually
+
+17
+00:01:26,050 --> 00:01:30,580
+is a pre rendered snapshot of the page and once it's DENDE runs in the client.
+
+18
+00:01:30,610 --> 00:01:33,790
+So in the browser it's a single page application again.
+
+19
+00:01:34,000 --> 00:01:38,500
+So we want to get the best of both worlds and angular Universal can help us with that.
+

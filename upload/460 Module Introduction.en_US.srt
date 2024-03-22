@@ -1,0 +1,88 @@
+1
+00:00:02,480 --> 00:00:06,090
+Now this course section is optional
+
+2
+00:00:06,090 --> 00:00:08,900
+because this course section will act
+
+3
+00:00:08,900 --> 00:00:13,810
+as an introduction to TypeScript, the programming language
+
+4
+00:00:13,810 --> 00:00:15,810
+which we are going to use for all
+
+5
+00:00:15,810 --> 00:00:20,320
+this entire course, since Angular embraces TypeScript.
+
+6
+00:00:20,320 --> 00:00:24,620
+But TypeScript in the end is just a programming language
+
+7
+00:00:24,620 --> 00:00:26,270
+extending Java script.
+
+8
+00:00:26,270 --> 00:00:29,360
+So if you know Java script, learning TypeScript
+
+9
+00:00:29,360 --> 00:00:32,370
+is rather straight forward, and you should be able
+
+10
+00:00:32,370 --> 00:00:36,060
+to learn those key TypeScript features by simply going
+
+11
+00:00:36,060 --> 00:00:38,450
+through the course step-by-step.
+
+12
+00:00:38,450 --> 00:00:40,760
+Nonetheless, in this course section
+
+13
+00:00:40,760 --> 00:00:43,250
+if you wanna quick introduction to TypeScript
+
+14
+00:00:43,250 --> 00:00:46,390
+or you wanna have a summary of the core features,
+
+15
+00:00:46,390 --> 00:00:51,210
+I will introduce you to what exactly TypeScript is
+
+16
+00:00:51,210 --> 00:00:55,650
+and why we might wanna use it, what its benefits are?
+
+17
+00:00:55,650 --> 00:00:59,410
+And we are going to explore some of its key features
+
+18
+00:00:59,410 --> 00:01:02,650
+and types, which we use all the time.
+
+19
+00:01:02,650 --> 00:01:06,220
+Now, that being said, we will not cover every single
+
+20
+00:01:06,220 --> 00:01:08,760
+TypeScript feature which you see in this course
+
+21
+00:01:08,760 --> 00:01:10,670
+since you will learn it step by step
+
+22
+00:01:10,670 --> 00:01:12,933
+when going through the course as mentioned.
+

@@ -1,0 +1,324 @@
+1
+00:00:02,460 --> 00:00:08,430
+At the moment, we're still using our user subject in our application and let me simply comment this
+
+2
+00:00:08,460 --> 00:00:08,940
+out
+
+3
+00:00:09,540 --> 00:00:16,830
+so that we get errors that point us at the files which we now have to update to use our @ngrx/store instead.
+
+4
+00:00:16,860 --> 00:00:22,020
+This is a nice trick to find all the places we now have to update and that starts with the auth interceptor.
+
+5
+00:00:22,020 --> 00:00:24,270
+In the auth interceptor,
+
+6
+00:00:24,270 --> 00:00:28,480
+we're using the auth service and we're accessing our user. Now
+
+7
+00:00:28,500 --> 00:00:33,800
+that is a good example for a place where we now want to use our @ngrx/store.
+
+8
+00:00:34,020 --> 00:00:42,960
+So in here, let's inject our store of type store, as before store needs to be imported from @ngrx/store
+
+9
+00:00:42,960 --> 00:00:45,690
+and it still is a generic type,
+
+10
+00:00:45,690 --> 00:00:55,480
+so again we should import everything as from app from our root store folder and there from the app
+
+11
+00:00:55,480 --> 00:00:56,650
+reducer file
+
+12
+00:00:56,650 --> 00:01:03,020
+and then here the type would be fromApp.AppState describing how our state looks like in this application.
+
+13
+00:01:03,130 --> 00:01:07,390
+Now here where I refer to this auth service user,
+
+14
+00:01:07,390 --> 00:01:21,280
+now we can instead just use this store select auth and now of course, I'm interested in getting my user
+
+15
+00:01:21,520 --> 00:01:23,820
+out of that part of the global state.
+
+16
+00:01:23,830 --> 00:01:25,780
+I don't want to take the entire auth state,
+
+17
+00:01:25,780 --> 00:01:27,940
+this is an object with a user property,
+
+18
+00:01:28,060 --> 00:01:31,900
+I'm just interested in the value of that user property,
+
+19
+00:01:31,900 --> 00:01:35,310
+so in that concrete user we have here.
+
+20
+00:01:35,360 --> 00:01:43,360
+Good thing is select gives us an observable, so we can call pipe and I only want to get one snapshot
+
+21
+00:01:43,360 --> 00:01:44,710
+here, so take one
+
+22
+00:01:44,710 --> 00:01:50,140
+still is correct, I want to have that here but now I'll add an extra step before we continue with the
+
+23
+00:01:50,140 --> 00:01:50,610
+user
+
+24
+00:01:50,650 --> 00:01:54,780
+because right now, what we have, what we get here is not the user,
+
+25
+00:01:54,790 --> 00:01:57,310
+instead it's an object with a user property,
+
+26
+00:01:57,370 --> 00:01:58,720
+that's a difference though.
+
+27
+00:01:59,020 --> 00:02:06,060
+So we'll add the map operator here which you therefore have to import from rxjs/operators and
+
+28
+00:02:06,070 --> 00:02:09,990
+with the map operator added, what we get here is our auth state in the end.
+
+29
+00:02:10,540 --> 00:02:14,880
+So here, my goal then is to map this auth state into something new.
+
+30
+00:02:15,170 --> 00:02:24,460
+Now this auth state here will have a user property, so I can access auth state user and the IDE in TypeScript
+
+31
+00:02:24,520 --> 00:02:31,360
+understand this automatically because I'm selecting the auth slice here and I define in my AppState
+
+32
+00:02:31,360 --> 00:02:32,180
+setup,
+
+33
+00:02:32,500 --> 00:02:34,800
+if have a look at that app reducer real quick,
+
+34
+00:02:34,900 --> 00:02:41,320
+I define that the app state has a shopping list and an auth part and the auth part has the from auth
+
+35
+00:02:41,590 --> 00:02:48,220
+state interface or structure and therefore, this in turn comes from the auth reducer,
+
+36
+00:02:48,250 --> 00:02:55,270
+it's this interface and this all comes together in the auth interceptor where I do select my auth
+
+37
+00:02:55,270 --> 00:03:00,350
+slice here and therefore TypeScript is able to resolve which kind of data I'm getting here.
+
+38
+00:03:00,460 --> 00:03:06,220
+I'm getting my auth state, here I can then access the user property and therefore this is now mapped into
+
+39
+00:03:06,220 --> 00:03:12,430
+a new observable which then reaches my next step which takes just that user that's inside of that observable.
+
+40
+00:03:12,430 --> 00:03:15,210
+So now, this should work fine actually.
+
+41
+00:03:15,670 --> 00:03:22,180
+With that, we have two more errors in the auth guard and in the header component, let's move on to the
+
+42
+00:03:22,180 --> 00:03:23,360
+auth guard first.
+
+43
+00:03:23,380 --> 00:03:29,290
+Here again, I'm using my auth service user and just as before, we can simply fix that by injecting the
+
+44
+00:03:29,290 --> 00:03:39,290
+store here instead, of type store, again imported from @ngrx/store and again, we need to import the description
+
+45
+00:03:39,290 --> 00:03:43,760
+or the interface describing our AppState,
+
+46
+00:03:43,880 --> 00:03:50,800
+so import everything as from app from our root store app reducer
+
+47
+00:03:50,960 --> 00:03:51,670
+and then here the
+
+48
+00:03:51,710 --> 00:03:56,430
+generic type when we inject store is fromApp.AppState.
+
+49
+00:03:56,660 --> 00:04:04,530
+Again, this gives us the advantage that we're now able to use this store select, select auth here
+
+50
+00:04:04,720 --> 00:04:06,130
+and again we pipe,
+
+51
+00:04:06,250 --> 00:04:11,770
+don't know why it's coloring this in such a strange way but it's the same code as before, we now
+
+52
+00:04:11,770 --> 00:04:14,370
+pipe take one which is good
+
+53
+00:04:14,440 --> 00:04:21,320
+but now before mapping the user, actually what we get is not the user but the auth state,
+
+54
+00:04:21,310 --> 00:04:31,000
+so we need another map operator where we now get our auth state and what we return here is auth state.
+
+55
+00:04:31,060 --> 00:04:31,730
+user
+
+56
+00:04:31,750 --> 00:04:37,610
+and now this gets wrapped into a new observable which then can be handled as before in here. And with
+
+57
+00:04:37,610 --> 00:04:40,570
+that, let's move onto the header component. There,
+
+58
+00:04:40,580 --> 00:04:47,150
+I'm also interested in my auth service and in my user, I subscribe to changes in my user and therefore,
+
+59
+00:04:47,210 --> 00:04:48,750
+we should do the same here,
+
+60
+00:04:48,950 --> 00:04:58,230
+now by injecting the store, just as before import it from @ngrx/store and also just as before, now we
+
+61
+00:04:58,230 --> 00:05:08,590
+should import our AppState from the app reducer in the store folder so that we can assign this type
+
+62
+00:05:08,590 --> 00:05:13,840
+here and get good autocompletion and TypeScript support
+
+63
+00:05:13,840 --> 00:05:21,310
+and then here, we're not using this auth service user but instead, this store select auth. Then here, I am
+
+64
+00:05:21,310 --> 00:05:23,600
+subscribing and I get my user,
+
+65
+00:05:23,620 --> 00:05:25,290
+again this is not how it works,
+
+66
+00:05:25,390 --> 00:05:34,180
+what select auth gives us is instead not our user but it's an object where we have a user property, hence
+
+67
+00:05:34,210 --> 00:05:41,500
+we can simply add pipe, add the map operator which you need to import from rxjs/operators and
+
+68
+00:05:41,500 --> 00:05:46,120
+with that added here, we can use that auth state
+
+69
+00:05:46,270 --> 00:05:51,520
+and now I'm using a quick inline statement because we only have one expression which we instantly return,
+
+70
+00:05:51,520 --> 00:05:57,820
+so here this does exactly the same as we did before in the auth interceptor and the auth guard. I'm getting
+
+71
+00:05:57,820 --> 00:06:03,340
+my auth state, I'm pulling out the user, I'm returning that here in the map operator so that the next step
+
+72
+00:06:03,340 --> 00:06:07,470
+in line really gets an observable that resolves to a user.
+
+73
+00:06:07,570 --> 00:06:11,590
+Now all these parts should be fixed, it compiles fine,
+
+74
+00:06:11,770 --> 00:06:13,940
+let's see if it works as expected,
+
+75
+00:06:14,230 --> 00:06:15,990
+auto login seems to work,
+
+76
+00:06:16,510 --> 00:06:25,720
+let's see if we can fetch data and therefore if our interceptor works, that all seems to work, let's fetch
+
+77
+00:06:25,720 --> 00:06:26,260
+again,
+
+78
+00:06:26,770 --> 00:06:27,670
+yes
+
+79
+00:06:27,670 --> 00:06:32,920
+and logging out also works and the header is also updated correctly,
+
+80
+00:06:32,920 --> 00:06:34,930
+logging in is also looking good.
+
+81
+00:06:35,170 --> 00:06:41,450
+So this all seems to work and now we're managing this main authentication flow with NgRx as well.
+

@@ -1,0 +1,36 @@
+1
+00:00:02,680 --> 00:00:08,070
+In the last lectures of this module, we learned a lot about Angular forms and how we can create such
+
+2
+00:00:08,070 --> 00:00:10,060
+a form and configure it to our needs
+
+3
+00:00:10,200 --> 00:00:14,170
+but remember there were two approaches, not just one.
+
+4
+00:00:14,250 --> 00:00:16,580
+So we had a look at the template driven approach,
+
+5
+00:00:16,590 --> 00:00:19,580
+now we're going to have a look at the reactive approach.
+
+6
+00:00:19,800 --> 00:00:23,940
+This approach allows you to configure your form in greater detail,
+
+7
+00:00:23,940 --> 00:00:31,050
+you create the form programmatically in TypeScript and whilst this might sound more complicated, it actually
+
+8
+00:00:31,050 --> 00:00:35,810
+isn't that difficult and it might be what you need for your new project.
+
+9
+00:00:35,820 --> 00:00:37,940
+So let's dive into this approach now.
+

@@ -1,0 +1,208 @@
+1
+00:00:02,250 --> 00:00:03,590
+Now to fix that,
+
+2
+00:00:03,720 --> 00:00:06,970
+there are a couple of ways. One way would be that
+
+3
+00:00:07,080 --> 00:00:10,990
+we simply import the router module like this, without for root
+
+4
+00:00:11,010 --> 00:00:17,400
+but just like that and also add the import statement up there into our recipes module.
+
+5
+00:00:17,490 --> 00:00:25,530
+If we do that and we go back to our application, now we still fail because of app recipe item that uses
+
+6
+00:00:25,530 --> 00:00:27,900
+ngFor and doesn't have access to that
+
+7
+00:00:27,960 --> 00:00:30,250
+but we don't get that routing error anymore.
+
+8
+00:00:30,360 --> 00:00:35,100
+Now still we get an error and this error is related to ngFor, here
+
+9
+00:00:35,100 --> 00:00:40,590
+the same logic as with the routing applies. You don't magically have access to all these core Angular
+
+10
+00:00:40,590 --> 00:00:45,180
+features. You did thus far because we had everything in the app module,
+
+11
+00:00:45,180 --> 00:00:51,660
+we declared all components in the app module and we have important imports here in the app module that
+
+12
+00:00:51,720 --> 00:00:57,960
+import core Angular features into the app module and therefore, any component declared here has access
+
+13
+00:00:57,960 --> 00:01:01,900
+to these features, components declared in other modules don't
+
+14
+00:01:02,020 --> 00:01:06,360
+and for example ngIf and ngFor are provided by the browser module.
+
+15
+00:01:06,360 --> 00:01:12,720
+All the forms related things are provided by the forms module or the reactive forms module. HTTP related
+
+16
+00:01:12,720 --> 00:01:16,640
+stuff is imported by that HttpClient module,
+
+17
+00:01:16,770 --> 00:01:22,920
+though this is kind of an exception, this only provides services and no directives or components and
+
+18
+00:01:22,920 --> 00:01:28,350
+services work differently and therefore are indeed available application-wide even in modules where
+
+19
+00:01:28,350 --> 00:01:33,480
+you don't add this but as soon as you use something that's not a service and I'll come back to that
+
+20
+00:01:33,480 --> 00:01:35,160
+services thing later,
+
+21
+00:01:35,160 --> 00:01:40,500
+as soon as you use something that's not a service but that offers real directives or any features you
+
+22
+00:01:40,500 --> 00:01:41,790
+use in templates,
+
+23
+00:01:41,790 --> 00:01:46,220
+as soon as that's the case, you only have access to what you import.
+
+24
+00:01:46,320 --> 00:01:54,240
+So to be able to use ngFor in the recipes module, besides the router module, we probably also need
+
+25
+00:01:54,240 --> 00:01:55,650
+the browser module.
+
+26
+00:01:55,650 --> 00:02:02,340
+However, this is now just a special case and the only special case. The browser module must only be used
+
+27
+00:02:02,340 --> 00:02:08,400
+once and that is in the app module because it does more than just add ngIf and ngFor, it does
+
+28
+00:02:08,400 --> 00:02:15,620
+some general application start up work that only has to run once. Instead of the browser module,
+
+29
+00:02:15,660 --> 00:02:22,170
+use the common module in all other places, in all other modules where you want to get access to ngIf and
+
+30
+00:02:22,170 --> 00:02:22,700
+ngFor.
+
+31
+00:02:23,250 --> 00:02:31,400
+So here, you add the common module and that is imported from @angular/common. Now with that imported,
+
+32
+00:02:31,640 --> 00:02:37,130
+we unlock ngIf and ngFor and therefore now if we save this, we again get an error but a different
+
+33
+00:02:37,130 --> 00:02:38,750
+error. This time,
+
+34
+00:02:38,750 --> 00:02:44,060
+the problem is the form group directive and as I mentioned, well you only have access to what you import,
+
+35
+00:02:44,060 --> 00:02:50,720
+we're not importing the forms module or here actually, the reactive forms module because we're using
+
+36
+00:02:50,810 --> 00:02:53,300
+reactive forms in the recipes area
+
+37
+00:02:53,300 --> 00:02:57,740
+and as soon as we do add it though and of course for that, you also need to add the import statement up
+
+38
+00:02:57,740 --> 00:03:05,000
+here from @angular/forms, as soon as we do add this, we can save this
+
+39
+00:03:05,050 --> 00:03:11,350
+and now we see that it finally loads again and our application runs again and if I login, I can indeed
+
+40
+00:03:11,590 --> 00:03:16,680
+go to my recipes, I can fetch my data here and that all works.
+
+41
+00:03:16,690 --> 00:03:22,900
+Now we outsource this into a separate module and the core takeaway you absolutely have to understand
+
+42
+00:03:22,900 --> 00:03:29,800
+is, whatever you declare here and whatever you use in the templates of these components, has to be imported
+
+43
+00:03:30,040 --> 00:03:31,300
+in that module,
+
+44
+00:03:31,330 --> 00:03:33,790
+it's not enough if you import it in the app module.
+
+45
+00:03:33,820 --> 00:03:36,620
+The only exception to the rule are services,
+
+46
+00:03:36,640 --> 00:03:41,980
+these only need to be set up once in the app module and you can access them in your whole application,
+
+47
+00:03:42,340 --> 00:03:48,490
+even in components which you added to feature modules but anything that's used in a template, so components,
+
+48
+00:03:48,610 --> 00:03:55,300
+directives, pipes, these things need to be declared or imported into the module where you plan on using
+
+49
+00:03:55,300 --> 00:03:55,680
+them.
+
+50
+00:03:55,690 --> 00:03:58,450
+It's not enough to use them in another module,
+
+51
+00:03:58,450 --> 00:04:05,230
+even if you export your things to that other module, even then it's not enough, Angular treats and parses
+
+52
+00:04:05,320 --> 00:04:07,370
+every NgModule standalone.
+

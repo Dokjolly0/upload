@@ -1,0 +1,384 @@
+1
+00:00:02,210 --> 00:00:05,810
+So I hope it became clear why we must not return error,
+
+2
+00:00:05,810 --> 00:00:11,840
+still the question of course is we're creating new observable here in catch error, in map, what should
+
+3
+00:00:11,840 --> 00:00:13,820
+be inside of these observables?
+
+4
+00:00:14,570 --> 00:00:19,520
+Well keep in mind that I said that you typically want to dispatch a new action once you're done with
+
+5
+00:00:19,520 --> 00:00:21,260
+the code in your effect,
+
+6
+00:00:21,260 --> 00:00:24,510
+so what should be in here is your new action.
+
+7
+00:00:24,560 --> 00:00:30,710
+You don't need to call dispatch because that's also partly done by add effect here, your entire chains
+
+8
+00:00:30,710 --> 00:00:38,000
+result here will automatically be treated as an action by @ngrx/effects and therefore will be dispatched.
+
+9
+00:00:38,000 --> 00:00:44,970
+So here you just need to return or add an action object and @ngrx/effects will automatically dispatch
+
+10
+00:00:44,990 --> 00:00:46,180
+it for you
+
+11
+00:00:46,310 --> 00:00:50,090
+and that means that here, we can of course create a new action.
+
+12
+00:00:50,090 --> 00:00:52,940
+Now we have no action for the error case,
+
+13
+00:00:52,970 --> 00:00:58,820
+so for now let's simply try to avoid this and not create any errors until we add proper error handling,
+
+14
+00:00:58,820 --> 00:01:02,150
+for now, I'll just return an empty observable. Here in map
+
+15
+00:01:02,150 --> 00:01:04,870
+however, we can return a real observable
+
+16
+00:01:04,880 --> 00:01:09,860
+and of course here, I want to return an observable that holds my login action,
+
+17
+00:01:09,920 --> 00:01:15,740
+so not the start, the login start action but the login action because now at this point of time, I
+
+18
+00:01:15,740 --> 00:01:21,830
+have a successfully logged in user and I want to reflect this in my application by reaching that login
+
+19
+00:01:21,830 --> 00:01:22,900
+reducer code
+
+20
+00:01:22,950 --> 00:01:28,010
+and for that, we need to dispatch that login action. Hence
+
+21
+00:01:28,260 --> 00:01:34,330
+here in AuthEffects, we're already importing auth actions,
+
+22
+00:01:34,360 --> 00:01:40,530
+so down here let's create a new auth actions login object.
+
+23
+00:01:40,570 --> 00:01:47,470
+Now there we need to feed in an object with the e-mail, password and so on. In auth service, this is all
+
+24
+00:01:47,470 --> 00:01:54,160
+data we forwarded here to handle authentication since we got it from resData and in handle authentication, 
+
+25
+00:01:54,160 --> 00:02:01,090
+we then did some additional things like calculating the expiration date. In the end, I'll just copy that
+
+26
+00:02:01,240 --> 00:02:04,580
+calculation here, like this,
+
+27
+00:02:04,800 --> 00:02:12,400
+go to the AuthEffects and now do this here in map data. resData holds all the data I need, 
+
+28
+00:02:12,400 --> 00:02:20,950
+for example in resData, I find the expiresIn key, TypeScript is just complaining here because map here
+
+29
+00:02:21,040 --> 00:02:26,470
+will by the way also execute after a catch error since we don't return an error anymore but a normal
+
+30
+00:02:26,470 --> 00:02:32,380
+observable, hence we should switch order here, then map will be skipped in case of an error and catch
+
+31
+00:02:32,380 --> 00:02:37,050
+error will kick in but when catch error executes, map will not run again
+
+32
+00:02:37,240 --> 00:02:42,280
+and now I also need to convert this to a number by adding a plus here to avoid errors.
+
+33
+00:02:42,310 --> 00:02:47,380
+So now we're calculating the expiration date and now here to login, we pass in the e-mail which we get
+
+34
+00:02:47,380 --> 00:02:48,470
+from resData,
+
+35
+00:02:48,490 --> 00:02:54,100
+there is an e-mail property we need to pass in into user ID which we also get from resData, there
+
+36
+00:02:54,100 --> 00:02:59,230
+it's that local ID key. We need to pass in the token which we also defined in resData,
+
+37
+00:02:59,380 --> 00:03:04,570
+it's the ID token property and expiration date is our expiration date
+
+38
+00:03:04,570 --> 00:03:06,430
+constant we just worked on.
+
+39
+00:03:06,430 --> 00:03:12,230
+So now I'm returning this new action here and this as I said automatically gets dispatched by 
+
+40
+00:03:12,240 --> 00:03:14,730
+@ngrx/effects.
+
+41
+00:03:14,860 --> 00:03:16,800
+OK, so that was a lot of talking,
+
+42
+00:03:16,840 --> 00:03:20,140
+let's ignore the error case for now and signing up and so on,
+
+43
+00:03:20,140 --> 00:03:27,070
+let's now make sure that we take advantage of our effect here for logging in and for that, we have to wire
+
+44
+00:03:27,070 --> 00:03:37,540
+everything up now. To wire our effects up, first of all we have to go to AuthEffects here, to our class and
+
+45
+00:03:37,630 --> 00:03:48,350
+add @injectable here, like this. @injectable or the injectable decorator needs to be imported from
+
+46
+00:03:48,350 --> 00:03:54,920
+@angular/core and it is required here not to provide this in root, so don't add this, it will never
+
+47
+00:03:54,920 --> 00:04:01,250
+be injected itself so it doesn't need to be provided but it needs @injectable so that things can be
+
+48
+00:04:01,250 --> 00:04:07,970
+injected into this class and we are injecting actions and the HttpClient, otherwise we would get errors,
+
+49
+00:04:08,150 --> 00:04:14,210
+so @injectable is needed here so that things can be injected into AuthEffects. Now for registering
+
+50
+00:04:14,270 --> 00:04:21,020
+all the effects and this effects logic globally, we have to go back to the app module where we also
+
+51
+00:04:21,030 --> 00:04:28,010
+registered our store module and after registering our store module, we now register, well you probably
+
+52
+00:04:28,010 --> 00:04:36,650
+can guess it, an effects module which we get from @ngrx/effects. Now that effects module here
+
+53
+00:04:36,890 --> 00:04:47,510
+also has a forRoot method, like this and to forRoot, you now have to pass an array of your root
+
+54
+00:04:47,630 --> 00:04:57,460
+effects, that means of your effect classes and here, that is the AuthEffects class which you therefore also
+
+55
+00:04:57,460 --> 00:05:03,420
+need to import AuthEffects imported from the auth folder from the store folder and from the AuthEffects
+
+56
+00:05:03,420 --> 00:05:09,120
+file. So registering this class here as a class that holds effects, we're forwarding it or we're
+
+57
+00:05:09,120 --> 00:05:15,960
+passing it to effects module and @ngrx/effects does the rest and sets this all up. The missing piece
+
+58
+00:05:15,960 --> 00:05:23,310
+for us now is to dispatch a login action. Now we have our login start action I mean, we have it here
+
+59
+00:05:23,370 --> 00:05:29,790
+in auth actions and therefore all we have to do is we have to go to the place where we do call login
+
+60
+00:05:29,790 --> 00:05:38,200
+on the auth service and that is our auth component. Here in onSubmit, I have an observable for logging
+
+61
+00:05:38,200 --> 00:05:46,750
+in or for signing up and now here, when we do login, I don't want to use the same logic as before,
+
+62
+00:05:46,750 --> 00:05:56,440
+instead here I now want to use my store, so let's inject store of type store, as always store is imported
+
+63
+00:05:56,440 --> 00:06:05,540
+from @ngrx/store. It's a generic type and therefore, it needs information about how our
+
+64
+00:06:06,410 --> 00:06:08,030
+AppState looks like, 
+
+65
+00:06:08,030 --> 00:06:11,780
+so let's import everything as from app from our
+
+66
+00:06:14,620 --> 00:06:20,590
+app reducer and here, then have fromApp.AppState.
+
+67
+00:06:24,100 --> 00:06:33,640
+And now when we do login here, let's comment out this old code and let's instead use this store and call
+
+68
+00:06:33,640 --> 00:06:38,070
+dispatch and now we just need access to our auth actions as well.
+
+69
+00:06:38,140 --> 00:06:46,840
+So time for another import, import everything as from, not as from but as auth actions from the store
+
+70
+00:06:46,840 --> 00:06:53,440
+folder in the auth folder and there from the auth actions file and with that imported, we dispatch a new
+
+71
+00:06:53,890 --> 00:07:01,090
+auth action which is logging start here. Now that needs two pieces of information, in an object it needs
+
+72
+00:07:01,090 --> 00:07:07,400
+the e-mail which we have as a constant here and it needs the password which we also have as a constant.
+
+73
+00:07:07,540 --> 00:07:12,340
+So let's forward e-mail and password here and with that, this gets dispatched.
+
+74
+00:07:12,340 --> 00:07:19,220
+Now one important side note, dispatch here does not give us an observable which is why I can't store
+
+75
+00:07:19,230 --> 00:07:23,910
+this in authObs. This also means we're not notified about
+
+76
+00:07:23,930 --> 00:07:29,930
+once this is done, this login process and hence resetting, loading and navigating away won't work for
+
+77
+00:07:29,930 --> 00:07:30,830
+that moment,
+
+78
+00:07:30,890 --> 00:07:37,190
+we'll have to check the network tab for whether this whole login process in theory works correctly
+
+79
+00:07:37,400 --> 00:07:44,120
+and thereafter we'll have to find out how we get information like, are we still loading, out of our store.
+
+80
+00:07:44,120 --> 00:07:46,460
+So for the moment, let's still test it like this though,
+
+81
+00:07:46,460 --> 00:07:56,330
+let's save everything and let's go back to our application, logout and let's try logging in. Now as I
+
+82
+00:07:56,340 --> 00:08:03,820
+said, this here simply fails and that is to be expected because we haven't updated all the code
+
+83
+00:08:03,830 --> 00:08:11,890
+but let's check the network tab here for requests that left our application and there indeed, we see
+
+84
+00:08:11,950 --> 00:08:16,420
+verify password, we did send a request to this path and that indeed is the login path and we've
+
+85
+00:08:16,420 --> 00:08:18,400
+got a 200 response back
+
+86
+00:08:18,580 --> 00:08:21,880
+and indeed in the preview we see we got success data here.
+
+87
+00:08:21,880 --> 00:08:28,390
+So the login request was sent and it also looks like it generally succeeded,
+
+88
+00:08:28,390 --> 00:08:31,270
+however the rest of this application is not really working,
+
+89
+00:08:31,270 --> 00:08:32,500
+it basically broke down,
+
+90
+00:08:32,500 --> 00:08:36,310
+we have an error and therefore it's now broken, our app is broken.
+
+91
+00:08:36,520 --> 00:08:45,270
+That of course simply is related to the fact that here, in our auth component, we are trying to subscribe
+
+92
+00:08:45,270 --> 00:08:48,870
+to authObs and that is simply not set in the login mode,
+
+93
+00:08:49,140 --> 00:08:54,420
+it's still undefined here because here I'm not setting it anymore because dispatch doesn't return an
+
+94
+00:08:54,420 --> 00:08:56,480
+observable to which I could set it.
+
+95
+00:08:56,550 --> 00:09:01,920
+Instead we'll have to find a different solution for being notified about whether we're currently waiting
+
+96
+00:09:01,920 --> 00:09:06,350
+for a response or whether we were successful or if we have an error.
+

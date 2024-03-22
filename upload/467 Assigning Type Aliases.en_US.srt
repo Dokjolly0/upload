@@ -1,0 +1,204 @@
+1
+00:00:02,080 --> 00:00:04,970
+Now the more TypeScript code you're going to
+
+2
+00:00:04,970 --> 00:00:07,230
+write, the higher the chances that
+
+3
+00:00:07,230 --> 00:00:11,760
+at some point you might be repeating some type definition.
+
+4
+00:00:11,760 --> 00:00:15,080
+And we're actually already doing this here.
+
+5
+00:00:15,080 --> 00:00:18,590
+Here, for people, I'm saying that I want an array
+
+6
+00:00:18,590 --> 00:00:20,880
+of this kind of object.
+
+7
+00:00:20,880 --> 00:00:22,210
+So that I want an array full
+
+8
+00:00:22,210 --> 00:00:24,610
+of objects that have this structure.
+
+9
+00:00:24,610 --> 00:00:26,870
+And that's the same object I have up here
+
+10
+00:00:26,870 --> 00:00:28,030
+for person.
+
+11
+00:00:28,030 --> 00:00:32,540
+The same type definition just in the non array form.
+
+12
+00:00:32,540 --> 00:00:35,290
+But the object type is the same.
+
+13
+00:00:35,290 --> 00:00:38,960
+Now you can, of course, duplicate the type definition
+
+14
+00:00:38,960 --> 00:00:41,400
+but it's more realistic that you wanna
+
+15
+00:00:41,400 --> 00:00:43,750
+avoid that duplication.
+
+16
+00:00:43,750 --> 00:00:48,170
+And for that, you can create a so-called type alias.
+
+17
+00:00:48,170 --> 00:00:51,520
+You can define your own base type
+
+18
+00:00:51,520 --> 00:00:54,960
+in which a more complex type definition is stored
+
+19
+00:00:54,960 --> 00:00:58,310
+and then use that type alias instead
+
+20
+00:00:58,310 --> 00:01:01,273
+of repeating the entire type definitions.
+
+21
+00:01:02,380 --> 00:01:05,970
+For that here, for example, before we use this object type
+
+22
+00:01:05,970 --> 00:01:10,210
+for the first time here, we can define such a type alias
+
+23
+00:01:10,210 --> 00:01:12,350
+with the type keyword.
+
+24
+00:01:12,350 --> 00:01:14,270
+And that's a keyword which does not
+
+25
+00:01:14,270 --> 00:01:16,970
+exist in standard JavaScript but
+
+26
+00:01:16,970 --> 00:01:19,283
+which is added by TypeScript instead.
+
+27
+00:01:20,568 --> 00:01:24,060
+Now, after this type keyword, you use any name
+
+28
+00:01:24,060 --> 00:01:28,730
+of your choice which will be your new type name.
+
+29
+00:01:28,730 --> 00:01:31,033
+For example, person, like this.
+
+30
+00:01:32,150 --> 00:01:34,590
+And then after the equal sign here
+
+31
+00:01:34,590 --> 00:01:36,460
+you then have a type definition
+
+32
+00:01:36,460 --> 00:01:39,930
+because this is a pure TypeScript feature.
+
+33
+00:01:39,930 --> 00:01:42,380
+This will basically be thrown out
+
+34
+00:01:42,380 --> 00:01:46,320
+of the window when the code is compiled to JavaScript.
+
+35
+00:01:46,320 --> 00:01:48,430
+So, here on the right side of the equal sign
+
+36
+00:01:48,430 --> 00:01:53,140
+it's not a JavaScript value, but instead a type definition.
+
+37
+00:01:53,140 --> 00:01:56,510
+And that could be our object type definition here
+
+38
+00:01:56,510 --> 00:01:59,370
+which I now store here in this person type.
+
+39
+00:01:59,370 --> 00:02:03,620
+And now in all those places where I used this object type
+
+40
+00:02:03,620 --> 00:02:06,610
+I can use my alias instead now.
+
+41
+00:02:06,610 --> 00:02:08,660
+And it's therefore still the same type
+
+42
+00:02:08,660 --> 00:02:10,580
+but I only define it once.
+
+43
+00:02:10,580 --> 00:02:14,750
+And then I can repeat it in all the places where I need it.
+
+44
+00:02:14,750 --> 00:02:17,050
+And I can still also change it like I'm doing it
+
+45
+00:02:17,050 --> 00:02:21,280
+down here to use it just as person like this,
+
+46
+00:02:21,280 --> 00:02:24,490
+or to use it as an array full of persons.
+
+47
+00:02:24,490 --> 00:02:26,393
+That also works.
+
+48
+00:02:27,640 --> 00:02:31,400
+And that's the very important feature of type aliases
+
+49
+00:02:31,400 --> 00:02:35,090
+which can save you a lot of typing work
+
+50
+00:02:35,090 --> 00:02:38,550
+and which can, therefore, make your code more concise
+
+51
+00:02:38,550 --> 00:02:40,433
+and easier to maintain.
+

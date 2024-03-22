@@ -1,0 +1,160 @@
+1
+00:00:02,480 --> 00:00:09,360
+In the last lecture, we added our own validator and we saw this strange error code, let's see what it
+
+2
+00:00:09,360 --> 00:00:11,620
+is up with this error code.
+
+3
+00:00:11,670 --> 00:00:14,490
+So right now, this form is invalid,
+
+4
+00:00:14,490 --> 00:00:17,200
+this field is invalid and the overall form is invalid,
+
+5
+00:00:17,220 --> 00:00:20,970
+I can still submit it though because I haven't disabled the button.
+
+6
+00:00:20,970 --> 00:00:22,520
+So if we have a look at this,
+
+7
+00:00:22,680 --> 00:00:25,840
+we see the errors property on our form,
+
+8
+00:00:26,280 --> 00:00:28,570
+if we open this, it's null though.
+
+9
+00:00:28,950 --> 00:00:33,590
+The interesting part is if we have a look at our controls here,
+
+10
+00:00:33,720 --> 00:00:41,970
+for example the userData and then there on the controls, the username, here if we have a look at the errors,
+
+11
+00:00:42,290 --> 00:00:44,370
+you see the name is forbidden
+
+12
+00:00:44,400 --> 00:00:46,410
+true key-value pair.
+
+13
+00:00:46,650 --> 00:00:56,780
+So this is where Angular actually adds the error codes on the individual controls on the errors object,
+
+14
+00:00:56,820 --> 00:01:03,420
+so we could take advantage of this by going back to the HTML code and finetuning this error message.
+
+15
+00:01:03,690 --> 00:01:08,550
+Let's say we want to say the username is required if the field is empty
+
+16
+00:01:08,880 --> 00:01:12,550
+and we want to say this is an invalid username if it is invalid.
+
+17
+00:01:12,930 --> 00:01:20,280
+So we could say this field is required here, our current check will not suffice though because here we
+
+18
+00:01:20,280 --> 00:01:23,190
+only check if it's valid in general,
+
+19
+00:01:23,190 --> 00:01:27,380
+so here we could simply wrap another span in there
+
+20
+00:01:30,060 --> 00:01:31,320
+and check if
+
+21
+00:01:33,850 --> 00:01:41,940
+signupForm get userData username errors,
+
+22
+00:01:42,060 --> 00:01:56,840
+if this has the name is forbidden error. If it does have this, I want to say this name is invalid.
+
+23
+00:01:58,890 --> 00:02:02,060
+I'll also add another span
+
+24
+00:02:02,270 --> 00:02:05,340
+and here we need to find out what the actual message is
+
+25
+00:02:05,370 --> 00:02:12,450
+if the field is required, so I'll enter the text here for now but then we need to check what the error
+
+26
+00:02:12,450 --> 00:02:13,740
+message would be.
+
+27
+00:02:13,980 --> 00:02:23,110
+So let's quickly submit this form here and check on our controls, userData and there on the controls,
+
+28
+00:02:24,770 --> 00:02:26,360
+the username
+
+29
+00:02:26,530 --> 00:02:33,800
+and there again, the errors, we see here the code will just be required,
+
+30
+00:02:34,150 --> 00:02:37,920
+so we can now check if it contains the required error.
+
+31
+00:02:38,230 --> 00:02:39,910
+With that in place,
+
+32
+00:02:39,940 --> 00:02:43,710
+if I now click in here and out of there, we see the field is required,
+
+33
+00:02:43,900 --> 00:02:46,680
+if I type Anna in there, we see the name is invalid
+
+34
+00:02:46,720 --> 00:02:49,450
+and if we type something valid, we don't see anything.
+
+35
+00:02:49,450 --> 00:02:52,140
+So this is how we can use these error codes
+
+36
+00:02:52,180 --> 00:02:55,690
+and of course you could also use ngSwitch here or any other set up.
+
+37
+00:02:55,690 --> 00:03:02,450
+The key thing is to understand that these error codes can be used to show the right error messages
+
+38
+00:03:02,590 --> 00:03:08,370
+and of course you can come up with even more complex set ups where you have TypeScript objects in your
+
+39
+00:03:08,380 --> 00:03:14,080
+TypeScript code where you map error codes to specific messages and dynamically output that here.
+
+40
+00:03:14,210 --> 00:03:18,010
+This is the basic example, the basic way of using these codes.
+

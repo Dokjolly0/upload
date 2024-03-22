@@ -1,0 +1,348 @@
+1
+00:00:02,300 --> 00:00:04,220
+In the last lecture we added some ingredients,
+
+2
+00:00:04,240 --> 00:00:08,760
+now I want you to make this to shopping list buttons work.
+
+3
+00:00:08,860 --> 00:00:16,330
+You can come up with some ideas, some solution on how you can send these items to the shopping list
+
+4
+00:00:16,330 --> 00:00:19,650
+so that once we go to the shopping list, we see them here.
+
+5
+00:00:19,720 --> 00:00:24,190
+Think about informing the component that something changed
+
+6
+00:00:24,190 --> 00:00:29,900
+and also think about how to add more than one item at once to the shopping list.
+
+7
+00:00:29,920 --> 00:00:31,410
+I wish you luck with that,
+
+8
+00:00:31,420 --> 00:00:33,580
+time to pause, in a couple of seconds,
+
+9
+00:00:33,610 --> 00:00:34,900
+we'll do it together.
+
+10
+00:00:37,150 --> 00:00:38,830
+So were you successful?
+
+11
+00:00:39,190 --> 00:00:42,600
+Let's add the shopping list items together.
+
+12
+00:00:42,790 --> 00:00:46,850
+We already have this button in the recipe detail component,
+
+13
+00:00:47,140 --> 00:00:50,420
+so the first step of course is to hook this button up.
+
+14
+00:00:50,470 --> 00:00:57,940
+I will remove the ref here and instead add an inline style to still have a cursor which looks like a
+
+15
+00:00:57,940 --> 00:01:05,940
+pointer but then here on the click listener, I'll call onAddToShoppingList,
+
+16
+00:01:05,950 --> 00:01:13,130
+of course you can choose a different name. Now that will be executed here in the component body, in
+
+17
+00:01:13,130 --> 00:01:15,580
+the recipe-detail.component.ts file
+
+18
+00:01:16,460 --> 00:01:24,770
+and here, we either need to get access to the shopping list service or to the recipe service
+
+19
+00:01:24,950 --> 00:01:28,670
+and then the recipe service accesses the shopping list service.
+
+20
+00:01:28,670 --> 00:01:30,760
+You can find arguments for both,
+
+21
+00:01:30,770 --> 00:01:35,750
+you could say we're in the recipe section therefore we should mainly work with the recipe service,
+
+22
+00:01:35,750 --> 00:01:40,290
+you could say why would we take this extra way, this extra step,
+
+23
+00:01:40,310 --> 00:01:44,140
+we can directly access the shopping list service, again
+
+24
+00:01:44,360 --> 00:01:46,740
+arguments can be found for both directions,
+
+25
+00:01:46,760 --> 00:01:50,270
+I will choose the route where we use the recipe service.
+
+26
+00:01:50,270 --> 00:01:53,060
+So I will inject the recipe
+
+27
+00:01:53,060 --> 00:01:56,810
+service here, type recipe service of course,
+
+28
+00:01:56,810 --> 00:01:58,730
+make sure to add the import
+
+29
+00:01:59,120 --> 00:02:02,000
+and now I need to add a method in the recipe service.
+
+30
+00:02:02,270 --> 00:02:08,300
+This is the addIngredientsToShoppingList method,
+
+31
+00:02:08,300 --> 00:02:10,300
+of course you can also pick a shorter name if
+
+32
+00:02:10,300 --> 00:02:13,320
+this one is a bit too long for you. Here 
+
+33
+00:02:13,430 --> 00:02:19,700
+I expect to receive my ingredients, so that will be of type ingredients and before we continue working
+
+34
+00:02:19,700 --> 00:02:22,630
+on this in the recipe service,
+
+35
+00:02:22,760 --> 00:02:24,640
+let's call this method.
+
+36
+00:02:24,770 --> 00:02:32,570
+So in the recipe detail component, I will access my recipe service,
+
+37
+00:02:32,630 --> 00:02:41,710
+call this brand new method with the extremely short name and pass on the ingredients of this recipe here,
+
+38
+00:02:41,870 --> 00:02:43,470
+so these ingredients.
+
+39
+00:02:43,850 --> 00:02:48,350
+So with that, these ingredients are passed to the recipe service,
+
+40
+00:02:48,380 --> 00:02:54,650
+now here we need to access the shopping list service. Now for that, we need to get access to the shopping
+
+41
+00:02:54,650 --> 00:02:56,110
+list service in this file
+
+42
+00:02:56,150 --> 00:03:03,440
+and if you want to inject a service into a service as we want to do here, you need to add @injectable
+
+43
+00:03:03,440 --> 00:03:04,310
+to that service,
+
+44
+00:03:04,310 --> 00:03:12,830
+make sure to import it from @angular/core. With that added here, we can inject the
+
+45
+00:03:12,830 --> 00:03:17,900
+service now in the constructor of this recipe service class.
+
+46
+00:03:18,180 --> 00:03:25,290
+Here I'll add the slService, so the shopping list service, to which you'll need it to add an import
+
+47
+00:03:25,340 --> 00:03:33,020
+at the top pointing to the shopping list folder and then the shopping list service file and with that added,
+
+48
+00:03:33,990 --> 00:03:38,520
+we can now reach out to that here, slService
+
+49
+00:03:38,940 --> 00:03:41,160
+and here we need to add a new method.
+
+50
+00:03:41,430 --> 00:03:49,800
+So let's go to the shopping list service and let's add an addIngredients method, like that.
+
+51
+00:03:51,620 --> 00:03:59,360
+Now in here, we will receive our list of ingredients, so of type ingredient array and now we need a logic
+
+52
+00:03:59,360 --> 00:04:00,630
+to add them.
+
+53
+00:04:01,010 --> 00:04:08,900
+Now a quick and easy way would be to simply loop through them, so let ingredient of
+
+54
+00:04:09,380 --> 00:04:16,580
+ingredients, like that and then we could simply call this addIngredient for each ingredient
+
+55
+00:04:16,820 --> 00:04:18,660
+and that would be absolutely fine,
+
+56
+00:04:18,680 --> 00:04:23,630
+the only downside probably is that we emit a lot of events.
+
+57
+00:04:23,660 --> 00:04:29,510
+Now it won't be too bad because even a recipe with like 30 ingredients wouldn't blow up our app
+
+58
+00:04:29,900 --> 00:04:33,900
+but still, there are a lot of unnecessary event emissions.
+
+59
+00:04:34,250 --> 00:04:42,050
+So that is a viable option but I'll comment it out, a different one would be to directly add all ingredients
+
+60
+00:04:42,050 --> 00:04:45,160
+in one go and then emit our event.
+
+61
+00:04:45,470 --> 00:04:55,100
+So we could access our ingredients here and call the push method and now we can use an ES6 feature,
+
+62
+00:04:55,500 --> 00:05:04,300
+the spread operator which allows us to basically turn an array of elements into a list of elements because
+
+63
+00:05:04,300 --> 00:05:09,630
+the push method here is able to handle multiple objects.
+
+64
+00:05:09,670 --> 00:05:15,490
+However, it is not able to handle an array or to be precise, it can handle an array but then it would
+
+65
+00:05:15,490 --> 00:05:19,650
+push this array as a single object to the other array.
+
+66
+00:05:19,690 --> 00:05:25,810
+So by adding the spread operator which is simply three dots, might look strange but that is how the operator
+
+67
+00:05:25,810 --> 00:05:26,870
+looks,
+
+68
+00:05:26,890 --> 00:05:32,470
+we can now simply spread our ingredients into a list of single ingredients which are now pushed without
+
+69
+00:05:32,470 --> 00:05:36,440
+issues to our ingredients array and then don't forget it,
+
+70
+00:05:36,580 --> 00:05:40,260
+we have to emit that our ingredients changed,
+
+71
+00:05:40,270 --> 00:05:44,150
+so why don't we simply pass a copy of it.
+
+72
+00:05:45,570 --> 00:05:50,540
+So with that now, we get a method we can call, addIngredients.
+
+73
+00:05:50,540 --> 00:05:57,810
+So back in the recipe service on the shopping list service, we can now call addIngredients and pass our ingredients
+
+74
+00:05:57,810 --> 00:05:59,490
+to that service.
+
+75
+00:05:59,640 --> 00:06:06,030
+With that let's save this and let's simply check this. Right now we only have the default values of apples
+
+76
+00:06:06,060 --> 00:06:08,460
+and tomatoes on our shopping list,
+
+77
+00:06:08,460 --> 00:06:11,280
+now on the Schnitzel we got meat and french fries,
+
+78
+00:06:11,370 --> 00:06:18,590
+let's click to shopping list and let's go to the shopping list and we see meat and french fries,
+
+79
+00:06:18,850 --> 00:06:21,830
+awesome, that looks really great.
+
+80
+00:06:21,940 --> 00:06:28,570
+Of course if you click this multiple times, it will duplicate it and you can of course write some logic
+
+81
+00:06:28,570 --> 00:06:33,700
+to check if an item has already been added and then group it together by name,
+
+82
+00:06:33,700 --> 00:06:35,580
+I won't do this in this application.
+
+83
+00:06:35,590 --> 00:06:37,680
+The main thing here is it works,
+
+84
+00:06:37,690 --> 00:06:42,960
+we can send data around through our app by using services.
+
+85
+00:06:43,090 --> 00:06:50,560
+We took a major step forward, now in the next section, we're going to have a look at routing and thereafter,
+
+86
+00:06:50,630 --> 00:06:58,690
+we're going to add routing to this application to now get a proper navigation and also to make this new recipe
+
+87
+00:06:58,690 --> 00:07:01,450
+button here work. So I'll see you there.
+

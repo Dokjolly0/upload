@@ -1,0 +1,160 @@
+1
+00:00:02,380 --> 00:00:09,430
+I'm back in my Firebase project and as with the normal HTTP requests, I really want to emphasize that
+
+2
+00:00:09,430 --> 00:00:14,830
+you of course don't need Firebase to add authentication to an Angular application.
+
+3
+00:00:14,830 --> 00:00:21,880
+You can add it with any back-end, be that a REST or a GraphQL API. Your back-end just needs to offer
+
+4
+00:00:21,910 --> 00:00:27,100
+endpoints you can use to create new users and to log users in to get such a token
+
+5
+00:00:27,100 --> 00:00:33,100
+therefore. If your API supports that, and most APIs do and if you're creating your own API, you can of
+
+6
+00:00:33,100 --> 00:00:36,730
+course add your own auth logic, then you can use that API,
+
+7
+00:00:36,730 --> 00:00:42,130
+you don't need Firebase, I'm just using it because it's easy, free to use, doesn't require us to write
+
+8
+00:00:42,130 --> 00:00:43,040
+server-side code,
+
+9
+00:00:43,090 --> 00:00:44,280
+that's the only reason.
+
+10
+00:00:45,070 --> 00:00:50,870
+And with that, let's go to the authentication page here and there,
+
+11
+00:00:50,920 --> 00:00:53,200
+we now have to set up a sign in method.
+
+12
+00:00:53,530 --> 00:00:57,790
+Well actually before we do that, let's go to the database again and there,
+
+13
+00:00:57,790 --> 00:01:06,730
+let's go to rules and under rules, previously we unlocked this by setting read and write access to true for
+
+14
+00:01:06,730 --> 00:01:07,290
+everyone.
+
+15
+00:01:07,330 --> 00:01:13,660
+This means that everyone can read our recipes, get our recipes and store recipes, everyone can interact
+
+16
+00:01:13,660 --> 00:01:15,240
+with our database here.
+
+17
+00:01:15,260 --> 00:01:20,860
+Now this was required in the past because we had no authentication in place, since this is about to change
+
+18
+00:01:20,860 --> 00:01:27,470
+now, it's about to change these settings and therefore you should now change this to auth unequal null
+
+19
+00:01:27,490 --> 00:01:30,300
+here, for both read and write.
+
+20
+00:01:30,310 --> 00:01:35,800
+This will tell Firebase that only authenticated users should be able to read and write data.
+
+21
+00:01:35,800 --> 00:01:41,140
+Now of course if you were using Firebase for your project, you can set up more sophisticated rules for
+
+22
+00:01:41,140 --> 00:01:45,770
+different resources and the official Firebase docs are then the way to go. Here,
+
+23
+00:01:45,790 --> 00:01:53,770
+I want to lock down everything, my entire Firebase database if users are not authenticated. Publish these
+
+24
+00:01:53,770 --> 00:01:57,250
+rules to make sure they have an effect and what you will already notice
+
+25
+00:01:57,250 --> 00:02:05,050
+now with these changes, that if you go to recipes and you fetch data, you get an error here, a 401 error
+
+26
+00:02:05,080 --> 00:02:06,790
+that you're not authorized.
+
+27
+00:02:06,820 --> 00:02:11,560
+Now of course, we could handle that error in a better way by displaying a nice error message here or
+
+28
+00:02:11,560 --> 00:02:17,290
+anything like that but we won't even reach that page soon because we will lock down access to it in
+
+29
+00:02:17,290 --> 00:02:23,170
+our front-end to provide a good user experience and avoid that a user is able to visit a page where
+
+30
+00:02:23,170 --> 00:02:25,950
+he's not going to be able to do anything anyways.
+
+31
+00:02:26,020 --> 00:02:29,260
+So for now, we can go there and we can fail but soon this will change
+
+32
+00:02:29,380 --> 00:02:36,130
+but now, we need to go back to Firebase and enable authentication so that we can slowly add the logic
+
+33
+00:02:36,340 --> 00:02:40,160
+to be able to visit our authenticated routes again.
+
+34
+00:02:40,240 --> 00:02:46,300
+So here under authentication on Firebase, click on setup sign in method and choose e-mail and password
+
+35
+00:02:46,480 --> 00:02:50,800
+and click enable here, only that top one. Now click save
+
+36
+00:02:50,800 --> 00:02:59,050
+and now you got that built-in Firebase authentication active where you can send requests to certain
+
+37
+00:02:59,050 --> 00:03:06,250
+endpoints offered by Firebase, to create users and to log users in and you'll then see your users here
+
+38
+00:03:06,430 --> 00:03:08,640
+under authentication in the users tab.
+
+39
+00:03:08,890 --> 00:03:11,010
+Now which endpoints are that though?
+
+40
+00:03:11,020 --> 00:03:12,700
+Let's start with signing users up.
+

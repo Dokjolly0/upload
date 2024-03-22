@@ -1,0 +1,172 @@
+1
+00:00:02,210 --> 00:00:06,630
+In the last lecture, we finished our set up which allowed us to load an item.
+
+2
+00:00:06,630 --> 00:00:12,900
+Now I want to make sure that if we are in the editMode, we actually don't add a new one but update the
+
+3
+00:00:12,900 --> 00:00:14,280
+existing one.
+
+4
+00:00:14,430 --> 00:00:20,820
+It starts in the template with the button name, here this won't be add at all times,
+
+5
+00:00:21,270 --> 00:00:27,630
+instead this will only be add if we are indeed adding an item,
+
+6
+00:00:27,720 --> 00:00:29,390
+otherwise it will be safe.
+
+7
+00:00:29,490 --> 00:00:31,980
+So here we can check if editMode
+
+8
+00:00:32,250 --> 00:00:39,600
+and if this is true and I'm using a ternary expression here, I want to output update maybe,
+
+9
+00:00:39,810 --> 00:00:41,910
+otherwise if we are not in editMode,
+
+10
+00:00:41,910 --> 00:00:45,170
+so if we are creating a new item, I will save add.
+
+11
+00:00:45,720 --> 00:00:48,290
+And now with that, we see add is the default
+
+12
+00:00:48,300 --> 00:00:55,920
+but if I click an item here, this switches to update. Now with that, of course I also want to change the
+
+13
+00:00:55,920 --> 00:00:59,100
+way we save this. So in onAddItem,
+
+14
+00:00:59,130 --> 00:01:02,030
+right now we always call add ingredient,
+
+15
+00:01:02,190 --> 00:01:05,680
+now that's not correct if we want to update an existing one.
+
+16
+00:01:05,700 --> 00:01:12,930
+First of all in the shopping list service, I'll add a new method which I'll name updateIngredient,
+
+17
+00:01:13,080 --> 00:01:14,060
+updateIngredient
+
+18
+00:01:14,250 --> 00:01:21,000
+and here I expect to get the index of the ingredient which should be updated and the new ingredient
+
+19
+00:01:21,210 --> 00:01:22,830
+of type ingredient. 
+
+20
+00:01:23,190 --> 00:01:29,640
+And with that information, I can simply reach out to my ingredients, get the one with the index I'm
+
+21
+00:01:29,640 --> 00:01:36,960
+looking for and set it equal to the new ingredient and thereafter, I want to call ingredients changed
+
+22
+00:01:37,530 --> 00:01:40,200
+and emit my updateIngredients
+
+23
+00:01:40,200 --> 00:01:43,480
+and as always, just a slice of them as we did before.
+
+24
+00:01:44,410 --> 00:01:48,830
+So with this, I'm now updating the ingredients here,
+
+25
+00:01:48,850 --> 00:01:53,260
+we need to call this method in onAddItem if we are in editMode.
+
+26
+00:01:53,620 --> 00:01:58,340
+Well, nothing easier than that, we can simply use an if expression, check our mode here,
+
+27
+00:01:58,420 --> 00:02:08,450
+so if editMode, if editMode is true, well then I don't want to add a new ingredient,
+
+28
+00:02:08,710 --> 00:02:13,590
+then I want to reach out to the shopping list service and call updateIngredient
+
+29
+00:02:13,840 --> 00:02:24,820
+and here I will pass my editedItemIndex and my new ingredient, otherwise then in this case here, I will
+
+30
+00:02:24,820 --> 00:02:27,560
+call add ingredient.
+
+31
+00:02:27,580 --> 00:02:35,170
+So now if we save this, we should see that indeed if I change this to 10 here or 19 because I mistyped and
+
+32
+00:02:35,170 --> 00:02:37,980
+I click update, it does update here
+
+33
+00:02:38,380 --> 00:02:42,160
+and the same for tomatoes, it updates here, of course
+
+34
+00:02:42,170 --> 00:02:44,750
+also if I rename this to bread.
+
+35
+00:02:45,010 --> 00:02:46,510
+So that's working,
+
+36
+00:02:46,510 --> 00:02:48,160
+that is awesome.
+
+37
+00:02:48,160 --> 00:02:51,510
+Now let's see if it also works if we create a new item,
+
+38
+00:02:51,520 --> 00:02:55,460
+Bread, now it correctly adds a new one
+
+39
+00:02:55,610 --> 00:03:00,810
+and if we now click on this, we do indeed edit it, so this works fine.
+
+40
+00:03:00,810 --> 00:03:06,460
+However now I also want to reset the form after updating or creating an item
+
+41
+00:03:06,480 --> 00:03:10,180
+and I also want to make this clear button work as well as the delete button.
+
+42
+00:03:10,290 --> 00:03:12,510
+Let's start with resetting the form though
+
+43
+00:03:12,510 --> 00:03:13,500
+in the next lecture.
+

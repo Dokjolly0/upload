@@ -1,0 +1,40 @@
+1
+00:00:03,070 --> 00:00:06,440
+So throughout the section, you learned a lot about components,
+
+2
+00:00:06,460 --> 00:00:08,740
+we really had a deep dive on them.
+
+3
+00:00:08,740 --> 00:00:14,590
+You learned how to use data binding with custom properties and events, how to pass data around, how to access
+
+4
+00:00:14,590 --> 00:00:20,680
+elements in your DOM, how to use local references, how to really create a dynamic app and how to use
+
+5
+00:00:20,680 --> 00:00:25,230
+lifecycle hooks to run some code at specific points of time.
+
+6
+00:00:25,350 --> 00:00:31,740
+With that, a lot of core features of Angular have been set now, have been taught,
+
+7
+00:00:31,780 --> 00:00:37,190
+now it's time to of course practice them in the recipe book in the next module where we will enhance
+
+8
+00:00:37,200 --> 00:00:38,900
+it as with our new knowledge
+
+9
+00:00:39,010 --> 00:00:42,700
+and of course to play around with that knowledge in your own apps.
+
+10
+00:00:42,700 --> 00:00:47,770
+So let's move onto the recipe book before we dive deeper into directives.
+

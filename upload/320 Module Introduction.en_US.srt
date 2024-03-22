@@ -1,0 +1,24 @@
+1
+00:00:02,470 --> 00:00:10,530
+We are nearing the end of this course or of the main features of Angular and in this module,
+
+2
+00:00:10,570 --> 00:00:18,130
+we'll have a look at the Angular modules, at this NgModule thing, what it exactly is about and how
+
+3
+00:00:18,130 --> 00:00:24,250
+we can work with multiple such modules in an Angular app and why we would want to do that and we'll
+
+4
+00:00:24,250 --> 00:00:30,820
+have a look at some general optimizations we can add to our Angular app to make it faster and more performant
+
+5
+00:00:31,150 --> 00:00:37,790
+and prepare it for deployment, which ultimately is of course the goal for any application you're building.
+
+6
+00:00:37,810 --> 00:00:38,590
+So let's dive in.
+

@@ -1,0 +1,160 @@
+1
+00:00:02,120 --> 00:00:08,630
+The problem is that in the actions I'm dispatching here, for example update ingredient, I'm referring
+
+2
+00:00:08,630 --> 00:00:11,660
+to the this editedItemIndex.
+
+3
+00:00:11,660 --> 00:00:17,160
+Now I do have this property here but I'm not setting it when we start editing.
+
+4
+00:00:17,250 --> 00:00:18,590
+Now two solutions, 
+
+5
+00:00:18,590 --> 00:00:25,760
+we could of course set this editedItemIndex equal to state data and then use the editedIngredient
+
+6
+00:00:25,760 --> 00:00:27,610
+index we stored in there
+
+7
+00:00:27,860 --> 00:00:35,610
+and if we do that, deleting works and updating works as well
+
+8
+00:00:35,650 --> 00:00:39,820
+and now our data also stays the way it is.
+
+9
+00:00:39,820 --> 00:00:41,070
+So now this works
+
+10
+00:00:41,260 --> 00:00:46,360
+but of course this is a bit redundant because we're extracting data from the store which we then need
+
+11
+00:00:46,480 --> 00:00:51,560
+in the store again to update our data, just to manage it in a component.
+
+12
+00:00:51,760 --> 00:00:59,960
+So we could get rid of the editedItemIndex here altogether and also remove it in the places where
+
+13
+00:00:59,960 --> 00:01:08,710
+we pass that information because if you think about it, we already know which data we manage in the store
+
+14
+00:01:08,720 --> 00:01:10,600
+or which data we're currently editing.
+
+15
+00:01:10,730 --> 00:01:13,400
+We're already managing this in our @ngrx/store,
+
+16
+00:01:13,400 --> 00:01:19,760
+we do have the editedIngredientIndex in there. So we don't need to receive these as arguments and hence
+
+17
+00:01:19,760 --> 00:01:24,700
+we can change our actions a little bit. For updating and deleting,
+
+18
+00:01:24,830 --> 00:01:26,960
+I don't really need the index anymore,
+
+19
+00:01:26,960 --> 00:01:29,870
+we could still get it but we don't need it,
+
+20
+00:01:29,870 --> 00:01:36,760
+instead we could say for updating our payload, just is the ingredient because that's all we need,
+
+21
+00:01:36,830 --> 00:01:43,910
+we already know which item we're editing and for deleting, I need no data at all because I already
+
+22
+00:01:43,910 --> 00:01:50,860
+know which item we're editing because we're starting the edit process with the help of NgRx. So with
+
+23
+00:01:50,860 --> 00:01:56,560
+these changed actions in the reducer, we of course also need to change our logic, for updating
+
+24
+00:01:56,800 --> 00:01:57,610
+our payload
+
+25
+00:01:57,610 --> 00:01:59,020
+now is the ingredient,
+
+26
+00:01:59,020 --> 00:02:02,380
+so we don't access .ingredient but just action.payload.
+
+27
+00:02:05,030 --> 00:02:12,260
+When we need the index, we just use the state editedIngredientIndex, the same down there, it's not part
+
+28
+00:02:12,260 --> 00:02:15,260
+of our action anymore, it's already stored in the state
+
+29
+00:02:18,830 --> 00:02:27,690
+and the same for deleting, there we also compare our index to the state editedIngredientIndex. Now one
+
+30
+00:02:27,690 --> 00:02:32,750
+tiny addition we should therefore also make here is when we do update or delete,
+
+31
+00:02:32,970 --> 00:02:40,170
+we of course also stop the editing process, right and hence it would make sense to then also set edited
+
+32
+00:02:40,170 --> 00:02:44,350
+ingredient index to minus one here and set editedIngredient to null,
+
+33
+00:02:44,460 --> 00:02:51,360
+so to reset our ingredient or our editedIngredient data here for updating and for deleting because
+
+34
+00:02:51,390 --> 00:02:59,080
+these two actions also stop the editing process. Now in the shopping list component here,
+
+35
+00:02:59,120 --> 00:03:04,270
+that also means that for updating, we just forward the new ingredient,
+
+36
+00:03:04,280 --> 00:03:09,910
+it's not part of an object, not the value of some property in an object, instead update ingredient takes
+
+37
+00:03:09,910 --> 00:03:14,560
+now just the ingredient as a payload. And with all of that,
+
+38
+00:03:14,750 --> 00:03:18,170
+again if I edit this, it works just fine
+
+39
+00:03:18,380 --> 00:03:25,550
+but now we update this correctly behind the scenes and we have a little bit of a leaner code where we
+
+40
+00:03:25,550 --> 00:03:29,660
+don't manage too much redundant data in our shopping-edit component.
+

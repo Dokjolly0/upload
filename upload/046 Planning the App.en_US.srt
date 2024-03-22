@@ -1,0 +1,288 @@
+1
+00:00:02,480 --> 00:00:09,500
+The first step in creating an Angular application of course is to lay out the structure of this app
+
+2
+00:00:09,800 --> 00:00:14,440
+and especially plan which components you're probably going to need.
+
+3
+00:00:14,570 --> 00:00:20,360
+Now it's normal that whilst building the app, you decide to add another component which you didn't plan to
+
+4
+00:00:20,360 --> 00:00:21,390
+add at the beginning
+
+5
+00:00:21,500 --> 00:00:26,110
+or maybe you decide that you can merge two components you thought you would have to split
+
+6
+00:00:26,390 --> 00:00:32,600
+but generally, this is still a good approach and this should also show you how I approach this and
+
+7
+00:00:32,600 --> 00:00:39,380
+how you may decide what should go into its own component and what can be merged into another one.
+
+8
+00:00:39,380 --> 00:00:44,780
+So on this page, I try to lay out the general structure of our app and at the bottom, you can find kind
+
+9
+00:00:44,780 --> 00:00:45,570
+of a legend,
+
+10
+00:00:45,650 --> 00:00:48,070
+so let's start with the features of this app.
+
+11
+00:00:48,380 --> 00:00:54,240
+Well, we're going to have a shopping list and a recipe book section as I said, managing either our single ingredients
+
+12
+00:00:54,260 --> 00:01:02,150
+we need to buy or in the recipe book, our whole recipes. Which components will we need for this? Obviously,
+
+13
+00:01:02,240 --> 00:01:05,430
+a root component holding our overall application,
+
+14
+00:01:05,460 --> 00:01:12,620
+the app component, every Angular app has this. Then since we have two sections, it probably makes sense
+
+15
+00:01:12,620 --> 00:01:17,620
+to have some kind of header component where we can navigate between these two sections.
+
+16
+00:01:17,630 --> 00:01:23,090
+Of course you could also hardcode the headers simply into the app component but since it will contain its
+
+17
+00:01:23,150 --> 00:01:29,120
+own business logic, in the end it will trigger a routing action later and we will also add a dropdown
+
+18
+00:01:29,120 --> 00:01:34,430
+there in the end which allows us to store our recipes on the server and fetch them from there.
+
+19
+00:01:34,430 --> 00:01:39,860
+So since we will have that logic attached to the header, outsourcing it into its own component makes
+
+20
+00:01:39,860 --> 00:01:46,310
+sense so that we don't have to put all the logic into our root component which really mainly should only
+
+21
+00:01:46,310 --> 00:01:49,520
+be responsible for holding our overall app.
+
+22
+00:01:49,910 --> 00:01:51,210
+So that is the header,
+
+23
+00:01:51,290 --> 00:01:53,630
+now let's dive into the individual features,
+
+24
+00:01:53,630 --> 00:01:59,330
+let's start with the shopping list. Here I guess it makes sense to have the overall shopping-list component,
+
+25
+00:01:59,330 --> 00:02:05,350
+remember the purple box is only the feature so we need a component holding our shopping list and maybe
+
+26
+00:02:05,410 --> 00:02:07,370
+in this shopping-list component,
+
+27
+00:02:07,370 --> 00:02:13,540
+we also want to have a shopping list edit part which allows us to add new items, so an input field and
+
+28
+00:02:13,540 --> 00:02:16,420
+a button because that again has its own logic,
+
+29
+00:02:16,460 --> 00:02:20,720
+we will have to decide if we are editing an existing item or adding a new one,
+
+30
+00:02:20,750 --> 00:02:25,240
+we need to submit this, so it makes sense to create its own component for this.
+
+31
+00:02:25,280 --> 00:02:30,710
+So if we have an overall list component, mainly holding the data of the list and the edit component
+
+32
+00:02:30,890 --> 00:02:36,050
+being responsible for managing this data kind of, though the edit component will be nested inside the
+
+33
+00:02:36,050 --> 00:02:37,460
+list component.
+
+34
+00:02:37,940 --> 00:02:42,430
+I guess that's it for the shopping list, let's have a look at the recipe book. Here,
+
+35
+00:02:42,440 --> 00:02:48,380
+it certainly makes sense to have, again just like with the shopping list, a recipe-list component which
+
+36
+00:02:48,470 --> 00:02:55,370
+shows us a list of all our recipes. Here we might later also put each individual recipe into its own
+
+37
+00:02:55,370 --> 00:02:55,940
+item
+
+38
+00:02:55,940 --> 00:03:03,890
+though since it holds a little bit more information than just one line of HTML code and a recipe-detail
+
+39
+00:03:03,890 --> 00:03:05,080
+area would be great too.
+
+40
+00:03:05,090 --> 00:03:12,320
+So an area where once we select a recipe, we can see informations about that. Later in the course, we will
+
+41
+00:03:12,320 --> 00:03:18,020
+also add another component here because we will then somehow need a component which allows us to edit
+
+42
+00:03:18,020 --> 00:03:20,240
+existing recipes or add new ones
+
+43
+00:03:20,360 --> 00:03:25,730
+but since this is really advanced and we would not be able to fill it with much life right now, I will
+
+44
+00:03:25,730 --> 00:03:28,600
+omit it for now and focus on the displaying part.
+
+45
+00:03:28,640 --> 00:03:33,260
+So a list with items and then the details section which displays the details for the currently
+
+46
+00:03:33,260 --> 00:03:34,650
+selected item.
+
+47
+00:03:34,670 --> 00:03:37,360
+I guess this looks like a good plan,
+
+48
+00:03:37,400 --> 00:03:44,670
+each of these components should hold a significant amount of business logic and I guess with the component
+
+49
+00:03:44,670 --> 00:03:52,730
+sketch out here, we're really having each component focus on one main topic, displaying a list, displaying
+
+50
+00:03:52,730 --> 00:03:58,590
+information about a single item, displaying detail information about a selected item and so on.
+
+51
+00:03:58,730 --> 00:04:00,720
+So this is generally how I approach this,
+
+52
+00:04:00,830 --> 00:04:03,990
+of course feel free to split this up even more
+
+53
+00:04:04,020 --> 00:04:06,250
+or if you want, merge them together,
+
+54
+00:04:06,260 --> 00:04:11,180
+for example recipe-list in a single item but this will become more clear once we actually implement
+
+55
+00:04:11,180 --> 00:04:12,920
+these components.
+
+56
+00:04:12,920 --> 00:04:18,560
+Now one last thing we should think about, which models will be use in this app? And with model, I simply
+
+57
+00:04:18,560 --> 00:04:20,870
+mean which data.
+
+58
+00:04:20,930 --> 00:04:25,690
+So we certainly will need some representation for our ingredient.
+
+59
+00:04:25,850 --> 00:04:31,620
+We will use ingredients a lot in the recipe book too, each recipe there has a couple of ingredients,
+
+60
+00:04:31,700 --> 00:04:38,510
+so we should define how the ingredient looks like. That is something which your application probably
+
+61
+00:04:38,600 --> 00:04:39,530
+also needs,
+
+62
+00:04:39,560 --> 00:04:45,260
+be clear about the data you're going to use and put it into its own class, so that you have your own
+
+63
+00:04:45,260 --> 00:04:51,980
+type you can use later on and that you have a clear interface or definition of what your data looks
+
+64
+00:04:51,980 --> 00:04:55,840
+like so that you can easily have your components talk with each other,
+
+65
+00:04:55,880 --> 00:05:01,070
+something we'll dive in later in this course so that there is no issue regarding the data we're exchanging.
+
+66
+00:05:01,700 --> 00:05:07,870
+So besides the ingredients which probably is a very simple model, only controlling the name and amount
+
+67
+00:05:07,880 --> 00:05:15,890
+maybe, we also will need a model for the recipe which contains things like title, the description, the ingredients
+
+68
+00:05:15,920 --> 00:05:17,360
+and so on.
+
+69
+00:05:17,570 --> 00:05:21,090
+And I think that with this, we have a solid plan for now,
+
+70
+00:05:21,200 --> 00:05:22,280
+let's get started,
+
+71
+00:05:22,370 --> 00:05:29,810
+let's implement all these components, fill it with some dummy data for now and take the first step in
+
+72
+00:05:29,810 --> 00:05:31,720
+building our course project.
+

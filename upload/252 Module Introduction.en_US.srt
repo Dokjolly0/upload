@@ -1,0 +1,56 @@
+1
+00:00:02,530 --> 00:00:06,830
+Thus far in our application, we always worked in the browser only.
+
+2
+00:00:06,880 --> 00:00:09,690
+That means that we control all our data with Angular,
+
+3
+00:00:09,690 --> 00:00:15,100
+we store our data somewhere in memory in the browser and it also means that whenever we restart the
+
+4
+00:00:15,100 --> 00:00:18,340
+application, all our data is gone.
+
+5
+00:00:18,340 --> 00:00:22,000
+It also means that we can't persist data anywhere
+
+6
+00:00:22,000 --> 00:00:27,220
+and of course, a typical requirement of an application you're building would be that the front-end,
+
+7
+00:00:27,220 --> 00:00:33,100
+so the part that runs in the browser, which is your Angular app, that this does not work standalone but
+
+8
+00:00:33,100 --> 00:00:40,480
+that it is able to communicate to some server to store data there, to fetch data from there, to do whatever
+
+9
+00:00:40,480 --> 00:00:42,460
+you need to do in your application
+
+10
+00:00:42,520 --> 00:00:48,340
+and that is exactly what we'll have a look at in this module. We'll learn how Angular communicates with
+
+11
+00:00:48,700 --> 00:00:51,400
+a back-end, with a database and so on.
+
+12
+00:00:51,550 --> 00:00:56,520
+You'll learn how to send HTTP requests and also how to transform data
+
+13
+00:00:56,530 --> 00:01:02,480
+if you need to. You might remember that observables section where I gave you a first introduction to that,
+
+14
+00:01:02,560 --> 00:01:03,970
+now we'll take a closer look.
+

@@ -1,0 +1,360 @@
+1
+00:00:02,330 --> 00:00:09,500
+Emitting new data is arguably the most important thing observables do and in I'd say 99% of all
+
+2
+00:00:09,500 --> 00:00:11,280
+cases, when you subscribe,
+
+3
+00:00:11,280 --> 00:00:16,370
+you'll pass that first argument where you are interested in the data you are getting
+
+4
+00:00:16,370 --> 00:00:22,100
+or maybe it's 90% because there is one other important use case too, especially when we think
+
+5
+00:00:22,100 --> 00:00:29,420
+about things like HTTP requests and that is error handling. This counter here can't fail,
+
+6
+00:00:29,420 --> 00:00:32,090
+there is no error that could occur here
+
+7
+00:00:32,330 --> 00:00:34,110
+but that's a different story
+
+8
+00:00:34,160 --> 00:00:40,260
+if you're sending HTTP request which we will later do. So here of course we can also fake an error,
+
+9
+00:00:40,280 --> 00:00:45,510
+we can simply throw one and define our own condition when we want to do that.
+
+10
+00:00:45,770 --> 00:00:51,230
+Now to do that, we could for example check if count is greater than three,
+
+11
+00:00:51,290 --> 00:00:59,150
+so if that occurs, then we'll first of all still emit that new data with the next method but then
+
+12
+00:00:59,150 --> 00:01:03,920
+we'll also use the error method to throw a new error here.
+
+13
+00:01:03,920 --> 00:01:11,000
+So here, I'll create a new error object, count is greater three, which of course is a horrible event that
+
+14
+00:01:11,000 --> 00:01:13,280
+definitely is worth an error.
+
+15
+00:01:13,310 --> 00:01:17,550
+Now if we do that and I save everything, let's see what happens,
+
+16
+00:01:17,570 --> 00:01:23,200
+it starts counting again and as soon as we exceed three, we get an error here right,
+
+17
+00:01:23,210 --> 00:01:24,460
+we get our error that
+
+18
+00:01:24,470 --> 00:01:28,310
+we defined and you see that the observable now stops emitting.
+
+19
+00:01:28,520 --> 00:01:34,000
+It actually gives us four which makes sense because that's the last value it emits
+
+20
+00:01:34,010 --> 00:01:39,840
+before this condition is true but there are no other values emitted because whenever an observable throws
+
+21
+00:01:39,840 --> 00:01:42,190
+an error, it cancels, it's done,
+
+22
+00:01:42,190 --> 00:01:45,350
+it will not emit any other values, it dies
+
+23
+00:01:45,370 --> 00:01:50,030
+so to say and therefore in that case, you also don't need to unsubscribe.
+
+24
+00:01:50,140 --> 00:01:52,720
+You still can unsubscribe if you navigate away,
+
+25
+00:01:52,720 --> 00:01:58,900
+you'll not get an error but it's not necessary because it was dead anyways but you might not have
+
+26
+00:01:58,900 --> 00:02:00,230
+known that when you unsubscribed,
+
+27
+00:02:00,250 --> 00:02:03,300
+so unsubscribing is not an issue.
+
+28
+00:02:03,320 --> 00:02:05,250
+Now this is how you can throw an error
+
+29
+00:02:05,260 --> 00:02:11,140
+and of course, it's more important to not just throw them, that most of the time will be done for you
+
+30
+00:02:11,140 --> 00:02:16,810
+when you're using some built-in Angular functionality that can fail, like HTTP requests but it's important
+
+31
+00:02:16,810 --> 00:02:22,090
+to know how to handle that and for that, you can pass another argument to subscribe.
+
+32
+00:02:22,690 --> 00:02:26,340
+Thus far, we passed the first argument which is this data function,
+
+33
+00:02:26,350 --> 00:02:31,480
+the second argument would be our function that gets called when an error occurs and we'll get the error
+
+34
+00:02:31,570 --> 00:02:33,320
+as an argument there.
+
+35
+00:02:33,370 --> 00:02:38,260
+Now of course the simplest thing we can do here is that we log that error to the console but obviously
+
+36
+00:02:38,260 --> 00:02:39,940
+you could do way more than that,
+
+37
+00:02:39,970 --> 00:02:46,630
+you could send it to your own back-end and store it in a database there, you can show an error message
+
+38
+00:02:46,630 --> 00:02:48,580
+and alert to the user.
+
+39
+00:02:48,640 --> 00:02:49,420
+Let's actually do that,
+
+40
+00:02:49,450 --> 00:02:55,130
+let's show an alert and let's show the error message here in the alert.
+
+41
+00:02:55,200 --> 00:02:56,310
+So that's what we're doing here,
+
+42
+00:02:56,310 --> 00:03:01,500
+we're logging it to the console, we're showing an alert and now it starts counting again and as soon as
+
+43
+00:03:01,500 --> 00:03:02,820
+we exceed three,
+
+44
+00:03:02,820 --> 00:03:04,100
+here you go,
+
+45
+00:03:04,110 --> 00:03:09,030
+now we get our alert and you see we don't have that red error here on the right anymore,
+
+46
+00:03:09,030 --> 00:03:12,720
+instead it's now a regular console log because that's what we're doing.
+
+47
+00:03:12,750 --> 00:03:20,200
+So now we're handling that error and that of course is also an important part. Now handling errors is
+
+48
+00:03:20,200 --> 00:03:20,890
+nice
+
+49
+00:03:21,040 --> 00:03:26,980
+but what about completing the observable? I told you that throwing an error actually cancels the
+
+50
+00:03:26,980 --> 00:03:28,920
+observable and lets it die
+
+51
+00:03:29,350 --> 00:03:31,530
+but completing it is something different,
+
+52
+00:03:31,550 --> 00:03:38,470
+completing can be a normal process in an observable. Now our interval by default doesn't complete, it
+
+53
+00:03:38,470 --> 00:03:44,170
+will emit new values until the end of time and HTTP requests on the other hand will complete,
+
+54
+00:03:44,290 --> 00:03:47,740
+it completes whenever a response by the server is there
+
+55
+00:03:47,890 --> 00:03:53,200
+and of course here when we're building our own observable from the ground up, we can also complete
+
+56
+00:03:53,200 --> 00:03:54,610
+this manually. In the end,
+
+57
+00:03:54,610 --> 00:04:00,840
+we are defining how our observable behaves, our event source is the set interval
+
+58
+00:04:00,850 --> 00:04:07,120
+we have wrapped in our observable and therefore before we throw an error let's say, we can also add another
+
+59
+00:04:07,120 --> 00:04:10,040
+condition, say if count is equal to two,
+
+60
+00:04:10,300 --> 00:04:18,510
+well then we simply call observer complete and there, you don't need to pass any arguments. Now when you
+
+61
+00:04:18,510 --> 00:04:25,200
+call complete, the observable will really come to a halt and you can see that if you now reload, it logs
+
+62
+00:04:25,200 --> 00:04:32,340
+zero, it logs one, it logs two and that's it, doesn't log anything else, doesn't reach our error condition
+
+63
+00:04:32,490 --> 00:04:38,130
+because we complete the observable before it gets there and that is important to understand and
+
+64
+00:04:38,130 --> 00:04:41,790
+to keep in mind, whenever an observable completes, it really is done,
+
+65
+00:04:41,850 --> 00:04:47,540
+there are no other values emitted thereafter, which kind of makes sense because it completed.
+
+66
+00:04:47,550 --> 00:04:53,220
+Now if you want to react to that completion, you can add a third arguments to the subscribe method and
+
+67
+00:04:53,220 --> 00:04:55,780
+that is your completion handler function.
+
+68
+00:04:55,860 --> 00:05:01,440
+It's a function that gets no arguments because completing doesn't pass any arguments and it's simply
+
+69
+00:05:01,440 --> 00:05:05,640
+a function where you can do some cleanup work or whatever you need to do
+
+70
+00:05:05,700 --> 00:05:09,650
+and here I'll just log completed. Also important,
+
+71
+00:05:09,690 --> 00:05:11,240
+you don't need to unsubscribe
+
+72
+00:05:11,310 --> 00:05:16,770
+if your observable did complete but again, you might not know that here in ngOnDestroy
+
+73
+00:05:16,770 --> 00:05:22,330
+so you can still do that without getting errors. So if I reload,
+
+74
+00:05:22,330 --> 00:05:30,420
+now we see our logs again and after the two, we see completed. Now also worth noting though and important
+
+75
+00:05:30,420 --> 00:05:31,580
+to keep in mind,
+
+76
+00:05:31,800 --> 00:05:37,650
+you might think that complete, so that complete function here also fires when you're getting an error,
+
+77
+00:05:38,100 --> 00:05:41,690
+after all the observable does finish after throwing an error,
+
+78
+00:05:41,730 --> 00:05:42,660
+right?
+
+79
+00:05:42,780 --> 00:05:44,410
+Well that's not the case.
+
+80
+00:05:44,640 --> 00:05:51,660
+If we change the complete condition here temporarily to let's say to 5 let's say
+
+81
+00:05:51,840 --> 00:05:57,580
+and therefore, this will happen after this condition which actually will throw an error,
+
+82
+00:05:57,780 --> 00:06:00,250
+you will see something that might surprise you.
+
+83
+00:06:00,270 --> 00:06:04,350
+We see our normal output here and then we get that error
+
+84
+00:06:05,310 --> 00:06:06,370
+and that's it.
+
+85
+00:06:06,390 --> 00:06:10,890
+What you don't see anywhere is our completed log,
+
+86
+00:06:10,980 --> 00:06:18,450
+so this here never gets logged and that's just one important characteristic you have to keep in mind
+
+87
+00:06:18,450 --> 00:06:25,200
+about observables. When it cancels due to an error, then that's a different thing than when it completes.
+
+88
+00:06:25,680 --> 00:06:28,320
+An error cancels the observable,
+
+89
+00:06:28,350 --> 00:06:35,070
+it does not complete it, technically in both cases, no new values are emitted but regarding the functions
+
+90
+00:06:35,100 --> 00:06:37,320
+that get called here, there is a difference.
+

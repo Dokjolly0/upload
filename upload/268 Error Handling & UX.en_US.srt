@@ -1,0 +1,120 @@
+1
+00:00:02,240 --> 00:00:07,880
+That is error handling and what you can do, some ideas on how to get started with error handling.
+
+2
+00:00:07,880 --> 00:00:13,170
+For the moment, I'll switch this rule back to true so that we can work with the data again
+
+3
+00:00:13,340 --> 00:00:20,360
+but it is worth keeping these concepts, these ideas in mind because it can be very helpful and will definitely
+
+4
+00:00:20,360 --> 00:00:21,590
+improve the experience
+
+5
+00:00:21,590 --> 00:00:23,270
+users have on your webpage
+
+6
+00:00:23,540 --> 00:00:27,730
+if you properly handle errors. Speaking of handling errors,
+
+7
+00:00:27,740 --> 00:00:30,710
+one last thing we could do here, in our alert,
+
+8
+00:00:30,710 --> 00:00:32,510
+of course we could also add a button,
+
+9
+00:00:37,800 --> 00:00:40,180
+where we say OK or anything like this
+
+10
+00:00:40,320 --> 00:00:46,600
+and this is simply there for the user to get rid of that error message, where we then trigger onHandleError
+
+11
+00:00:46,600 --> 00:00:51,790
+and now in that method in the app component,
+
+12
+00:00:51,790 --> 00:00:58,630
+let's add onHandleError and there, I simply set error back to null and
+
+13
+00:00:58,640 --> 00:01:01,640
+this will get rid of this error alert as well.
+
+14
+00:01:01,700 --> 00:01:09,230
+Now to see that, I will indeed quickly switch back to false here again so that we can get an error,
+
+15
+00:01:09,440 --> 00:01:11,810
+so let's fetch posts, here's the error,
+
+16
+00:01:11,870 --> 00:01:14,100
+let's click OK, now we get rid of that.
+
+17
+00:01:14,120 --> 00:01:17,970
+Now we see loading again and that of course should also not be the case
+
+18
+00:01:18,080 --> 00:01:22,160
+and indeed, the right thing to do would be to reset
+
+19
+00:01:22,250 --> 00:01:24,140
+this is fetching property
+
+20
+00:01:24,260 --> 00:01:26,680
+whenever we get an error as well
+
+21
+00:01:26,690 --> 00:01:31,170
+because even if we have an error, we are definitely not fetching data again.
+
+22
+00:01:31,250 --> 00:01:36,560
+So setting is fetching to false here in the error use case when we subscribe
+
+23
+00:01:36,560 --> 00:01:38,180
+is the right thing to do
+
+24
+00:01:38,210 --> 00:01:43,730
+because even with an error, you're not fetching data anymore, so that state definitely changed and therefore
+
+25
+00:01:43,730 --> 00:01:47,720
+it should be reflected in the UI too and in your data too.
+
+26
+00:01:47,720 --> 00:01:49,170
+So now with this changed,
+
+27
+00:01:49,340 --> 00:01:54,650
+here's the error and if we handled this, we just see no posts available which makes more sense than loading
+
+28
+00:01:54,650 --> 00:01:55,320
+I guess.
+
+29
+00:01:55,490 --> 00:02:00,130
+So with that out of the way however, let's now really switch this back to true
+
+30
+00:02:00,290 --> 00:02:04,930
+and now we have an error handling strategy that is very basic but a good start.
+

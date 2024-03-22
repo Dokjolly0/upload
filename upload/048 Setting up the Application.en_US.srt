@@ -1,0 +1,228 @@
+1
+00:00:02,470 --> 00:00:09,310
+I'm in a brand new project created with the CLI and the only thing I did thus far is I cleaned up
+
+2
+00:00:09,310 --> 00:00:16,180
+the app component, remove this property we had there and cleaned up the app.component.html file. All
+
+3
+00:00:16,180 --> 00:00:17,690
+the rest is still the same,
+
+4
+00:00:17,710 --> 00:00:19,690
+I didn't change anything else,
+
+5
+00:00:19,690 --> 00:00:25,780
+so the first thing I want to do and you can of course recreate this project by simply running ng new,
+
+6
+00:00:25,900 --> 00:00:31,630
+any project name you like and then cleaning it up like I did. The first thing I want to do is I want
+
+7
+00:00:31,630 --> 00:00:37,690
+to add the Bootstrap CSS framework so that we have some CSS classes we can work with to give this
+
+8
+00:00:37,720 --> 00:00:43,460
+some nice styling because in this app, I really want to focus on Angular and not on the styling.
+
+9
+00:00:43,810 --> 00:00:51,580
+So of course, we can add Bootstrap with npm inside this project folder, in the terminal, I type npm install
+
+10
+00:00:51,790 --> 00:00:58,060
+then --save as it will be a production dependency Bootstrap and this will automatically install
+
+11
+00:00:58,060 --> 00:01:01,600
+the latest version of Bootstrap in this project.
+
+12
+00:01:01,930 --> 00:01:05,230
+Now once it is finished, we get Bootstrap installed,
+
+13
+00:01:05,230 --> 00:01:11,050
+now we also need to inform the CLI that Bootstrap should be included in our final bundle it creates
+
+14
+00:01:11,050 --> 00:01:16,840
+for us because of course, the CLI bundles all our script files and style files and by default, it would
+
+15
+00:01:16,840 --> 00:01:24,400
+not include Bootstrap. So to inform the CLI, we should go to the .angular-cli.json file and here
+
+16
+00:01:24,400 --> 00:01:32,830
+in styles, in this styles array, we can add any global stylesheets we want to add to our whole project.
+
+17
+00:01:32,830 --> 00:01:38,650
+Now it already has the styles.css file which is a file where you can find styles for the whole
+
+18
+00:01:38,650 --> 00:01:39,760
+project,
+
+19
+00:01:39,970 --> 00:01:43,700
+here I will simply add the path to our Bootstrap styles.
+
+20
+00:01:44,480 --> 00:01:50,090
+Now we can have a look where that is stored. In a node modules folder which manages all our dependencies,
+
+21
+00:01:50,390 --> 00:01:57,770
+if we have a look at the Bootstrap folder there, the dist folder sounds about right for distribution,
+
+22
+00:01:57,770 --> 00:01:59,720
+there we have a CSS folder
+
+23
+00:01:59,810 --> 00:02:08,970
+and here the bootstrap.css file is probably what we need. So we can quickly import this here by
+
+24
+00:02:08,970 --> 00:02:10,350
+adding a path to that
+
+25
+00:02:10,350 --> 00:02:15,820
+and now the important thing is we need to go up one level first because you don't have to see this path
+
+26
+00:02:15,820 --> 00:02:18,450
+relative from the cli.json file here,
+
+27
+00:02:18,480 --> 00:02:23,240
+so this config file we're in but you have to see it relative from your index.html file
+
+28
+00:02:23,280 --> 00:02:24,940
+and that is in the source folder,
+
+29
+00:02:25,020 --> 00:02:29,350
+so it's nested one folder deep into your app you could say.
+
+30
+00:02:29,700 --> 00:02:35,510
+So here we target node modules and then we can target the Bootstrap folder
+
+31
+00:02:35,700 --> 00:02:42,120
+and now again just to make this really clear where this is coming from, in the Bootstrap folder, we can
+
+32
+00:02:42,120 --> 00:02:51,980
+target dist/css so let's do this, dist/css and here, bootstrap.css, just like that.
+
+33
+00:02:53,320 --> 00:02:59,230
+To be precise, it would even be better to target the minified version which is a file also lying in that
+
+34
+00:02:59,230 --> 00:02:59,620
+folder,
+
+35
+00:02:59,620 --> 00:03:06,100
+so let's add .min between bootstrap and .css, so this will already give us the minified code
+
+36
+00:03:06,280 --> 00:03:08,330
+which is of course smaller.
+
+37
+00:03:08,530 --> 00:03:16,420
+Now with that, this should be added and now we can run ng serve to get our CLI to build this project
+
+38
+00:03:16,420 --> 00:03:22,190
+for the first time and serve it at localhost:4200 as we did before in this course
+
+39
+00:03:22,950 --> 00:03:25,070
+and that is our running application.
+
+40
+00:03:25,080 --> 00:03:31,020
+Now we don't see very much here, of course because our app.component.html file is completely empty,
+
+41
+00:03:31,020 --> 00:03:37,740
+we can quickly check if Bootstrap styles were added successfully by adding a div for the class container
+
+42
+00:03:37,890 --> 00:03:43,080
+and the shortcut I'm using here is a plugin called emmet which allows me to just type dot claas name
+
+43
+00:03:43,080 --> 00:03:45,000
+and hit tab to autocomplete it.
+
+44
+00:03:45,000 --> 00:03:50,610
+It's available for many IDEs, so I'll simply Google for plus your IDE or editor and chances are you will
+
+45
+00:03:50,610 --> 00:03:51,750
+find it
+
+46
+00:03:52,050 --> 00:03:54,070
+and then in there I want to nest a row
+
+47
+00:03:54,150 --> 00:04:01,350
+and now let's say simply to get started, a column for medium-sized devices which spans the full width
+
+48
+00:04:01,350 --> 00:04:02,220
+for now
+
+49
+00:04:02,480 --> 00:04:04,670
+and I simply want to output in a h2 tab 
+
+50
+00:04:04,800 --> 00:04:06,430
+I'm working.
+
+51
+00:04:06,570 --> 00:04:10,100
+So with this, if we save thatm it should recompile and now we're seeing I'm working,
+
+52
+00:04:10,140 --> 00:04:14,230
+this looks like Bootstrap is working too,  we can see those on the font size
+
+53
+00:04:14,370 --> 00:04:19,210
+and also if we inspect this here in the styles, all these styles here and down there
+
+54
+00:04:19,220 --> 00:04:21,730
+are coming from Bootstrap.
+
+55
+00:04:21,780 --> 00:04:23,310
+So this is working
+
+56
+00:04:23,340 --> 00:04:26,370
+and with that, we get our application set up.
+
+57
+00:04:26,370 --> 00:04:29,200
+Now let's get started creating all the components we require.
+

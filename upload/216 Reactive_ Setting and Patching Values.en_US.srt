@@ -1,0 +1,96 @@
+1
+00:00:02,650 --> 00:00:09,450
+Not only can you listen to the updates in your form, you can also update the form on your own,
+
+2
+00:00:09,520 --> 00:00:15,450
+just like in the template driven approach, setValue and patchValue are there for you.
+
+3
+00:00:15,820 --> 00:00:17,540
+I will quickly show it here.
+
+4
+00:00:17,590 --> 00:00:24,310
+You can of course on your form as a whole call setValue and pass a Javascript object which should
+
+5
+00:00:24,310 --> 00:00:28,250
+now resemble the object structure up here when you create the form,
+
+6
+00:00:28,270 --> 00:00:35,410
+so where you have your userData which then is an object, where you have your username and set this equal
+
+7
+00:00:35,410 --> 00:00:38,580
+to Max for example,
+
+8
+00:00:38,730 --> 00:00:55,050
+have your e-mail, set this equal to max@test.com, have your gender, male and of course your hobbies,
+
+9
+00:00:55,050 --> 00:00:57,520
+potentially an empty array.
+
+10
+00:00:59,650 --> 00:01:07,220
+So if we do this, we should see that now our form is pre-populated with some values because we immediately
+
+11
+00:01:07,220 --> 00:01:11,160
+call setValue and of course you can also call this upon the click of a button.
+
+12
+00:01:11,660 --> 00:01:20,090
+And as in the template driven approach, you also have patchValue of course if you only want to update
+
+13
+00:01:20,330 --> 00:01:25,420
+a part of the form, like for example the username, switch this to Anna,
+
+14
+00:01:25,460 --> 00:01:28,560
+now you should see that the username is changed to Anna,
+
+15
+00:01:28,610 --> 00:01:32,220
+the rest still contains the values I set with setValue.
+
+16
+00:01:32,390 --> 00:01:38,720
+So just to bring this to your attention, patchValue and setValue are also available and the same is true
+
+17
+00:01:39,080 --> 00:01:40,470
+for resetting,
+
+18
+00:01:40,610 --> 00:01:46,470
+so if we want to reset the form after submitting it, we can simply call reset here.
+
+19
+00:01:46,730 --> 00:01:48,620
+So let's quickly do this
+
+20
+00:01:49,790 --> 00:01:51,140
+and hit submit,
+
+21
+00:01:51,170 --> 00:01:52,660
+now it's gone.
+
+22
+00:01:52,730 --> 00:01:55,130
+So this empties our form,
+
+23
+00:01:55,130 --> 00:02:02,000
+now with that, you should have the tools to work with the form, to configure it to your needs and to really
+
+24
+00:02:02,000 --> 00:02:07,380
+build powerful forms. Time to practice this in the next assignment.
+

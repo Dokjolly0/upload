@@ -1,0 +1,232 @@
+1
+00:00:02,450 --> 00:00:04,530
+We added the header in the last lecture,
+
+2
+00:00:04,550 --> 00:00:12,070
+now I want to work on my recipes. So we get the recipes component which holds the recipe-list,
+
+3
+00:00:12,110 --> 00:00:16,550
+now I also want to fill the list with some life. For this,
+
+4
+00:00:16,670 --> 00:00:22,820
+I'll go into my recipe-list component and we'll learn more about ngOnInit later in the next module,
+
+5
+00:00:22,820 --> 00:00:24,480
+in the components module,
+
+6
+00:00:24,650 --> 00:00:30,770
+for now what I want to do here is I want to add my recipes array, my array of recipes which for now is
+
+7
+00:00:30,770 --> 00:00:31,820
+an empty array
+
+8
+00:00:32,060 --> 00:00:36,040
+and here, let's go back to that slide from the beginning,
+
+9
+00:00:36,440 --> 00:00:39,610
+I want to define how a recipe should look like.
+
+10
+00:00:39,690 --> 00:00:45,710
+We're going to use a recipe a lot throughout this app and therefore we should definitely clearly define how
+
+11
+00:00:45,710 --> 00:00:51,380
+a recipe looks like, so that whenever we use it in any component, we're always talking about the same
+
+12
+00:00:51,410 --> 00:00:54,660
+structure, about the same kind of object.
+
+13
+00:00:54,680 --> 00:01:01,490
+So for this, I will create a model. What is a model then? A model simply is a TypeScript file. So in the recipes
+
+14
+00:01:01,490 --> 00:01:04,610
+folder because it's going to be the recipe model,
+
+15
+00:01:04,610 --> 00:01:12,840
+I'll add another file, it's called recipe.model.ts. Now .model is optional
+
+16
+00:01:12,860 --> 00:01:16,090
+but again you should be descriptive about what's inside the file
+
+17
+00:01:16,190 --> 00:01:18,640
+and with that, it's pretty clear what will be inside.
+
+18
+00:01:18,890 --> 00:01:23,300
+So I'll add this file, again it's now just in the recipes folder
+
+19
+00:01:23,300 --> 00:01:25,960
+and how should this file look like?
+
+20
+00:01:25,970 --> 00:01:31,820
+First of all, I'm going to export a ts class, a TypeScript class which is simply named recipe
+
+21
+00:01:33,000 --> 00:01:36,440
+because we define how a single recipe looks like here.
+
+22
+00:01:36,620 --> 00:01:41,720
+Now you could think that we're going to add something like @model here, now we're not going to do this,
+
+23
+00:01:41,730 --> 00:01:43,920
+there is no decorator like this
+
+24
+00:01:43,920 --> 00:01:49,350
+and we don't need to do this because we can use vanilla TypeScript for this. A model
+
+25
+00:01:49,500 --> 00:01:56,960
+in the end should just be a blueprint for objects we create and the TypeScript class does just this job.
+
+26
+00:01:57,000 --> 00:02:04,410
+A class can be instantiated, so we can create new objects based on the setup we provide here in this
+
+27
+00:02:04,410 --> 00:02:10,130
+class. So we can define how a recipe should look like in this class,
+
+28
+00:02:10,230 --> 00:02:11,790
+so let's do this.
+
+29
+00:02:11,910 --> 00:02:19,130
+A recipe should have a name and I'll add an accessor to be really clear about that this is publicly available,
+
+30
+00:02:19,230 --> 00:02:21,630
+so that this can be accessed from outside
+
+31
+00:02:21,630 --> 00:02:29,070
+if using this as an instantiated object. So I'll add public in front of it and then name as the property name.
+
+32
+00:02:29,700 --> 00:02:35,940
+I'll also assign the type of this by adding a colon and the type will be string and that is just how you
+
+33
+00:02:35,940 --> 00:02:41,490
+assign types in TypeScript, you add a colon after the property name and then the type you want to assign,
+
+34
+00:02:41,570 --> 00:02:42,210
+so string
+
+35
+00:02:42,210 --> 00:02:51,960
+in this case. I also want to have a description in each recipe, so I'll add my description property which
+
+36
+00:02:52,010 --> 00:02:55,500
+also is a string because a description is just a text of course.
+
+37
+00:02:56,660 --> 00:03:06,410
+Now maybe we also want to store an image for each recipe, so we should have an imagePath since we won't
+
+38
+00:03:06,410 --> 00:03:07,710
+store the image itself here
+
+39
+00:03:07,730 --> 00:03:09,190
+of course, that wouldn't work,
+
+40
+00:03:09,200 --> 00:03:15,680
+we can't store files in our code but we want to store the path pointing to the image and we will simply
+
+41
+00:03:15,680 --> 00:03:17,240
+use images from the web here,
+
+42
+00:03:17,270 --> 00:03:19,350
+so this will hold a URL in the end,
+
+43
+00:03:19,490 --> 00:03:27,270
+so that is also a string, a text in the end. That is the basic model for now, the basic blueprint.
+
+44
+00:03:27,800 --> 00:03:33,890
+I'll also add a constructor to it so that we can instantiate this with the new keyword and pass the arguments
+
+45
+00:03:33,890 --> 00:03:35,350
+right to the constructor,
+
+46
+00:03:35,540 --> 00:03:39,840
+so here I expect to receive the name which will be of type string,
+
+47
+00:03:39,880 --> 00:03:46,640
+the description, I'll just write it a bit shorter here which will be of type string and the imagePath which
+
+48
+00:03:46,640 --> 00:03:49,660
+will be of type string. In the constructor body
+
+49
+00:03:49,700 --> 00:03:53,600
+and if that's brand new to you, the constructor is simply a built-in function
+
+50
+00:03:53,600 --> 00:03:59,240
+every class has and which will be executed once you create a new instance of this class,
+
+51
+00:03:59,240 --> 00:04:01,400
+I will show you how this works in a second.
+
+52
+00:04:01,670 --> 00:04:07,640
+So inside the body of this constructor, we have to assign the arguments we receive here to the properties
+
+53
+00:04:07,640 --> 00:04:10,680
+of our object now, to the properties of our class.
+
+54
+00:04:10,700 --> 00:04:16,940
+So this name, referring to the name up here, to our property should be equal to name
+
+55
+00:04:17,090 --> 00:04:21,410
+and now the same for description, this description should be equal to desc
+
+56
+00:04:21,620 --> 00:04:24,710
+and this imagePath should be equal to imagePath.
+
+57
+00:04:25,040 --> 00:04:28,040
+So with that, we get a recipe model we can use, 
+
+58
+00:04:28,070 --> 00:04:31,400
+now let's use it in the next lecture.
+

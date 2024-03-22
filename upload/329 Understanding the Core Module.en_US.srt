@@ -1,0 +1,284 @@
+1
+00:00:02,270 --> 00:00:09,350
+Now that we had a look at feature modules and shared modules, let's have a look at the third important
+
+2
+00:00:09,560 --> 00:00:10,690
+module type
+
+3
+00:00:10,700 --> 00:00:16,490
+you can work with and that would be the core module and of course, let me highlight that all these modules
+
+4
+00:00:17,000 --> 00:00:19,700
+are created in the same way with NgModule,
+
+5
+00:00:19,700 --> 00:00:24,320
+just the things you put in there and how we use them differs and that is what I mean with different
+
+6
+00:00:24,320 --> 00:00:25,390
+module types.
+
+7
+00:00:25,400 --> 00:00:27,560
+So what's the core module?
+
+8
+00:00:27,560 --> 00:00:34,640
+The core module is basically there to make the app module a bit leaner, let's say in the app module, we
+
+9
+00:00:34,640 --> 00:00:35,630
+have the app component
+
+10
+00:00:35,630 --> 00:00:39,140
+and here we are providing two services.
+
+11
+00:00:39,140 --> 00:00:45,170
+Well then we can use a core module to move these services out of the app module into the core module
+
+12
+00:00:45,620 --> 00:00:49,590
+which then in turn is added back to the app module.
+
+13
+00:00:49,610 --> 00:00:55,760
+The alternative to that would of course be to use provided in in @injectable on the services which
+
+14
+00:00:55,760 --> 00:00:58,490
+means we don't have to add them to providers at all
+
+15
+00:00:58,490 --> 00:01:04,100
+but if you do add it to providers in the app module, well then using a core module can be an idea to
+
+16
+00:01:04,100 --> 00:01:06,780
+again keep your app module leaner.
+
+17
+00:01:06,830 --> 00:01:12,260
+It's a pattern you see sometimes, not a pattern you absolutely have to follow and indeed, a pattern that
+
+18
+00:01:12,260 --> 00:01:14,570
+you don't need to use or can't use
+
+19
+00:01:14,690 --> 00:01:19,960
+if you are using provided in in @injectable which I would recommend using anyways.
+
+20
+00:01:19,970 --> 00:01:27,950
+But if you do provide your services in providers of your app module, then this is a pattern you
+
+21
+00:01:27,950 --> 00:01:29,050
+might want to use,
+
+22
+00:01:29,060 --> 00:01:32,180
+let's have a look at it. In our app module,
+
+23
+00:01:32,180 --> 00:01:36,680
+if we have a look at the providers, I have the shopping list service and the recipe service there and
+
+24
+00:01:36,680 --> 00:01:38,060
+my interceptor.
+
+25
+00:01:38,120 --> 00:01:45,590
+Now the idea behind the core module is that we simply provide all these application-wide services that
+
+26
+00:01:45,590 --> 00:01:50,930
+are important right from the start of the application, that we provide them in a separate module which
+
+27
+00:01:50,930 --> 00:01:57,800
+we then simply import into the app module, really just to keep this leaner and to have a way or a place
+
+28
+00:01:57,800 --> 00:02:02,300
+where we can quickly see all the core services of this application.
+
+29
+00:02:02,300 --> 00:02:08,660
+Now as I mentioned, this does only make sense or is only a pattern you may use if you are providing a
+
+30
+00:02:08,660 --> 00:02:12,230
+service like this, by adding its type to the providers array.
+
+31
+00:02:12,320 --> 00:02:17,480
+If you are providing a service, like we're doing it for the data storage service, where we pass this object
+
+32
+00:02:17,510 --> 00:02:23,510
+to @injectable, where we set provided in root, then this service is also provided application-wide
+
+33
+00:02:23,840 --> 00:02:29,210
+and you can't and shouldn't add it to providers of the app module and this is indeed the approach I
+
+34
+00:02:29,210 --> 00:02:30,800
+would recommend taking,
+
+35
+00:02:30,830 --> 00:02:33,790
+I would not provide services in the app module,
+
+36
+00:02:33,800 --> 00:02:36,840
+I would instead provide them application-wide like this.
+
+37
+00:02:36,860 --> 00:02:41,900
+The effect is the same but it keeps the app module cleaner and leaner automatically.
+
+38
+00:02:41,900 --> 00:02:46,140
+Still, for some things like the interceptors, you have no alternative,
+
+39
+00:02:46,160 --> 00:02:48,350
+you have to add them to providers
+
+40
+00:02:48,350 --> 00:02:53,090
+and here for demo purposes, I also add shopping list service and recipes service.
+
+41
+00:02:53,090 --> 00:03:01,400
+Then we can add a core.module.ts file where we export the core module and that again
+
+42
+00:03:01,400 --> 00:03:07,720
+is just a regular module with NgModule like this and NgModule
+
+43
+00:03:07,730 --> 00:03:09,920
+as before now needs to be imported,
+
+44
+00:03:09,950 --> 00:03:19,790
+so NgModule from @angular/core. Now here in NgModule, you add providers, this providers array
+
+45
+00:03:20,330 --> 00:03:27,280
+and there, you simply add the providers you had in your app module, like this.
+
+46
+00:03:27,360 --> 00:03:33,690
+Now of course for this to work, you need to make sure you're importing all the things that you use in
+
+47
+00:03:33,690 --> 00:03:34,270
+here,
+
+48
+00:03:34,350 --> 00:03:42,110
+so I can grab these imports from the app module, we're in the end talking about the shopping list service,
+
+49
+00:03:42,110 --> 00:03:44,730
+the recipe service and the auth interceptor service,
+
+50
+00:03:44,730 --> 00:03:50,820
+I'll cut them from the app module and move them here into the core module, import path is the same because
+
+51
+00:03:50,820 --> 00:03:57,570
+the core module file is right next to the app module file and I also need the HttpInterceptor, so
+
+52
+00:03:57,570 --> 00:04:06,150
+I can cut them from here and instead use that here, add it here to the core module, import HttpInterceptor
+
+53
+00:04:06,150 --> 00:04:12,090
+from @angular/common/http.
+
+54
+00:04:13,080 --> 00:04:20,580
+So now the core module here is prepared, you don't need to export your services because services work
+
+55
+00:04:20,580 --> 00:04:27,510
+differently than declarations, only declarations and other modules need to be exported, services are automatically
+
+56
+00:04:27,870 --> 00:04:33,150
+injected on a root level, you don't need to export them to make this happen.
+
+57
+00:04:33,330 --> 00:04:37,790
+So services are simply an exception and therefore now the app module,
+
+58
+00:04:37,800 --> 00:04:47,360
+the only thing we have to do is we have to import our core module, even though it's not exporting anything
+
+59
+00:04:47,390 --> 00:04:59,910
+but to still include it here into our build process and we import it from our core.module file. With
+
+60
+00:04:59,910 --> 00:05:00,730
+that set up,
+
+61
+00:05:01,670 --> 00:05:08,810
+the application restarts and you should still have the same functionality as before. I can fetch my
+
+62
+00:05:08,870 --> 00:05:10,810
+my recipes here,
+
+63
+00:05:10,910 --> 00:05:15,510
+let's try deleting a recipe which will use the recipe service behind the scenes,
+
+64
+00:05:15,560 --> 00:05:19,930
+let's test something here for my shopping list,
+
+65
+00:05:19,940 --> 00:05:21,890
+this all still works,
+
+66
+00:05:21,890 --> 00:05:24,500
+so all these services still work
+
+67
+00:05:24,500 --> 00:05:30,140
+but now we have them in the core module which is our go to place to quickly see our root application
+
+68
+00:05:30,140 --> 00:05:31,490
+services
+
+69
+00:05:31,490 --> 00:05:34,880
+and we have a leaner app module, without a providers array.
+
+70
+00:05:34,880 --> 00:05:40,880
+But as I mentioned a) this is optional and b) this is only required if you provide a service here instead
+
+71
+00:05:40,880 --> 00:05:46,370
+of providing it through @injectable which would be my recommendation to use whenever possible.
+

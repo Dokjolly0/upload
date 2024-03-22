@@ -1,0 +1,64 @@
+1
+00:00:02,400 --> 00:00:06,640
+In the last lecture, we made our child routerLinks here work again,
+
+2
+00:00:06,660 --> 00:00:16,520
+now let's make clear which one is selected by marking it. We can mark the active link by adding manually
+
+3
+00:00:16,760 --> 00:00:19,040
+the active class to it.
+
+4
+00:00:19,250 --> 00:00:24,470
+If we do this, all are marked as active because of course it's added to every instance of this component
+
+5
+00:00:24,470 --> 00:00:26,510
+because I hardcoded it in there.
+
+6
+00:00:26,930 --> 00:00:28,090
+So that's the right class
+
+7
+00:00:28,100 --> 00:00:34,420
+but of course we should add it dynamically with good old routerLinkActive directive and here, I simply
+
+8
+00:00:34,430 --> 00:00:40,210
+want to pass active as the class name because we just saw this is the CSS class we need to add
+
+9
+00:00:40,460 --> 00:00:45,040
+and with that it's working as expected. And this is all we needed here,
+
+10
+00:00:45,050 --> 00:00:51,020
+you also see that recipes is still marked as active at the top because we still are at /recipes
+
+11
+00:00:51,230 --> 00:00:56,630
+and then at a child route but that doesn't matter for this to be marked as active because it's not
+
+12
+00:00:56,630 --> 00:00:58,450
+set to exact matching
+
+13
+00:00:58,460 --> 00:01:03,420
+and actually we want the behaviour we have right now. So that all looks pretty good,
+
+14
+00:01:03,440 --> 00:01:09,920
+now we can move on to make sure that we can click this new recipe button and this edit recipe button
+
+15
+00:01:10,130 --> 00:01:11,510
+and actually do something
+
+16
+00:01:11,510 --> 00:01:12,640
+once we do click them.
+

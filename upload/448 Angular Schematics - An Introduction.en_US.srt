@@ -1,0 +1,88 @@
+1
+00:00:02,210 --> 00:00:11,330
+What are Angler Seelie schematics, schematics are a powerful tool or a concept introduced by the Angler
+
+2
+00:00:11,330 --> 00:00:18,050
+team or specifically by the Angler SEAL team schematics are basically blueprints which certain angler
+
+3
+00:00:18,050 --> 00:00:19,430
+commands can pick up.
+
+4
+00:00:19,820 --> 00:00:25,310
+And, for example, you can have schematics for and generate to generate new building blocks in your
+
+5
+00:00:25,310 --> 00:00:31,190
+app like components for Engy Add, which we hadn't had a closer look at yet for adding, for example,
+
+6
+00:00:31,190 --> 00:00:37,760
+libraries or certain capabilities to a project and energy update for keeping a project up to date,
+
+7
+00:00:38,810 --> 00:00:41,060
+you can build your own schematics.
+
+8
+00:00:41,060 --> 00:00:47,210
+Angular has some built in schematics which you have unlocked by default, and the angular Seelie and
+
+9
+00:00:47,210 --> 00:00:50,180
+third party packages can also add schematics.
+
+10
+00:00:50,180 --> 00:00:52,330
+And that's what makes this feature powerful.
+
+11
+00:00:52,910 --> 00:00:58,580
+Now, adding your own schematics, of course, a super powerful because you could build your own blueprints,
+
+12
+00:00:58,580 --> 00:01:03,620
+your own energy, generate command for generating, let's say, a specific version of a component which
+
+13
+00:01:03,620 --> 00:01:04,460
+you need all the time.
+
+14
+00:01:04,910 --> 00:01:08,960
+But let me also say that building your own schematics is not trivial.
+
+15
+00:01:09,620 --> 00:01:15,320
+If you search for angular schematics, you will find an introduction on the official angle, angular
+
+16
+00:01:15,320 --> 00:01:18,320
+block and also something the official documentation.
+
+17
+00:01:18,650 --> 00:01:23,240
+And there you also have this offering schematics, part where you learn how to build your own schematics.
+
+18
+00:01:23,630 --> 00:01:27,500
+It is fairly introductory, but it might be a nice start.
+
+19
+00:01:27,650 --> 00:01:29,390
+If you want to learn all about that.
+
+20
+00:01:29,390 --> 00:01:31,970
+It will be a lot of trial and error, though.
+
+21
+00:01:32,150 --> 00:01:38,090
+And I can also recommend checking out some third party applications schematics because that's what I
+
+22
+00:01:38,090 --> 00:01:39,260
+now want to focus on.
+

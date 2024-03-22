@@ -1,0 +1,456 @@
+1
+00:00:02,150 --> 00:00:08,930
+So let's continue working on this and let's continue by having a look at how we can add multiple ingredients
+
+2
+00:00:08,960 --> 00:00:14,150
+because that's also a case we have, so not just one ingredient but multiple ingredients at once.
+
+3
+00:00:14,210 --> 00:00:22,010
+This is what gets triggered when we're working on a recipe and we then select the add to shopping list
+
+4
+00:00:22,550 --> 00:00:24,820
+button here, to shopping list.
+
+5
+00:00:24,830 --> 00:00:26,360
+So that's this case
+
+6
+00:00:26,360 --> 00:00:30,870
+and we also have update and delete ingredient to handle.
+
+7
+00:00:30,920 --> 00:00:36,870
+Let's start with add ingredients because this probably is one of the easier cases to add
+
+8
+00:00:37,000 --> 00:00:42,110
+and for that let's go back to the shopping list reducer and let's handle that second case
+
+9
+00:00:42,680 --> 00:00:47,900
+and for that of course, we first of all have to go to the shopping list actions and add an appropriate
+
+10
+00:00:47,900 --> 00:00:48,410
+action.
+
+11
+00:00:48,860 --> 00:00:57,830
+So below the constant, ADD_INGREDIENT, I'll export another constant, ADD_INGREDIENTS, so plural and
+
+12
+00:00:57,830 --> 00:00:59,060
+here, the identifier
+
+13
+00:00:59,060 --> 00:01:04,540
+text is also add ingredients. Now by the way, in theory you could of course deviate here,
+
+14
+00:01:04,550 --> 00:01:10,220
+you could have a different string value than constant name but it is of course a good practice to keep
+
+15
+00:01:10,220 --> 00:01:11,910
+those two in sync,
+
+16
+00:01:12,140 --> 00:01:15,890
+so this makes it easier to match them mentally.
+
+17
+00:01:15,890 --> 00:01:22,760
+Now this is just the string identifier, an action however is an object as you learned and therefore, we need
+
+18
+00:01:22,940 --> 00:01:25,710
+a second class which I'll also export.
+
+19
+00:01:25,730 --> 00:01:29,240
+So I'll export another class, AddIngredients
+
+20
+00:01:29,240 --> 00:01:30,430
+sounds like a fitting name
+
+21
+00:01:30,440 --> 00:01:37,910
+and just as add ingredient, this will implement an action. Now this class here
+
+22
+00:01:37,910 --> 00:01:42,210
+therefore also has a readonly type which here is add ingredients,
+
+23
+00:01:42,260 --> 00:01:50,180
+so the plural form of that and it will also get a constructor and that constructor should now not take
+
+24
+00:01:50,240 --> 00:01:58,070
+a single ingredient but multiple. Still I'll store the data we get in the payload property
+
+25
+00:01:58,460 --> 00:02:03,710
+and again, the name is up to you, this doesn't have to be payload but payload is a typical name and I
+
+26
+00:02:03,710 --> 00:02:09,320
+would recommend following that convention and the type here will of course not be a single ingredient
+
+27
+00:02:09,320 --> 00:02:15,850
+but actually an ingredient array because we will add multiple ingredients at once.
+
+28
+00:02:15,860 --> 00:02:19,690
+So now we export this class here back in the shopping list reducer,
+
+29
+00:02:19,700 --> 00:02:21,600
+we can now handle that case.
+
+30
+00:02:21,650 --> 00:02:28,410
+So we handle the case that our type is of type shopping list actions add ingredients here
+
+31
+00:02:28,820 --> 00:02:36,290
+and I'm getting a TypeScript error, type add ingredients is not comparable to type add ingredient. Do
+
+32
+00:02:36,290 --> 00:02:41,130
+you have any idea what could be causing this? Keep in mind
+
+33
+00:02:41,130 --> 00:02:49,020
+that we tell TypeScript that the action type of the action we're getting in the reducer is shopping list
+
+34
+00:02:49,020 --> 00:02:51,510
+actions add ingredient.
+
+35
+00:02:51,540 --> 00:02:58,320
+Now that was true when we only had this action but now we have two actions and we can't tell whether
+
+36
+00:02:58,320 --> 00:03:07,010
+the action that reaches this reducer is actually the add ingredient or the add ingredients action.
+
+37
+00:03:07,050 --> 00:03:13,470
+Now what we could do is we could fall back to the more generic action interface which we can import
+
+38
+00:03:13,590 --> 00:03:17,180
+from @ngrx/store,
+
+39
+00:03:17,180 --> 00:03:18,230
+that's the wrong import,
+
+40
+00:03:18,230 --> 00:03:20,190
+let's use @ngrx/store.
+
+41
+00:03:20,270 --> 00:03:25,490
+We could do that but then we get a problem with the payload because that action interface doesn't know
+
+42
+00:03:25,610 --> 00:03:28,390
+about the payload, so that won't work,
+
+43
+00:03:28,490 --> 00:03:30,160
+so we need a different approach.
+
+44
+00:03:30,200 --> 00:03:33,380
+Of course we could simply use any and that would work
+
+45
+00:03:33,380 --> 00:03:42,490
+but a bit more TypeScript support would be nice and the solution is to export an additional type here,
+
+46
+00:03:42,740 --> 00:03:45,240
+you can create your own types
+
+47
+00:03:45,260 --> 00:03:52,880
+so to say with TypeScript, which you can name shopping list actions or anything like that
+
+48
+00:03:53,090 --> 00:03:59,850
+and that simply is a combination of all the types you want to include into your shopping list actions.
+
+49
+00:03:59,930 --> 00:04:07,070
+So you create a union of the different action types you want to support in this part of your store and
+
+50
+00:04:07,070 --> 00:04:16,130
+the union here will consist of add ingredient and separated by a pipe symbol, add ingredients.
+
+51
+00:04:16,130 --> 00:04:17,720
+This is a TypeScript feature,
+
+52
+00:04:17,720 --> 00:04:22,870
+this simply says the type of shopping list actions is add ingredient or add ingredients,
+
+53
+00:04:22,880 --> 00:04:27,100
+so it's one of these two and we export our own type to summarize this.
+
+54
+00:04:27,110 --> 00:04:31,370
+This is a pure TypeScript thing but during development, this will help us
+
+55
+00:04:31,370 --> 00:04:38,750
+and therefore now we'll say our action here is actually of type shopping list actions.shopping list
+
+56
+00:04:38,750 --> 00:04:39,500
+actions.
+
+57
+00:04:39,500 --> 00:04:40,830
+Now it might look strange,
+
+58
+00:04:40,970 --> 00:04:47,080
+the first shopping list actions here is simply the alias I'm using here for our bundled import
+
+59
+00:04:47,090 --> 00:04:49,120
+and you could name this differently,
+
+60
+00:04:49,370 --> 00:04:56,600
+the .shopping list actions then refers to this union type I have down there which kind of combines
+
+61
+00:04:56,720 --> 00:05:02,570
+add ingredient and add ingredients and now TypeScript knows that an action is either of these two types
+
+62
+00:05:02,570 --> 00:05:04,960
+and therefore we get no error here.
+
+63
+00:05:04,970 --> 00:05:12,470
+Now back to that case then where we handle add ingredients, what do we want to do there? We always have
+
+64
+00:05:12,470 --> 00:05:18,890
+to return a new state, so a new object here and then, you'll learn that I would recommend that you always
+
+65
+00:05:18,890 --> 00:05:22,550
+copy the old state first, so all the properties of the old state
+
+66
+00:05:23,960 --> 00:05:36,300
+and then here, I again set ingredients equal to a new array where I copy all my old state ingredients,
+
+67
+00:05:36,360 --> 00:05:43,350
+so all the existing ingredient elements in that ingredients array and then I have to add the ingredients
+
+68
+00:05:43,470 --> 00:05:46,340
+added by my action.payload.
+
+69
+00:05:46,410 --> 00:05:51,870
+Now action.payload here should not be added like this because what's my action.payload
+
+70
+00:05:51,870 --> 00:05:57,230
+if we add ingredients? Well it will be an array of ingredients,
+
+71
+00:05:57,360 --> 00:06:02,130
+so if we add it like this, then we add a array to an array and hence we have a nested array.
+
+72
+00:06:02,130 --> 00:06:08,040
+I want to add the elements of that payload array to the outer array and therefore here, we should also
+
+73
+00:06:08,040 --> 00:06:13,620
+use the spread operator to pull these elements in action.payload out of this array and add them to this
+
+74
+00:06:13,620 --> 00:06:16,940
+ingredients array.
+
+75
+00:06:16,950 --> 00:06:21,590
+So now this reducer is updated, the actions here are updated,
+
+76
+00:06:21,750 --> 00:06:28,920
+let's now make sure we also use our new action and we dispatch it whenever we do add ingredients from
+
+77
+00:06:28,920 --> 00:06:35,700
+a recipe because right now, if I for example add my recipes from that big fat burger here, go back to
+
+78
+00:06:35,700 --> 00:06:37,380
+the shopping list, we don't see them here and
+
+79
+00:06:37,380 --> 00:06:43,500
+the reason for that is that I don't get an error but I do add these ingredients from inside the recipe
+
+80
+00:06:43,500 --> 00:06:47,710
+service and there, I use the shopping list service to add ingredients.
+
+81
+00:06:47,730 --> 00:06:48,640
+Now that works
+
+82
+00:06:48,660 --> 00:06:53,430
+but keep in mind that the shopping list service is no longer our source of truth,
+
+83
+00:06:53,430 --> 00:06:58,230
+we're not using the ingredients from the shopping list service anymore and therefore adding them there
+
+84
+00:06:58,230 --> 00:06:59,550
+doesn't do anything.
+
+85
+00:06:59,550 --> 00:07:05,340
+Instead here in the recipe service, instead of using the shopping list service, we should dispatch this
+
+86
+00:07:05,460 --> 00:07:12,570
+add ingredients action to use our @ngrx/store instead and for that in the constructor, we first of all have
+
+87
+00:07:12,570 --> 00:07:20,070
+to inject our store which is of type store and that store still has to be imported from @ngrx/store
+
+88
+00:07:20,190 --> 00:07:26,100
+like in all other places of the app as well and also in the other places, we have to be clear about
+
+89
+00:07:26,100 --> 00:07:27,640
+what's inside this store,
+
+90
+00:07:28,110 --> 00:07:34,530
+so you should actually grab the type definition as you have it in the shopping list component for example.
+
+91
+00:07:34,530 --> 00:07:40,710
+So this object with shopping list and then the nested object with ingredients and use this in the recipe
+
+92
+00:07:40,710 --> 00:07:41,950
+service here as well
+
+93
+00:07:41,970 --> 00:07:48,230
+when you inject that store so that TypeScript knows which store that isn't what's inside of that store,
+
+94
+00:07:48,270 --> 00:07:53,340
+even if you don't select anything from it, there still you should provide it like this.
+
+95
+00:07:53,340 --> 00:07:59,580
+Now the store is injected into the recipes service and now here in add ingredients to shopping list,
+
+96
+00:08:00,030 --> 00:08:05,850
+we're not using the shopping list service anymore but instead the store where we dispatch a new action
+
+97
+00:08:06,540 --> 00:08:16,300
+and that new action should come from our shopping list actions file and for that again, let's import everything
+
+98
+00:08:16,390 --> 00:08:23,980
+as shopping list actions, that name is up to you, from and now reach out to the shopping list area, to
+
+99
+00:08:23,980 --> 00:08:28,330
+the store folder and there to the shopping list actions file.
+
+100
+00:08:28,330 --> 00:08:33,620
+We bundle all exports from that shopping list actions file into the shopping list actions
+
+101
+00:08:33,760 --> 00:08:34,840
+object here
+
+102
+00:08:35,020 --> 00:08:41,250
+and with that bundled, when we dispatch an action, we use that but not the bundled exports
+
+103
+00:08:41,260 --> 00:08:47,880
+but instead the add ingredients class that is set up inside of that shopping list actions file
+
+104
+00:08:47,890 --> 00:08:50,200
+and this takes an array of ingredients, right,
+
+105
+00:08:50,200 --> 00:08:54,340
+that is the kind of data this action expects.
+
+106
+00:08:54,340 --> 00:08:55,940
+This is the add ingredients action,
+
+107
+00:08:55,990 --> 00:09:01,030
+it expects a payload which is an ingredient array and therefore in the recipe service, 
+
+108
+00:09:01,030 --> 00:09:06,370
+we have to forward such an array. Conveniently we have one here in the ingredients argument,
+
+109
+00:09:06,520 --> 00:09:09,490
+so let's send this with store dispatch.
+
+110
+00:09:10,180 --> 00:09:16,090
+And now with that if you go back to your application, this is our current shopping list with apple and
+
+111
+00:09:16,090 --> 00:09:17,250
+tomatoes, if I
+
+112
+00:09:17,260 --> 00:09:24,790
+now fetch my data again and I go to the big fat burger and I then execute two shopping list,
+
+113
+00:09:24,970 --> 00:09:31,330
+if we go back to the shopping list, we have the two ingredients from that recipe here as well and that
+
+114
+00:09:31,330 --> 00:09:34,810
+works because we're now again using our global store.
+

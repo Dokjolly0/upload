@@ -1,0 +1,508 @@
+1
+00:00:02,320 --> 00:00:07,870
+We're nearing the end of this module and I want to conclude it by diving into one other optimization
+
+2
+00:00:07,870 --> 00:00:12,220
+technique we can and should perform before we ship our app to production.
+
+3
+00:00:12,250 --> 00:00:18,130
+So before we deploy our built angular app onto a server, and that is ahead of time.
+
+4
+00:00:18,140 --> 00:00:20,890
+Where is this Just-In-Time compilation and what's that?
+
+5
+00:00:21,610 --> 00:00:26,380
+Well, in our angular application, we're of course writing some code are angular code and our template
+
+6
+00:00:26,380 --> 00:00:34,090
+code and our templates, of course, include special angular syntax like NGF and Ferenz on only Angular
+
+7
+00:00:34,090 --> 00:00:36,940
+understands this templates we're creating.
+
+8
+00:00:37,210 --> 00:00:41,590
+That's not a one to one snapshot that's going to get rendered into the real DOM.
+
+9
+00:00:42,040 --> 00:00:49,090
+Instead, Angler will pass our templates and then update the real DOM based on the instructions we placed
+
+10
+00:00:49,090 --> 00:00:50,160
+in our templates.
+
+11
+00:00:50,470 --> 00:00:56,470
+So all our components and our directives are in the end translated to commands that will be used to
+
+12
+00:00:56,470 --> 00:00:59,890
+alter the real DOM JavaScript in the browser.
+
+13
+00:00:59,890 --> 00:01:01,660
+Doesn't understand our templates.
+
+14
+00:01:01,780 --> 00:01:07,690
+Angular does, so we write our templates for Angular because Angular understands all these features.
+
+15
+00:01:09,030 --> 00:01:13,530
+So whilst we use the typescript compiler to compile the types good code to JavaScript code, which of
+
+16
+00:01:13,530 --> 00:01:20,010
+course is understood by the browser, we also have another compiler in that built process working behind
+
+17
+00:01:20,010 --> 00:01:21,630
+the scenes as part of a..
+
+18
+00:01:21,630 --> 00:01:26,870
+Surf, which is the angular compiler that is included in the angular framework.
+
+19
+00:01:26,880 --> 00:01:30,600
+It's a crucial part of the angular framework, and it's actually quite big.
+
+20
+00:01:30,900 --> 00:01:33,600
+The angular compiler itself is written in JavaScript.
+
+21
+00:01:33,720 --> 00:01:39,060
+It's relatively large and it's part of the angular application you are seeing in the browser with Engy
+
+22
+00:01:39,060 --> 00:01:39,540
+Surf.
+
+23
+00:01:40,380 --> 00:01:46,860
+So that angler compiler takes to compile JavaScript code and your templates and actually translates
+
+24
+00:01:46,860 --> 00:01:54,180
+all the logic there into concrete instructions that update the real dumb disk by default happens all
+
+25
+00:01:54,210 --> 00:01:59,370
+in your browser because the angular compiler is part of the angler code you're shipping.
+
+26
+00:01:59,970 --> 00:02:06,180
+This process is called Just-In-Time computation because the angular templates are compiled just in time
+
+27
+00:02:06,180 --> 00:02:08,720
+when the rendering occurs in your browser.
+
+28
+00:02:09,150 --> 00:02:12,090
+So the angular compiler runs in the browser at runtime.
+
+29
+00:02:12,600 --> 00:02:17,680
+The obvious downside of this is that this compilation process takes time.
+
+30
+00:02:17,970 --> 00:02:23,250
+It's super fast, but still it's a small performance hit and the angular compiler.
+
+31
+00:02:23,250 --> 00:02:29,240
+So the entire code that is just responsible for compiling or templates is not that small.
+
+32
+00:02:29,520 --> 00:02:35,610
+It's actually quite large and it's part of your angular application, even though it has no purpose,
+
+33
+00:02:35,610 --> 00:02:41,790
+it has nothing to do with your business logic other than bringing it onto the screen, which arguably
+
+34
+00:02:41,790 --> 00:02:45,810
+is important, but still a bit annoying that it has to be part of your application.
+
+35
+00:02:46,500 --> 00:02:53,970
+The good thing is it doesn't have to be part of your application since the angular compiler is responsible
+
+36
+00:02:54,180 --> 00:02:57,450
+for converting your template code into your template.
+
+37
+00:02:57,450 --> 00:03:04,470
+Instructions into a JavaScript commands the browser understands we can do that during development as
+
+38
+00:03:04,470 --> 00:03:05,760
+part of the build process.
+
+39
+00:03:06,120 --> 00:03:12,000
+And that process is called ahead of time computation because we compile the angular templates ahead
+
+40
+00:03:12,000 --> 00:03:18,000
+of the execution time, then the angular template compiler runs during the build process before the
+
+41
+00:03:18,000 --> 00:03:20,340
+app is deployed and not in the browser.
+
+42
+00:03:22,070 --> 00:03:28,550
+Now, DNG ServPro says as of now, by default, uses the Just-In-Time compiler because that's better
+
+43
+00:03:28,550 --> 00:03:34,820
+for debugging and fast updating of the running application, and there's nothing wrong with that during
+
+44
+00:03:34,820 --> 00:03:35,640
+development.
+
+45
+00:03:35,660 --> 00:03:41,750
+We have no problem with shipping a too big application where the compiler is part of the code because
+
+46
+00:03:41,750 --> 00:03:44,290
+we're not optimizing the code size during development.
+
+47
+00:03:44,450 --> 00:03:48,890
+We want to have a good development experience with rich error messages and so on.
+
+48
+00:03:49,550 --> 00:03:55,190
+But as soon as we're preparing ourselves for production and for building our angular app for production
+
+49
+00:03:55,190 --> 00:04:01,700
+to then upload it on a server, we want to optimize our code as much as possible and shrink it to as
+
+50
+00:04:01,700 --> 00:04:03,500
+small of a bundle as possible.
+
+51
+00:04:04,310 --> 00:04:06,530
+And we do that with a command.
+
+52
+00:04:06,540 --> 00:04:10,630
+You'll also see in the deployment section I quit and you serve here.
+
+53
+00:04:11,090 --> 00:04:16,900
+We do that with energy build, but there you actually add dash dash profit for production.
+
+54
+00:04:17,750 --> 00:04:24,080
+This command takes your angular application and now does not spin up a development server where you
+
+55
+00:04:24,080 --> 00:04:32,240
+can see it, but it actually builds your entire app into a few files which you can then deploy now showed
+
+56
+00:04:32,240 --> 00:04:34,340
+a deployment process in a separate module.
+
+57
+00:04:34,520 --> 00:04:40,820
+But let's already execute this command because this automatically does an important optimization for
+
+58
+00:04:40,820 --> 00:04:41,030
+you.
+
+59
+00:04:41,270 --> 00:04:43,460
+It uses ahead of time computation.
+
+60
+00:04:44,060 --> 00:04:46,130
+You don't need to configure anything special.
+
+61
+00:04:46,140 --> 00:04:47,200
+That's the great thing.
+
+62
+00:04:47,210 --> 00:04:50,980
+It works out of the box, but it does it for you.
+
+63
+00:04:51,260 --> 00:04:53,440
+And here we now get an error.
+
+64
+00:04:53,960 --> 00:04:58,750
+Property control does not exist on type abstract control in your recipe added component.
+
+65
+00:04:59,660 --> 00:05:05,960
+This error didn't occur earlier because the Just-In-Time compiler is a bit more forgiving than the ahead
+
+66
+00:05:05,960 --> 00:05:07,740
+of time compiler does.
+
+67
+00:05:07,760 --> 00:05:08,450
+Ahead of time.
+
+68
+00:05:08,450 --> 00:05:13,120
+Compiler does some extra checks and here it found code it didn't understand.
+
+69
+00:05:13,400 --> 00:05:17,300
+So let's have a look at the recipe component HTML file there.
+
+70
+00:05:17,300 --> 00:05:18,890
+The problem is this part.
+
+71
+00:05:19,460 --> 00:05:26,600
+This part works with the Just-In-Time compiler, but the ahead of time compiler basically does not understand
+
+72
+00:05:27,140 --> 00:05:34,220
+that disk partya recipe form get ingredients gives us back a form array that has a controlled property.
+
+73
+00:05:34,550 --> 00:05:36,190
+It doesn't know what we get back here.
+
+74
+00:05:36,230 --> 00:05:37,550
+It knows we get back in.
+
+75
+00:05:37,550 --> 00:05:44,060
+Abstract control for Mouret is an abstract control, but basically an extended version with this extra
+
+76
+00:05:44,060 --> 00:05:45,200
+controls property.
+
+77
+00:05:45,650 --> 00:05:50,660
+Abreau controls don't have a controlled property and that is the problem ahead of time compiler has.
+
+78
+00:05:51,590 --> 00:05:56,060
+The solution is to remove that code from the template and move it into the typescript code.
+
+79
+00:05:56,780 --> 00:06:01,250
+There we can add a new Gater property.
+
+80
+00:06:02,620 --> 00:06:04,180
+Let's say here.
+
+81
+00:06:05,940 --> 00:06:07,200
+With the get keyword.
+
+82
+00:06:08,030 --> 00:06:15,080
+And then we named as ingredients controls a gater property is like a function which you can use like
+
+83
+00:06:15,080 --> 00:06:16,430
+a property in a template.
+
+84
+00:06:16,550 --> 00:06:18,260
+You can't set a value to it, though.
+
+85
+00:06:18,260 --> 00:06:19,250
+You can only read it.
+
+86
+00:06:19,260 --> 00:06:19,700
+That's.
+
+87
+00:06:21,110 --> 00:06:26,180
+Achieved by using to get key word here in front of the property, name the signature, then looks like
+
+88
+00:06:26,180 --> 00:06:29,060
+the function signature with the parentheses in the curly braces.
+
+89
+00:06:29,600 --> 00:06:34,820
+And then there we return this recipe form, get ingredients.
+
+90
+00:06:34,820 --> 00:06:40,460
+And now to inform TypeScript about the type of this and that, we know that there will be a form eRate
+
+91
+00:06:41,000 --> 00:06:48,710
+we wrap this part here into an extra pair of parentheses and add as form array here.
+
+92
+00:06:49,490 --> 00:06:52,370
+Form array needs to be imported from adding life forms.
+
+93
+00:06:52,910 --> 00:06:57,020
+This is a typescript instruction that tells TypeScript all this good.
+
+94
+00:06:57,350 --> 00:07:05,150
+This term here or this expression here will resolve to a form array and therefore it does not complain
+
+95
+00:07:05,150 --> 00:07:06,720
+about us using controls here.
+
+96
+00:07:07,580 --> 00:07:13,430
+Now we're returning this and therefore the only thing we did is we made this more type.
+
+97
+00:07:13,430 --> 00:07:18,230
+Securer might seem redundant, but it is important for the.
+
+98
+00:07:19,160 --> 00:07:25,940
+Ahead of time, compiler to not fail anymore, now we can use ingredient controls, disk geter property
+
+99
+00:07:25,940 --> 00:07:29,140
+here in the place where we previously had that code snippet.
+
+100
+00:07:29,930 --> 00:07:36,860
+And now if we save that and we rerun Engie Bill Prot, now, this will actually work.
+
+101
+00:07:40,310 --> 00:07:41,870
+Let's wait for this to finish.
+
+102
+00:07:43,370 --> 00:07:49,130
+And hear this now before we have a look at what this generated, let's all the rerun and you serve here
+
+103
+00:07:49,160 --> 00:07:56,030
+to see whether dad also works and to again have a look at the development file sizes, which were quite
+
+104
+00:07:56,030 --> 00:07:57,040
+big, if you remember.
+
+105
+00:07:57,550 --> 00:07:58,820
+Let's wait for this to build.
+
+106
+00:08:00,200 --> 00:08:09,530
+Here it is, let's log in real quick here, go to the recipes module, fetched recipes and then maybe
+
+107
+00:08:09,530 --> 00:08:13,010
+also added one to see that the edit page really still works.
+
+108
+00:08:13,430 --> 00:08:14,220
+That looks good.
+
+109
+00:08:14,630 --> 00:08:18,340
+Let's create a new recipe where we add an ingredient.
+
+110
+00:08:18,380 --> 00:08:20,240
+So this all works without errors.
+
+111
+00:08:21,080 --> 00:08:22,560
+Now, that is good, of course.
+
+112
+00:08:23,210 --> 00:08:26,480
+Let's now have a look at what this engy built command generated.
+
+113
+00:08:29,230 --> 00:08:35,830
+It generated a nudist folder, this folder contains a folder with your project name, and in there you
+
+114
+00:08:35,830 --> 00:08:41,550
+got multiple files which are basically which basically contain the content of your application.
+
+115
+00:08:41,560 --> 00:08:50,560
+So your code files, but now bundled and optimized and decreased in size as much as possible to be as
+
+116
+00:08:50,560 --> 00:08:52,210
+small as possible.
+
+117
+00:08:52,660 --> 00:08:57,970
+Let me actually inspect this year in my finder or in the Windows Explorer to have a look at this.
+
+118
+00:08:59,470 --> 00:09:00,670
+And there you see.
+
+119
+00:09:01,720 --> 00:09:04,370
+These files are much smaller.
+
+120
+00:09:04,420 --> 00:09:10,730
+Remember that in development, we can see it here actually in the network tap if I reload this page.
+
+121
+00:09:11,380 --> 00:09:16,110
+We do have files which are free, dot eight megabytes big and one megabyte.
+
+122
+00:09:16,750 --> 00:09:22,960
+Now, here, if you have a look at these files there, Weismuller, they shrank significantly in size
+
+123
+00:09:22,960 --> 00:09:29,560
+because of all these optimizations and ahead of time computation is one important optimization because
+
+124
+00:09:29,560 --> 00:09:36,220
+it removes the angular compiler from the final bundle, which is super important and huge, of course.
+
+125
+00:09:36,820 --> 00:09:42,880
+So definitely always build your application with Energy Bill Dashboard before you want to deploy it
+
+126
+00:09:42,880 --> 00:09:43,300
+somewhere.
+
+127
+00:09:43,420 --> 00:09:47,620
+But speaking of that, deployment is also something we'll focus on next in this course.
+

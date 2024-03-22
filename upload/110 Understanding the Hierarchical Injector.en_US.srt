@@ -1,0 +1,140 @@
+1
+00:00:02,790 --> 00:00:08,760
+In the last lecture, we set up our account service and hooked it up on our app and still, our app seems
+
+2
+00:00:08,760 --> 00:00:10,050
+to be broken.
+
+3
+00:00:10,080 --> 00:00:13,170
+If I click these buttons, the status has not changed,
+
+4
+00:00:13,320 --> 00:00:16,260
+so somehow our code is not working.
+
+5
+00:00:16,710 --> 00:00:19,120
+Actually it's working correctly,
+
+6
+00:00:19,170 --> 00:00:23,530
+we're just using services wrong here, in this specific case,
+
+7
+00:00:23,550 --> 00:00:27,910
+we're not using the service in the way we should use it in our app.
+
+8
+00:00:27,960 --> 00:00:29,470
+What's going wrong?
+
+9
+00:00:30,030 --> 00:00:38,550
+The Angular dependency injector actually is a hierarchical injector, that means that if we provide a
+
+10
+00:00:38,550 --> 00:00:47,160
+service in some place of our app, let's say on one component, the Angular framework knows how to create
+
+11
+00:00:47,160 --> 00:00:54,200
+an instance of that service for this component and important, all its child components
+
+12
+00:00:54,270 --> 00:01:00,840
+and actually this component and all its child components and the child components of the child components
+
+13
+00:01:01,290 --> 00:01:06,000
+will receive the same instance of the service.
+
+14
+00:01:06,000 --> 00:01:11,090
+There are other places where we can provide a service too, the highest possible level
+
+15
+00:01:11,130 --> 00:01:12,510
+is the app module,
+
+16
+00:01:12,600 --> 00:01:15,560
+we haven't done this yet but we will see this soon.
+
+17
+00:01:15,750 --> 00:01:22,800
+If we provide a service there, the app module does have a providers array, the same instance and that's
+
+18
+00:01:22,800 --> 00:01:23,250
+important,
+
+19
+00:01:23,250 --> 00:01:30,990
+the same instance of the class, of the service is available in our whole app, in all components, in all
+
+20
+00:01:30,990 --> 00:01:35,260
+directives, in all other services where we maybe inject the service.
+
+21
+00:01:35,310 --> 00:01:37,910
+Yes, we can inject services into services,
+
+22
+00:01:37,920 --> 00:01:46,020
+I'll come back to this. The next level for example would be the app component, there the app component and
+
+23
+00:01:46,110 --> 00:01:50,550
+all its child components do have the same instance of the service
+
+24
+00:01:50,550 --> 00:01:52,380
+and this is true for any component,
+
+25
+00:01:52,440 --> 00:01:58,530
+so even if we have a child of the app component, if we provide it on that child, all the children of this
+
+26
+00:01:58,530 --> 00:02:03,310
+child will have the same instance and the child itself but not the app component.
+
+27
+00:02:03,540 --> 00:02:05,800
+The instances don't propagate up,
+
+28
+00:02:05,850 --> 00:02:14,730
+they only go down that tree of components. The lowest level therefore is a single component with no child
+
+29
+00:02:14,730 --> 00:02:15,870
+components.
+
+30
+00:02:15,900 --> 00:02:22,710
+If we provide a service there, this component will have its own instance of this service and well it
+
+31
+00:02:22,710 --> 00:02:24,300
+doesn't have any child components,
+
+32
+00:02:24,330 --> 00:02:30,610
+so this instance will only be available for this component and this will actually even overwrite if
+
+33
+00:02:30,610 --> 00:02:34,180
+we were to provide the same service on a higher level
+
+34
+00:02:34,230 --> 00:02:35,850
+and that's exactly what we're doing.
+
+35
+00:02:35,880 --> 00:02:38,100
+So let's take a closer look in the next lecture.
+

@@ -1,0 +1,76 @@
+1
+00:00:02,360 --> 00:00:11,630
+With all these changes made, we can now also get rid of the recipe service here and that means that in
+
+2
+00:00:11,630 --> 00:00:13,610
+the core
+
+3
+00:00:17,230 --> 00:00:24,310
+module, we no longer need and can't provide it, so we can clean that up
+
+4
+00:00:24,340 --> 00:00:33,570
+as well and I'm getting an error about my recipe detail component. The recipe detail components still
+
+5
+00:00:33,570 --> 00:00:40,230
+imports it and still injects it and still uses it here in on
+
+6
+00:00:40,230 --> 00:00:46,680
+add to shopping list and that is now the remaining thing where I don't want to use the recipe service
+
+7
+00:00:46,680 --> 00:00:53,940
+anymore because I deleted it anyways. Instead here the idea is now to import my shopping list actions
+
+8
+00:00:55,240 --> 00:01:05,500
+as shopping list actions from and now I go to the shopping list area of this application, to the store
+
+9
+00:01:05,530 --> 00:01:12,280
+there and then to the shopping list actions file because there, we do have an action for adding all ingredients, 
+
+10
+00:01:12,280 --> 00:01:12,670
+right.
+
+11
+00:01:12,670 --> 00:01:21,250
+So in here, we can now use the store dispatch and dispatch a new shopping list action and that would be
+
+12
+00:01:21,250 --> 00:01:28,090
+the add ingredients action which takes the ingredients as a payload and that would be the this recipe
+
+13
+00:01:28,390 --> 00:01:30,650
+ingredients data which I want to add
+
+14
+00:01:30,940 --> 00:01:37,000
+and with that, we fixed that. Now in the recipe-edit component, there I'm also still importing the recipe
+
+15
+00:01:37,000 --> 00:01:40,950
+service because I am still injecting it but we don't need it there anymore,
+
+16
+00:01:40,960 --> 00:01:43,180
+so here we can just remove it.
+
+17
+00:01:43,180 --> 00:01:49,750
+With that, everything compiled successfully and if we reload, that looks good, let's try adding these items
+
+18
+00:01:49,750 --> 00:01:52,320
+to the shopping list, this also works
+
+19
+00:01:52,390 --> 00:01:56,020
+and now we did some cleanup work and we're entirely in the NgRx world.
+

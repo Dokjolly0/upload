@@ -1,0 +1,336 @@
+1
+00:00:02,190 --> 00:00:07,860
+We're nearing the end but I won't leave this module without touching on one very important and very
+
+2
+00:00:07,860 --> 00:00:13,020
+useful concept or feature that is also supported by the Angular HttpClient
+
+3
+00:00:13,260 --> 00:00:15,180
+and that would be interceptors.
+
+4
+00:00:15,210 --> 00:00:17,090
+Now what our interceptors?
+
+5
+00:00:17,370 --> 00:00:23,070
+We're sending our HTTP requests here and whenever we want to configure something like search params,
+
+6
+00:00:23,160 --> 00:00:25,640
+we're doing this on a per request basis
+
+7
+00:00:25,680 --> 00:00:31,690
+and oftentimes, this is the way it should be because every request might need different headers.
+
+8
+00:00:31,980 --> 00:00:38,430
+But let's imagine we want to attach this custom header to all our outgoing requests and a more realistic
+
+9
+00:00:38,430 --> 00:00:47,070
+scenario would be that you want to authenticate your user and you need to add a certain param or a certain
+
+10
+00:00:47,070 --> 00:00:49,610
+header to every outgoing request therefore
+
+11
+00:00:49,650 --> 00:00:54,930
+so that the back-end can read that, you don't want to manually configure every request because that is
+
+12
+00:00:54,930 --> 00:00:58,680
+very cumbersome and for that, you can add interceptors.
+
+13
+00:00:58,680 --> 00:01:05,760
+Now how do interceptors work though? Let's create a new interceptor by adding a new file and I will
+
+14
+00:01:05,760 --> 00:01:12,630
+name this the auth interceptor because I kind of want to simulate that we there attach some header to every
+
+15
+00:01:12,630 --> 00:01:16,740
+request that is required for authentication on our back-end.
+
+16
+00:01:16,770 --> 00:01:21,390
+Of course, we're not really using authorization here but that's just an example.
+
+17
+00:01:21,420 --> 00:01:28,440
+So here, I will add a file and I'll name it auth-interceptor.ts or auth-interceptor.service
+
+18
+00:01:28,470 --> 00:01:32,080
+because it actually is basically an Angular service
+
+19
+00:01:32,430 --> 00:01:39,570
+and in there, you create such an interceptor by exporting a class and you give that a name which probably
+
+20
+00:01:39,570 --> 00:01:42,420
+should be auth interceptor service,
+
+21
+00:01:42,420 --> 00:01:47,970
+you can name it however you want but I will keep that general file naming convention which we also used
+
+22
+00:01:48,000 --> 00:01:55,450
+in the rest of the course and this will implement a certain interface and that is the HttpInterceptor
+
+23
+00:01:55,590 --> 00:02:01,470
+interface, which you need to import from @angular/common/http.
+
+24
+00:02:01,500 --> 00:02:09,480
+Now this interface forces us to add a intercept method and that intercept method here will actually
+
+25
+00:02:09,480 --> 00:02:15,610
+get two arguments and that will get that automatically by Angular when it applies our interceptor and 
+
+26
+00:02:15,610 --> 00:02:18,800
+I'll show you how to apply it in just a second.
+
+27
+00:02:18,870 --> 00:02:25,860
+So here, we get two arguments and the first one is a request object, which is of type HTTP request
+
+28
+00:02:25,890 --> 00:02:30,750
+which you need to import from @angular/common/http as well.
+
+29
+00:02:30,750 --> 00:02:38,700
+This is a generic type, a generic object, so you can use the angled brackets to basically inform Angular
+
+30
+00:02:38,700 --> 00:02:41,650
+about the kind of data this request will yield
+
+31
+00:02:41,760 --> 00:02:47,700
+and I want to write a generic interceptor here, so I will use any because this will work for any data
+
+32
+00:02:47,700 --> 00:02:54,480
+that might be retrieved by a request and you have a second argument which is passed to intercept and
+
+33
+00:02:54,480 --> 00:02:56,950
+that is typically called next,
+
+34
+00:02:57,000 --> 00:03:00,360
+you could of course rename these arguments but the first one is a request object,
+
+35
+00:03:00,390 --> 00:03:07,170
+so req makes sense and this is a function which will forward the request because the interceptor will
+
+36
+00:03:07,170 --> 00:03:16,100
+basically run code before your request leaves your app, so before it really is sent and right before the
+
+37
+00:03:16,100 --> 00:03:18,450
+response is forwarded to subscribe,
+
+38
+00:03:18,530 --> 00:03:24,980
+so it steps into that request flow and next is a function you need to call to let the request continue
+
+39
+00:03:24,980 --> 00:03:27,950
+its journey but more on that in a second too.
+
+40
+00:03:27,980 --> 00:03:35,140
+Next is of type HttpHandler which also needs to be imported from @angular/common/http.
+
+41
+00:03:35,240 --> 00:03:44,660
+Now this intercept method now allows us to run code, that as I just mentioned, will run right before
+
+42
+00:03:44,720 --> 00:03:47,990
+the request leaves our application.
+
+43
+00:03:47,990 --> 00:03:56,720
+So for example here, we could for now just log request is on its way and thereafter we should return
+
+44
+00:03:57,170 --> 00:04:00,560
+the result that next yields us. Next
+
+45
+00:04:00,560 --> 00:04:07,190
+as I mentioned is a function or actually an object but an object with an important method that will
+
+46
+00:04:07,190 --> 00:04:10,940
+allow us to let the request continue its journey, to be precise
+
+47
+00:04:10,940 --> 00:04:17,390
+that's the handle method which you have to call to which you should pass that request object and by
+
+48
+00:04:17,390 --> 00:04:24,140
+calling this, you let the request continue and you should actually return the result to really let it
+
+49
+00:04:24,140 --> 00:04:24,850
+continue.
+
+50
+00:04:24,860 --> 00:04:30,470
+So that is the setup you need to use to have some code that is run right before the request leaves the
+
+51
+00:04:30,470 --> 00:04:33,690
+app and to still let the request leave the app.
+
+52
+00:04:33,770 --> 00:04:40,100
+If you don't return next handle and pass the request, then the request will not continue and therefore
+
+53
+00:04:40,100 --> 00:04:41,850
+your app will basically break,
+
+54
+00:04:41,900 --> 00:04:44,380
+you definitely have to return this here.
+
+55
+00:04:44,660 --> 00:04:51,170
+Now with that, we have to provide that service and we have to provide this in a special way.
+
+56
+00:04:51,200 --> 00:04:58,070
+So let's go to the app module and in there, add a new element to the providers array and that should
+
+57
+00:04:58,070 --> 00:05:05,120
+be a Javascript object now and not the name of that service where you have three keys - 
+
+58
+00:05:05,120 --> 00:05:13,670
+the first key is the provide key and there, you have to use HTTP_INTERCEPTORS, all capital cases,
+
+59
+00:05:13,700 --> 00:05:22,760
+that is a type that is imported from @angular/common/http. So import that from this package
+
+60
+00:05:23,120 --> 00:05:25,690
+and use it here as a value for provide.
+
+61
+00:05:25,700 --> 00:05:31,700
+This is the token by which this injection can later be identified by Angular, so it will basically
+
+62
+00:05:31,700 --> 00:05:36,700
+know that all the classes you provide on that token,
+
+63
+00:05:36,710 --> 00:05:43,010
+so by using that identifier, should be treated as HTTP interceptors and should therefore run their
+
+64
+00:05:43,010 --> 00:05:47,310
+intercept method whenever a request leaves the application.
+
+65
+00:05:47,330 --> 00:05:54,700
+The second key you pass to that object is the use class key where you now point at your interceptor
+
+66
+00:05:54,710 --> 00:06:01,730
+class you want to add as an interceptor and here, that would be the auth interceptor service
+
+67
+00:06:01,730 --> 00:06:04,210
+which you of course also need to import.
+
+68
+00:06:04,430 --> 00:06:10,010
+And last but not least, you can have more than one interceptor and you inform Angular about that and
+
+69
+00:06:10,010 --> 00:06:15,860
+that it should not replace the existing interceptors with this one by adding multi and setting this
+
+70
+00:06:15,860 --> 00:06:17,440
+to true.
+
+71
+00:06:17,460 --> 00:06:23,220
+So this is just a dependency injection syntax supported by Angular that allows it to register a service
+
+72
+00:06:23,490 --> 00:06:28,800
+under a different identifier and to have actually multiple services under that identifier, which will
+
+73
+00:06:28,800 --> 00:06:36,420
+then all be provided and injected. Now Angular will do the rest, it will automatically grab all your
+
+74
+00:06:36,420 --> 00:06:42,480
+HTTP interceptors and run their intercept method whenever a request leaves the application. And
+
+75
+00:06:42,480 --> 00:06:48,780
+therefore with this setup, we should now be able to reload and we see request is on its way and if I
+
+76
+00:06:48,810 --> 00:06:54,390
+click fetch posts, you see it again and if I send a different request, like sending a new post, you see
+
+77
+00:06:54,390 --> 00:06:57,660
+it too because this code now runs for every request that leaves
+
+78
+00:06:57,690 --> 00:06:58,460
+the app
+
+79
+00:06:58,470 --> 00:07:03,830
+and if you want to restrict the requests for which this executes, you have to do that here in the interceptor.
+
+80
+00:07:03,840 --> 00:07:09,210
+You got that request object in the end and that request object has information like the URL to which
+
+81
+00:07:09,210 --> 00:07:09,990
+it sent.
+
+82
+00:07:09,990 --> 00:07:16,460
+So if you know you don't want a send this to a certain URL, then you can use the URL here
+
+83
+00:07:16,560 --> 00:07:19,020
+in an if check and compare it and so on,
+
+84
+00:07:19,020 --> 00:07:22,320
+so you can control that all in here in the interceptor.
+

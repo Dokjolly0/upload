@@ -1,0 +1,533 @@
+1
+00:00:02,333 --> 00:00:05,000
+- [Narrator] So now that
+we know what TypeScript is,
+
+2
+00:00:05,000 --> 00:00:08,966
+that we can add types
+to our programs with it
+
+3
+00:00:08,966 --> 00:00:12,900
+and how the syntax generally looks like,
+
+4
+00:00:12,900 --> 00:00:15,933
+let's make sure we can all use TypeScript.
+
+5
+00:00:15,933 --> 00:00:18,700
+And therefore if you
+search for TypeScript,
+
+6
+00:00:18,700 --> 00:00:21,600
+you can visit typescriptlang.org
+
+7
+00:00:21,600 --> 00:00:24,166
+and that's the official TypeScript webpage
+
+8
+00:00:24,166 --> 00:00:26,800
+where you can learn more about TypeScript
+
+9
+00:00:26,800 --> 00:00:30,266
+and where you can also learn
+how to install TypeScript.
+
+10
+00:00:30,266 --> 00:00:33,000
+As a side note, if you
+want to learn way more
+
+11
+00:00:33,000 --> 00:00:35,766
+about TypeScript, I
+also do have a complete
+
+12
+00:00:35,766 --> 00:00:39,966
+TypeScript course where I
+dive deeply into TypeScript.
+
+13
+00:00:39,966 --> 00:00:43,300
+In this module, I'll
+just cover some basics.
+
+14
+00:00:43,300 --> 00:00:45,700
+So if you want to learn
+more my full course
+
+15
+00:00:45,700 --> 00:00:47,766
+might be interesting to you as well
+
+16
+00:00:47,766 --> 00:00:50,433
+or the official docs
+of course in addition.
+
+17
+00:00:51,366 --> 00:00:53,233
+So now to install it locally,
+
+18
+00:00:53,233 --> 00:00:55,600
+we can click here on install locally
+
+19
+00:00:55,600 --> 00:00:59,933
+and now we basically need
+to run this command here.
+
+20
+00:00:59,933 --> 00:01:04,100
+Now for that, we need to make
+sure that Node.js is installed
+
+21
+00:01:04,100 --> 00:01:05,833
+but we needed this for this
+course
+
+22
+00:01:05,933 --> 00:01:09,933
+anyways and therefore that
+should already be installed.
+
+23
+00:01:09,933 --> 00:01:11,566
+So therefore we can now run this command
+
+24
+00:01:11,566 --> 00:01:13,566
+to install TypeScript.
+
+25
+00:01:13,566 --> 00:01:16,533
+And running this command
+will install TypeScript
+
+26
+00:01:16,533 --> 00:01:18,966
+into a specific project.
+
+27
+00:01:18,966 --> 00:01:22,166
+If you wanna install it
+globally on your system,
+
+28
+00:01:22,166 --> 00:01:26,766
+then you need to run npm
+install -g typescript.
+
+29
+00:01:26,766 --> 00:01:30,366
+But often installing it just
+into one specific project
+
+30
+00:01:30,366 --> 00:01:33,000
+is enough so that you
+can then use TypeScript
+
+31
+00:01:33,000 --> 00:01:36,766
+in that project into which you install it.
+
+32
+00:01:36,766 --> 00:01:39,233
+And therefore that's
+what I'll do here now.
+
+33
+00:01:39,233 --> 00:01:42,833
+I will open my terminal,
+which is integrated
+
+34
+00:01:42,833 --> 00:01:47,333
+here into this project and
+run npm install typescript.
+
+35
+00:01:48,333 --> 00:01:52,533
+And actually for this I'll
+first of all run npm init -y
+
+36
+00:01:52,533 --> 00:01:55,266
+to create a empty package.json file
+
+37
+00:01:56,466 --> 00:01:58,933
+because we will need that
+to install dependencies
+
+38
+00:01:58,933 --> 00:02:02,700
+and then I'll run npm install typescript.
+
+39
+00:02:02,700 --> 00:02:05,933
+And this will now install
+TypeScript into this project.
+
+40
+00:02:06,466 --> 00:02:08,200
+So now TypeScript is installed.
+
+41
+00:02:09,333 --> 00:02:12,433
+With that installed, we can now invoke
+
+42
+00:02:12,433 --> 00:02:16,833
+the TypeScript compiler and
+that is really important.
+
+43
+00:02:16,833 --> 00:02:21,233
+As you learned, TypeScript
+is a superset to JavaScript
+
+44
+00:02:21,233 --> 00:02:25,900
+extending the JavaScript
+syntax with those extra types.
+
+45
+00:02:25,900 --> 00:02:30,166
+Now the important thing to
+note is that TypeScript code
+
+46
+00:02:30,166 --> 00:02:32,833
+does not run in the browser though.
+
+47
+00:02:32,833 --> 00:02:35,833
+So if you try to execute
+TypeScript in the browser,
+
+48
+00:02:35,833 --> 00:02:37,000
+it will fail.
+
+49
+00:02:37,866 --> 00:02:42,866
+Therefore we need to compile
+TypeScript to JavaScript.
+
+50
+00:02:42,933 --> 00:02:46,166
+And during that compilation process,
+
+51
+00:02:46,166 --> 00:02:49,766
+all our type annotations will be removed
+
+52
+00:02:49,766 --> 00:02:53,800
+because JavaScript doesn't
+know those annotations.
+
+53
+00:02:53,800 --> 00:02:56,566
+But it's during this compilation step
+
+54
+00:02:56,566 --> 00:02:59,433
+where we will be notified about errors.
+
+55
+00:02:59,433 --> 00:03:02,700
+In addition to the notification
+we get in the IDE already.
+
+56
+00:03:03,600 --> 00:03:07,633
+So it's this compilation
+step which then will warn us
+
+57
+00:03:07,633 --> 00:03:10,933
+of potential code problems
+if we haven't spotted
+
+58
+00:03:10,933 --> 00:03:15,533
+them in the IDE before and
+then it's that compiled code
+
+59
+00:03:15,533 --> 00:03:17,333
+which will run in the browser.
+
+60
+00:03:17,333 --> 00:03:19,866
+Now to invoke this compiler,
+
+61
+00:03:19,866 --> 00:03:24,866
+we need to run this command here npx tsc.
+
+62
+00:03:25,000 --> 00:03:28,966
+So now if I run npx tsc like this,
+
+63
+00:03:28,966 --> 00:03:31,566
+you'll see that I get an error though.
+
+64
+00:03:31,566 --> 00:03:34,500
+I get this error because
+if I run this command
+
+65
+00:03:34,500 --> 00:03:36,966
+just like this, then it expects
+
+66
+00:03:36,966 --> 00:03:41,366
+a TypeScript configuration
+file in that project folder
+
+67
+00:03:41,366 --> 00:03:45,766
+that tells TypeScript
+which files to compile.
+
+68
+00:03:45,766 --> 00:03:48,900
+Now we'll add such a
+configuration file later,
+
+69
+00:03:48,900 --> 00:03:52,866
+for the moment we can run this
+command slightly modified.
+
+70
+00:03:52,866 --> 00:03:56,266
+We can point at a file
+that should be compiled.
+
+71
+00:03:56,266 --> 00:03:59,966
+In this case, with typescript.ts.
+
+72
+00:03:59,966 --> 00:04:03,866
+So if I run npx tsc with typescript.ts
+
+73
+00:04:03,866 --> 00:04:06,500
+then this file is getting compiled.
+
+74
+00:04:06,500 --> 00:04:10,133
+And hence now here I get
+one compilation error,
+
+75
+00:04:10,133 --> 00:04:14,366
+the same error my IDE
+warned me about before.
+
+76
+00:04:14,366 --> 00:04:16,833
+So if I haven't spotted it in the IDE,
+
+77
+00:04:16,833 --> 00:04:18,466
+now I get an error here.
+
+78
+00:04:19,666 --> 00:04:23,300
+Now you will notice that
+a no-typescript.js file
+
+79
+00:04:23,300 --> 00:04:25,266
+was created nonetheless.
+
+80
+00:04:25,266 --> 00:04:27,800
+That simply happens because by default
+
+81
+00:04:27,800 --> 00:04:31,100
+even if you get an error
+during the compilation
+
+82
+00:04:31,100 --> 00:04:32,966
+it's still completes.
+
+83
+00:04:32,966 --> 00:04:36,166
+It just warns you because of that error
+
+84
+00:04:36,166 --> 00:04:39,066
+but it still gives you a JavaScript file.
+
+85
+00:04:39,066 --> 00:04:43,133
+And this JavaScript
+file, sorry this one here
+
+86
+00:04:43,133 --> 00:04:46,266
+is now based on our TypeScript file.
+
+87
+00:04:46,266 --> 00:04:48,866
+And you'll see it's almost the same code
+
+88
+00:04:48,866 --> 00:04:52,000
+just without the types
+and actually it's changed
+
+89
+00:04:52,000 --> 00:04:55,566
+const to var because by default right now,
+
+90
+00:04:55,566 --> 00:04:57,600
+it's still also compiles to code
+
+91
+00:04:57,600 --> 00:05:01,233
+such that it runs in
+older browsers as well.
+
+92
+00:05:01,233 --> 00:05:03,333
+That is something which can be overwritten
+
+93
+00:05:03,333 --> 00:05:05,466
+with the TypeScript conflict file
+
+94
+00:05:05,466 --> 00:05:07,933
+but we don't have such a conflict file yet
+
+95
+00:05:07,933 --> 00:05:11,033
+and therefore we have
+this code change as well.
+
+96
+00:05:11,033 --> 00:05:13,600
+But of course you see that
+other than that it's the same
+
+97
+00:05:13,600 --> 00:05:16,633
+code as we wrote in the TypeScript file.
+
+98
+00:05:16,633 --> 00:05:19,633
+Now of course we should get
+rid of that error though,
+
+99
+00:05:19,633 --> 00:05:22,666
+otherwise using TypeScript
+doesn't make any sense
+
+100
+00:05:22,666 --> 00:05:25,166
+and hence I'll convert my two numbers,
+
+101
+00:05:25,166 --> 00:05:27,433
+my two strings to numbers
+
+102
+00:05:27,433 --> 00:05:32,166
+and if I save this now, the
+error is gone in the IDE.
+
+103
+00:05:32,166 --> 00:05:35,366
+and if I now compile
+again, this also compiles
+
+104
+00:05:35,366 --> 00:05:37,800
+without errors and we still have the same
+
+105
+00:05:37,800 --> 00:05:40,333
+JavaScript output as before.
+
+106
+00:05:40,333 --> 00:05:43,366
+But now it's this JavaScript
+file which we could
+
+107
+00:05:43,366 --> 00:05:46,033
+import here and use here.
+
+108
+00:05:46,033 --> 00:05:49,200
+If I now save this and
+then reload this page,
+
+109
+00:05:49,200 --> 00:05:53,033
+I get seven again but now
+if we continue working
+
+110
+00:05:53,033 --> 00:05:56,566
+in the TypeScript file
+and then compile it to run
+
+111
+00:05:56,566 --> 00:06:01,166
+in the browser, now we actually
+protect ourselves against
+
+112
+00:06:01,166 --> 00:06:05,300
+errors like we hadn't
+before, thanks to TypeScript.
+
+113
+00:06:05,300 --> 00:06:09,200
+And now with that installed
+and now that we understand
+
+114
+00:06:09,200 --> 00:06:12,866
+what this compiler does and
+how it this generally works,
+
+115
+00:06:12,866 --> 00:06:16,266
+let's dive into some core
+features you need to know
+
+116
+00:06:16,266 --> 00:06:17,866
+when working with TypeScript
+before
+
+117
+00:06:17,866 --> 00:06:22,766
+we then thereafter are ready to use TypeScript with Angular.
+

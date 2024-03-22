@@ -1,0 +1,432 @@
+1
+00:00:02,770 --> 00:00:09,640
+Great! In the last lectures, we learned something crucial, something we will use a lot in our demo app in
+
+2
+00:00:09,640 --> 00:00:16,450
+this course and probably in any app, how to pass data from a component down to another component which
+
+3
+00:00:16,450 --> 00:00:18,140
+was implemented there.
+
+4
+00:00:18,220 --> 00:00:24,880
+Now about the other direction, what if we have a component and something changes in there and we want
+
+5
+00:00:24,880 --> 00:00:30,190
+to inform our parent component, so the component which implements the other component?
+
+6
+00:00:30,190 --> 00:00:34,570
+For example here in app component, we're implementing app cockpit
+
+7
+00:00:34,690 --> 00:00:40,750
+and in this child component, in app cockpit, something can change because here we got two buttons and
+
+8
+00:00:40,750 --> 00:00:43,180
+when we click the buttons, we want to do something
+
+9
+00:00:43,300 --> 00:00:47,940
+and right now the code which would normally get executed was simply commented out.
+
+10
+00:00:48,430 --> 00:00:52,900
+So here, we want to inform our parent component, the app component
+
+11
+00:00:52,900 --> 00:00:58,500
+in this case, that a new server or a new blueprint was created.
+
+12
+00:00:59,080 --> 00:01:05,050
+So in our app component, we maybe still want to implement these two methods,
+
+13
+00:01:05,290 --> 00:01:09,030
+so let's simply add them here.
+
+14
+00:01:09,030 --> 00:01:16,410
+However I will adjust the names and say onServerAdded because these methods will kind of only be executed
+
+15
+00:01:16,860 --> 00:01:23,910
+after this button has been clicked, so not once the button is clicked but thereafter, once we really already
+
+16
+00:01:23,910 --> 00:01:32,130
+are done creating the server so to say. So onServerAdded and onBlueprintAdded sounds like more appropriate
+
+17
+00:01:32,130 --> 00:01:34,920
+names here in the app component.
+
+18
+00:01:34,950 --> 00:01:41,490
+Then however, we can comment out this code and still create a new server or a new blueprint,
+
+19
+00:01:41,490 --> 00:01:50,430
+however this will not work as expected here because we're referencing newServerName and newServerContent
+
+20
+00:01:50,460 --> 00:01:52,570
+which are not available in the app component.
+
+21
+00:01:52,680 --> 00:01:59,240
+but that is exactly information we kind of want to pass from the cockpit to the app component because the
+
+22
+00:01:59,240 --> 00:02:05,910
+app component is the central place in our app for now which manages this array of servers.
+
+23
+00:02:05,910 --> 00:02:08,910
+So how can we emit an event, our own event,
+
+24
+00:02:08,910 --> 00:02:11,850
+how can we inform our app component?
+
+25
+00:02:12,330 --> 00:02:16,680
+It would be great if it would look something like this, on the app cockpit,
+
+26
+00:02:16,710 --> 00:02:21,080
+so in the app.component.html file where we implement app cockpit,
+
+27
+00:02:21,270 --> 00:02:27,240
+it would be great if we could listen to serverCreated, any name you like but that would be a fitting
+
+28
+00:02:27,240 --> 00:02:29,870
+name for the kind of event we want to listen to.
+
+29
+00:02:29,880 --> 00:02:32,570
+Of course this event doesn't exist by default,
+
+30
+00:02:32,730 --> 00:02:38,370
+so just like we listen to click, now we want to listen to some event like this, serverCreated and once
+
+31
+00:02:38,370 --> 00:02:40,980
+a server was created, we execute some code,
+
+32
+00:02:40,980 --> 00:02:47,450
+so just like in any other built_in event like click here, on the right side of the equal side between the
+
+33
+00:02:47,450 --> 00:02:48,370
+quotation marks,
+
+34
+00:02:48,480 --> 00:02:52,920
+we want to call onServerAdded, the method we've prepared for this.
+
+35
+00:02:53,160 --> 00:02:56,790
+And we even expect to get some data with $event,
+
+36
+00:02:56,810 --> 00:03:03,600
+this is how you could catch this data, that could be some object which gives us the required information
+
+37
+00:03:03,600 --> 00:03:06,480
+about that server, like the name and the content.
+
+38
+00:03:06,980 --> 00:03:13,010
+So in onServerAdded now here, we would expect to get event data
+
+39
+00:03:13,080 --> 00:03:20,430
+or let's say we would actually expect to get the server data and that could be of type, let's say a Javascript
+
+40
+00:03:20,430 --> 00:03:23,420
+object which has a name field with a string
+
+41
+00:03:23,820 --> 00:03:25,460
+or let's be more explicit,
+
+42
+00:03:25,470 --> 00:03:33,240
+let's name it serverName which is of type string and serverContent which is of type string.
+
+43
+00:03:33,240 --> 00:03:37,820
+So that would be the type of object we expect to get in this method
+
+44
+00:03:38,070 --> 00:03:47,310
+and with that, we could use it here and use server data, serverName to assign it as a name for our
+
+45
+00:03:47,310 --> 00:03:50,890
+newly created server, the one we push onto our array here
+
+46
+00:03:51,210 --> 00:03:55,230
+and the same of course down here for the content,
+
+47
+00:03:55,230 --> 00:03:58,290
+so that is how it should work.
+
+48
+00:03:58,350 --> 00:04:05,700
+We get this data in onServerAdded and we call onServerAdded once our custom event occurs on the cockpit
+
+49
+00:04:05,760 --> 00:04:11,400
+component and this event even should give us this data we expect to get and we catch it with
+
+50
+00:04:11,400 --> 00:04:19,430
+$event. Now obviously we can also replicate these for the let's say
+
+51
+00:04:21,770 --> 00:04:26,120
+blueprintCreated event, here we would execute onBlueprintAdded
+
+52
+00:04:26,120 --> 00:04:28,440
+and of course you could also kind of merge these two methods,
+
+53
+00:04:28,460 --> 00:04:33,220
+I keep them separate to be really clear about what's happening here and there again,
+
+54
+00:04:33,230 --> 00:04:38,610
+we also expect to get our blueprint data in this case,
+
+55
+00:04:38,810 --> 00:04:49,940
+so blueprint data maybe and there, we also would receive the information we require like the serverName
+
+56
+00:04:50,010 --> 00:04:56,180
+and then of course also the content, this is how it should work.
+
+57
+00:04:56,210 --> 00:05:00,800
+Now in the cockpit component, we actually need to emit our own event.
+
+58
+00:05:01,130 --> 00:05:08,150
+We are waiting for events named serverCreated and blueprintCreated, maybe with a lowercase p.
+
+59
+00:05:08,420 --> 00:05:16,520
+So in the cockpit component, I kind of want to create two new properties here, properties, that's important,
+
+60
+00:05:17,150 --> 00:05:22,430
+serverCreated and blueprintCreated.
+
+61
+00:05:22,500 --> 00:05:30,970
+Now before, we placed @input in front of them to mark them as properties you can set from outside,
+
+62
+00:05:30,980 --> 00:05:33,000
+now we want to do the opposite,
+
+63
+00:05:33,080 --> 00:05:40,440
+we want to make sure that both properties kind of are events we can emit and to make them events,
+
+64
+00:05:40,560 --> 00:05:49,280
+we first of all have to assign a new value, new eventEmitter and eventEmitter needs to be imported
+
+65
+00:05:49,640 --> 00:05:51,180
+from @angular/core,
+
+66
+00:05:51,200 --> 00:05:58,910
+so you should add this import here at the top. eventEmitter is a generic type which is indicated in TypeScript
+
+67
+00:05:58,930 --> 00:06:05,330
+by using this smaller than and greater than sign and in-between, you simply define the type of event data you're
+
+68
+00:06:05,330 --> 00:06:06,680
+going to emit
+
+69
+00:06:06,980 --> 00:06:07,700
+and here,
+
+70
+00:06:07,790 --> 00:06:11,500
+well we know this would just be the data we expect in the app component,
+
+71
+00:06:11,630 --> 00:06:15,990
+so this will be an object with a serverName and serverContent,
+
+72
+00:06:16,070 --> 00:06:22,670
+so we can pass this in between the smaller and greater than signs. And important, add parentheses in the
+
+73
+00:06:22,670 --> 00:06:28,430
+end to call the constructor of eventEmitter and create a new eventEmitter object which is now stored
+
+74
+00:06:28,580 --> 00:06:31,610
+in serverCreated,
+
+75
+00:06:31,850 --> 00:06:34,980
+I'll do the same for blueprintCreated.
+
+76
+00:06:35,000 --> 00:06:41,960
+Now we get two event emitters and that's the first step, eventEmitter is an object in the Angular framework
+
+77
+00:06:41,960 --> 00:06:45,020
+which allows you to emit your own events.
+
+78
+00:06:45,080 --> 00:06:51,600
+What we can do with that is in onAddServer, we can now call serverCreated
+
+79
+00:06:52,010 --> 00:06:55,160
+and here we can call the emit method.
+
+80
+00:06:55,160 --> 00:07:01,220
+This will, well like the name implies, emit a new event of this type, so of the server created
+
+81
+00:07:01,220 --> 00:07:08,240
+here using this eventEmitter. Well and here, we simply want to create the object or pass the object
+
+82
+00:07:08,240 --> 00:07:16,370
+we kind of said we would pass here, an object where we have a server name which of course is our new
+
+83
+00:07:16,370 --> 00:07:25,640
+serverName so it would be whatever we save here and then a serverContent with the value of newServerContent
+
+84
+00:07:26,000 --> 00:07:27,050
+as a value
+
+85
+00:07:27,410 --> 00:07:30,950
+and I can split this over two lines to make it a bit easier to read.
+
+86
+00:07:30,980 --> 00:07:37,820
+So this is what we emit in onAddServer and let's do the same for onAddBlueprint, here however of course,
+
+87
+00:07:38,000 --> 00:07:40,730
+we use blueprintCreated, the second event
+
+88
+00:07:40,730 --> 00:07:42,070
+we set up there.
+
+89
+00:07:42,650 --> 00:07:46,040
+So with that, we're emitting our own events, pretty awesome,
+
+90
+00:07:46,040 --> 00:07:47,810
+we're passing the data,
+
+91
+00:07:47,900 --> 00:07:50,040
+one piece is missing though.
+
+92
+00:07:50,090 --> 00:07:55,520
+Remember, we added @input to make a property bindable from outside,
+
+93
+00:07:55,520 --> 00:08:01,370
+now we need to add something to serverCreated and blueprintCreated to make it kind of listenable
+
+94
+00:08:01,400 --> 00:08:02,610
+from outside,
+
+95
+00:08:02,930 --> 00:08:08,300
+that something is another decorator and it's not input because we're not getting something passed
+
+96
+00:08:08,390 --> 00:08:09,790
+into this component,
+
+97
+00:08:09,800 --> 00:08:16,070
+it's @output with parentheses because we're passing something out of the component, we're passing
+
+98
+00:08:16,100 --> 00:08:18,130
+our event out of the component
+
+99
+00:08:18,620 --> 00:08:21,330
+and the same for blueprintCreated.
+
+100
+00:08:21,350 --> 00:08:24,700
+Make sure to import output from
+
+101
+00:08:24,800 --> 00:08:28,650
+@angular/core. With this in place,
+
+102
+00:08:28,700 --> 00:08:36,950
+now if we save this and have a look at our application, if we create a new server, some test content and
+
+103
+00:08:36,950 --> 00:08:38,300
+we click add server,
+
+104
+00:08:38,480 --> 00:08:44,130
+you see it gets displayed down there, so it successfully emits this event.
+
+105
+00:08:44,360 --> 00:08:48,260
+Let's check the same for the blueprint, that looks pretty good too.
+
+106
+00:08:48,410 --> 00:08:52,050
+So with that, we get our app working again
+
+107
+00:08:52,070 --> 00:08:59,630
+but now split up into several components which can communicate with each other and that is a key building
+
+108
+00:08:59,630 --> 00:09:03,810
+block because component communication is so important.
+

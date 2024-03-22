@@ -1,0 +1,304 @@
+1
+00:00:02,590 --> 00:00:08,110
+In the last lecture, we created our service and I told you to not instantiate it on your own.
+
+2
+00:00:08,160 --> 00:00:13,900
+I told you that Angular offers some great tool which will give us access to our services,
+
+3
+00:00:13,930 --> 00:00:16,930
+it's Angular's dependency injector.
+
+4
+00:00:17,310 --> 00:00:19,100
+What is a dependency injector?
+
+5
+00:00:19,200 --> 00:00:22,890
+Well a dependency is something a class of ours will depend on,
+
+6
+00:00:22,890 --> 00:00:28,760
+for example the new account component depends on the loggingService because we want to call a method
+
+7
+00:00:28,770 --> 00:00:36,980
+in that service and the dependency injector simply injects this dependency, injects an instance of this
+
+8
+00:00:36,980 --> 00:00:40,430
+class into our component automatically.
+
+9
+00:00:40,590 --> 00:00:46,260
+All we need to do is we need to inform Angular that we require such an instance.
+
+10
+00:00:46,290 --> 00:00:54,580
+So how do we inform Angular that we require such an instance? We add a constructor to the class, to the component
+
+11
+00:00:54,600 --> 00:00:57,620
+in this case where we want to use our service.
+
+12
+00:00:57,780 --> 00:01:04,350
+So there, I can bind it to a property by using this TypeScript shortcut of adding an accessor in front
+
+13
+00:01:04,350 --> 00:01:09,540
+of the name, of the argument to instantly create a property with the same name and bind the value to
+
+14
+00:01:09,540 --> 00:01:10,260
+it.
+
+15
+00:01:10,260 --> 00:01:12,840
+So here, I will name this loggingService,
+
+16
+00:01:12,860 --> 00:01:14,690
+this name is totally up to you.
+
+17
+00:01:14,940 --> 00:01:19,300
+Now this is the important part here though, add a type assignment here,
+
+18
+00:01:19,350 --> 00:01:20,640
+this is not optional.
+
+19
+00:01:20,640 --> 00:01:26,090
+You need to set the type and the type has to be the class you want to get injected,
+
+20
+00:01:26,220 --> 00:01:31,850
+loggingService in this case, make sure to also add the import at the top.
+
+21
+00:01:31,860 --> 00:01:38,190
+Now let me close the body of this constructor and this simple task here informs Angular that we will
+
+22
+00:01:38,190 --> 00:01:41,530
+need an instance of this loggingService. Correctly
+
+23
+00:01:41,530 --> 00:01:48,550
+you might ask, well how do we inform Angular, why does this matter if we write this in the constructor?
+
+24
+00:01:48,600 --> 00:01:54,890
+Think about who gives us the instance of this account component, this new account component here.
+
+25
+00:01:55,100 --> 00:01:56,550
+This is a TypeScript class
+
+26
+00:01:56,550 --> 00:02:01,570
+in the end so somewhere, this needs to get instantiated so that something happens in our app.
+
+27
+00:02:01,950 --> 00:02:04,780
+Well who is responsible for creating our components?
+
+28
+00:02:05,720 --> 00:02:12,380
+Angular is of course because we are placing selectors in our templates and when Angular comes across
+
+29
+00:02:12,380 --> 00:02:19,730
+these selectors, it gives us instances of our components. Now since Angular is responsible for instantiating
+
+30
+00:02:19,820 --> 00:02:25,570
+our components, Angular will need to construct them correctly.
+
+31
+00:02:25,700 --> 00:02:32,450
+So if we define in the constructor that we require some argument, Angular will recognize this and now
+
+32
+00:02:32,450 --> 00:02:40,850
+it tries to give us that argument, it tries to give us this type in this case. So it knows
+
+33
+00:02:40,860 --> 00:02:45,920
+we want an instance of the loggingService class because we defined a type,
+
+34
+00:02:45,930 --> 00:02:47,980
+this is why this is important.
+
+35
+00:02:48,080 --> 00:02:51,030
+Now that is almost enough but not quite,
+
+36
+00:02:51,050 --> 00:02:57,100
+now Angular knows what we want but it doesn't know how to give us such an instance.
+
+37
+00:02:57,140 --> 00:03:00,300
+We need to do one additional step,
+
+38
+00:03:00,370 --> 00:03:07,440
+we need to provide a service. Provide simply means we tell Angular how to create it
+
+39
+00:03:07,540 --> 00:03:11,270
+and that sounds very complicated and it is very simple,
+
+40
+00:03:11,290 --> 00:03:16,180
+all we have to do is add one extra property to the @component decorator,
+
+41
+00:03:16,360 --> 00:03:23,740
+the providers property here. This also takes an array like other properties we added before
+
+42
+00:03:23,980 --> 00:03:31,180
+and here we again just have to specify the type of what we want to be able to get provided you could
+
+43
+00:03:31,180 --> 00:03:33,830
+say, so loggingService again.
+
+44
+00:03:33,880 --> 00:03:40,840
+Now with that, Angular when analyzing the component, recognizes that it should be able to give us such
+
+45
+00:03:40,840 --> 00:03:45,100
+a loggingService and it will set itself up to be able to do so
+
+46
+00:03:45,250 --> 00:03:51,700
+and when it then actually builds the component, constructs it, it sees that we want to have such an instance
+
+47
+00:03:51,910 --> 00:03:54,430
+and it will know how to give us such an instance
+
+48
+00:03:54,670 --> 00:04:02,890
+and now we can simply in our component, anywhere in this component, access our loggingService property which
+
+49
+00:04:02,890 --> 00:04:09,460
+is created automatically since I use this TypeScript shortcut here and call log status change.
+
+50
+00:04:09,490 --> 00:04:15,040
+So now I'm not creating that instance manually, Angular does it for us
+
+51
+00:04:15,040 --> 00:04:18,030
+and why is this better than creating it manually?
+
+52
+00:04:18,310 --> 00:04:20,540
+You will see some other advantages later
+
+53
+00:04:20,710 --> 00:04:27,180
+but this basically let's you stay in the Angular ecosystem and Angular knows how your app works.
+
+54
+00:04:27,180 --> 00:04:30,490
+Again, some other advantages will come up later.
+
+55
+00:04:30,730 --> 00:04:35,820
+So with this, we now have the same code as before,
+
+56
+00:04:35,920 --> 00:04:45,580
+so if we have a look at our application again and create a new account, we still see the log here depending
+
+57
+00:04:45,580 --> 00:04:48,210
+on which status we chose here,
+
+58
+00:04:48,220 --> 00:04:52,790
+so this still works but now, we're injecting the service.
+
+59
+00:04:52,790 --> 00:04:58,650
+Now let's also do the same by copying that in the account component here.
+
+60
+00:04:58,690 --> 00:05:01,480
+So here, I'll also add the constructor
+
+61
+00:05:01,780 --> 00:05:06,430
+and of course here we also need to add the import because TypeScript needs to know where
+
+62
+00:05:06,430 --> 00:05:10,560
+this loggingService comes from, not Angular, TypeScript
+
+63
+00:05:10,560 --> 00:05:17,980
+and I will also add a provider of course because for this component too, I need to inform Angular how to create
+
+64
+00:05:17,980 --> 00:05:20,140
+this loggingService.
+
+65
+00:05:20,230 --> 00:05:28,540
+So if we do this and then go back to the application here, reload, create a new service again,
+
+66
+00:05:29,860 --> 00:05:30,910
+this works,
+
+67
+00:05:30,940 --> 00:05:33,170
+now let's change the status
+
+68
+00:05:33,250 --> 00:05:35,190
+and this also still works.
+
+69
+00:05:35,230 --> 00:05:41,000
+Now of course because I didn't replace this here, so let's call the loggingService now,
+
+70
+00:05:41,980 --> 00:05:47,370
+and call log status change and pass the status.
+
+71
+00:05:47,380 --> 00:05:53,000
+Now if we save this and try to change this, it still works.
+
+72
+00:05:53,020 --> 00:06:00,280
+So now we get this same logging functionality outsourced, centralized in a service and therefore, our
+
+73
+00:06:00,280 --> 00:06:06,430
+code here is a bit leaner and I guess you can imagine how in bigger applications, where you have duplicate
+
+74
+00:06:06,460 --> 00:06:10,100
+code, a service can really help you to get more dry,
+
+75
+00:06:10,110 --> 00:06:18,160
+to don't repeat yourself all the time but instead to really cleverly outsource your code into a service
+
+76
+00:06:18,250 --> 00:06:19,170
+and have it there.
+

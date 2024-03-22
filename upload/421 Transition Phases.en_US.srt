@@ -1,0 +1,180 @@
+1
+00:00:01,650 --> 00:00:04,350
+Thus far we only had starting an ending state.
+
+2
+00:00:04,350 --> 00:00:06,780
+Now let's play around with the animate function.
+
+3
+00:00:06,810 --> 00:00:13,830
+We actually cannot only pastie the timing we can control the whole animation and define styles.
+
+4
+00:00:13,830 --> 00:00:16,710
+The animation should take during the animation.
+
+5
+00:00:16,860 --> 00:00:22,920
+For that I will pass a second argument here which is the style never again we're already importing that
+
+6
+00:00:22,920 --> 00:00:23,180
+.
+
+7
+00:00:23,250 --> 00:00:28,250
+And as I can define a style in a state I can also define a style during the animation.
+
+8
+00:00:28,410 --> 00:00:34,380
+So year I also pass a challenge crypt object and that in-between style will now be taken during the
+
+9
+00:00:34,380 --> 00:00:35,760
+installation.
+
+10
+00:00:35,790 --> 00:00:42,840
+So here let's say I want to give as a border radius of 50 pixels.
+
+11
+00:00:42,840 --> 00:00:47,720
+Now let's see how that looks if I save this with this extra style during the animation.
+
+12
+00:00:48,090 --> 00:00:56,350
+If I hit shrink you see it now looks kind of ugly because now we let these border radios or we let it
+
+13
+00:00:56,480 --> 00:00:57,700
+well get around.
+
+14
+00:00:57,750 --> 00:01:01,570
+But once it finishes it instantly jumps to the end state.
+
+15
+00:01:01,620 --> 00:01:08,760
+So this is not really what you want we want to smooth fully half this in between our animation and not
+
+16
+00:01:08,820 --> 00:01:15,750
+any made the changing of the border radius and that instead of the chumped the end state to cater for
+
+17
+00:01:15,750 --> 00:01:23,790
+such needs we would replace this any made function here like this with an array.
+
+18
+00:01:23,810 --> 00:01:27,230
+Now we can pass an array as the second argument to transition.
+
+19
+00:01:27,420 --> 00:01:34,350
+And here we can also define starting and in between states during this transition.
+
+20
+00:01:34,410 --> 00:01:46,860
+So we could pass a style here and say background background color Shelby orange it would be one thing
+
+21
+00:01:46,890 --> 00:01:48,150
+.
+
+22
+00:01:48,160 --> 00:01:54,120
+Thereafter the second element in disarray would be an animated function which takes let's say one second
+
+23
+00:01:54,650 --> 00:02:03,450
+where I want to animate my border radius ask before border radius 50 pixels and now to avoid this ugly
+
+24
+00:02:03,450 --> 00:02:06,150
+jump at the end I add a number.
+
+25
+00:02:06,150 --> 00:02:11,730
+Any made function of half a second which will be executed after the border radius has been changed.
+
+26
+00:02:11,760 --> 00:02:17,530
+Now with that we should instantly see a change to the background color to orange.
+
+27
+00:02:17,650 --> 00:02:24,090
+Thereafter we should see the border radius developing over one second and thereafter we should see the
+
+28
+00:02:24,090 --> 00:02:29,690
+animation of well half a second where we removed the border edges again.
+
+29
+00:02:29,940 --> 00:02:37,500
+Shrink the object and turn it from orange back to our end state which is green for example if we do
+
+30
+00:02:37,500 --> 00:02:38,380
+shrink it.
+
+31
+00:02:38,790 --> 00:02:45,450
+Well let's see if I can shrink it What we do indeed see it turn orange see the border radius and thereafter
+
+32
+00:02:45,450 --> 00:02:50,370
+see a shrink and the border radius being removed and the same is true for any made back.
+
+33
+00:02:50,370 --> 00:02:55,140
+So with that I get a more complex animation where a chain multiple styles.
+
+34
+00:02:55,200 --> 00:03:01,650
+And while all this nesting here might look difficult it actually isn't it only is an array passed to
+
+35
+00:03:01,650 --> 00:03:08,520
+the transmission which allows us to define different phases in that transition starting phase.
+
+36
+00:03:08,550 --> 00:03:15,510
+If no Any made method is used then it is instantly applied that if we do get any mate we do apply a
+
+37
+00:03:15,510 --> 00:03:22,110
+style but over some time and if we have any made without a style this means basically now transition
+
+38
+00:03:22,140 --> 00:03:23,390
+to the end state.
+
+39
+00:03:23,730 --> 00:03:29,060
+And this is how we can set up our animation of course we could have multiple in-between styles.
+
+40
+00:03:29,310 --> 00:03:36,060
+The important thing is that you do end with any made 500 or whatever timing you have to get smoothly
+
+41
+00:03:36,060 --> 00:03:41,230
+to the end state otherwise you will see what we had before that it instantly snaps back to your end
+
+42
+00:03:41,250 --> 00:03:41,680
+state.
+
+43
+00:03:41,730 --> 00:03:44,140
+Probably not what you want.
+
+44
+00:03:44,160 --> 00:03:49,130
+This is a more complex transition with the in between steps.
+
+45
+00:03:49,200 --> 00:03:55,050
+But I think still manageable if you really think about what's happening here with these different phases
+

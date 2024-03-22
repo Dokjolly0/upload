@@ -1,0 +1,371 @@
+1
+00:00:02,210 --> 00:00:08,550
+Thus far, we always were only interested in the response data of our request,
+
+2
+00:00:08,570 --> 00:00:14,780
+right? For example when we fetch the post, we get the response data, we map that and we return the subscription
+ 
+00:00:14,810 --> 00:00:17,660
+and then we use that data in the component.
+
+3
+00:00:17,660 --> 00:00:20,480
+Nothing wrong with that and absolutely what we need here
+
+4
+00:00:20,480 --> 00:00:26,420
+but sometimes you need access to the entire response object and not just to the extracted body data,
+
+5
+00:00:26,420 --> 00:00:32,090
+sometimes you need to find out which status code was attached or you need some response headers and
+
+6
+00:00:32,180 --> 00:00:40,040
+in such cases, you can change the way the Angular HttpClient parses that response and you can
+
+7
+00:00:40,580 --> 00:00:46,820
+basically tell Angular, "hey, please don't give me the unpacked, the extracted response data
+
+8
+00:00:46,820 --> 00:00:48,010
+you found in the body,
+
+9
+00:00:48,050 --> 00:00:53,930
+give me the full response instead" and let's do that for sending a POST request for example.
+
+10
+00:00:54,020 --> 00:00:57,890
+You do that by adding this extra argument to configure the request
+
+11
+00:00:58,160 --> 00:01:07,600
+and here I won't set any headers or params, instead here we can change the observe key here. Observe takes
+
+12
+00:01:07,600 --> 00:01:14,080
+a couple of values and intellisense here incorrectly shows that I can only set a body, that actually
+
+13
+00:01:14,080 --> 00:01:20,980
+is the default and body means that you get that response data extracted and converted to a Javascript
+
+14
+00:01:21,010 --> 00:01:28,030
+object automatically but you don't have to stick to body. You can for example also change this to response,
+
+15
+00:01:28,660 --> 00:01:34,310
+by the way you should get an error if you enter something incorrect but response is supported.
+
+16
+00:01:34,350 --> 00:01:36,210
+Now let's see what this is.
+
+17
+00:01:36,250 --> 00:01:42,670
+We are already logging the response data or whatever we get back here in the console, so we should see
+
+18
+00:01:42,670 --> 00:01:44,680
+that when we add a new post.
+
+19
+00:01:45,280 --> 00:01:47,230
+So let's simply enter some content here,
+
+20
+00:01:47,230 --> 00:01:48,070
+doesn't matter,
+
+21
+00:01:48,070 --> 00:01:53,550
+let's send that post and now you see you get back the full HTTP response object.
+
+22
+00:01:53,800 --> 00:02:00,220
+You have the body in there and conveniently, this still already was parsed and converted to a Javascript
+
+23
+00:02:00,250 --> 00:02:06,810
+object for you but if you wanted to access it, you would now have to access it by typing response data
+
+24
+00:02:06,880 --> 00:02:12,250
+body here and you even get autocompletion because TypeScript understands that we request the full
+
+25
+00:02:12,250 --> 00:02:18,990
+response here. So you still have access to the body but now, you also have access to the headers of the
+
+26
+00:02:18,990 --> 00:02:22,500
+response, to the status code, the status text,
+
+27
+00:02:22,620 --> 00:02:30,720
+if it was OK which will be true, if the status code is in the 200xx region, so if it's not a 400 or
+
+28
+00:02:30,720 --> 00:02:37,740
+500 status code and that can be more useful in some scenarios where you maybe don't care about the body
+
+29
+00:02:37,920 --> 00:02:44,520
+or not only about the body but you actually want more information than just that. With observe,
+
+30
+00:02:44,520 --> 00:02:47,690
+you can change the kind of data you get back. Now,
+
+31
+00:02:47,700 --> 00:02:50,220
+this is how you observe the response,
+
+32
+00:02:50,220 --> 00:02:53,400
+you can also observe something different.
+
+33
+00:02:54,090 --> 00:02:59,700
+So here when we delete posts, I will use observe again and I mentioned that body would be the default
+
+34
+00:02:59,820 --> 00:03:03,990
+and that extracts the response body and converts it to Javascript.
+
+35
+00:03:03,990 --> 00:03:06,360
+You also have response as you learned,
+
+36
+00:03:06,390 --> 00:03:08,610
+now you'll also have events,
+
+37
+00:03:08,610 --> 00:03:10,000
+now what is events?
+
+38
+00:03:10,710 --> 00:03:17,640
+Let's simply have a look at this events thing by using one other operator which we can chain in here
+
+39
+00:03:18,180 --> 00:03:22,290
+and we import that from rxjs/operators and that's the tab operator
+
+40
+00:03:22,410 --> 00:03:28,890
+and that simply allows us to execute some code without altering the response, so that we basically just
+
+41
+00:03:28,890 --> 00:03:35,250
+can do something with the response but not disturb our subscribe function and the functions we passed
+
+42
+00:03:35,280 --> 00:03:37,400
+as arguments to subscribe.
+
+43
+00:03:37,410 --> 00:03:41,650
+So here, I simply pipe tap in there,
+
+44
+00:03:41,800 --> 00:03:49,060
+I get my my event presumably since we observe events here and I can console log this and you don't need
+
+45
+00:03:49,060 --> 00:03:51,500
+to return anything or anything like that,
+
+46
+00:03:51,730 --> 00:03:55,520
+it won't interrupt the normal observable data flow,
+
+47
+00:03:55,570 --> 00:04:02,180
+it just taps in there, allows you to do something but then automatically lets the response pass through
+
+48
+00:04:02,200 --> 00:04:05,020
+so to say. So let's see what that gives us.
+
+49
+00:04:05,230 --> 00:04:14,780
+If I now click clear posts, we see we get two outputs now and these outputs stem from post service line 70
+
+50
+00:04:14,780 --> 00:04:16,620
+which clearly is this console log.
+
+51
+00:04:17,180 --> 00:04:24,410
+So it seems like we got two events here - the first one logs an empty object or an almost empty object
+
+52
+00:04:24,440 --> 00:04:32,240
+where we have type 0 and the second one is the HTTP response object. In the end, you have different type
+
+53
+00:04:32,270 --> 00:04:35,650
+of events and they are encoded with numbers.
+
+54
+00:04:35,660 --> 00:04:38,290
+However here in code, you don't have to use these numbers,
+
+55
+00:04:38,360 --> 00:04:46,080
+you have a more convenient way. We can check event type and compare this to HTTP
+
+56
+00:04:46,090 --> 00:04:53,550
+event type which is an enum you can import from @angular/common/http.
+
+57
+00:04:53,550 --> 00:04:59,100
+This is supported in TypeScript only and for Javascript, this in the end just is a map of numbers,
+
+58
+00:04:59,220 --> 00:05:00,680
+so of zero and so on
+
+59
+00:05:00,750 --> 00:05:06,650
+and it understands which type of event, so which number here stands for which internal type of event
+
+60
+00:05:06,690 --> 00:05:11,670
+but here we have a more human readable way because now if you type a dot here, you see the different
+
+61
+00:05:11,670 --> 00:05:12,590
+translations.
+
+62
+00:05:12,630 --> 00:05:19,140
+Now these are just the responses for the numbers you see in that log here and you can actually see that
+
+63
+00:05:19,140 --> 00:05:24,480
+here in the preview. You see for example response has a type of 4 by the look of it,
+
+64
+00:05:24,480 --> 00:05:28,840
+this is simply number 4 encoded in more human readable text
+
+65
+00:05:28,920 --> 00:05:35,370
+and again that's a TypeScript-only feature, it is compiled to just that number comparison in the end and
+
+66
+00:05:35,370 --> 00:05:41,670
+you see that for example sent has that number of 0, so it looks like we had the sent first and then
+
+67
+00:05:41,670 --> 00:05:45,090
+we had the response event and that was also log.
+
+68
+00:05:45,090 --> 00:05:50,640
+There are other events too which didn't kick in here, for example when you were uploading files, you would
+
+69
+00:05:50,640 --> 00:05:54,150
+get back some progress information about that file upload,
+
+70
+00:05:54,150 --> 00:05:55,820
+how it is going
+
+71
+00:05:55,920 --> 00:05:57,120
+and so on.
+
+72
+00:05:57,210 --> 00:05:57,940
+So here,
+
+73
+00:05:58,050 --> 00:06:00,130
+if you ever for example want to check,
+
+74
+00:06:00,150 --> 00:06:00,390
+yes,
+
+75
+00:06:00,390 --> 00:06:02,150
+did I get back the response?
+
+76
+00:06:02,310 --> 00:06:09,600
+Then you can just compare the event type to this event type, so to this number and see are we having
+
+77
+00:06:09,620 --> 00:06:10,960
+the response here
+
+78
+00:06:11,010 --> 00:06:18,660
+and if you do have the response, for example you could log the event body because you know OK the event
+
+79
+00:06:18,660 --> 00:06:21,030
+we have here is actually my response object,
+
+80
+00:06:21,030 --> 00:06:25,100
+I can safely access the body. If you just send this,
+
+81
+00:06:25,140 --> 00:06:35,720
+so if the type is equal to HTTP event type sent, well then and TypeScript is really smart here, then you can't
+
+82
+00:06:35,720 --> 00:06:40,250
+access the body, here you actually have only the type but you could do something else, you could update
+
+83
+00:06:40,250 --> 00:06:46,430
+something in the UI to basically inform the user that request was now sent and you're waiting for the
+
+84
+00:06:46,430 --> 00:06:47,590
+response.
+
+85
+00:06:47,690 --> 00:06:56,510
+So that is how you can use these events if you need very granular control over how you update the UI and
+
+86
+00:06:56,510 --> 00:07:00,090
+in which phase your request currently is.
+
+87
+00:07:00,170 --> 00:07:08,140
+So to quickly demonstrate this again, if I now fetch my posts and then I'll clear them,
+
+88
+00:07:08,300 --> 00:07:14,540
+now we have our different outputs here and this null statement here for example is from me accessing
+
+89
+00:07:14,540 --> 00:07:17,190
+the response body which here just happens to be null
+
+90
+00:07:17,300 --> 00:07:21,090
+but if there were one, then we could safely access it here.
+
+91
+00:07:21,110 --> 00:07:27,050
+So these are events, obviously something you'll not use all the time but can be very helpful if you need
+
+92
+00:07:27,050 --> 00:07:30,440
+finegrained control over your request status.
+

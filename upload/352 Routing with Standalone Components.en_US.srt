@@ -1,0 +1,592 @@
+1
+00:00:02,130 --> 00:00:04,060
+Now with all those basics
+
+2
+00:00:04,060 --> 00:00:06,440
+about Standalone Components out of the way,
+
+3
+00:00:06,440 --> 00:00:08,370
+let's move one step further
+
+4
+00:00:08,370 --> 00:00:10,840
+and let's take a look at Standalone Components
+
+5
+00:00:10,840 --> 00:00:12,540
+combined with routing
+
+6
+00:00:12,540 --> 00:00:15,490
+because, of course, in many Angular applications,
+
+7
+00:00:15,490 --> 00:00:17,223
+you also need routing.
+
+8
+00:00:18,110 --> 00:00:21,250
+For this, attached you find an updated starting project,
+
+9
+00:00:21,250 --> 00:00:23,380
+which is the same project as before
+
+10
+00:00:23,380 --> 00:00:25,460
+with all those components migrated
+
+11
+00:00:25,460 --> 00:00:27,070
+to Standalone Components,
+
+12
+00:00:27,070 --> 00:00:29,970
+at least the components we worked on thus far
+
+13
+00:00:29,970 --> 00:00:33,210
+but we've got some new components in there as well.
+
+14
+00:00:33,210 --> 00:00:34,930
+We've got an about.component,
+
+15
+00:00:34,930 --> 00:00:37,990
+which renders a simple dummy About Page
+
+16
+00:00:37,990 --> 00:00:40,490
+and a dashboard.component
+
+17
+00:00:40,490 --> 00:00:42,360
+which renders a dummy page,
+
+18
+00:00:42,360 --> 00:00:44,860
+which also has another routerLink in there
+
+19
+00:00:44,860 --> 00:00:46,440
+because there we can navigation
+
+20
+00:00:46,440 --> 00:00:47,800
+to this today.component,
+
+21
+00:00:47,800 --> 00:00:49,593
+which is another dummy page.
+
+22
+00:00:50,540 --> 00:00:52,090
+Now, what's interesting here
+
+23
+00:00:52,090 --> 00:00:56,050
+is that the dashboard components have their own module
+
+24
+00:00:56,050 --> 00:01:00,200
+where I'm specifically declaring the DashboardComponent
+
+25
+00:01:00,200 --> 00:01:02,724
+and then the DashboardRoutingModule,
+
+26
+00:01:02,724 --> 00:01:04,555
+and the DashboardRoutingModule
+
+27
+00:01:04,555 --> 00:01:08,510
+is responsible for navigating between dashboard
+
+28
+00:01:08,510 --> 00:01:10,290
+and this TodayComponent
+
+29
+00:01:10,290 --> 00:01:13,040
+and it's worth noting that they are provided
+
+30
+00:01:13,040 --> 00:01:17,730
+with the forChild method, making them lazy loadable
+
+31
+00:01:17,730 --> 00:01:19,470
+because that's the idea.
+
+32
+00:01:19,470 --> 00:01:21,720
+I have this dashboard-routing.module
+
+33
+00:01:21,720 --> 00:01:23,460
+and the module and its routes
+
+34
+00:01:23,460 --> 00:01:26,050
+should be loaded lazily when they're needed
+
+35
+00:01:26,050 --> 00:01:28,460
+by the app-routing.module.
+
+36
+00:01:28,460 --> 00:01:31,610
+This is also new, another new file I added
+
+37
+00:01:31,610 --> 00:01:33,290
+to this starting project,
+
+38
+00:01:33,290 --> 00:01:35,440
+and in this app-routing.module,
+
+39
+00:01:35,440 --> 00:01:37,420
+I am defining some routes,
+
+40
+00:01:37,420 --> 00:01:40,420
+the root route to the Welcome Component,
+
+41
+00:01:40,420 --> 00:01:42,910
+the about route to the AboutComponent
+
+42
+00:01:42,910 --> 00:01:44,810
+and then the dashboard route,
+
+43
+00:01:44,810 --> 00:01:47,813
+which loads this dashboard-routing.module lazily.
+
+44
+00:01:49,032 --> 00:01:51,040
+So that module I just showed you
+
+45
+00:01:51,040 --> 00:01:53,540
+is loaded lazily here.
+
+46
+00:01:53,540 --> 00:01:56,670
+And again, this is all default Angular code.
+
+47
+00:01:56,670 --> 00:01:58,420
+That is what you already know.
+
+48
+00:01:58,420 --> 00:02:00,380
+That's nothing special.
+
+49
+00:02:00,380 --> 00:02:02,430
+But this also won't work like this
+
+50
+00:02:02,430 --> 00:02:03,630
+because at the moment,
+
+51
+00:02:03,630 --> 00:02:05,110
+this app-routing.module
+
+52
+00:02:05,110 --> 00:02:08,950
+is not wired up because we have no app module.
+
+53
+00:02:08,950 --> 00:02:12,390
+We removed that app module after all.
+
+54
+00:02:12,390 --> 00:02:14,530
+Therefore, if you ng serve this,
+
+55
+00:02:14,530 --> 00:02:17,200
+if you start the development server here,
+
+56
+00:02:17,200 --> 00:02:19,540
+you will notice that this fails
+
+57
+00:02:19,540 --> 00:02:22,630
+because in the app.component template here,
+
+58
+00:02:22,630 --> 00:02:24,810
+I'm using the router-outlet
+
+59
+00:02:24,810 --> 00:02:26,977
+but this won't work anymore
+
+60
+00:02:26,977 --> 00:02:29,110
+because the app.component
+
+61
+00:02:29,110 --> 00:02:30,630
+is a Standalone Component
+
+62
+00:02:30,630 --> 00:02:33,850
+and does not know what to do with that router-outlet
+
+63
+00:02:33,850 --> 00:02:36,670
+and it also doesn't know about these routes.
+
+64
+00:02:36,670 --> 00:02:39,690
+So therefore, that's what we'll have to fix here.
+
+65
+00:02:39,690 --> 00:02:42,220
+Now, as a first step to fix this,
+
+66
+00:02:42,220 --> 00:02:44,270
+we have to make the app.component
+
+67
+00:02:44,270 --> 00:02:46,210
+aware of the router module,
+
+68
+00:02:46,210 --> 00:02:49,210
+the router module that's built into Angular
+
+69
+00:02:49,210 --> 00:02:51,330
+so that it knows the router-outlet
+
+70
+00:02:51,330 --> 00:02:54,270
+but also the routerLink directive
+
+71
+00:02:54,270 --> 00:02:56,480
+because routerLink and router-outlet
+
+72
+00:02:56,480 --> 00:03:00,010
+are things totally unknown to Angular
+
+73
+00:03:00,010 --> 00:03:03,160
+if you're not making the router module available.
+
+74
+00:03:03,160 --> 00:03:04,660
+And right now, the app.component
+
+75
+00:03:04,660 --> 00:03:07,750
+doesn't know about it because it's standalone.
+
+76
+00:03:07,750 --> 00:03:10,950
+So just because we have an NgModule here
+
+77
+00:03:10,950 --> 00:03:13,680
+where we are defining the RouterModule
+
+78
+00:03:13,680 --> 00:03:17,370
+does not tell the app.component about it.
+
+79
+00:03:17,370 --> 00:03:20,210
+Instead, just as with our own customer component,
+
+80
+00:03:20,210 --> 00:03:23,200
+we have to import the RouterModule here.
+
+81
+00:03:23,200 --> 00:03:25,510
+We have to add it to imports here
+
+82
+00:03:25,510 --> 00:03:28,530
+in our app.component and also add the import here
+
+83
+00:03:28,530 --> 00:03:30,013
+at the top of our file.
+
+84
+00:03:31,270 --> 00:03:34,600
+With that, this error is gone
+
+85
+00:03:34,600 --> 00:03:37,200
+but now we don't see anything on the screen.
+
+86
+00:03:37,200 --> 00:03:40,620
+The reason for that is that Angular now does know
+
+87
+00:03:40,620 --> 00:03:42,720
+about the router-outlet,
+
+88
+00:03:42,720 --> 00:03:44,400
+it does now understand this
+
+89
+00:03:44,400 --> 00:03:46,720
+and it does understand routerLink
+
+90
+00:03:46,720 --> 00:03:48,853
+but it's not aware of those routes yet.
+
+91
+00:03:49,910 --> 00:03:52,420
+Now, to make Angular aware of these routes,
+
+92
+00:03:52,420 --> 00:03:54,230
+we have to go to main.ts
+
+93
+00:03:54,230 --> 00:03:56,270
+where we bootstrapped the application
+
+94
+00:03:56,270 --> 00:03:57,640
+and here we basically
+
+95
+00:03:57,640 --> 00:04:02,640
+have to add our routing module to providers.
+
+96
+00:04:02,780 --> 00:04:05,570
+Now, the routing module is not a service
+
+97
+00:04:05,570 --> 00:04:10,470
+but forRoot actually acts as a service.
+
+98
+00:04:10,470 --> 00:04:13,780
+Now, to make the app-routing.module work here
+
+99
+00:04:13,780 --> 00:04:17,890
+in main.ts, we have to import a special helper function
+
+100
+00:04:17,890 --> 00:04:20,360
+provided by Angular Core
+
+101
+00:04:20,360 --> 00:04:23,650
+and that's the importProvidersFrom function.
+
+102
+00:04:25,390 --> 00:04:27,199
+We have to add this here
+
+103
+00:04:27,199 --> 00:04:30,820
+to our providers array on bootstrapApplication
+
+104
+00:04:30,820 --> 00:04:33,300
+and it's a function, so we execute it.
+
+105
+00:04:33,300 --> 00:04:36,680
+And then to importProvidersFrom,
+
+106
+00:04:36,680 --> 00:04:41,293
+we add a pointer at AppRoutingModule, like this.
+
+107
+00:04:42,410 --> 00:04:45,590
+So we have to import AppRoutingModule
+
+108
+00:04:45,590 --> 00:04:48,170
+from this AppRoutingModule file
+
+109
+00:04:48,170 --> 00:04:49,870
+and then we point at it here.
+
+110
+00:04:49,870 --> 00:04:53,630
+We pass a pointer at this routing module class
+
+111
+00:04:53,630 --> 00:04:55,243
+to importProvidersFrom.
+
+112
+00:04:56,530 --> 00:04:57,970
+And this in the end makes
+
+113
+00:04:57,970 --> 00:05:00,650
+our standalone root component aware
+
+114
+00:05:00,650 --> 00:05:02,150
+of our routes and makes
+
+115
+00:05:02,150 --> 00:05:05,690
+the overall Angular application aware of our routes,
+
+116
+00:05:05,690 --> 00:05:07,250
+so to say.
+
+117
+00:05:07,250 --> 00:05:08,780
+If we save this now,
+
+118
+00:05:08,780 --> 00:05:10,690
+our welcome page is back
+
+119
+00:05:10,690 --> 00:05:13,430
+but we can now also navigate to the About page
+
+120
+00:05:13,430 --> 00:05:15,360
+or the Dashboard page.
+
+121
+00:05:15,360 --> 00:05:16,800
+And it's worth noting,
+
+122
+00:05:16,800 --> 00:05:19,560
+if we reload the application on the Home page,
+
+123
+00:05:19,560 --> 00:05:22,760
+and we open the Network tab in our browser dev tools
+
+124
+00:05:22,760 --> 00:05:26,150
+that this dashboard page is loaded lazily.
+
+125
+00:05:26,150 --> 00:05:28,740
+If you watch the HTTP requests here,
+
+126
+00:05:28,740 --> 00:05:31,030
+you'll notice that if I click on Dashboard,
+
+127
+00:05:31,030 --> 00:05:32,270
+the code for this component
+
+128
+00:05:32,270 --> 00:05:35,020
+is only downloaded when it's needed.
+
+129
+00:05:35,020 --> 00:05:37,140
+So lazy loading works just fine here
+
+130
+00:05:37,140 --> 00:05:38,626
+and it's also worth noting
+
+131
+00:05:38,626 --> 00:05:41,600
+that all of that works in a application,
+
+132
+00:05:41,600 --> 00:05:44,380
+in an Angular app where many components,
+
+133
+00:05:44,380 --> 00:05:45,870
+including the root component
+
+134
+00:05:45,870 --> 00:05:49,260
+are actually Standalone Components.
+
+135
+00:05:49,260 --> 00:05:51,700
+So app.component is a Standalone Component
+
+136
+00:05:51,700 --> 00:05:55,570
+and nonetheless, by connecting our routing setup like this,
+
+137
+00:05:55,570 --> 00:05:59,510
+we are able to use routing with our app-routing.module
+
+138
+00:05:59,510 --> 00:06:01,250
+and with a couple of components
+
+139
+00:06:01,250 --> 00:06:04,373
+that are not Standalone Components at all.
+
+140
+00:06:05,310 --> 00:06:09,380
+Dashboard, today and about are not Standalone Components.
+
+141
+00:06:09,380 --> 00:06:12,720
+Instead, they are registered in a different module
+
+142
+00:06:12,720 --> 00:06:14,930
+and in a different routing module,
+
+143
+00:06:14,930 --> 00:06:17,280
+and everything works just fine.
+
+144
+00:06:17,280 --> 00:06:19,560
+So again, you can blend modules
+
+145
+00:06:19,560 --> 00:06:23,683
+with this standalone approach also when using routing.
+
+146
+00:06:24,520 --> 00:06:27,240
+But you can also choose a different approach,
+
+147
+00:06:27,240 --> 00:06:30,890
+turn those components into Standalone Components as well
+
+148
+00:06:30,890 --> 00:06:34,203
+and then also adjust the routing code accordingly.
+

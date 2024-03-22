@@ -1,0 +1,320 @@
+1
+00:00:02,860 --> 00:00:06,040
+That's the project you can find attached to this lecture here,
+
+2
+00:00:06,040 --> 00:00:12,310
+it allows us to define a server name here and then some content for the server and then we can either
+
+3
+00:00:12,310 --> 00:00:14,680
+add a server or a blueprint
+
+4
+00:00:14,680 --> 00:00:20,500
+and as you can see, both look pretty similar but the server is bold and red or has some bold and red text,
+
+5
+00:00:20,590 --> 00:00:24,540
+the blueprint has some italic blue text.
+
+6
+00:00:24,700 --> 00:00:26,320
+So that's the difference here.
+
+7
+00:00:26,320 --> 00:00:30,300
+Now this app is all running in one component
+
+8
+00:00:30,300 --> 00:00:35,680
+as of now, in the app component, here in the template, we got a lot of code and we can do better, we can
+
+9
+00:00:35,680 --> 00:00:42,280
+split this up because that's not ideal having all that logic in this component here, maybe splitting
+
+10
+00:00:42,280 --> 00:00:48,810
+it up makes sense because that would also allow us if we build a bigger app to reuse parts of that.
+
+11
+00:00:48,820 --> 00:00:55,600
+So how could we split this up? We could create a new component for this whole cockpit here where we enter
+
+12
+00:00:55,600 --> 00:00:57,870
+a name and content and click the buttons
+
+13
+00:00:58,060 --> 00:01:03,170
+and of course we could also create component, a component for an individual server
+
+14
+00:01:03,490 --> 00:01:10,450
+and with that, we should have a much leaner app.component.html file and we would bundle our business
+
+15
+00:01:10,450 --> 00:01:13,930
+logic better into individual components.
+
+16
+00:01:13,930 --> 00:01:15,870
+Now we learned how to create new components,
+
+17
+00:01:15,880 --> 00:01:16,860
+I will use the CLI,
+
+18
+00:01:16,870 --> 00:01:23,320
+you could of course also do it manually and I will create new components with ng g and then let's say
+
+19
+00:01:23,320 --> 00:01:26,320
+the first component could be this cockpit here,
+
+20
+00:01:26,380 --> 00:01:30,960
+so I will simply name it cockpit component.
+
+21
+00:01:31,090 --> 00:01:37,620
+Now as an addition, we can type --spec false to make sure this spec, this testing file is
+
+22
+00:01:37,660 --> 00:01:38,620
+not getting created,
+
+23
+00:01:38,620 --> 00:01:40,880
+I deleted it all the time anyways
+
+24
+00:01:41,200 --> 00:01:47,230
+and then I will repeat the step for another new component which I will simply name server-element,
+
+25
+00:01:47,260 --> 00:01:50,000
+server-element because it could either be a server or a blueprint
+
+26
+00:01:50,010 --> 00:01:51,380
+in this example.
+
+27
+00:01:51,760 --> 00:01:55,040
+So with that, we get two new folders in our app component,
+
+28
+00:01:55,300 --> 00:01:56,900
+so two new components,
+
+29
+00:01:56,920 --> 00:01:59,220
+thus far nothing you don't know.
+
+30
+00:01:59,260 --> 00:02:05,430
+Now we can of course take our code here from the app.component.html file from this template,
+
+31
+00:02:05,440 --> 00:02:13,750
+so for example this first bootstrap row here, cut it here and add it to our cockpit, like this.
+
+32
+00:02:13,750 --> 00:02:20,870
+Now of course if we remove the template part here, we also have to remove or we have to move the methods
+
+33
+00:02:20,880 --> 00:02:21,910
+we're calling here,
+
+34
+00:02:21,910 --> 00:02:24,890
+so onAddServer and onAddBlueprint.
+
+35
+00:02:25,180 --> 00:02:32,230
+So in the TypeScript code here, I will copy both or I will cut both elements here and move them over to our
+
+36
+00:02:32,230 --> 00:02:36,010
+cockpit and we'll soon also come to ngOnInit
+
+37
+00:02:36,010 --> 00:02:44,530
+and what this does as a side note. Now of course my issue is that I try to push these two arrays or to
+
+38
+00:02:44,620 --> 00:02:46,470
+an array which doesn't exist here,
+
+39
+00:02:46,480 --> 00:02:50,230
+serverElements, that array is still in the app component.
+
+40
+00:02:50,560 --> 00:02:52,330
+We could of course move that,
+
+41
+00:02:52,410 --> 00:03:00,210
+oh and maybe I should also move that closing curly brace. We could of course move this serverElements
+
+42
+00:03:00,210 --> 00:03:00,900
+array
+
+43
+00:03:01,200 --> 00:03:07,530
+but then we would no longer have it in our app component and we will need it there too because
+
+44
+00:03:07,590 --> 00:03:14,330
+there we still will need to replicate the serverElements to create the servers we output here.
+
+45
+00:03:14,330 --> 00:03:20,580
+So as a first step, what I can move of course, cut and paste are the two properties which are used here
+
+46
+00:03:20,580 --> 00:03:23,990
+with two-way binding, so I can move that to the cockpit
+
+47
+00:03:24,120 --> 00:03:28,450
+but we will have to see what we do about this serverElements array.
+
+48
+00:03:28,800 --> 00:03:33,630
+For now let's go back to the app.component.html file and take a single server here,
+
+49
+00:03:33,630 --> 00:03:34,770
+so this panel
+
+50
+00:03:34,800 --> 00:03:35,730
+div here.
+
+51
+00:03:35,940 --> 00:03:42,210
+So with that, all we have here now is the row and the column and the other part will go into the HTML file
+
+52
+00:03:42,210 --> 00:03:46,290
+of the server element because that is a single server.
+
+53
+00:03:46,290 --> 00:03:51,880
+Now here of course, we have this loop and that's not what I want to have in here, so
+
+54
+00:03:51,880 --> 00:03:57,980
+I will get rid of it there because I still want to manage my array of serverElements in the app component
+
+55
+00:03:58,470 --> 00:04:03,980
+because we somehow need to be able to manipulate from the cockpit and then replicate it in the app
+
+56
+00:04:03,990 --> 00:04:09,930
+component to create multiple instances of this server element component which is only a single server.
+
+57
+00:04:09,930 --> 00:04:12,890
+Keep this in mind, this is not the list of servers.
+
+58
+00:04:12,930 --> 00:04:17,130
+Of course you could set this up differently but this is the approach I will go with and this approach
+
+59
+00:04:17,130 --> 00:04:18,810
+won't work right now,
+
+60
+00:04:18,840 --> 00:04:26,250
+we also tried to access an element property now inside of our server element component which we also don't
+
+61
+00:04:26,250 --> 00:04:26,990
+have.
+
+62
+00:04:27,390 --> 00:04:29,700
+So a couple of things to fix,
+
+63
+00:04:29,700 --> 00:04:37,800
+I like the general way we split up our app and that we now can add our app cockpit here where we before
+
+64
+00:04:37,810 --> 00:04:44,860
+had the full HTML ccode we moved over there and that we can add our app-server-element component here
+
+65
+00:04:45,270 --> 00:04:52,460
+and that we could also replicate this with ngFor, let serverElement of serverElements,
+
+66
+00:04:52,560 --> 00:04:57,290
+so we can of course also place ngFor on a component as you already learned before.
+
+67
+00:04:57,300 --> 00:05:03,750
+So I like that but I don't like that the app is broken and if we have a look at it, that we simply
+
+68
+00:05:03,750 --> 00:05:06,330
+get an error that a couple of properties are unknown.
+
+69
+00:05:06,540 --> 00:05:07,910
+So we somehow
+
+70
+00:05:08,070 --> 00:05:09,640
+and that is a key part,
+
+71
+00:05:09,840 --> 00:05:12,360
+need to get the new server
+
+72
+00:05:12,360 --> 00:05:17,500
+we add in the cockpit to this array of servers in our app component,
+
+73
+00:05:17,580 --> 00:05:24,990
+so we kind of need to inform our app component that one of its child components, the app cockpit changed
+
+74
+00:05:24,990 --> 00:05:27,650
+or that something changed there to which we should react,
+
+75
+00:05:27,660 --> 00:05:29,230
+a new server was added
+
+76
+00:05:29,820 --> 00:05:33,330
+and then we also need to get the data we got from the cockpit,
+
+77
+00:05:33,330 --> 00:05:38,620
+so this new server which is managed in this array of servers in the app component, we need to get to
+
+78
+00:05:38,620 --> 00:05:44,990
+individual server of a single loop iteration here down to the app-server-element.
+
+79
+00:05:45,090 --> 00:05:50,310
+So we need to pass data between components and that of course is a super important task
+
+80
+00:05:50,310 --> 00:05:53,910
+we haven't touched yet but we will dive deeper into right now.
+

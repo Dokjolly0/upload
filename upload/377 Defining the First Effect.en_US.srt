@@ -1,0 +1,236 @@
+1
+00:00:02,480 --> 00:00:07,490
+So let's start adding effects and let's start by adding a login effect
+
+2
+00:00:07,490 --> 00:00:11,290
+and of course we'll thereafter also add sign-up and so on. For this,
+
+3
+00:00:11,360 --> 00:00:18,560
+since it's auth related, in the auth store folder, let's add a new file, auth.effects.ts and in
+
+4
+00:00:18,680 --> 00:00:23,010
+auth effects, we need to export a normal class,
+
+5
+00:00:23,060 --> 00:00:33,000
+you organize your effects in classes. The name should be auth effects, matching the file name and inside
+
+6
+00:00:33,180 --> 00:00:36,480
+of auth effects,
+
+7
+00:00:36,580 --> 00:00:43,570
+we now need to inject something first of all and that something is coming from the @ngrx/effects
+
+8
+00:00:43,690 --> 00:00:44,650
+package,
+
+9
+00:00:44,650 --> 00:00:51,190
+so from @ngrx/effects, we have to import something and that something is actions.
+
+10
+00:00:51,190 --> 00:00:56,310
+Now we imported action from @ngrx/store before, for creating our actions,
+
+11
+00:00:56,530 --> 00:01:01,660
+actions here is something different, it's a different kind of object.
+
+12
+00:01:01,660 --> 00:01:07,780
+It allows us to inject actions and the convention here is to write this with a dollar sign at the end
+
+13
+00:01:07,810 --> 00:01:09,000
+but this is totally up to you,
+
+14
+00:01:09,010 --> 00:01:13,200
+this entire name is up to you and actions is of type actions.
+
+15
+00:01:13,210 --> 00:01:22,090
+Now what is actions? Actions is one big observable that will give you access to all dispatched actions
+
+16
+00:01:22,300 --> 00:01:23,990
+so that you can react to them,
+
+17
+00:01:24,070 --> 00:01:27,720
+you just react differently than in the reducer because in the reducer,
+
+18
+00:01:27,730 --> 00:01:33,760
+you of course also get access to all dispatched actions as you learned, here in the effect class, in the
+
+19
+00:01:33,760 --> 00:01:34,870
+auth effects class,
+
+20
+00:01:34,870 --> 00:01:39,970
+the idea now is that you don't change any state but that you can execute any other code that should
+
+21
+00:01:39,970 --> 00:01:44,890
+happen when such an action is dispatched and that you then can simply dispatch a new action
+
+22
+00:01:44,890 --> 00:01:49,040
+once that code, which also may be asynchronous, is done.
+
+23
+00:01:49,450 --> 00:01:52,570
+So this is just a stream of dispatched actions
+
+24
+00:01:52,570 --> 00:01:55,500
+so to say and again using that dollar sign,
+
+25
+00:01:55,660 --> 00:01:57,700
+I haven't done it before in this application,
+
+26
+00:01:57,700 --> 00:02:03,970
+I got other observable injected where I don't add this, some like to add a dollar sign after every observable
+
+27
+00:02:04,000 --> 00:02:08,890
+so that it's clear that this is an observable. In a lot of the official docs, you will see that dollar
+
+28
+00:02:08,890 --> 00:02:10,690
+sign especially for the actions,
+
+29
+00:02:10,690 --> 00:02:13,600
+hence I leave it here but it is up to you if you add it or not,
+
+30
+00:02:13,600 --> 00:02:15,820
+it's not required.
+
+31
+00:02:15,820 --> 00:02:22,110
+So the actions are injected here, with that injected, we can register our first effect,
+
+32
+00:02:22,180 --> 00:02:32,920
+so our first action handler so to say. You add such an effect as a normal property in your auth effect
+
+33
+00:02:32,920 --> 00:02:39,910
+class and I will name this auth login, the name is totally up to you though, you can choose any name here,
+
+34
+00:02:39,920 --> 00:02:47,770
+it should kind of describe which kind of effect you're handling though. Now in here, in auth login,
+
+35
+00:02:47,770 --> 00:02:55,930
+I now assign a value and there, I use my actions. So I'm referring to the injected actions
+
+36
+00:02:55,930 --> 00:02:59,430
+property here, like this.
+
+37
+00:02:59,770 --> 00:03:07,840
+Now actions as I mentioned is just an observable and therefore we can call pipe or subscribe.
+
+38
+00:03:07,840 --> 00:03:15,160
+Now don't call subscribe here, @ngrx/effects will subscribe for you, just call pipe instead and what
+
+39
+00:03:15,160 --> 00:03:21,790
+you need to pipe here is now a special RxJS operator which is not part of RxJS but which
+
+40
+00:03:21,790 --> 00:03:30,760
+is provided by @ngrx/effects, it's the ofType operator. ofType simply allows you to define a filter
+
+41
+00:03:30,760 --> 00:03:37,300
+for which types of effects you want to continue in this observable pipe you're creating, in this observable
+
+42
+00:03:37,420 --> 00:03:42,670
+stream here because you can have multiple effects by adding multiple properties to your class here
+
+43
+00:03:42,970 --> 00:03:48,540
+and you can simply define different types of effects that you want to handle in each chain.
+
+44
+00:03:48,550 --> 00:03:54,580
+So here for example, we could handle the login effect or to be precise, the login action since we're basically
+
+45
+00:03:54,580 --> 00:04:00,820
+reacting to all dispatched actions here and this is a filter to allow us to define for which exact actions
+
+46
+00:04:00,820 --> 00:04:03,160
+we want to continue in this chain
+
+47
+00:04:03,160 --> 00:04:05,000
+and now I need more actions.
+
+48
+00:04:05,050 --> 00:04:11,770
+Thus far, we only had login and logout but now since we actually want to send the HTTP request
+
+49
+00:04:11,770 --> 00:04:14,460
+here from inside our auth effect,
+
+50
+00:04:14,470 --> 00:04:25,360
+we need a new identifier which could be login start and the value here could be auth login start.
+
+51
+00:04:25,370 --> 00:04:31,100
+Of course you could name this login success but I don't want to rename it everywhere where I used it,
+
+52
+00:04:31,280 --> 00:04:38,510
+hence I will keep that named login. Login start however is basically the point where we want to start
+
+53
+00:04:38,510 --> 00:04:40,610
+sending our request.
+
+54
+00:04:40,610 --> 00:04:53,340
+So here in auth effects, we now import everything as auth actions from these auth actions file and here
+
+55
+00:04:53,340 --> 00:05:00,120
+in auth type, we can then refer to auth actions login start here and what this says is only continue in
+
+56
+00:05:00,120 --> 00:05:07,530
+this observable chain if the action that we're reacting to here is of type login start, all other actions
+
+57
+00:05:07,620 --> 00:05:10,050
+will not trigger this effect here,
+
+58
+00:05:10,200 --> 00:05:11,770
+only login start will
+
+59
+00:05:11,910 --> 00:05:17,340
+and you could add multiple actions here by the way if you want to run the same code for different actions.
+

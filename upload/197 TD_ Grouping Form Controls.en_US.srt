@@ -1,0 +1,164 @@
+1
+00:00:02,930 --> 00:00:05,680
+Our form has evolved quite a bit.
+
+2
+00:00:05,720 --> 00:00:12,320
+Now let's say that on the value object we get when we submit the form, we want to group some things,
+
+3
+00:00:12,350 --> 00:00:18,380
+for example we want to group the secret and the questionAnswer and the username and e-mail to just have
+
+4
+00:00:18,380 --> 00:00:22,490
+some structure in our object because for a very big form,
+
+5
+00:00:22,550 --> 00:00:25,210
+we might want to have such a structure.
+
+6
+00:00:25,250 --> 00:00:33,170
+This would also be nice if we could then validate the validity, the status of our individual groups of
+
+7
+00:00:33,200 --> 00:00:34,280
+inputs,
+
+8
+00:00:34,280 --> 00:00:38,440
+turns out that's easy to do with the template driven approach. Here
+
+9
+00:00:38,540 --> 00:00:45,350
+on our first group, the username and e-mail, I already have a wrapping div with the ID userData here.
+
+10
+00:00:45,470 --> 00:00:48,140
+Now you can simply place another directive on it,
+
+11
+00:00:48,140 --> 00:00:55,160
+the ngModelGroup directive like this and this will now group this into,
+
+12
+00:00:55,160 --> 00:00:57,570
+well you guessed it, a group of inputs,
+
+13
+00:00:57,590 --> 00:01:03,360
+however ngModelGroup needs to be set equal to a string.
+
+14
+00:01:03,620 --> 00:01:05,360
+So for example, the userData,
+
+15
+00:01:05,540 --> 00:01:09,350
+this will be the key name for this group.
+
+16
+00:01:09,350 --> 00:01:18,200
+So now if I save this with ngModelGroup added, If I enter value here and here and hit submit and we
+
+17
+00:01:18,200 --> 00:01:23,960
+have a look at the value of the form, you'll now see that we have a userData field here which holds
+
+18
+00:01:23,960 --> 00:01:28,240
+another object where we now have e-mail and username.
+
+19
+00:01:28,250 --> 00:01:37,730
+Now not only did we add this extra field in our value, we also now have a different set up here in controls,
+
+20
+00:01:37,970 --> 00:01:38,210
+here
+
+21
+00:01:38,270 --> 00:01:45,260
+we also now have a userData control with all the properties you know on those controls, like valid and
+
+22
+00:01:45,260 --> 00:01:46,200
+so on.
+
+23
+00:01:46,550 --> 00:01:55,260
+So if we now simply inspect our HTML code and this div with the ID userData, you'll see that there also
+
+24
+00:01:55,270 --> 00:01:59,150
+we got the ng-dirty, touched and valid classes added.
+
+25
+00:01:59,300 --> 00:02:06,110
+So you can now also check the validity of this overall control here for example
+
+26
+00:02:06,170 --> 00:02:09,760
+which might be a nice feature in your form.
+
+27
+00:02:09,770 --> 00:02:17,720
+You can also get access to the Javascript representation by again adding a local reference to
+
+28
+00:02:17,720 --> 00:02:20,970
+the element which holds the ngModelGroup directive,
+
+29
+00:02:21,190 --> 00:02:28,270
+here for example userData would be a fitting name and then setting this equal to ngModelGroup.
+
+30
+00:02:28,280 --> 00:02:34,100
+So just like we did before with e-mail which was equal to ngModel, I'm now setting this reference
+
+31
+00:02:34,100 --> 00:02:38,570
+equal to ngModel group to get access to this Javascript object
+
+32
+00:02:38,900 --> 00:02:45,040
+and this would allow us to for example output a message if this whole group is not valid.
+
+33
+00:02:45,110 --> 00:02:58,080
+So we could simply output a paragraph here, userData is invalid which we add if userData, this is the local
+
+34
+00:02:58,080 --> 00:02:59,720
+reference created here,
+
+35
+00:03:00,460 --> 00:03:03,410
+if userData is not valid 
+
+36
+00:03:03,610 --> 00:03:06,000
+and let's say it has been touched,
+
+37
+00:03:06,160 --> 00:03:12,940
+so userData touched is true. With that if this reloads,
+
+38
+00:03:13,280 --> 00:03:14,860
+you see that we don't see any message
+
+39
+00:03:14,870 --> 00:03:18,530
+but as soon as I click into one of the fields and then leave it,
+
+40
+00:03:18,620 --> 00:03:21,020
+you'll see userData is invalid was shown.
+
+41
+00:03:21,020 --> 00:03:27,690
+So now you really got a very finegrained control over your form with all these tools.
+

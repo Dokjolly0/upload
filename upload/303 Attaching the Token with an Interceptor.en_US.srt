@@ -1,0 +1,368 @@
+1
+00:00:02,360 --> 00:00:08,570
+So with the token added to fetch recipes, obviously we also want to add it to store recipes.
+
+2
+00:00:08,570 --> 00:00:14,420
+Now we can use the same logic we used in fetched recipes in store recipes but since we're using the
+
+3
+00:00:14,420 --> 00:00:20,420
+Angular HttpClient, we could also use another feature offered by that client because what we
+
+4
+00:00:20,420 --> 00:00:25,720
+do here in the end is we manipulate all these outgoing requests in the same way and
+
+5
+00:00:25,820 --> 00:00:29,220
+what could we use here? An interceptor.
+
+6
+00:00:29,270 --> 00:00:35,360
+So let's add such an interceptor here to use that interceptor to manipulate our requests instead
+
+7
+00:00:35,360 --> 00:00:36,980
+of manually doing it twice.
+
+8
+00:00:39,780 --> 00:00:45,590
+I'll add it in the auth folder because I'll name it auth-interceptor.service.ts
+
+9
+00:00:45,650 --> 00:00:53,450
+because it is an authentication-related interceptor and the class name therefore will be auth interceptor
+
+10
+00:00:53,750 --> 00:01:03,210
+service and since I'll plan on injecting something there, let's add @injectable, like this and import
+
+11
+00:01:04,620 --> 00:01:06,630
+injectable from
+
+12
+00:01:09,630 --> 00:01:11,340
+@angular/core.
+
+13
+00:01:11,340 --> 00:01:16,860
+Now important, don't add the object with provided in root here because we will provide this differently
+
+14
+00:01:16,860 --> 00:01:22,380
+as you learned in the HTTP section, we have to provide it such that Angular understands it.
+
+15
+00:01:22,590 --> 00:01:32,740
+Now this service should implement an interface provided by the @angular/common/http package
+
+16
+00:01:33,310 --> 00:01:43,150
+and that interface would be the HTTP interceptor interface here, so let's add implements
+
+17
+00:01:43,150 --> 00:01:49,410
+HttpInterceptor here and that forces us to add a intercept method and that intercept method actually
+
+18
+00:01:49,410 --> 00:01:59,400
+needs to get two arguments - the request, the HTTP request which is a generic type of type any, so we don't
+
+19
+00:01:59,400 --> 00:02:07,800
+know which data all the requests will return and we have next which is our HTTP handler and you
+
+20
+00:02:07,800 --> 00:02:13,740
+need to import these types from @angular/common/http and definitely watch the HttpClient
+
+21
+00:02:13,740 --> 00:02:15,790
+module to learn more about that.
+
+22
+00:02:15,900 --> 00:02:21,480
+Now there, you also learned that you need to return next handle and pass in your request.
+
+23
+00:02:21,480 --> 00:02:28,770
+However, not the request like this but actually, I want to edit the request and add my token.
+
+24
+00:02:28,770 --> 00:02:36,720
+Therefore, let's add a constructor and inject the auth service here, which is of type auth service
+
+25
+00:02:39,400 --> 00:02:41,730
+and that service needs to be imported,
+
+26
+00:02:41,740 --> 00:02:48,630
+so let's import auth service from ./auth.service.
+
+27
+00:02:48,640 --> 00:02:54,910
+And with that injected, we can now reach out to the auth service, to the user which is a subject and
+
+28
+00:02:54,910 --> 00:02:57,970
+therefore an observable and subscribe to it.
+
+29
+00:02:58,000 --> 00:03:02,950
+Now, we have the same problem as before though, in the end here, we need to return an observable,
+
+30
+00:03:02,950 --> 00:03:08,500
+this also is an observable and therefore I'll solve this problem in the same way as before. In the data
+
+31
+00:03:08,500 --> 00:03:12,980
+storage service, we used pipe take one exhaustMap and so on.
+
+32
+00:03:13,150 --> 00:03:15,140
+It's pretty much the same now,
+
+33
+00:03:15,220 --> 00:03:25,930
+I'll grab this code here, with the exhaustMap and the pipe method and we'll fix it here in a second
+
+34
+00:03:26,380 --> 00:03:37,530
+and go to the auth interceptor and use this code in that place, close all parentheses, import these operators
+
+35
+00:03:37,530 --> 00:03:47,270
+from RxJS of course, so import take and exhaustMap from rxjs/operators, so that this works
+
+36
+00:03:47,340 --> 00:03:53,280
+and now since we got the user in here, in there we can return next handle request and we can edit the
+
+37
+00:03:53,280 --> 00:04:00,900
+request based on the user here now and we return this overall chain which just as before will be a
+
+38
+00:04:00,900 --> 00:04:07,110
+chain that in the end has this handle observable being returned because we swapped the user observable
+
+39
+00:04:07,320 --> 00:04:11,640
+with that one in the map function here, in that map operator.
+
+40
+00:04:11,790 --> 00:04:20,160
+So all we have to do here now is, we have to clone our request and update it, so the modified request is
+
+41
+00:04:21,220 --> 00:04:28,690
+created by calling request clone and to clone, we can pass on an object where we can update the params
+
+42
+00:04:29,140 --> 00:04:35,110
+by setting them to a new set of HTTP params which is imported from @angular/common/http,
+
+43
+00:04:35,150 --> 00:04:44,200
+where we call set and pass in the params. So auth is the name of the params we need and user.token
+
+44
+00:04:44,200 --> 00:04:50,900
+is the value. Now of course, we should handle the modified request
+
+45
+00:04:50,900 --> 00:04:57,990
+and with that, this interceptor should add the token to all outgoing requests.
+
+46
+00:04:58,010 --> 00:05:03,710
+Now let's make sure we provide that token in the app module, here under providers
+
+47
+00:05:03,710 --> 00:05:05,030
+I want to add a new object
+
+48
+00:05:08,330 --> 00:05:15,440
+where I add the provide keyword and use HTTP interceptor which is imported from
+
+49
+00:05:15,440 --> 00:05:17,300
+@angular/common/http.
+
+50
+00:05:20,270 --> 00:05:29,550
+This is the identifier for this provider, then use class and there I'll use the auth interceptor service and
+
+51
+00:05:29,600 --> 00:05:32,580
+for that, we need to import that service here at the top.
+
+52
+00:05:32,600 --> 00:05:36,290
+So let's import auth interceptor service from
+
+53
+00:05:39,110 --> 00:05:48,890
+the auth folder and there, the auth-interceptor.service file and last but not least as you learned,
+
+54
+00:05:49,040 --> 00:05:53,660
+set multi to true to allow for multiple interceptors
+
+55
+00:05:53,660 --> 00:06:00,620
+even if you're only using one. So now with that, the interceptor is added here,
+
+56
+00:06:00,620 --> 00:06:06,770
+now we just need to fix the data storage service again because now, we don't need to use the logic we
+
+57
+00:06:06,770 --> 00:06:10,810
+had in there a second ago because we now move that into the interceptor,
+
+58
+00:06:10,820 --> 00:06:19,370
+so now we directly return this observable and we simply call pipe there and pass in map and so on into this
+
+59
+00:06:19,370 --> 00:06:25,430
+pipe, we don't add the params here as well.
+
+60
+00:06:25,540 --> 00:06:29,310
+Now we should use this interceptor for outgoing request.
+
+61
+00:06:29,650 --> 00:06:34,550
+If we now go to authenticate and we login again,
+
+62
+00:06:34,630 --> 00:06:36,480
+we get an unknown error,
+
+63
+00:06:36,520 --> 00:06:43,780
+do you have any idea what could be the reason for that error? It becomes clear if we inspect the outgoing
+
+64
+00:06:43,780 --> 00:06:44,940
+request here.
+
+65
+00:06:45,010 --> 00:06:46,180
+We're trying to login,
+
+66
+00:06:46,420 --> 00:06:55,790
+so let's retry this here with the cleared request tab and somehow, no request gets sent at all.
+
+67
+00:06:56,370 --> 00:06:59,720
+So our request fails before it even gets sent
+
+68
+00:07:00,030 --> 00:07:07,950
+and that is actually stemming from our auth interceptor because there, we are using that logic for every
+
+69
+00:07:07,950 --> 00:07:12,610
+outgoing request, including our sign-up and login requests.
+
+70
+00:07:12,630 --> 00:07:18,510
+Now when that happens, what we try to do is we subscribe to the user service and we get null as a user
+
+71
+00:07:18,510 --> 00:07:22,120
+therefore because this is what we initialize our user
+
+72
+00:07:22,500 --> 00:07:27,380
+at the beginning, here it is null when our app loads. So user here is null
+
+73
+00:07:27,630 --> 00:07:32,320
+and therefore when we try to access the token, this fails because we try to access token on null,
+
+74
+00:07:32,400 --> 00:07:36,060
+this throws an error and the request doesn't even get sent.
+
+75
+00:07:36,090 --> 00:07:38,350
+How do we work around that?
+
+76
+00:07:38,370 --> 00:07:44,240
+Well, we can add a check here and check if we don't have a user,
+
+77
+00:07:44,430 --> 00:07:49,320
+then we just return next handle for the original requests, so we don't try to modify it,
+
+78
+00:07:49,350 --> 00:07:53,200
+we only try to add the token if we have a user.
+
+79
+00:07:53,730 --> 00:08:00,060
+Alternatively or in addition, you could also check the URL of the outgoing request and only add the
+
+80
+00:08:00,090 --> 00:08:04,030
+token for a specific URLs or exclude certain URLs
+
+81
+00:08:04,080 --> 00:08:04,520
+but here
+
+82
+00:08:04,520 --> 00:08:06,410
+this should do the trick already.
+
+83
+00:08:06,420 --> 00:08:13,800
+So now if you try logging in again, this looks way better and now if I try fetching data, this also still
+
+84
+00:08:13,800 --> 00:08:14,250
+works
+
+85
+00:08:14,250 --> 00:08:17,510
+but keep in mind that this now uses the interceptor.
+
+86
+00:08:17,790 --> 00:08:23,970
+The advantage of the interceptor now of course is that this also automatically works for storing recipes
+
+87
+00:08:24,000 --> 00:08:27,500
+because this uses the same interceptor automatically.
+
+88
+00:08:27,510 --> 00:08:32,380
+So if I delete a recipe and I click save data, you see this also succeeds,
+
+89
+00:08:32,430 --> 00:08:36,720
+otherwise we would have an error down there and we can also prove it by fetching data
+
+90
+00:08:36,720 --> 00:08:38,730
+again. This doesn't change,
+
+91
+00:08:38,730 --> 00:08:44,020
+so we are not fetching a third recipe because we overwrote them on the server with our save action.
+
+92
+00:08:44,160 --> 00:08:45,660
+So that's the interceptor in action.
+

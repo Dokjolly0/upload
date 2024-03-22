@@ -1,0 +1,44 @@
+1
+00:00:02,430 --> 00:00:08,760
+Let's now apply our newly gained knowledge about sending HTTP requests in our course project.
+
+2
+00:00:08,760 --> 00:00:15,090
+So here's the recipe book as we left it after the last course project section and now my goal is to make
+
+3
+00:00:15,090 --> 00:00:22,770
+sure that we can actually click these manage save data and fetch data buttons to save all our recipes
+
+4
+00:00:23,280 --> 00:00:27,880
+on a server in the web and with the fetch data button, of course to fetch them.
+
+5
+00:00:27,900 --> 00:00:34,350
+So the idea is pretty simple, the idea simply is that we can store and fetch all our recipes we created
+
+6
+00:00:34,440 --> 00:00:35,370
+on demand.
+
+7
+00:00:35,380 --> 00:00:41,790
+Now obviously, you can alter this in a lot of different ways, you could auto fetch any recipes whenever
+
+8
+00:00:41,790 --> 00:00:44,310
+the application starts or anything like that,
+
+9
+00:00:44,340 --> 00:00:51,030
+the core thing we'll handle in this section of course is the sending of the HTTP requests.
+
+10
+00:00:51,120 --> 00:00:52,550
+So let's take care about this
+
+11
+00:00:52,550 --> 00:00:52,890
+now.
+

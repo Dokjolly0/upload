@@ -1,0 +1,124 @@
+1
+00:00:01,350 --> 00:00:03,680
+Why might you want to treat the unit tests.
+
+2
+00:00:03,750 --> 00:00:05,360
+Let's have a look at this application.
+
+3
+00:00:05,370 --> 00:00:06,710
+We got a user component.
+
+4
+00:00:06,810 --> 00:00:10,820
+We get a user detail a component a reverse pipe and a user service.
+
+5
+00:00:11,200 --> 00:00:16,830
+The user component also uses some input binding here or some property binding to user detail a component
+
+6
+00:00:16,840 --> 00:00:17,180
+.
+
+7
+00:00:17,460 --> 00:00:23,550
+We can ask a couple of questions or one and the same question actually dusty component work is intended
+
+8
+00:00:23,570 --> 00:00:27,900
+to pipe and to service this is what we want to answer with unit tests.
+
+9
+00:00:27,900 --> 00:00:29,690
+We also might want to answer.
+
+10
+00:00:29,760 --> 00:00:31,820
+Does the input work as intended.
+
+11
+00:00:32,010 --> 00:00:34,860
+Or dusty in checking your work as intended.
+
+12
+00:00:34,860 --> 00:00:41,280
+These are questions we want to cover with unit tests and with you and the test we hopefully get a true
+
+13
+00:00:41,340 --> 00:00:45,680
+response for all our tests telling us that our application is working as intended.
+
+14
+00:00:45,690 --> 00:00:52,050
+Of course you can already imagine that writing the task correctly is an important part in order to get
+
+15
+00:00:52,050 --> 00:00:53,110
+the right answers.
+
+16
+00:00:53,250 --> 00:00:59,430
+And that's something I'm not going to teach you here because I can't writing correct tests is again
+
+17
+00:00:59,430 --> 00:01:05,400
+something Ford's old coords not even English to specific course of course focus in on testing.
+
+18
+00:01:05,400 --> 00:01:07,340
+It's not the goal of what I want to do here.
+
+19
+00:01:07,440 --> 00:01:13,980
+I want to show you how to use testing in English to application not philosophize about how testing should
+
+20
+00:01:14,430 --> 00:01:16,990
+work or how tests should be written.
+
+21
+00:01:17,040 --> 00:01:19,780
+So with the answers to our questions.
+
+22
+00:01:19,830 --> 00:01:26,940
+The cool thing as unit tests allow us to guard against breaking changes because we could say upon upgrading
+
+23
+00:01:26,940 --> 00:01:33,840
+online application we reran all our tests and we see which tests now fail if we know they work before
+
+24
+00:01:33,930 --> 00:01:37,880
+we know which places in our application now are broken due to the update.
+
+25
+00:01:37,890 --> 00:01:44,680
+We can also analyze our current behavior to detect both expected and unexpected results and we can reveal
+
+26
+00:01:44,700 --> 00:01:46,010
+design mistakes.
+
+27
+00:01:46,080 --> 00:01:52,800
+Maybe when writing our test we experience some problem writing it cause we find a mistake in our general
+
+28
+00:01:52,800 --> 00:01:57,290
+design or we find what's running to test you to an unexpected response.
+
+29
+00:01:57,450 --> 00:01:59,070
+So this is where tests can help us.
+
+30
+00:01:59,070 --> 00:02:04,770
+Again the philosophy behind testing and how to write correct tests is something which will not be coverture
+
+31
+00:02:04,830 --> 00:02:10,410
+which can't be covered here but I want to show you how to create tests in your law to application
+

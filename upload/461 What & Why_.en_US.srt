@@ -1,0 +1,528 @@
+1
+00:00:02,100 --> 00:00:04,133
+- [Maximilian] So what is TypeScript
+
+2
+00:00:04,133 --> 00:00:06,766
+and why would you use it?
+
+3
+00:00:06,766 --> 00:00:11,766
+TypeScript is a so-called
+"superset" to JavaScript.
+
+4
+00:00:11,800 --> 00:00:16,633
+It's a programming language
+which builds up on JavaScript.
+
+5
+00:00:16,633 --> 00:00:19,633
+It extends JavaScript you could say,
+
+6
+00:00:19,633 --> 00:00:22,033
+and that is really important.
+
+7
+00:00:22,033 --> 00:00:26,400
+The core programming language
+still, is JavaScript.
+
+8
+00:00:26,400 --> 00:00:30,033
+So the base JavaScript syntax you know,
+
+9
+00:00:30,033 --> 00:00:32,500
+how you write JavaScript code,
+
+10
+00:00:32,500 --> 00:00:37,500
+if statements, for loops,
+objects, all that does not change.
+
+11
+00:00:37,766 --> 00:00:41,533
+But TypeScript then adds more features
+
+12
+00:00:41,533 --> 00:00:44,166
+to the JavaScript syntax.
+
+13
+00:00:44,600 --> 00:00:49,600
+And most importantly, it adds
+static typing to JavaScript.
+
+14
+00:00:50,866 --> 00:00:54,466
+And that's also where the
+name comes from, TypeScript.
+
+15
+00:00:54,466 --> 00:00:57,866
+It adds static typing to JavaScript,
+
+16
+00:00:57,866 --> 00:01:02,866
+because JavaScript on its own
+is actually dynamically typed.
+
+17
+00:01:03,533 --> 00:01:07,133
+And what does this mean
+and why is this useful?
+
+18
+00:01:07,133 --> 00:01:10,700
+For this, I prepared a
+very simple example here,
+
+19
+00:01:10,700 --> 00:01:12,366
+which you find attached.
+
+20
+00:01:12,366 --> 00:01:15,133
+Now this is not an Angular project,
+
+21
+00:01:15,133 --> 00:01:18,633
+that's a standard, empty project basically - with
+
+22
+00:01:18,633 --> 00:01:22,833
+just an HTML file and a JavaScript file.
+
+23
+00:01:22,833 --> 00:01:25,833
+And I prepared this project to show you
+
+24
+00:01:25,833 --> 00:01:29,200
+why me might wanna use TypeScript and why
+
+25
+00:01:29,200 --> 00:01:32,200
+Angular, in the end, uses TypeScript therefore.
+
+26
+00:01:32,666 --> 00:01:36,233
+This is a standard JavaScript function
+
+27
+00:01:36,233 --> 00:01:41,200
+and a standard HTML file,
+which has no actual content
+
+28
+00:01:41,200 --> 00:01:44,266
+but which imports this script file.
+
+29
+00:01:45,366 --> 00:01:47,933
+Now, if I open this file in the browser,
+
+30
+00:01:47,933 --> 00:01:50,600
+simply by copying the path here
+
+31
+00:01:50,600 --> 00:01:53,866
+and then opening that path in the browser,
+
+32
+00:01:53,866 --> 00:01:56,966
+if I reload this page and
+open the developer tools,
+
+33
+00:01:56,966 --> 00:02:00,133
+I see seven here in the developer tools,
+
+34
+00:02:00,133 --> 00:02:02,400
+in the JavaScript console.
+
+35
+00:02:02,400 --> 00:02:06,133
+And I see seven here
+because in this script file,
+
+36
+00:02:06,133 --> 00:02:08,300
+I define an "add" function,
+
+37
+00:02:08,300 --> 00:02:10,366
+and then I call this "add" function
+
+38
+00:02:10,366 --> 00:02:12,700
+and store the result in this constant
+
+39
+00:02:12,700 --> 00:02:16,366
+and then I log this constant.
+
+40
+00:02:16,366 --> 00:02:20,866
+So that's standard JavaScript,
+nothing fancy here.
+
+41
+00:02:20,866 --> 00:02:24,233
+Now JavaScript has types.
+
+42
+00:02:24,233 --> 00:02:27,533
+JavaScript knows the concept of types.
+
+43
+00:02:27,533 --> 00:02:30,733
+For example, here, the two
+values which I'm passing in,
+
+44
+00:02:30,733 --> 00:02:33,133
+are of type "number",
+
+45
+00:02:33,133 --> 00:02:35,666
+and that's something JavaScript knows
+
+46
+00:02:35,666 --> 00:02:38,566
+on its own, without TypeScript.
+
+47
+00:02:38,566 --> 00:02:40,833
+The important thing just is that,
+
+48
+00:02:40,833 --> 00:02:45,333
+JavaScript as I just mentioned,
+is dynamically typed.
+
+49
+00:02:45,333 --> 00:02:48,000
+Which means that this function here,
+
+50
+00:02:48,000 --> 00:02:51,366
+does not expect any particular types.
+
+51
+00:02:51,366 --> 00:02:54,600
+It just knows that it will
+receive two parameters,
+
+52
+00:02:54,600 --> 00:02:56,066
+and that's it.
+
+53
+00:02:56,066 --> 00:02:57,966
+So it's not statically typed,
+
+54
+00:02:57,966 --> 00:03:02,600
+the types for this function are
+not announced ahead of time,
+
+55
+00:03:02,600 --> 00:03:05,000
+instead it just takes whatever it gets
+
+56
+00:03:05,000 --> 00:03:07,900
+and then tries to execute this code.
+
+57
+00:03:07,900 --> 00:03:11,600
+And that code happens
+to work with numbers.
+
+58
+00:03:11,600 --> 00:03:16,366
+But this code also happens
+to work with strings.
+
+59
+00:03:16,366 --> 00:03:20,400
+And hence, if I convert my
+two numbers into strings here,
+
+60
+00:03:20,400 --> 00:03:22,666
+by wrapping them with quotes,
+
+61
+00:03:22,666 --> 00:03:25,500
+then I got two different types here,
+
+62
+00:03:25,500 --> 00:03:28,100
+I got two strings instead of numbers,
+
+63
+00:03:28,100 --> 00:03:30,600
+which are types JavaScript knows.
+
+64
+00:03:30,600 --> 00:03:33,266
+And if I change it like
+this and saved as file,
+
+65
+00:03:33,266 --> 00:03:37,500
+if I reload, you see now we get 25 here,
+
+66
+00:03:37,500 --> 00:03:39,900
+because now the plus operator
+
+67
+00:03:39,900 --> 00:03:44,366
+does not add these two
+arguments in a mathematical way,
+
+68
+00:03:44,366 --> 00:03:47,200
+but instead it concatenates two strings
+
+69
+00:03:47,200 --> 00:03:50,400
+because it receives two strings here.
+
+70
+00:03:50,400 --> 00:03:55,400
+And that shows why just
+JavaScript is okay and great,
+
+71
+00:03:55,500 --> 00:03:59,133
+but why it might not always be best.
+
+72
+00:03:59,133 --> 00:04:04,100
+Why having static typing
+could enhance your code
+
+73
+00:04:04,100 --> 00:04:07,233
+and prevent errors like this.
+
+74
+00:04:07,233 --> 00:04:09,800
+Now, of course you
+might say, "Which error?
+
+75
+00:04:09,800 --> 00:04:12,433
+I can simply not call "add" like this,
+
+76
+00:04:12,433 --> 00:04:15,766
+I just make sure that I
+always pass into numbers,
+
+77
+00:04:15,766 --> 00:04:17,833
+and it won't face this problem."
+
+78
+00:04:17,833 --> 00:04:20,666
+And that's true, but in a bigger project,
+
+79
+00:04:20,666 --> 00:04:22,433
+with lots of code files,
+
+80
+00:04:22,433 --> 00:04:25,933
+and potentially a lot of people
+working on the code base,
+
+81
+00:04:25,933 --> 00:04:28,466
+you might sometimes call a function
+
+82
+00:04:28,466 --> 00:04:32,966
+or use some object in an unintended way.
+
+83
+00:04:32,966 --> 00:04:35,733
+And then you could run
+into problems like this,
+
+84
+00:04:35,733 --> 00:04:37,966
+because nothing is warning you
+
+85
+00:04:37,966 --> 00:04:41,333
+that this is not how you
+should use this function.
+
+86
+00:04:41,333 --> 00:04:43,166
+Nothing is telling you,
+
+87
+00:04:43,166 --> 00:04:47,166
+that this function
+actually wants two numbers,
+
+88
+00:04:47,166 --> 00:04:51,000
+instead of two strings or any values.
+
+89
+00:04:51,000 --> 00:04:54,800
+And that's where TypeScript can help us.
+
+90
+00:04:54,800 --> 00:04:59,000
+Because with TypeScript,
+and I'll show you this code
+
+91
+00:04:59,000 --> 00:05:01,700
+even though we haven't
+installed TypeScript yet,
+
+92
+00:05:01,700 --> 00:05:04,166
+but I have it installed
+on my system already,
+
+93
+00:05:04,166 --> 00:05:07,800
+and we will install it together
+in the next lecture too.
+
+94
+00:05:07,800 --> 00:05:09,733
+But let me show you this first.
+
+95
+00:05:09,733 --> 00:05:12,700
+So with TypeScript, if I copy this code,
+
+96
+00:05:12,700 --> 00:05:15,800
+what we will be able to do is,
+
+97
+00:05:15,800 --> 00:05:18,933
+we can add type annotations here,
+
+98
+00:05:18,933 --> 00:05:22,133
+simply by adding a colon
+after our parameter,
+
+99
+00:05:22,133 --> 00:05:24,000
+and then adding the type
+
+100
+00:05:24,000 --> 00:05:26,433
+which should be used for this parameter.
+
+101
+00:05:26,433 --> 00:05:28,700
+I'll do this for B as well.
+
+102
+00:05:28,700 --> 00:05:32,500
+And we'll also not just be
+able to use type annotations
+
+103
+00:05:32,500 --> 00:05:34,333
+on function parameters,
+
+104
+00:05:34,333 --> 00:05:37,000
+but as you will see
+throughout this module,
+
+105
+00:05:37,000 --> 00:05:40,233
+we can use types and many
+other situations as well.
+
+106
+00:05:41,166 --> 00:05:42,900
+So now I am making it clear,
+
+107
+00:05:42,900 --> 00:05:47,900
+with TypeScript that here, I
+actually want two parameters
+
+108
+00:05:48,533 --> 00:05:51,100
+which both should be of type number.
+
+109
+00:05:51,100 --> 00:05:54,666
+And hence, I already get
+an error here in my IDE,
+
+110
+00:05:54,666 --> 00:05:57,233
+which tells me that this
+argument of type string
+
+111
+00:05:57,233 --> 00:06:00,133
+is not assignable to a
+parameter of type number,
+
+112
+00:06:01,100 --> 00:06:02,400
+pretty helpful.
+
+113
+00:06:02,400 --> 00:06:06,300
+And with that, I can catch such an error,
+
+114
+00:06:06,300 --> 00:06:10,000
+such an unintended use of this function
+
+115
+00:06:10,000 --> 00:06:13,233
+before I run and test my code.
+
+116
+00:06:13,233 --> 00:06:14,666
+And that of course allows us
+
+117
+00:06:14,666 --> 00:06:16,800
+to write better code in the end,
+
+118
+00:06:16,800 --> 00:06:18,833
+because we can avoid such errors
+
+119
+00:06:18,833 --> 00:06:21,500
+and we don't have to track them at runtime
+
+120
+00:06:21,500 --> 00:06:26,000
+but we see such errors right,
+when we start writing code.
+
+121
+00:06:26,000 --> 00:06:30,133
+And that's why using TypeScript
+could be worth a thought.
+

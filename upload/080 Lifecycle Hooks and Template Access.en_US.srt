@@ -1,0 +1,128 @@
+1
+00:00:02,960 --> 00:00:08,450
+Before concluding this module one more thing related to our hooks here.
+
+2
+00:00:08,750 --> 00:00:16,280
+We learned about at Vue child which we can use here in the cockpit to get access to element from our
+
+3
+00:00:16,520 --> 00:00:18,550
+while Dom from our template.
+
+4
+00:00:18,620 --> 00:00:23,260
+Let's do the same here in the server element component HDMI follow where we have all these lifecycle
+
+5
+00:00:23,270 --> 00:00:24,150
+hooks.
+
+6
+00:00:24,320 --> 00:00:26,860
+Let's say I want to get access to this heading.
+
+7
+00:00:26,900 --> 00:00:34,570
+So I would simply place a local reference named heading on it therefore I'll add a new ad view child
+
+8
+00:00:35,410 --> 00:00:36,230
+property.
+
+9
+00:00:36,250 --> 00:00:40,120
+Make sure to import view child from angular core.
+
+10
+00:00:40,440 --> 00:00:49,080
+And with that added here all stored is in the header property which is of type element for F as we learned
+
+11
+00:00:49,110 --> 00:00:52,080
+which also needs to be imported from angular core.
+
+12
+00:00:53,010 --> 00:00:59,270
+And I want to select the heading local reference with a chest placed on this day of year.
+
+13
+00:00:59,490 --> 00:01:07,590
+So with that we get access to it and now we would expect that we can't use stairs before we reached
+
+14
+00:01:07,680 --> 00:01:09,260
+after view in it.
+
+15
+00:01:09,300 --> 00:01:12,040
+So let's try it and energy on in it.
+
+16
+00:01:12,090 --> 00:01:14,790
+Let me actually console log this
+
+17
+00:01:17,860 --> 00:01:21,260
+header and there the native element.
+
+18
+00:01:21,520 --> 00:01:29,920
+And now let's access something which is definitely a whale on a div and that is the text content if
+
+19
+00:01:29,920 --> 00:01:31,870
+we do this and I save this.
+
+20
+00:01:31,870 --> 00:01:33,250
+Let's view the console.
+
+21
+00:01:33,340 --> 00:01:38,930
+If I reload the application here you see this empty line here.
+
+22
+00:01:38,960 --> 00:01:45,410
+This is where I would have expected text content can make this even clearer by outputting text content
+
+23
+00:01:47,120 --> 00:01:52,880
+and then while rendering the text content if there were any there is no text content in here as you
+
+24
+00:01:52,880 --> 00:01:55,270
+can see an empty space.
+
+25
+00:01:55,730 --> 00:02:00,590
+If I copy the exact same code and placed as an after view in it here.
+
+26
+00:02:01,100 --> 00:02:07,300
+So after the view should have initialized now you will see that here when it's called the second time
+
+27
+00:02:07,390 --> 00:02:10,660
+after viewing it we see test server.
+
+28
+00:02:10,660 --> 00:02:16,360
+So that is the difference between Wilder points of time where these hooks run after view and it gives
+
+29
+00:02:16,360 --> 00:02:19,380
+you access to the Template elements.
+
+30
+00:02:19,390 --> 00:02:24,640
+You can then access them and use their values and so on before does Hook has been reached.
+
+31
+00:02:24,670 --> 00:02:30,460
+You can't do that you can't check the value of some element in your dorm because it hasn't been rendered
+
+32
+00:02:30,490 --> 00:02:30,840
+yet.
+

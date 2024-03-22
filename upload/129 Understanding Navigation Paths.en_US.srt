@@ -1,0 +1,236 @@
+1
+00:00:02,280 --> 00:00:06,980
+In the last lecture, we added this navigation and I also mentioned that
+
+2
+00:00:06,990 --> 00:00:10,680
+you can change the way you use your paths here.
+
+3
+00:00:10,680 --> 00:00:17,220
+Right now, we use //servers or even with this more complex notation, we have /users as
+
+4
+00:00:17,230 --> 00:00:18,870
+the first element.
+
+5
+00:00:18,870 --> 00:00:24,800
+Now what happens if we just use servers here, like this and just use users like this?
+
+6
+00:00:24,990 --> 00:00:27,960
+Let's save this without the leading slash.
+
+7
+00:00:27,960 --> 00:00:34,660
+Now if we click there on our links, you'll still see this works absolutely fine,
+
+8
+00:00:34,710 --> 00:00:36,630
+nothing changed.
+
+9
+00:00:36,630 --> 00:00:41,390
+Now let's go to our servers component template file here
+
+10
+00:00:41,750 --> 00:00:45,470
+and for now, let's quickly add an anchor element here
+
+11
+00:00:45,840 --> 00:00:54,110
+where we also add a routerLink where I add servers again, Reload Page would be a fitting description.
+
+12
+00:00:54,120 --> 00:00:59,040
+So on the servers component, I now added this routerLink where I basically want to make sure that I stay
+
+13
+00:00:59,040 --> 00:01:01,340
+on the servers page which I'm already on.
+
+14
+00:01:01,620 --> 00:01:08,820
+So if we go to servers here, we see the reload page here and if I click it, you'll see we got an error. This
+
+15
+00:01:08,820 --> 00:01:14,790
+error here occurs because it doesn't find a route which is servers/servers.
+
+16
+00:01:14,790 --> 00:01:20,450
+Now this error won't occur if on the servers component, I turn this to /servers,  
+
+17
+00:01:20,490 --> 00:01:25,500
+so to an absolute path, it was a relative path. Here
+
+18
+00:01:25,540 --> 00:01:32,550
+if we now have our console still open and I click reload page, nothing occurs here, nothing, no error occurs
+
+19
+00:01:32,850 --> 00:01:37,950
+because now it simply navigates to localhost:4200/servers
+
+20
+00:01:37,950 --> 00:01:45,180
+as you can see down there and if we turn this back to a relative path, the difference was that now
+
+21
+00:01:45,330 --> 00:01:48,280
+it tries to go /serversServers.
+
+22
+00:01:48,300 --> 00:01:55,150
+So with a relative path, it always append the path you specify in the routerLink to the end of your current
+
+23
+00:01:55,160 --> 00:01:55,840
+path
+
+24
+00:01:55,920 --> 00:02:00,450
+and important here, the current path depends on which component you are currently on.
+
+25
+00:02:00,450 --> 00:02:07,500
+That is why we could remove that in our navigation where we also use relative paths because that is in
+
+26
+00:02:07,500 --> 00:02:08,910
+our root component,
+
+27
+00:02:08,970 --> 00:02:11,550
+this component is not loaded through the router,
+
+28
+00:02:11,580 --> 00:02:17,990
+so this root component always sits at localhost:4200 slash nothing.
+
+29
+00:02:18,000 --> 00:02:23,760
+So this is always at our root level which is why we can use relative paths here too
+
+30
+00:02:24,090 --> 00:02:30,240
+but one layer below that once we loaded a route, for example the servers component, this page is only
+
+31
+00:02:30,240 --> 00:02:32,640
+loaded if we are at /servers.
+
+32
+00:02:32,700 --> 00:02:38,340
+So if we add a relative route here, this will now get appended to this route we are on,
+
+33
+00:02:38,340 --> 00:02:45,210
+so it will try to load servers/servers and therefore it gives us an error in our case because we
+
+34
+00:02:45,210 --> 00:02:49,350
+haven't registered a servers/servers route.
+
+35
+00:02:49,380 --> 00:02:56,220
+Now of course using relative paths inside of active components, active routes might be a
+
+36
+00:02:56,220 --> 00:02:58,720
+nice thing if you have nested routes,
+
+37
+00:02:58,830 --> 00:03:01,620
+right now it will only break the app though.
+
+38
+00:03:01,710 --> 00:03:05,560
+Now you can also use relative paths with ./ at the beginning,
+
+39
+00:03:05,560 --> 00:03:07,870
+this is the same as having nothing there
+
+40
+00:03:08,250 --> 00:03:15,990
+and you can even navigate around like in a folder directory, you could add ../ which means go
+
+41
+00:03:16,050 --> 00:03:22,170
+up one level and then add this to the path here.
+
+42
+00:03:22,170 --> 00:03:28,710
+Now if we do this inside of our a servers component, you will see if I hover over this, now it again only
+
+43
+00:03:28,710 --> 00:03:36,300
+tries to load /servers and therefore, we don't see an error because now it first goes back one level
+
+44
+00:03:36,360 --> 00:03:42,960
+which basically is to just our root paths, so it removes one path and important path depends on the
+
+45
+00:03:42,960 --> 00:03:44,030
+route you're on.
+
+46
+00:03:44,040 --> 00:03:51,200
+So if you were on servers slash something and this would load this component, it would remove both,
+
+47
+00:03:51,360 --> 00:03:57,960
+so this does not necessarily only remove one segment here, it removes the currently loaded segment you
+
+48
+00:03:57,960 --> 00:03:58,600
+could say.
+
+49
+00:03:58,710 --> 00:04:04,770
+So in this case, it removes this and then adds /servers again which is why this works and this is
+
+50
+00:04:04,770 --> 00:04:10,560
+how you can navigate around. Absolute paths with a slash at the beginning which will always get appended
+
+51
+00:04:10,560 --> 00:04:18,300
+to the root domain, relative paths without a slash or with ./ which means added to the currently
+
+52
+00:04:18,300 --> 00:04:27,050
+loaded path or ../ and you can even add more of them to say well go back ones path, go back
+
+53
+00:04:27,170 --> 00:04:28,280
+another path,
+
+54
+00:04:28,320 --> 00:04:35,070
+so always seen from the currently loaded component on and if that is something which is not 100%
+
+55
+00:04:35,070 --> 00:04:35,610
+clear,
+
+56
+00:04:35,640 --> 00:04:41,460
+you will see throughout this module but also feel free to play around with it, add your own routes, add some
+
+57
+00:04:41,460 --> 00:04:45,640
+nesting, add more complex paths and see how this works out.
+
+58
+00:04:45,660 --> 00:04:48,150
+But for now, let's continue with our application,
+
+59
+00:04:48,180 --> 00:04:51,910
+I will remove this reload page link and let's enhance this a bit more.
+

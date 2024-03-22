@@ -1,0 +1,164 @@
+1
+00:00:02,320 --> 00:00:09,400
+I mentioned a way of optimizing lazy loading, which itself of course is already an optimization and with that,
+
+2
+00:00:09,400 --> 00:00:13,840
+I mean how the lazy loaded code is then loaded.
+
+3
+00:00:13,840 --> 00:00:16,380
+Right now, we load code whenever we need it,
+
+4
+00:00:16,390 --> 00:00:24,930
+so as soon as we visit /recipes, for example after logging in, we bring in the recipes module.
+
+5
+00:00:24,960 --> 00:00:27,800
+Now the downside of that of course is that this is downloaded and parsed
+
+6
+00:00:27,800 --> 00:00:34,140
+just when we need it, leading to a very tiny delay in our application. We might not see that here because
+
+7
+00:00:34,140 --> 00:00:37,720
+the module is small and the internet connection is fast
+
+8
+00:00:37,920 --> 00:00:43,080
+but the bigger the module and the slower the internet connection or for example if you temporarily have
+
+9
+00:00:43,080 --> 00:00:44,540
+no internet connection,
+
+10
+00:00:44,670 --> 00:00:52,890
+the longer that delay will be and therefore, we can actually tell Angular to preload lazy loaded modules
+
+11
+00:00:54,160 --> 00:00:56,870
+to avoid this delay.
+
+12
+00:00:57,070 --> 00:01:03,640
+For this, we simply go to our root router module, so here we reconfigure our root routes and you can
+
+13
+00:01:03,640 --> 00:01:06,230
+pass a second argument to that.
+
+14
+00:01:06,370 --> 00:01:13,060
+This is an object where you can configure that root router and there, you can set up a preloading strategy
+
+15
+00:01:13,930 --> 00:01:20,350
+and you can set this equal to preload all modules. The default is no preloading, you don't need to set
+
+16
+00:01:20,350 --> 00:01:27,730
+this but you can set this to preload all modules, which is simply and in the end, a constant you need to import
+
+17
+00:01:27,730 --> 00:01:29,710
+from @angular/router.
+
+18
+00:01:29,710 --> 00:01:34,330
+Speaking of imports, you should remove the auth component import by the way to optimize lazy loading as
+
+19
+00:01:34,330 --> 00:01:35,040
+well.
+
+20
+00:01:35,320 --> 00:01:41,140
+But with preload all modules imported and set here as a preloading strategy, you're telling Angular
+
+21
+00:01:41,140 --> 00:01:47,890
+generally we're using lazy loading, so it will not put all that code into one bundle, it will split
+
+22
+00:01:47,890 --> 00:01:53,870
+it as we saw it but it will preload the bundles as soon as possible,
+
+23
+00:01:53,890 --> 00:01:59,950
+so when we are on the auth page, it will already preload recipes and shopping list so that these code
+
+24
+00:01:59,950 --> 00:02:02,910
+bundles are already available when we need them.
+
+25
+00:02:02,920 --> 00:02:08,290
+The advantage is that the initial download bundles still is kept small because there, that code is not
+
+26
+00:02:08,290 --> 00:02:12,040
+included and therefore the initial loading phase is fast
+
+27
+00:02:12,490 --> 00:02:18,970
+but then when the user is browsing the page and we have some idle time anyways, then we
+
+28
+00:02:18,970 --> 00:02:25,150
+preload these additional code bundles to make sure that subsequent navigation requests are faster,
+
+29
+00:02:25,150 --> 00:02:32,280
+so we're getting the best of both worlds, a fast initial load and thereafter, fast subsequent loads.
+
+30
+00:02:32,320 --> 00:02:38,230
+So with that preloading strategy setup, now if you reload this page here, you actually see something
+
+31
+00:02:38,230 --> 00:02:39,320
+interesting.
+
+32
+00:02:39,370 --> 00:02:48,670
+We of course see that the main.js file and so on is loaded but then we also see that here, the recipes
+
+33
+00:02:48,670 --> 00:02:53,790
+module is loaded and the shopping list module is loaded and therefore now if I clear this all here,
+
+34
+00:02:53,790 --> 00:02:57,330
+the network request output,
+
+35
+00:02:57,450 --> 00:03:02,190
+you see no downloads of these modules here because they already were preloaded.
+
+36
+00:03:02,190 --> 00:03:08,490
+Still, we had that smaller initial bundle but we benefit from these code packages being there when we
+
+37
+00:03:08,490 --> 00:03:13,370
+need them and therefore, setting this preloading strategy is definitely worth a thought
+
+38
+00:03:13,440 --> 00:03:19,290
+if you want to optimize lazy loading and you want to ensure that this goes as fast as possible. Now you
+
+39
+00:03:19,290 --> 00:03:25,920
+can even build your own preloading strategies here where you could have more refined logic, for example
+
+40
+00:03:25,920 --> 00:03:31,980
+controlling that only certain routes should be preloaded but that is beyond the scope of that course.
+
+41
+00:03:32,100 --> 00:03:37,200
+Being aware of that preloading strategy is super import though and that is how you could use it.
+

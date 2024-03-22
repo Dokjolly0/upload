@@ -1,0 +1,188 @@
+1
+00:00:02,570 --> 00:00:04,370
+So we created our form,
+
+2
+00:00:04,440 --> 00:00:09,140
+let's now synchronize it to the HTML code. For this,
+
+3
+00:00:09,140 --> 00:00:11,300
+first of all and that's very important,
+
+4
+00:00:11,300 --> 00:00:15,620
+we need to add something to the app module. In the imports array,
+
+5
+00:00:15,620 --> 00:00:24,170
+we now not only need the forms module, we'll also need the reactive forms module which needs to be imported
+
+6
+00:00:24,260 --> 00:00:29,840
+from @angular/forms, otherwise synchronizing with our 
+
+7
+00:00:29,890 --> 00:00:35,720
+HTML code will fail because we don't have access to the directives we need for that.
+
+8
+00:00:35,780 --> 00:00:43,890
+So therefore, what I'll do is go to my recipe-edit.component.html file and now I want to connect my form.
+
+9
+00:00:44,420 --> 00:00:47,870
+Let's start on the overall form element, here
+
+10
+00:00:47,900 --> 00:00:55,670
+we have the FormGroup directive which we should use with square brackets because we need to pass some
+
+11
+00:00:55,670 --> 00:00:57,290
+data to that directive
+
+12
+00:00:57,320 --> 00:01:01,920
+via property binding and that data is our recipe form,
+
+13
+00:01:01,940 --> 00:01:09,190
+so let's quickly assign this. Now we're telling Angular that our overall form is managed by us
+
+14
+00:01:09,230 --> 00:01:11,630
+and that Angular itself should not manage it,
+
+15
+00:01:11,630 --> 00:01:14,030
+instead it should take our form.
+
+16
+00:01:14,480 --> 00:01:19,440
+With this, we can now assign our own controls.
+
+17
+00:01:19,440 --> 00:01:26,910
+So let's simply go to a first input, the name here and there we have the formControlName directive.
+
+18
+00:01:27,110 --> 00:01:33,230
+Now we could enclose it in square brackets and then use single quotation marks but we need double quotation
+
+19
+00:01:33,230 --> 00:01:41,480
+marks or we omit both and simply use this syntax and now the name here of course has to match the name
+
+20
+00:01:41,570 --> 00:01:42,830
+we set up here.
+
+21
+00:01:42,980 --> 00:01:44,600
+So here we chose a name
+
+22
+00:01:44,690 --> 00:01:49,930
+we should choose the same in the HTML code. Now I'll copy this,
+
+23
+00:01:50,070 --> 00:01:56,060
+also for the imageUrl, here I chose imagePath as a name,
+
+24
+00:01:56,100 --> 00:01:58,480
+so let's make sure to use this
+
+25
+00:01:58,890 --> 00:02:03,810
+and of course description for our text area here, here
+
+26
+00:02:03,870 --> 00:02:12,060
+I also will add the formGroupName directive and assign description. Now to be able to see something,
+
+27
+00:02:12,080 --> 00:02:17,450
+I'll also set up the ngSubmit listener and listen to onSubmit,
+
+28
+00:02:17,450 --> 00:02:21,130
+now here of course I don't need to pass the form as an argument,
+
+29
+00:02:21,170 --> 00:02:26,280
+instead I can simply add the onSubmit method here
+
+30
+00:02:26,510 --> 00:02:31,170
+and for now simply log my recipe form to the console.
+
+31
+00:02:31,190 --> 00:02:34,250
+Let's see if everything works as it should.
+
+32
+00:02:34,490 --> 00:02:42,760
+So once this has recompiled, I'll head over to the form and this looks OK,
+
+33
+00:02:42,850 --> 00:02:46,010
+it almost works as expected.
+
+34
+00:02:46,060 --> 00:02:52,670
+The name was pre-populated for the selected recipe and it does update
+
+35
+00:02:52,690 --> 00:02:58,830
+if we change this to big fat burger, the description is not displayed though.
+
+36
+00:02:59,700 --> 00:03:02,790
+So that is not how I want this to behave.
+
+37
+00:03:02,970 --> 00:03:09,420
+As a side note, on new recipe, it correctly sets this to an empty form, so that is OK but would be nice
+
+38
+00:03:09,420 --> 00:03:11,660
+if the description is displayed too.
+
+39
+00:03:11,940 --> 00:03:18,320
+If I submit the form, let's have a look at the value, description,
+
+40
+00:03:18,380 --> 00:03:21,530
+actually it says what else you need to say,
+
+41
+00:03:21,530 --> 00:03:23,940
+so what could be wrong about the description then.
+
+42
+00:03:24,750 --> 00:03:28,650
+Well if we have a look at the text area, I simply assign the wrong directive,
+
+43
+00:03:28,650 --> 00:03:32,550
+it should be formControlName. With this in place if it reloads,
+
+44
+00:03:32,610 --> 00:03:34,420
+this looks much better.
+
+45
+00:03:34,920 --> 00:03:39,150
+So with that, the synchronisation is working,
+
+46
+00:03:39,150 --> 00:03:46,440
+the next step is to get our ingredients to work correctly and that actually will involve a couple of
+
+47
+00:03:46,440 --> 00:03:50,160
+steps because we need to manage this array of ingredients for that.
+

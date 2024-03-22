@@ -1,0 +1,72 @@
+1
+00:00:02,160 --> 00:00:03,540
+So we're almost done
+
+2
+00:00:03,650 --> 00:00:07,560
+but the delete button isn't entirely working as expected.
+
+3
+00:00:07,820 --> 00:00:14,960
+It's updating the list but we're staying on the page of the deleted recipe. So to change this, we need
+
+4
+00:00:14,960 --> 00:00:22,400
+to go to the recipe detail component which again is where the delete recipe button lives and in
+
+5
+00:00:22,430 --> 00:00:26,680
+onDeleteRecipe, we simply need to navigate away.
+
+6
+00:00:26,780 --> 00:00:35,770
+We already get the router injected here, so we can simply call this router navigate
+
+7
+00:00:35,990 --> 00:00:39,740
+and now I simply want to navigate to /recipes here
+
+8
+00:00:39,740 --> 00:00:46,490
+and with that, we should have the right user experience that once this updates here, that
+
+9
+00:00:46,550 --> 00:00:53,100
+if I click delete here, it is deleted and we are taken back to the main view.
+
+10
+00:00:53,540 --> 00:01:05,450
+So let's try this a final time here with spaghetti, searching for a fitting image for spaghetti,
+
+11
+00:01:05,460 --> 00:01:08,010
+let's pick this one here
+
+12
+00:01:09,920 --> 00:01:11,980
+and let's insert it here
+
+13
+00:01:14,420 --> 00:01:21,270
+and let's finally enter a description, tasty spaghetti.
+
+14
+00:01:21,410 --> 00:01:28,610
+Let's hit add ingredient to add some spaghetti, 10 let's say and let's save the form
+
+15
+00:01:28,840 --> 00:01:30,970
+and this all works
+
+16
+00:01:31,030 --> 00:01:33,580
+but one thing is not working,
+
+17
+00:01:33,580 --> 00:01:40,680
+do you see which? The image, we're not getting a preview of the image here.
+
+18
+00:01:40,750 --> 00:01:45,200
+So let's fix this in the next lecture before we finally move on.
+

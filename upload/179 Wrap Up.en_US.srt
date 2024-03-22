@@ -1,0 +1,48 @@
+1
+00:00:02,530 --> 00:00:09,520
+That's it for observables. You saw how you can build your own observable, to basically get an idea of
+
+2
+00:00:09,550 --> 00:00:15,490
+what's happening behind the scenes, how you can subscribe to it and provide different functions to do
+
+3
+00:00:15,490 --> 00:00:20,690
+different things for data, errors or the observable being completed.
+
+4
+00:00:21,070 --> 00:00:25,930
+You learned about operators which you add by using the pipe method on the observable and then by
+
+5
+00:00:25,930 --> 00:00:31,810
+adding the operators you import from rxjs/operators, which are tools that might not look
+
+6
+00:00:31,810 --> 00:00:37,240
+super useful right now but which will actually become quite handy throughout the course since they make
+
+7
+00:00:37,240 --> 00:00:43,960
+it easy for us to build nice code structures where we have a clear chain of steps we want to execute
+
+8
+00:00:44,260 --> 00:00:49,990
+on the data we're getting let's say from a server and therefore, they're really powerful. And you learned
+
+9
+00:00:49,990 --> 00:00:56,470
+about subjects, which are in the end a better event emitter you could say. And with that, you have a
+
+10
+00:00:56,470 --> 00:01:03,100
+thorough foundation about observables. Now also check out the advanced resources you find in the last
+
+11
+00:01:03,100 --> 00:01:08,170
+lecture of this module and which l already show throughout this module if you want to dive way
+
+12
+00:01:08,170 --> 00:01:12,970
+deeper but with that, we now have all the preparation to continue with the course.
+

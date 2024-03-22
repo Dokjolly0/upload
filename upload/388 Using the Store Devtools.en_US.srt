@@ -1,0 +1,256 @@
+1
+00:00:02,610 --> 00:00:09,210
+Our application is taking shape or to be precise, it already has shape but we're moving more and more
+
+2
+00:00:09,210 --> 00:00:16,560
+of the logic into NgRx with the auth and the shopping list area finished, only the recipes remain and of
+
+3
+00:00:16,560 --> 00:00:19,160
+course we still have that data storage service
+
+4
+00:00:19,290 --> 00:00:22,170
+but let's focus on that and a second step,
+
+5
+00:00:22,170 --> 00:00:29,370
+first of all let's take a step back and let's work on our development experience a little bit.
+
+6
+00:00:29,400 --> 00:00:33,290
+Thus far, we had a look at NgRx where
+
+7
+00:00:33,330 --> 00:00:39,120
+we were using it but wouldn't it be nice if you could sometimes look into it and have a nice log of
+
+8
+00:00:39,120 --> 00:00:44,760
+the different actions that are being dispatched and which data they carry and how they change your global
+
+9
+00:00:44,760 --> 00:00:46,740
+application store?
+
+10
+00:00:46,740 --> 00:00:53,100
+Well you can have a look at this with a special development tool which you can install. For this, search
+
+11
+00:00:53,100 --> 00:01:00,510
+for Redux dev tools extension and you should find this Github repository here which is about the Redux
+
+12
+00:01:00,540 --> 00:01:07,710
+dev tools extension and NgRx is compatible with that and you can follow that link to find a page with
+
+13
+00:01:07,710 --> 00:01:15,190
+instructions on how to install it in Chrome or Firefox. So I'm using Chrome, so I will go to the Chrome
+
+14
+00:01:15,280 --> 00:01:23,360
+Web Store on the page of that package and I already have added it,
+
+15
+00:01:23,370 --> 00:01:30,270
+if you haven't, simply click the installation link which you should find here. Now that is basically all
+
+16
+00:01:30,270 --> 00:01:34,740
+you need to do then, you have installed that, you don't need to follow any other steps here, you just need
+
+17
+00:01:34,740 --> 00:01:40,180
+to go to the Chrome store and install it from there.
+
+18
+00:01:41,650 --> 00:01:50,130
+Once you have that installed, you can install a special package in your project with npm install and
+
+19
+00:01:50,130 --> 00:01:56,150
+now --save-dev because that will be a development only dependency and there,
+
+20
+00:01:56,290 --> 00:01:59,450
+this is
+
+21
+00:02:02,070 --> 00:02:06,410
+@ngrx/store-devtools.
+
+22
+00:02:06,440 --> 00:02:15,100
+Now let's restart ng serve and to use that part and use it together with the install extension,
+
+23
+00:02:15,100 --> 00:02:22,120
+you now have to go to the app module and there, after creating your store module, you now can register
+
+24
+00:02:22,150 --> 00:02:26,950
+a new module which is unsurprisingly imported from that newly added package.
+
+25
+00:02:26,950 --> 00:02:33,650
+So we just added @ngrx/store devtools, from that package,
+
+26
+00:02:33,650 --> 00:02:38,810
+you can install or you can import the store devtools module.
+
+27
+00:02:38,930 --> 00:02:46,490
+Now with that import added, add it in the imports of your app module, store devtools module like this
+
+28
+00:02:47,150 --> 00:02:50,480
+and call instrument on it.
+
+29
+00:02:50,480 --> 00:02:56,210
+Now instrument takes an object where you can configure this and there is one configuration which I want
+
+30
+00:02:56,210 --> 00:03:05,270
+to add and that is log only which I want to set to environment and environment is now getting imported
+
+31
+00:03:05,570 --> 00:03:08,320
+from our environments folder,
+
+32
+00:03:08,330 --> 00:03:13,880
+so there actually let me navigate there manually, one level up, then into the environments folder and
+
+33
+00:03:13,880 --> 00:03:18,410
+then the environment file, not from the environment.prod file but just from the environment file.
+
+34
+00:03:19,040 --> 00:03:21,980
+In there, in that environment file,
+
+35
+00:03:22,340 --> 00:03:28,790
+we have a production property in that constant, in that environment constant and that is false during
+
+36
+00:03:28,790 --> 00:03:30,940
+development but in the prod file, it is true
+
+37
+00:03:30,980 --> 00:03:34,680
+and as you learned, these two files are swapped automatically by the CLI
+
+38
+00:03:34,680 --> 00:03:42,550
+once you build for production. So this environment constant has this production property which is false
+
+39
+00:03:44,060 --> 00:03:52,800
+during development but true during production and therefore with log only,
+
+40
+00:03:52,810 --> 00:03:57,730
+we're basically restricting the output to only some log messages when we're in production.
+
+41
+00:03:58,720 --> 00:04:09,830
+With that added, you can save your application and now go back to it and maybe restart your browser after
+
+42
+00:04:09,830 --> 00:04:15,620
+the installation of that Chrome extension or of that Firefox extension and you should then find a Redux
+
+43
+00:04:15,770 --> 00:04:22,200
+element here in your browser developer tools and in there, that's pretty nice,
+
+44
+00:04:22,220 --> 00:04:26,540
+you now have a detailed log of what's happening in your application.
+
+45
+00:04:26,630 --> 00:04:32,980
+If I reload for example, we see which actions are getting dispatched here, we
+
+46
+00:04:32,990 --> 00:04:36,140
+see the auth auto login, dummy
+
+47
+00:04:36,140 --> 00:04:41,990
+and if you scroll up by the way, you see there are some initialization actions being dispatched as well
+
+48
+00:04:42,080 --> 00:04:48,260
+and you might recall that I mentioned these initialization actions earlier in this module,
+
+49
+00:04:48,260 --> 00:04:56,220
+this is important for your state getting initialized. So there, we see what was getting dispatched,
+
+50
+00:04:56,360 --> 00:05:00,190
+we see what the state looked like after that
+
+51
+00:05:00,200 --> 00:05:07,300
+dispatch, you see which action that was and you see more information about that action,
+
+52
+00:05:07,430 --> 00:05:11,600
+for example you can see more information once I do login,
+
+53
+00:05:11,600 --> 00:05:13,880
+now you see login start was dispatched,
+
+54
+00:05:13,910 --> 00:05:21,140
+this had a payload, that payload was the e-mail and password and we see that the state here was at this
+
+55
+00:05:21,140 --> 00:05:25,270
+point of time when it was dispatched, that the user was basically null
+
+56
+00:05:25,550 --> 00:05:32,990
+but then for login once this is done, the user, so excuse me, that's the state after this action has been
+
+57
+00:05:32,990 --> 00:05:39,140
+performed but for login start, the user obviously still was null but loading was true and after login,
+
+58
+00:05:39,140 --> 00:05:44,190
+the state was such that we had a user and loading was set back to false.
+
+59
+00:05:44,210 --> 00:05:49,760
+So here you can now really dive into the different steps that are being executed in your application
+
+60
+00:05:49,920 --> 00:05:52,290
+and you can learn more about what's going on,
+
+61
+00:05:52,310 --> 00:05:57,350
+you can simply play around with that and get an overview of which actions were dispatched and how they
+
+62
+00:05:57,350 --> 00:06:04,580
+affected the state, which state updates were made and so on and you can even go back in time and replay
+
+63
+00:06:04,580 --> 00:06:11,150
+your application at different points of time and simply play around with that a bit, to simulate different
+
+64
+00:06:11,390 --> 00:06:17,360
+states and most importantly, to get a feeling for what NgRx is doing behind the scenes.
+

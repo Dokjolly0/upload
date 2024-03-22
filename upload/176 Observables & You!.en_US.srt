@@ -1,0 +1,96 @@
+1
+00:00:02,270 --> 00:00:08,450
+That was a lot of talking about observables but now we have an example of an observable and how
+
+2
+00:00:08,450 --> 00:00:10,180
+it behaves under the hood.
+
+3
+00:00:10,220 --> 00:00:15,980
+However I know that this can look even more confusing and you might ask yourself, well when do I write
+
+4
+00:00:15,980 --> 00:00:16,430
+this code
+
+5
+00:00:16,430 --> 00:00:21,280
+because that's nice about the interval but come on, I don't need that interval that often
+
+6
+00:00:21,350 --> 00:00:26,720
+in my application and you would be right and by the way if you needed one, you'd of course use the built
+
+7
+00:00:26,720 --> 00:00:29,370
+in interval function and not build your own one.
+
+8
+00:00:29,390 --> 00:00:31,790
+So what's the idea behind that example?
+
+9
+00:00:31,790 --> 00:00:37,820
+The idea is that you understand what happens inside of an observable. Whenever you subscribe and you
+
+10
+00:00:37,820 --> 00:00:44,090
+set up your different handler functions here, RxJS in the end merges them all together into
+
+11
+00:00:44,090 --> 00:00:51,860
+one object and passes that object, the observer to the observable and inside of the observable, it will
+
+12
+00:00:51,860 --> 00:00:57,970
+then interact with the observer and let the observer know about new data and errors and so on
+
+13
+00:00:58,010 --> 00:00:59,620
+and that is how your functions get called.
+
+14
+00:01:00,080 --> 00:01:06,070
+However, you rarely, very very very rarely build your own observables.
+
+15
+00:01:06,380 --> 00:01:12,350
+More often, you use observables that come with libraries like Angular, like the route params observable
+
+16
+00:01:12,350 --> 00:01:18,230
+we already used. Under the hood, that in the end is a custom observable built by the Angular team but
+
+17
+00:01:18,230 --> 00:01:20,990
+of course you just use it like that.
+
+18
+00:01:20,990 --> 00:01:26,360
+You rarely build your own ones but still, it's super important to understand how they work under the
+
+19
+00:01:26,360 --> 00:01:29,170
+hood and in the end, they all work a bit like that.
+
+20
+00:01:29,240 --> 00:01:31,940
+They wrap some event source,
+
+21
+00:01:32,030 --> 00:01:34,070
+in this case it's set interval,
+
+22
+00:01:34,070 --> 00:01:41,120
+in other cases it could be an Ajax request or a click listener or whatever it is and they give you data
+
+23
+00:01:41,210 --> 00:01:49,400
+or possibly also errors or the complete event and you will mostly use subscribe and pass in functions
+
+24
+00:01:49,550 --> 00:01:52,790
+that deal with that data or those errors.
+

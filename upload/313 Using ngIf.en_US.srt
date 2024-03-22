@@ -1,0 +1,140 @@
+1
+00:00:02,490 --> 00:00:08,850
+So we started with ngIf and therefore at the moment, our alert component here is simply included
+
+2
+00:00:08,880 --> 00:00:11,670
+with its selector and controlled with ngIf.
+
+3
+00:00:11,730 --> 00:00:18,270
+The huge advantage of this is that we don't have to manually create it and we also can pass data in
+
+4
+00:00:18,270 --> 00:00:24,960
+as we learn it here, with property binding. It also means that listening to events is super simple and
+
+5
+00:00:24,960 --> 00:00:26,280
+straightforward.
+
+6
+00:00:26,580 --> 00:00:33,210
+If we want to make sure we can also get rid of that alert, all we need to do is we need to emit an event
+
+7
+00:00:33,750 --> 00:00:36,230
+and we make that event listenable from outside
+
+8
+00:00:36,230 --> 00:00:44,400
+with the help of @output which you import from @angular/core and we could name this close and this will
+
+9
+00:00:44,400 --> 00:00:53,340
+be or will hold a new event emitter which we import also from @angular/core and that event emitter could
+
+10
+00:00:53,340 --> 00:01:00,450
+now also transport some data but here I'll actually add void as a type because I won't emit any data,
+
+11
+00:01:00,450 --> 00:01:01,920
+I'll just emit the "hey
+
+12
+00:01:01,950 --> 00:01:09,270
+this was closed" event. Now to emit this, we need a method here, for example on close
+
+13
+00:01:09,300 --> 00:01:14,550
+and now this will be triggered whenever a user clicks this close button or the backdrop.
+
+14
+00:01:14,940 --> 00:01:21,480
+So here, we can register a click listener and fire on close and we do the same when the backdrop is
+
+15
+00:01:21,480 --> 00:01:25,140
+clicked let's say, to dismiss the modal in that case as well.
+
+16
+00:01:25,140 --> 00:01:31,380
+So both of these things, the backdrop and this button will trigger on close and in on close, we can
+
+17
+00:01:31,380 --> 00:01:37,090
+now simply use the close event we created and manually emit it.
+
+18
+00:01:37,140 --> 00:01:43,550
+Now this allows us to go back to the auth component and in there, we can now listen to close
+
+19
+00:01:43,560 --> 00:01:51,140
+and here we can now call onHandleError for example, whatever you want to name it.
+
+20
+00:01:51,180 --> 00:01:58,890
+This is a method we now have to add to the auth component, maybe here and in onHandleError,
+
+21
+00:01:58,920 --> 00:02:03,880
+I essentially just want to reset the error, so I'll set error back to null
+
+22
+00:02:03,900 --> 00:02:09,480
+and by doing that, the condition for displaying the error will be removed because we're using error here
+
+23
+00:02:09,480 --> 00:02:15,090
+in ngIf and if that is null, then this whole alert will not be shown anymore and therefore this will
+
+24
+00:02:15,090 --> 00:02:16,880
+then close the alert.
+
+25
+00:02:16,950 --> 00:02:18,080
+So let's try this again,
+
+26
+00:02:18,090 --> 00:02:19,650
+let's enter invalid credentials,
+
+27
+00:02:19,650 --> 00:02:26,070
+here is the alert, if I click here, we get rid of it. If I now enter invalid credentials again,
+
+28
+00:02:26,130 --> 00:02:28,920
+let's try the close button, works too.
+
+29
+00:02:28,920 --> 00:02:34,980
+So now this is the finished flow with ngIf and I strongly recommend using that flow.
+
+30
+00:02:35,010 --> 00:02:41,700
+There are rarely situations where you absolutely need the imperative approach you're also going
+
+31
+00:02:41,700 --> 00:02:47,970
+to learn about, using this approach with ngIf is so much easier and therefore really is an approach
+
+32
+00:02:48,210 --> 00:02:55,170
+you should use when you have a scenario where you need to show some component dynamically when some
+
+33
+00:02:55,170 --> 00:02:56,460
+condition is met.
+
+34
+00:02:56,520 --> 00:03:02,670
+Nonetheless, let's now see how we could create that alert component entirely in code and control it from
+
+35
+00:03:02,670 --> 00:03:03,010
+there.
+

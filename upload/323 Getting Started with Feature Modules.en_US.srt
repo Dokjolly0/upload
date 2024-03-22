@@ -1,0 +1,436 @@
+1
+00:00:02,330 --> 00:00:07,790
+So we can work with multiple modules. Instead of having one big app module,
+
+2
+00:00:07,790 --> 00:00:13,730
+we could split that into an app module that defines our app component and then we have, in this slide
+
+3
+00:00:13,730 --> 00:00:18,710
+here, two separate new modules, so-called feature modules.
+
+4
+00:00:18,710 --> 00:00:22,670
+Now the term feature module does not mean that you create them in a special way,
+
+5
+00:00:22,730 --> 00:00:26,840
+it's still a class with the @ngModule decorator,
+
+6
+00:00:26,870 --> 00:00:34,640
+it just means that this is a module that groups together components, directives, pipes, that are used
+
+7
+00:00:34,640 --> 00:00:38,960
+in a certain feature area of your application,
+
+8
+00:00:38,960 --> 00:00:44,240
+like in this slide when we're building let's say an online shop, we could have components that are
+
+9
+00:00:44,270 --> 00:00:50,840
+primarily involved in rendering products and individual products and we could outsource those into a
+
+10
+00:00:50,840 --> 00:00:52,550
+products module
+
+11
+00:00:52,550 --> 00:00:58,160
+and if we then have an area in our application where we're primarily concerned with orders, then we
+
+12
+00:00:58,160 --> 00:01:02,650
+could also outsource that into our orders module.
+
+13
+00:01:02,690 --> 00:01:08,110
+Now that is an important step of Angular application development,
+
+14
+00:01:08,210 --> 00:01:13,910
+splitting your app into such feature modules because that is the prerequisite to performance improvements
+
+15
+00:01:13,910 --> 00:01:15,140
+we'll dive into later
+
+16
+00:01:15,290 --> 00:01:21,830
+and that also now ensures that when other developers work on your code or you work on your code, maybe
+
+17
+00:01:21,830 --> 00:01:29,100
+after a short pause, you quickly know where to look for the set up for this specific part of your app
+
+18
+00:01:29,240 --> 00:01:34,190
+because of course you could be building an application with hundreds or thousands of components and
+
+19
+00:01:34,190 --> 00:01:40,910
+directives and then grouping them together into logical modules makes working with them and refactoring
+
+20
+00:01:40,910 --> 00:01:42,980
+your code simply much easier.
+
+21
+00:01:42,980 --> 00:01:50,720
+Now let's apply that to our course project where we also have multiple features. Which features do we
+
+22
+00:01:50,720 --> 00:01:53,800
+have in our course project there?
+
+23
+00:01:53,810 --> 00:02:01,810
+Well if we have a look at it in our app folder, I'd say we have three main feature areas -
+
+24
+00:02:01,940 --> 00:02:07,030
+we have the recipes feature area, so all the components related to recipes,
+
+25
+00:02:07,250 --> 00:02:12,530
+we have the shopping list feature area with all the logic related to the shopping list and we have
+
+26
+00:02:12,550 --> 00:02:18,120
+the auth feature area, where we have all the components and all the logic related to authentication
+
+27
+00:02:18,170 --> 00:02:24,050
+even if in this case it's only one component but still, it's a separate feature. The header and the shared
+
+28
+00:02:24,050 --> 00:02:25,340
+components here,
+
+29
+00:02:25,370 --> 00:02:28,550
+I'd say these are not really features of the app,
+
+30
+00:02:28,550 --> 00:02:31,030
+the header is part of the app component,
+
+31
+00:02:31,070 --> 00:02:32,520
+we do render it there,
+
+32
+00:02:32,630 --> 00:02:36,590
+so it definitely belongs to the root of our application
+
+33
+00:02:36,590 --> 00:02:43,040
+and regarding the shared components, in this app we might only use certain features in certain parts
+
+34
+00:02:43,040 --> 00:02:43,470
+of the app,
+
+35
+00:02:43,490 --> 00:02:44,760
+let's say the alert component,
+
+36
+00:02:44,780 --> 00:02:50,870
+we only use it in the auth component but it would make sense that we share that across different features
+
+37
+00:02:50,870 --> 00:02:55,340
+of our application because you could be showing an alert in the recipes area as well
+
+38
+00:02:55,340 --> 00:03:01,650
+when you fail to load recipes. So the alert and so on, these shared things, we'll take care about later,
+
+39
+00:03:01,670 --> 00:03:08,150
+they're not really a feature module of this app but let's dive into creating a module for our recipes
+
+40
+00:03:08,150 --> 00:03:14,000
+then and for this in the recipes folder, you simply create a new TypeScript file and you would name this
+
+41
+00:03:14,000 --> 00:03:15,710
+recipes.module.ts,
+
+42
+00:03:15,750 --> 00:03:20,210
+just as we have the app module for our general application,
+
+43
+00:03:20,300 --> 00:03:23,320
+so basically the core is set up for the entire app,
+
+44
+00:03:23,360 --> 00:03:29,450
+we now have the recipes module that should be responsible for defining the building blocks of the recipe
+
+45
+00:03:29,630 --> 00:03:31,190
+feature area.
+
+46
+00:03:31,460 --> 00:03:37,040
+And for that, you simply export a class here and name it recipes module, that is the naming convention
+
+47
+00:03:37,040 --> 00:03:37,400
+here,
+
+48
+00:03:37,520 --> 00:03:39,440
+just as you name it a recipes component
+
+49
+00:03:39,440 --> 00:03:44,840
+recipes component, you now name the recipes module recipes module.
+
+50
+00:03:44,990 --> 00:03:50,620
+This class now needs a decorator and you can probably guess which decorator that is,
+
+51
+00:03:50,900 --> 00:03:58,570
+it is the NgModule decorator, NgModule is imported from @angular/core.
+
+52
+00:03:58,640 --> 00:04:04,490
+Now the NgModule decorator takes an object which you pass in to configure that module and there,
+
+53
+00:04:04,610 --> 00:04:09,860
+you now can add basically whatever you also added to the app module.
+
+54
+00:04:09,860 --> 00:04:16,940
+So since we're talking about the recipes module here, we for example will add declarations and add all
+
+55
+00:04:17,000 --> 00:04:21,740
+recipes related components to this recipes module.
+
+56
+00:04:21,740 --> 00:04:26,450
+So if we have a look at the app module, we've got the recipes component, the recipe list in detail and
+
+57
+00:04:26,450 --> 00:04:33,230
+recipe item component and also the recipes start and edit components, all these components,
+
+58
+00:04:33,230 --> 00:04:41,230
+I'll remove them here from the app module and move them into declarations of my recipes module.
+
+59
+00:04:41,230 --> 00:04:44,570
+So let's grab these here as well like this and
+
+60
+00:04:47,380 --> 00:04:48,710
+that should be it,
+
+61
+00:04:48,870 --> 00:04:55,360
+let's remove the line breaks here in the app module and of course in the app module, we can now also
+
+62
+00:04:55,360 --> 00:05:02,290
+remove the unused import statements here of all these recipes related components because we don't need
+
+63
+00:05:02,290 --> 00:05:08,480
+to import the types into this app module file anymore if we're not using them here and now therefore
+
+64
+00:05:08,480 --> 00:05:11,110
+in the recipes module, we need to add the imports
+
+65
+00:05:11,230 --> 00:05:16,030
+and here, the IDE you might be able to help you if you get something like a light bulb here, you can
+
+66
+00:05:16,030 --> 00:05:21,580
+simply let the IDE import this, otherwise simply add these import statements with the correct paths
+
+67
+00:05:21,940 --> 00:05:23,590
+on your own of course.
+
+68
+00:05:23,620 --> 00:05:26,920
+So I'll quickly add them all with the help of my IDE here,
+
+69
+00:05:30,190 --> 00:05:33,610
+you can also use all missing imports
+
+70
+00:05:33,970 --> 00:05:42,010
+and now we made a first important step towards our recipes module but actually not one that will suffice,
+
+71
+00:05:42,010 --> 00:05:53,280
+not at all. How can we now use our recipes module in the app module? Now as a first step, since I declare
+
+72
+00:05:53,310 --> 00:05:55,380
+all the recipe components here,
+
+73
+00:05:55,500 --> 00:06:04,110
+we could simply add the exports array to the recipes module and export all components which we declared
+
+74
+00:06:04,110 --> 00:06:10,260
+here, so that we can not just use them in the recipes module but in any module that imports the recipe
+
+75
+00:06:10,260 --> 00:06:13,180
+module and that could be the app module.
+
+76
+00:06:13,200 --> 00:06:17,220
+So here, now I cleaned up the declarations to kind of bring them back,
+
+77
+00:06:17,220 --> 00:06:19,350
+they are now declared in a recipes module,
+
+78
+00:06:19,410 --> 00:06:22,750
+we now have to import the recipes module here.
+
+79
+00:06:22,830 --> 00:06:29,400
+So simply add recipes module to the imports of the app module and of course make sure you also add that
+
+80
+00:06:29,430 --> 00:06:34,530
+import statement here at the top, which is not to be mistaken with the imports down there by the way.
+
+81
+00:06:34,800 --> 00:06:42,030
+This imports array in NgModule is there for Angular to add features of other NgModules into
+
+82
+00:06:42,030 --> 00:06:49,630
+this NgModule. This import statement up here is a TypeScript feature to tell TypeScript where to
+
+83
+00:06:49,630 --> 00:06:52,540
+find this type, that it sits in another file,
+
+84
+00:06:52,600 --> 00:06:55,520
+it has nothing to do with Angular.
+
+85
+00:06:55,600 --> 00:07:03,360
+Now if you save all of that and let the application compile and I try to go back to the app, I actually
+
+86
+00:07:03,360 --> 00:07:04,290
+get an error,
+
+87
+00:07:04,380 --> 00:07:12,450
+router outlet is not a known element and this error is stemming from the recipes module recipes component
+
+88
+00:07:13,350 --> 00:07:19,800
+and the problem we have here is that in the recipes component, I am indeed using router outlet.
+
+89
+00:07:19,800 --> 00:07:26,160
+The problem is router outlet is a directive provided by Angular and it's not magically available in the
+
+90
+00:07:26,160 --> 00:07:27,690
+entire application,
+
+91
+00:07:27,690 --> 00:07:32,580
+it is made available by the router module which I import here.
+
+92
+00:07:32,580 --> 00:07:35,050
+This is not just there to configure our routes,
+
+93
+00:07:35,130 --> 00:07:41,280
+it also adds routing features, like the router link directive which we use to add a link or the router
+
+94
+00:07:41,310 --> 00:07:42,780
+outlet directive.
+
+95
+00:07:42,780 --> 00:07:48,360
+Now I export it here in the app routing module and since I import that in the app module, in the app
+
+96
+00:07:48,360 --> 00:07:52,530
+module, this router module and its features are available.
+
+97
+00:07:52,770 --> 00:07:58,860
+Now you might think that then it should also be available in the recipes module because we kind of add
+
+98
+00:07:58,860 --> 00:08:02,280
+recipes through this routing module here, right
+
+99
+00:08:02,280 --> 00:08:08,230
+we go to the recipes route through the help of the app routing module but this is not how it works.
+
+100
+00:08:08,310 --> 00:08:14,610
+Instead, as I mentioned and this is really just something you have to memorize, everything in a module
+
+101
+00:08:14,670 --> 00:08:20,600
+works standalone. You can export something to then be able to import it into another module
+
+102
+00:08:20,730 --> 00:08:26,760
+as I'm doing it here with all these components but that alone does not mean that in this module, in the
+
+103
+00:08:26,760 --> 00:08:32,220
+recipes module here, you can use features that are made available in the app module. You can only export
+
+104
+00:08:32,220 --> 00:08:34,050
+something which then is usable anywhere else,
+
+105
+00:08:34,110 --> 00:08:40,560
+you don't automatically get access to our content. So the recipe module and the components in there got
+
+106
+00:08:40,680 --> 00:08:46,600
+absolutely no access to all the things we import into our app module,
+
+107
+00:08:46,680 --> 00:08:53,430
+so things like the routing module but also forms, that all is not available in the recipes module
+
+108
+00:08:53,580 --> 00:08:55,800
+and therefore we get this error.
+
+109
+00:08:55,800 --> 00:08:57,500
+Now how can we fix that?
+

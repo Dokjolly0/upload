@@ -1,0 +1,108 @@
+1
+00:00:02,300 --> 00:00:05,230
+Inside of an interceptor, you can not only log data,
+
+2
+00:00:05,240 --> 00:00:09,330
+you can also modify the request object.
+
+3
+00:00:09,440 --> 00:00:16,910
+However, the request object itself is immutable, so you can't set request URL to a new URL, that
+
+4
+00:00:16,910 --> 00:00:18,920
+will not work and you also get an error here.
+
+5
+00:00:19,760 --> 00:00:24,890
+Instead if you want to modify the request, you have to create a new one, like modified request sounds
+
+6
+00:00:24,890 --> 00:00:30,750
+like a fitting name for the constant, where you call request clone and inside of clone, you pass in
+
+7
+00:00:30,760 --> 00:00:37,070
+a Javascript object where you now can overwrite all the core things. You could set a new URL here
+
+8
+00:00:39,220 --> 00:00:45,400
+or you could add new headers, if you want to keep the old headers by the way, then you simply do that
+
+9
+00:00:45,700 --> 00:00:52,810
+by using the request headers and calling append or you add new params or whatever you want.
+
+10
+00:00:52,840 --> 00:00:58,720
+Now, I wanted to add a header here, so indeed I will access my headers and I will access the old headers
+
+11
+00:00:58,840 --> 00:01:05,110
+on the original request object and then simply call append and as you learned, this will return a new headers
+
+12
+00:01:05,110 --> 00:01:11,230
+object where I then have all the old headers but also the new headers and these will then be set here as
+
+13
+00:01:11,230 --> 00:01:17,450
+headers for this modified request. And here, I'll have my auth key
+
+14
+00:01:17,450 --> 00:01:23,640
+let's say, with xyz as a value, of course this just some made up header which doesn't really do anything.
+
+15
+00:01:23,870 --> 00:01:31,760
+And now the important thing here is, I do not forward the original request but my modified request and
+
+16
+00:01:31,760 --> 00:01:35,350
+that of course is a typical use case for an interceptor,
+
+17
+00:01:35,390 --> 00:01:41,690
+you change the request and then you forward that modified request and if you only wanted to append the
+
+18
+00:01:41,690 --> 00:01:48,110
+auth header for certain URLs, then you could use an if check with the request URL key for
+
+19
+00:01:48,110 --> 00:01:55,850
+example. Here I will indeed log request URL, so that we really see for which request the interceptor
+
+20
+00:01:55,850 --> 00:01:57,080
+ran
+
+21
+00:01:57,080 --> 00:02:01,940
+and now let's go back and let's fetch some posts for example,
+
+22
+00:02:01,940 --> 00:02:09,640
+you see the URL is being logged. If we have a look at the network, we fetch again and we inspect that request,
+
+23
+00:02:10,030 --> 00:02:12,830
+you'll see that there on the request headers, auth
+
+24
+00:02:12,840 --> 00:02:19,560
+xyz was indeed added and we should see the same if I now add a post. There
+
+25
+00:02:19,690 --> 00:02:22,770
+if we have a look at the request headers, we also see this.
+
+26
+00:02:22,810 --> 00:02:29,470
+So our interceptor is adding that for all outgoing requests and therefore, interceptors are a super important
+
+27
+00:02:29,470 --> 00:02:30,490
+and useful feature.
+

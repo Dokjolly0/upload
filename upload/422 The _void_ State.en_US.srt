@@ -1,0 +1,308 @@
+1
+00:00:01,530 --> 00:00:02,490
+So that's all nice.
+
+2
+00:00:02,490 --> 00:00:04,870
+We're able to animate these deaths year.
+
+3
+00:00:05,070 --> 00:00:10,620
+But what if we actually do want to animate the addition of an item to the list.
+
+4
+00:00:10,710 --> 00:00:16,160
+Or if I click on it remove movement of such an item how can we animate this.
+
+5
+00:00:16,170 --> 00:00:20,360
+We'll have a look at this now thus far we only animated the deaf.
+
+6
+00:00:20,370 --> 00:00:27,210
+Well now it's time to add a new trigger to our application so I'll copy the first trigger in this overall
+
+7
+00:00:27,210 --> 00:00:28,790
+animations array here.
+
+8
+00:00:28,890 --> 00:00:34,380
+This one here and added Make sure you pick the right level where you add it should be in the same level
+
+9
+00:00:34,380 --> 00:00:40,170
+as the ava triggers of course now I'm going to name this list one and there.
+
+10
+00:00:40,200 --> 00:00:48,300
+I only want to have one state actually d in state so that the element is on the dorm is added to the
+
+11
+00:00:48,300 --> 00:00:50,420
+state it's in the dorm.
+
+12
+00:00:50,550 --> 00:00:55,800
+The our state would be that we don't have the element because we just remove it or we just edit it.
+
+13
+00:00:55,800 --> 00:01:02,500
+So it kind of should appear and that is stayed handled by Anglo to us you will learn.
+
+14
+00:01:02,510 --> 00:01:07,250
+So the instate is how should it look like once it finally is there.
+
+15
+00:01:07,560 --> 00:01:13,320
+Well I want to have translate X of zero to be at the position to actually place it here in my what my
+
+16
+00:01:13,320 --> 00:01:23,160
+age team on the code and I wanted to have let's say an opacity of one so that it is fully visible not
+
+17
+00:01:23,160 --> 00:01:24,450
+transparent.
+
+18
+00:01:24,570 --> 00:01:29,340
+That is the one state I have here now I need transitions.
+
+19
+00:01:29,490 --> 00:01:33,610
+The first transition which is interesting for me is when it comes in.
+
+20
+00:01:33,630 --> 00:01:39,510
+So when I added to the dorm here the end state is in but what is the beginning state.
+
+21
+00:01:39,900 --> 00:01:46,290
+Well we could use the wildcard character but there is a specific state for this case that the element
+
+22
+00:01:46,290 --> 00:01:48,080
+hasn't been added yet.
+
+23
+00:01:48,270 --> 00:01:52,890
+That's why it so why does a reserved state name you can't use it.
+
+24
+00:01:52,890 --> 00:01:56,000
+You shouldn't override it when it does provide the buying won't you.
+
+25
+00:01:56,000 --> 00:02:03,510
+For cases where you do have an element in an end state which wasn't added to the dorm at the beginning
+
+26
+00:02:03,720 --> 00:02:07,170
+or of course you could also add Woit as the transition to state.
+
+27
+00:02:07,200 --> 00:02:15,540
+So if you remove an element for example with this it should slowly appear and we can see the action
+
+28
+00:02:15,540 --> 00:02:23,580
+by going to our app component to our HMO file and there on the list on the list item specifically we
+
+29
+00:02:23,580 --> 00:02:29,580
+want to add a trigger as before in square brackets and then at and then place to one and we don't need
+
+30
+00:02:29,580 --> 00:02:37,560
+to bind it to anything because it will actually set up word to anything because I don't care what the
+
+31
+00:02:37,560 --> 00:02:39,970
+specific state is in.
+
+32
+00:02:39,990 --> 00:02:42,720
+It's just a dummy or you could use any name.
+
+33
+00:02:42,720 --> 00:02:48,010
+I only have in here we could have some logic in the code which changes the state of our list items.
+
+34
+00:02:48,090 --> 00:02:54,560
+But here for the entering animation when we add a new item I don't care what the initial state is and
+
+35
+00:02:54,570 --> 00:02:56,660
+actually I never said it in this application.
+
+36
+00:02:56,670 --> 00:02:58,140
+I never apply a state of.
+
+37
+00:02:58,140 --> 00:03:02,790
+In two days I don't have a property managing my list element States.
+
+38
+00:03:02,790 --> 00:03:06,300
+I do have it forward the above examples but here I don't care.
+
+39
+00:03:06,360 --> 00:03:11,820
+I went to any made from not existent to any state.
+
+40
+00:03:11,820 --> 00:03:20,320
+This is the animation I want to execute and if I saved this and we see this in action let's add tasks
+
+41
+00:03:20,400 --> 00:03:25,770
+here and well that is certainly not working as intended.
+
+42
+00:03:25,770 --> 00:03:27,240
+So what's going wrong here.
+
+43
+00:03:27,510 --> 00:03:30,200
+Well the issues clearly we have no starting state.
+
+44
+00:03:30,390 --> 00:03:37,120
+Now it doesn't work as such that we now set up Lloyd like this before we defined are states like this
+
+45
+00:03:37,120 --> 00:03:37,140
+.
+
+46
+00:03:37,140 --> 00:03:41,490
+But since what is kind of a bulge in state it now works differently.
+
+47
+00:03:41,490 --> 00:03:46,110
+Instead here in our transition we now want to change this.
+
+48
+00:03:46,110 --> 00:03:50,080
+We will use an array here where any mate is placed in.
+
+49
+00:03:50,130 --> 00:03:57,750
+But before executing animate I will have a nap restyle method where I set the initial style and this
+
+50
+00:03:57,750 --> 00:04:01,310
+style will now be applied by English to you right at the beginning.
+
+51
+00:04:01,350 --> 00:04:07,680
+So when we add on your list item it is appended to the dawn and it will instantly get this style by
+
+52
+00:04:07,690 --> 00:04:13,960
+Angola 2 and then transition over Dyster region to its final style here.
+
+53
+00:04:14,340 --> 00:04:21,080
+So to a style a one a set up here therefore is a pop opacity of 0 and a 1 to transform such that it
+
+54
+00:04:21,090 --> 00:04:22,130
+flies in.
+
+55
+00:04:22,200 --> 00:04:25,690
+So translate X should be minus 100 pixels.
+
+56
+00:04:25,770 --> 00:04:29,790
+And now if I save this now we should see a nice animation.
+
+57
+00:04:29,850 --> 00:04:35,680
+When they actually add new items to the list year you saw it up on the initial loading already.
+
+58
+00:04:35,880 --> 00:04:41,880
+And now each new item is smooth fully animated in like that automatically by Englad to.
+
+59
+00:04:41,940 --> 00:04:43,930
+It doesn't work for deleting though.
+
+60
+00:04:43,980 --> 00:04:45,490
+So let's handle this next.
+
+61
+00:04:45,690 --> 00:04:53,220
+Well let's say for deleting we want to have it slide to the right so to do this I'll add a new transmission
+
+62
+00:04:53,220 --> 00:05:04,890
+here to my trigger and here I want to navigate or animate from any state to any state would be possible
+
+63
+00:05:04,890 --> 00:05:07,360
+to you but too wide specifically.
+
+64
+00:05:07,560 --> 00:05:15,410
+And here I want to start with the state it already has so no need to define a starting state.
+
+65
+00:05:15,420 --> 00:05:19,240
+Instead my animate function should now have a final state.
+
+66
+00:05:19,350 --> 00:05:24,050
+Because here I don't have the problem of it snapping to some state at the end.
+
+67
+00:05:24,060 --> 00:05:26,680
+This should be the state that takes a deep end.
+
+68
+00:05:26,700 --> 00:05:31,250
+So here was a second argument as you learned above here.
+
+69
+00:05:31,270 --> 00:05:34,110
+I set up the state I want to have it where I want to have it.
+
+70
+00:05:34,210 --> 00:05:35,220
+And the end.
+
+71
+00:05:35,510 --> 00:05:39,240
+And there are two trends for him to translate x.
+
+72
+00:05:39,390 --> 00:05:47,130
+The last one hundred pixels to move it to the right and to all faded out by setting the opacity to zero
+
+73
+00:05:47,130 --> 00:05:47,940
+again.
+
+74
+00:05:48,330 --> 00:05:50,740
+Well and with that in place the timing.
+
+75
+00:05:50,750 --> 00:05:57,930
+Well let's let's have it at 300 to Wantage reloads and I click on the element you see it smoothly transition
+
+76
+00:05:57,960 --> 00:06:04,410
+out and being removed and this is how you can animate lists and the same would of course also work for
+
+77
+00:06:04,410 --> 00:06:09,020
+energy IV where you also have the behavior of something new being added to the DOM
+

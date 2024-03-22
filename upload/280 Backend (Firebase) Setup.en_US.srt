@@ -1,0 +1,92 @@
+1
+00:00:02,130 --> 00:00:04,720
+For this, we of course need a back-end
+
+2
+00:00:04,780 --> 00:00:12,040
+and just as in the HTTP section, I will use Firebase here because I don't want to write any server-side
+
+3
+00:00:12,040 --> 00:00:17,170
+code because that's simply not the course for that, Angular doesn't run on the server after all,
+
+4
+00:00:17,170 --> 00:00:23,140
+you could of course have your own back-end written in PHP or Node or whatever you want but this again
+
+5
+00:00:23,260 --> 00:00:24,810
+is not the focus of the course,
+
+6
+00:00:24,850 --> 00:00:31,510
+so we will use Firebase here since it's easy to set up, free to use and has everything we need here.
+
+7
+00:00:31,510 --> 00:00:38,880
+So on firebase.com, visit the Firebase console just as we did it in the last course section and there,
+
+8
+00:00:38,920 --> 00:00:42,690
+create a new project which you can give any name you want.
+
+9
+00:00:42,730 --> 00:00:50,590
+Now I will name it ng-course-recipe-book but again, you are free to pick any name you want here.
+
+10
+00:00:51,010 --> 00:00:59,620
+So ng-course-recipe-book accepts both checkmarks or both terms here and then create that project
+
+11
+00:00:59,620 --> 00:01:05,340
+and definitely check out that last course section where we used the HTTP service
+
+12
+00:01:05,350 --> 00:01:12,030
+Angular offers for the first time so that this is not brand new to you. With this created, let's open our
+
+13
+00:01:12,030 --> 00:01:18,670
+project and just as before, we'll use a database and we'll use that realtime database. So not Firestore
+
+14
+00:01:18,720 --> 00:01:23,700
+because that's a bit more clunky to use but instead, we'll use the realtime database down here,
+
+15
+00:01:23,700 --> 00:01:24,870
+create a database
+
+16
+00:01:25,050 --> 00:01:31,770
+and for now, start in test mode so that we have unlimited read and write access without being authenticated,
+
+17
+00:01:32,010 --> 00:01:36,360
+though we will add authentication soon in a separate module.
+
+18
+00:01:36,360 --> 00:01:42,270
+So for now, start in test mode, enable this and create your database in that Firebase project
+
+19
+00:01:42,480 --> 00:01:49,380
+and now as you learned in the last section, this will be the URL you use to save data or at least
+
+20
+00:01:49,490 --> 00:01:51,960
+a part of that URL we'll use.
+
+21
+00:01:51,960 --> 00:01:53,280
+But before we'll use that,
+
+22
+00:01:53,280 --> 00:01:58,920
+let's go back to our code and let's make sure that here, we have some way of interacting with the back-end
+
+23
+00:01:58,920 --> 00:02:01,500
+and of using the Angular HTTP service.
+

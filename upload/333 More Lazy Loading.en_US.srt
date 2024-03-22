@@ -1,0 +1,136 @@
+1
+00:00:02,570 --> 00:00:07,970
+Before we dive into optimizing lazy loading, let's add more lazy loading though. Let's make sure we
+
+2
+00:00:08,060 --> 00:00:14,810
+also lazy load the shopping list and the auth module. Of course feel free to pause the video at this point
+
+3
+00:00:14,810 --> 00:00:15,950
+and do it on your own,
+
+4
+00:00:15,970 --> 00:00:21,960
+thereafter we'll do that together. Were you successful? In the end,
+
+5
+00:00:22,000 --> 00:00:24,820
+we just replicate what we did for recipes.
+
+6
+00:00:24,820 --> 00:00:33,640
+We add a new path, shopping list and there we add load children and we point at the shopping list
+
+7
+00:00:33,640 --> 00:00:41,710
+folder and there at the shopping list module, without .ts and thereafter with shopping list module
+
+8
+00:00:41,710 --> 00:00:44,610
+or whatever you name the class in that file.
+
+9
+00:00:44,710 --> 00:00:50,980
+Now important, if we have a look at that shopping list module here, this one,
+
+10
+00:00:51,040 --> 00:00:55,810
+again make sure you are using the right name here in your route config and of course make sure that
+
+11
+00:00:55,810 --> 00:01:02,380
+here you have a route setup where now, you remove the path name and you have an empty path because the
+
+12
+00:01:02,380 --> 00:01:09,470
+path name now went in to this global route config where we set up lazy loading.
+
+13
+00:01:09,530 --> 00:01:15,890
+Now let's replicate the same for auth, therefore here the path should be auth and then we again
+
+14
+00:01:15,890 --> 00:01:23,150
+use load children, we point at /auth, then at the auth module without .ts and then here, at auth
+
+15
+00:01:23,300 --> 00:01:27,260
+module and again, in the auth module file,
+
+16
+00:01:27,260 --> 00:01:29,920
+make sure the path is now just an empty path.
+
+17
+00:01:31,890 --> 00:01:33,450
+With all of that in place,
+
+18
+00:01:33,480 --> 00:01:40,020
+again restart ng serve to be certain that these changes are picked up, sometimes they can get lost
+
+19
+00:01:40,020 --> 00:01:46,050
+if you don't restart the build process and therefore now with that all reset, go back into the app
+
+20
+00:01:46,050 --> 00:01:47,700
+module and just as before,
+
+21
+00:01:47,700 --> 00:01:54,120
+make sure you remove the auth module and the shopping list module here so that you're not eagerly loading
+
+22
+00:01:54,120 --> 00:02:02,810
+that, also remove the imports, save again to trigger a rebuild and now let's wait for that to reload
+
+23
+00:02:02,820 --> 00:02:04,740
+here in the application,
+
+24
+00:02:04,740 --> 00:02:05,870
+this looks good.
+
+25
+00:02:06,090 --> 00:02:13,190
+Now you see that here, the auth auth module was loaded for me which is only 10kb,
+
+26
+00:02:13,500 --> 00:02:18,000
+the main module shrank to 54kb which is great,
+
+27
+00:02:18,000 --> 00:02:24,900
+even the vendor module shrank a bit because some parts we previously imported, there are now only imported
+
+28
+00:02:24,900 --> 00:02:31,200
+by modules, so some parts of the Angular framework like the forms module are now only imported when that
+
+29
+00:02:31,200 --> 00:02:39,880
+component that uses it is imported and therefore now when we do login here, we go to recipes,
+
+30
+00:02:39,900 --> 00:02:43,050
+now the recipes module is coming in.
+
+31
+00:02:43,050 --> 00:02:48,690
+If you click on shopping list, now the shopping list module is imported here, you see these imports popping
+
+32
+00:02:48,690 --> 00:02:51,900
+up on the right and that is lazy loading in action
+
+33
+00:02:51,990 --> 00:02:57,330
+and even though the effect is not that large in this app, we can see it and of course it becomes bigger
+
+34
+00:02:57,330 --> 00:02:59,880
+and bigger the bigger your application is.
+

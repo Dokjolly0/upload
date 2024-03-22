@@ -1,0 +1,248 @@
+1
+00:00:02,440 --> 00:00:09,550
+So were you successful using our recipes array here and replicating this part in the code as often as
+
+2
+00:00:09,550 --> 00:00:13,840
+needed and fill it with the data for the recipe?
+
+3
+00:00:13,840 --> 00:00:17,250
+Now clearly, we need ngFor for this.
+
+4
+00:00:17,350 --> 00:00:23,980
+So let's add ngFor, this is the directive which allows us to repeat code in our template
+
+5
+00:00:24,490 --> 00:00:27,020
+and here, I want to loop through all the recipes.
+
+6
+00:00:27,310 --> 00:00:31,390
+So I will actually create a local variable named recipe,
+
+7
+00:00:31,390 --> 00:00:33,330
+this name is totally up to you,
+
+8
+00:00:33,460 --> 00:00:40,400
+that will simply store the recipe of each iteration in our loop and I will loop through all the recipes,
+
+9
+00:00:40,480 --> 00:00:46,020
+so through this recipes property we created here in the TypeScript file.
+
+10
+00:00:46,070 --> 00:00:53,960
+Now with that, I'll also bring this into new lines here to make it a bit easier to read. With that, everywhere
+
+11
+00:00:54,110 --> 00:00:56,360
+inside this ngFor loop,
+
+12
+00:00:56,360 --> 00:01:00,320
+so everywhere here, we can use this recipe now.
+
+13
+00:01:00,560 --> 00:01:02,700
+So let's use it to output the name,
+
+14
+00:01:02,720 --> 00:01:05,140
+we can use string interpolation for that.
+
+15
+00:01:05,240 --> 00:01:09,910
+String interpolation as we learned allows us to output some text anywhere in our template.
+
+16
+00:01:10,280 --> 00:01:16,850
+Now we got the single recipe but that's going to be an object looking like our model because remember,
+
+17
+00:01:17,180 --> 00:01:21,070
+the recipes array simply holds an array of our recipes,
+
+18
+00:01:21,170 --> 00:01:23,620
+so a single item simply looks like this,
+
+19
+00:01:23,630 --> 00:01:30,950
+it has a name, a description and the imagePath. Well with this information, we can of course access the name
+
+20
+00:01:30,950 --> 00:01:32,810
+here, like this
+
+21
+00:01:32,810 --> 00:01:37,380
+and for the description, we can replace this with recipe description.
+
+22
+00:01:37,400 --> 00:01:39,390
+So we're going to use the property names
+
+23
+00:01:39,500 --> 00:01:44,300
+we set up here in the model and important, you have to use the ones here at the top of course because
+
+24
+00:01:44,300 --> 00:01:47,990
+down there, these are only the constructor argument names,
+
+25
+00:01:47,990 --> 00:01:50,370
+they are not available outside of this model.
+
+26
+00:01:51,620 --> 00:01:54,050
+So that's the name and description,
+
+27
+00:01:54,050 --> 00:02:02,390
+now about that image. First of all for that alt-text, here that's a normal HTML attribute of course,
+
+28
+00:02:02,510 --> 00:02:07,510
+I will use string interpolation to output some text here, the recipe name maybe
+
+29
+00:02:07,910 --> 00:02:13,910
+but regarding the image source itself and I'm just splitting this over multiple lines to make it a bit
+
+30
+00:02:13,940 --> 00:02:19,820
+easier to read, regarding that source, we can follow two approaches.
+
+31
+00:02:19,820 --> 00:02:26,580
+You can either use string interpolation here to output recipe imagePath here
+
+32
+00:02:26,720 --> 00:02:28,200
+and that should work fine
+
+33
+00:02:28,550 --> 00:02:37,430
+or as an alternative, you cannot use the attribute plus string interpolation but you could bind to the
+
+34
+00:02:37,430 --> 00:02:39,740
+source property itself
+
+35
+00:02:39,980 --> 00:02:42,720
+and now here, you don't add curly braces,
+
+36
+00:02:42,810 --> 00:02:45,990
+instead just recipe imagePath
+
+37
+00:02:46,010 --> 00:02:49,910
+because now we're using property binding and not string interpolation anymore.
+
+38
+00:02:50,150 --> 00:02:58,070
+So here is a great example of where you may use both, string interpolation with the normal HTML attribute
+
+39
+00:02:58,520 --> 00:03:04,760
+or not using the attribute but directly binding to the source property of the image and then just putting
+
+40
+00:03:04,760 --> 00:03:12,130
+in a valid expression, returning what this property expects, in this case a string between the quotation marks.
+
+41
+00:03:12,140 --> 00:03:17,360
+Now I will go with the property binding approach here and since I can't comment this out in here without
+
+42
+00:03:17,360 --> 00:03:19,800
+breaking the element, I'm going to remove it
+
+43
+00:03:19,910 --> 00:03:23,510
+but I want you to keep in mind that both approaches would work.
+
+44
+00:03:24,110 --> 00:03:31,340
+With that, let's save and see if we see something and actually that looks pretty good but looks like
+
+45
+00:03:31,340 --> 00:03:36,760
+the image I chose does not support deep linking, so that's nice,
+
+46
+00:03:36,800 --> 00:03:38,200
+probably good for them,
+
+47
+00:03:38,360 --> 00:03:40,800
+let me quickly pick a different image then.
+
+48
+00:03:41,150 --> 00:03:45,190
+So I ended up with picking this image here then,
+
+49
+00:03:45,370 --> 00:03:46,780
+so you can see it here
+
+50
+00:03:47,110 --> 00:03:48,400
+and now we get the list working.
+
+51
+00:03:48,400 --> 00:03:49,750
+This is the style I want to have,
+
+52
+00:03:49,750 --> 00:03:52,120
+of course it doesn't do anything if I click it
+
+53
+00:03:52,240 --> 00:03:55,200
+but that's something we can add in the future. For now,
+
+54
+00:03:55,240 --> 00:03:58,550
+the recipe-list component is taking shape,
+
+55
+00:03:58,930 --> 00:04:05,480
+I want to add one more thing though, I don't want to have this button sit directly on top of this list.
+
+56
+00:04:05,530 --> 00:04:12,160
+So what I'll quickly do in my recipe-list component here between the button and the list, I can simply add
+
+57
+00:04:12,160 --> 00:04:18,780
+a horizontal line to have a little bit of a spacing in-between and this nice separation.
+
+58
+00:04:19,060 --> 00:04:24,550
+So that's the list and you should see that if you add more items to that list, that it automatically
+
+59
+00:04:24,550 --> 00:04:25,210
+grows,
+
+60
+00:04:25,240 --> 00:04:30,520
+so if I simply duplicate this because I'm lazy, you should see the same recipe twice here.
+
+61
+00:04:30,560 --> 00:04:32,520
+So that's working great,
+
+62
+00:04:32,530 --> 00:04:35,750
+now let's work on the details section next.
+

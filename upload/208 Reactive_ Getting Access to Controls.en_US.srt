@@ -1,0 +1,184 @@
+1
+00:00:02,770 --> 00:00:06,000
+So in the last lectures, we added validation,
+
+2
+00:00:06,100 --> 00:00:12,610
+now as in a template driven approach, we can now use this form status to display messages
+
+3
+00:00:12,850 --> 00:00:18,220
+but it works a bit differently because we access the controls differently.
+
+4
+00:00:18,220 --> 00:00:22,680
+Let's say we want to display a message below the input here for the username
+
+5
+00:00:22,690 --> 00:00:23,840
+if that is incorrect.
+
+6
+00:00:23,980 --> 00:00:29,680
+So I'll add a span with a class of help-block again, the Bootstrap class and I'll say please enter a
+
+7
+00:00:29,680 --> 00:00:34,330
+valid username, like this.
+
+8
+00:00:34,330 --> 00:00:40,060
+Now in the template driven approach, we would place username on this and I say NgModel to get
+
+9
+00:00:40,060 --> 00:00:44,860
+the reference. This doesn't work here because again, this is not set up via NgModel,
+
+10
+00:00:44,860 --> 00:00:49,990
+this is not registered via NgModel but it's still very easy.
+
+11
+00:00:49,990 --> 00:00:55,800
+We can simply add ngIf of course because we want to determine whether to display this or not
+
+12
+00:00:56,200 --> 00:01:01,530
+and then we can get access to this by accessing our overall form
+
+13
+00:01:01,630 --> 00:01:10,130
+and here, we have a get method. The get method allows us to get access to our controls easily, here
+
+14
+00:01:10,330 --> 00:01:15,040
+you can either specify the control name or I will come back to this later,
+
+15
+00:01:15,040 --> 00:01:21,730
+the path to the control. Now for now the path is the name because we only have one level of nesting
+
+16
+00:01:21,730 --> 00:01:26,140
+in our form object and here, the name is username.
+
+17
+00:01:26,140 --> 00:01:32,110
+So this gives us access to this username control and now valid holds whether this control is valid
+
+18
+00:01:32,170 --> 00:01:33,070
+or not.
+
+19
+00:01:33,070 --> 00:01:35,890
+So if it's not valid, I want to output this
+
+20
+00:01:36,070 --> 00:01:42,790
+and of course again to give the user the chance to change it, I'll also check if signupForm
+
+21
+00:01:43,540 --> 00:01:47,950
+get username actually was touched.
+
+22
+00:01:48,310 --> 00:01:54,180
+So by adding this, we should see no messages displayed, if I click in there and click out of there, 
+
+23
+00:01:54,220 --> 00:01:58,190
+we see the error and if I enter something valid, it's gone again.
+
+24
+00:01:58,360 --> 00:02:05,490
+So this is how easy you can get access to a control in your form with this get helper method.
+
+25
+00:02:05,740 --> 00:02:10,200
+Now I will repeat this for the e-mail here,
+
+26
+00:02:10,360 --> 00:02:12,130
+so we load the input here,
+
+27
+00:02:12,160 --> 00:02:18,010
+I will simply exchange username for e-mail and I will do it for the overall form,
+
+28
+00:02:18,040 --> 00:02:24,880
+here I can simply remove this get access here and just execute valid untouched on the overall
+
+29
+00:02:24,880 --> 00:02:27,790
+form which of course also has these properties.
+
+30
+00:02:27,790 --> 00:02:35,590
+So please enter validator might be the right message here and up here for the e-mail, it should be please enter
+
+31
+00:02:35,590 --> 00:02:36,960
+a valid e-mail.
+
+32
+00:02:36,970 --> 00:02:42,310
+So with this in place, we should see nothing right now, if I click in here and out of there, we see the
+
+33
+00:02:42,310 --> 00:02:49,960
+message for the username as before and for the overall form which is still there because e-mail is invalid
+
+34
+00:02:50,140 --> 00:02:55,370
+but now if I enter something valid there, we don't see it, if I remove this, we see the message for the
+
+35
+00:02:55,480 --> 00:02:56,320
+field here
+
+36
+00:02:56,380 --> 00:02:58,360
+and for the overall form again.
+
+37
+00:02:58,360 --> 00:03:02,070
+So now we're using the forms date again
+
+38
+00:03:02,200 --> 00:03:08,710
+and of course keep in mind, these CSS classes ng-touched, ng-invalid are still added.
+
+39
+00:03:08,920 --> 00:03:18,430
+So you can still go to your CSS code and say an input with ng-invalid and ng-touched should still
+
+40
+00:03:18,430 --> 00:03:23,180
+receive a border which is red for example.
+
+41
+00:03:23,200 --> 00:03:24,750
+So that is still possible,
+
+42
+00:03:24,760 --> 00:03:27,720
+the classes are the same as in the template driven approach,
+
+43
+00:03:27,850 --> 00:03:29,600
+so now if I click in there and leave it,
+
+44
+00:03:29,680 --> 00:03:34,830
+you see it now has a red border which disappears as soon as the value becomes valid.
+
+45
+00:03:35,050 --> 00:03:41,100
+So this is how you can still use the form state, important takeaway, you access your elements differently
+
+46
+00:03:41,230 --> 00:03:45,080
+with this get helper method to conveniently get access to them.
+

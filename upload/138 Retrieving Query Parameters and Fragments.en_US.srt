@@ -1,0 +1,172 @@
+1
+00:00:02,980 --> 00:00:07,010
+In the last lecture, we learned how we can pass parameters and fragments,
+
+2
+00:00:07,020 --> 00:00:09,310
+now let's make sure we can also retrieve them.
+
+3
+00:00:09,780 --> 00:00:15,600
+So we're loading this edit-server.component in the end, so that is probably where we want to retrieve that
+
+4
+00:00:15,600 --> 00:00:20,650
+information. We can easily do this by going there, edit server component
+
+5
+00:00:20,650 --> 00:00:23,090
+and you see there already is a lot of code in there,
+
+6
+00:00:23,160 --> 00:00:29,670
+well everything what's happening here however is it's using our serversService to get the server with
+
+7
+00:00:29,670 --> 00:00:37,680
+the ID one and to be able to update it and definitely dive into this serversService file if you want
+
+8
+00:00:37,680 --> 00:00:39,410
+to learn more about what's happening here.
+
+9
+00:00:39,480 --> 00:00:45,210
+It's super simple though, we simply are able to get this array of servers, get a single server or update
+
+10
+00:00:45,210 --> 00:00:46,100
+a single server,
+
+11
+00:00:46,110 --> 00:00:47,240
+so overwrite it.
+
+12
+00:00:47,610 --> 00:00:49,280
+So that's not the interesting part,
+
+13
+00:00:49,440 --> 00:00:54,930
+the interesting part in the edit component here is how we can get access to our query parameter and
+
+14
+00:00:54,930 --> 00:00:58,710
+the fragment. We need our ActivatedRoute for this,
+
+15
+00:00:58,710 --> 00:01:06,880
+so let's inject it just like we did before, ActivatedRoute needs to be imported from the 
+
+16
+00:01:06,970 --> 00:01:08,010
+@angular/router package,
+
+17
+00:01:08,010 --> 00:01:15,300
+so make sure to add this import at the top and with this added and let's say ngOnInit, we can retrieve
+
+18
+00:01:15,300 --> 00:01:18,230
+our query parameters and the fragment
+
+19
+00:01:18,600 --> 00:01:25,920
+and just like before, there are two ways of retrieving it. For the first approach, we can simply access
+
+20
+00:01:25,920 --> 00:01:35,870
+the snapshot of our route and access query params here or our fragment, just like that.
+
+21
+00:01:35,890 --> 00:01:39,570
+Now this might bring the same problem as with the params,
+
+22
+00:01:39,640 --> 00:01:44,370
+this is only run or updated at the time this component is created.
+
+23
+00:01:44,500 --> 00:01:50,080
+So if there is a chance of changing your query params from the page you're currently on, you might
+
+24
+00:01:50,080 --> 00:01:56,860
+not want to use this approach because it won't be reactive, it won't display or allow you to react to
+
+25
+00:01:56,950 --> 00:02:01,690
+any changes which happen after this component has been loaded.
+
+26
+00:02:01,690 --> 00:02:04,290
+So for now, let's use the snapshot though
+
+27
+00:02:05,060 --> 00:02:10,170
+and let's watch the console, once this reloads, notice we already have a query parameter and a fragment
+
+28
+00:02:10,880 --> 00:02:12,710
+and we see both here.
+
+29
+00:02:12,860 --> 00:02:18,860
+This is our query parameter object where we have this key-value pair mapping again, allowEdit to one
+
+30
+00:02:19,040 --> 00:02:21,720
+and this is just a bit broken
+
+31
+00:02:21,730 --> 00:02:28,060
+but here you see if I make my console a bit broader, you see the loading hash fragment.
+
+32
+00:02:28,090 --> 00:02:30,450
+So this is how you can retrieve it.
+
+33
+00:02:30,520 --> 00:02:35,810
+The alternative of course is to use the route and just like we had params as observable,
+
+34
+00:02:35,920 --> 00:02:40,370
+we also have query params as an observable we can subscribe to, like this
+
+35
+00:02:40,720 --> 00:02:44,440
+and of course we also have fragment as an observable we can subscribe
+
+36
+00:02:44,440 --> 00:02:46,250
+to. So just like before,
+
+37
+00:02:46,280 --> 00:02:50,760
+this will now allow you to react to changed query parameters.
+
+38
+00:02:50,830 --> 00:02:53,340
+Now that's something we'll use later in this module,
+
+39
+00:02:53,380 --> 00:02:58,930
+for now nothing will happen here but it is important to keep in mind like for params, you do
+
+40
+00:02:58,930 --> 00:03:01,410
+have the same for query params and fragment.
+
+41
+00:03:01,480 --> 00:03:07,050
+You don't need to unsubscribe here, Angular will handle it for you just like it did for params but this
+
+42
+00:03:07,060 --> 00:03:12,970
+is how you can now get access to these extra features and how you can make sure that you don't miss
+
+43
+00:03:12,970 --> 00:03:13,750
+that data.
+

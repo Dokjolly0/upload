@@ -1,0 +1,248 @@
+1
+00:00:02,470 --> 00:00:06,490
+So in the last section, we created the HTML code for our form,
+
+2
+00:00:06,490 --> 00:00:12,310
+now let's initialize our form and we will use the reactive approach as I already said.
+
+3
+00:00:12,340 --> 00:00:18,280
+Now for this approach, it's important to understand if we are in edit mode or new mode and we do get
+
+4
+00:00:18,340 --> 00:00:21,480
+this information here. Why is that important?
+
+5
+00:00:21,790 --> 00:00:28,360
+Well of course because depending on this, we need to prepopulate the fields or not.
+
+6
+00:00:28,780 --> 00:00:36,430
+So I will create a new private method in the recipe-edit.component which I'll name initForm because
+
+7
+00:00:36,430 --> 00:00:39,980
+it is responsible for initializing our form.
+
+8
+00:00:40,210 --> 00:00:43,200
+The form itself shall be a property here,
+
+9
+00:00:43,270 --> 00:00:46,880
+so I will name it recipe form and it will be of type FormGroup
+
+10
+00:00:46,900 --> 00:00:55,210
+as you learned, to be imported from @angular/forms. Now we can build this recipe form here in
+
+11
+00:00:55,260 --> 00:00:56,770
+initForm.
+
+12
+00:00:56,920 --> 00:01:04,300
+Basically I will reach out to it and assign a value and this value will be a new FormGroup, to give
+
+13
+00:01:04,300 --> 00:01:12,720
+us the outer shell of our form so to say, the frame. FormGroup takes a Javascript object where we have
+
+14
+00:01:12,720 --> 00:01:16,570
+key-value pairs for the control we want to register.
+
+15
+00:01:16,590 --> 00:01:24,030
+So the first control I do want to register here is the name, the name of the recipe.
+
+16
+00:01:24,120 --> 00:01:28,760
+This will be a new FormControl, so we should import FormControl from 
+
+17
+00:01:28,790 --> 00:01:32,270
+@angular/forms too and here,
+
+18
+00:01:32,270 --> 00:01:38,420
+now as I said it's important to decide whether we are in edit mode or not because that will determine
+
+19
+00:01:38,630 --> 00:01:42,200
+whether we want to assign an initial value or not.
+
+20
+00:01:42,650 --> 00:01:49,220
+Well, we could simply create a variable at the top here which holds our recipe name and let's set it
+
+21
+00:01:49,220 --> 00:01:52,760
+to an empty string by default,
+
+22
+00:01:52,860 --> 00:01:59,870
+then let's add some logic which decides what the value should be if we are in edit mode,
+
+23
+00:02:00,020 --> 00:02:03,020
+so let's check if this edit mode.
+
+24
+00:02:03,320 --> 00:02:12,500
+If that's the case, then recipe name should probably be something else and it should probably be the
+
+25
+00:02:12,500 --> 00:02:15,490
+value of the recipe
+
+26
+00:02:15,500 --> 00:02:18,050
+we can load with the ID we got here,
+
+27
+00:02:18,110 --> 00:02:26,930
+we do have the ID stored up there. So we can simply inject our recipe service,
+
+28
+00:02:26,960 --> 00:02:28,240
+let's do this here,
+
+29
+00:02:28,280 --> 00:02:29,270
+recipe service,
+
+30
+00:02:29,270 --> 00:02:32,970
+make sure to add the import at the top here
+
+31
+00:02:34,130 --> 00:02:37,500
+and now we can fetch our recipe here,
+
+32
+00:02:37,520 --> 00:02:44,510
+the recipe we're currently editing. So I will fetch it right at the beginning, the recipe, reaching out
+
+33
+00:02:44,510 --> 00:02:53,230
+to the recipe service and then with get recipe and passing the ID of the recipe we know we are editing,
+
+34
+00:02:53,300 --> 00:02:59,690
+I can get it. Actually, I shouldn't do it here because I will try to get one if we don't have an ID because
+
+35
+00:02:59,720 --> 00:03:01,370
+we are not in edit mode,
+
+36
+00:03:01,460 --> 00:03:03,030
+I should do it in here.
+
+37
+00:03:04,210 --> 00:03:06,370
+So now we got a recipe,
+
+38
+00:03:06,490 --> 00:03:12,380
+now we can simply access the name of the recipe and assign this to our variable here.
+
+39
+00:03:12,520 --> 00:03:18,610
+Now the same will be true for the imageUrl, the recipe imagePath.
+
+40
+00:03:18,780 --> 00:03:24,640
+It's an empty string by default and the same is probably true for the description, so recipe description
+
+41
+00:03:24,640 --> 00:03:28,680
+is also an empty string by default and the ingredients,
+
+42
+00:03:28,690 --> 00:03:30,670
+I'll come back to these.
+
+43
+00:03:30,760 --> 00:03:36,360
+So for now, let's overwrite all these variables if we are in edit mode,
+
+44
+00:03:36,400 --> 00:03:44,740
+so recipe imagePath will be set to recipe imagePath and recipe description will be set to recipe
+
+45
+00:03:44,770 --> 00:03:46,250
+description here
+
+46
+00:03:46,750 --> 00:03:54,460
+and with that, we can simply assign recipe name here for the name as a default value because it will either
+
+47
+00:03:54,460 --> 00:04:01,360
+be an empty string that's the default or if we happen to be in edit mode, it will have the name of the
+
+48
+00:04:01,360 --> 00:04:05,080
+recipe we are editing as a value.
+
+49
+00:04:05,080 --> 00:04:07,380
+So with that, we got the name,
+
+50
+00:04:07,390 --> 00:04:10,770
+now let's also assign the imagePath, here I'll
+
+51
+00:04:10,840 --> 00:04:17,920
+also add a new FormControl and set this recipe imagePath. As a side note, we'll take care about validation
+
+52
+00:04:17,920 --> 00:04:26,350
+later and let's assign the description here, a new FormControl again and we should assign the recipe
+
+53
+00:04:26,350 --> 00:04:28,130
+description.
+
+54
+00:04:28,210 --> 00:04:31,660
+Now again, I'll take care about the ingredients later.
+
+55
+00:04:32,080 --> 00:04:35,030
+That is our base form created,
+
+56
+00:04:35,110 --> 00:04:37,870
+now when should we call initForm,
+
+57
+00:04:37,900 --> 00:04:46,890
+this method here? We should call it whenever our route params change because that indicates that we reloaded
+
+58
+00:04:46,960 --> 00:04:48,040
+the page,
+
+59
+00:04:48,040 --> 00:04:52,160
+so that is where we should call this initForm.
+
+60
+00:04:52,360 --> 00:04:56,490
+Now with that, we are creating the form and it probably will work,
+
+61
+00:04:56,620 --> 00:05:02,010
+however now we need to synchronize our form to our HTML code.
+
+62
+00:05:02,140 --> 00:05:04,070
+We'll do this in the next lecture.
+

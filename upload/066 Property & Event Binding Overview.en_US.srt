@@ -1,0 +1,88 @@
+1
+00:00:02,550 --> 00:00:08,550
+In the last lecture, we split up our app into multiple components which is great, that is why we use components
+
+2
+00:00:08,720 --> 00:00:12,910
+but one issue is that we need to pass data between these components.
+
+3
+00:00:13,200 --> 00:00:19,680
+Now in the basics section, we learned about property and event binding and there we used it to, for example
+
+4
+00:00:19,740 --> 00:00:23,550
+bind the disabled property of a HTML element.
+
+5
+00:00:23,790 --> 00:00:28,140
+So we kind of passed the data to that element,
+
+6
+00:00:28,140 --> 00:00:36,930
+we passed the information that it should be disabled, that this is set to true to this HTML element. The same
+
+7
+00:00:36,930 --> 00:00:40,900
+with event binding, when we click this HTML button,
+
+8
+00:00:41,070 --> 00:00:42,420
+something happened,
+
+9
+00:00:42,420 --> 00:00:46,110
+this button emitted an event to which we were able to listen,
+
+10
+00:00:46,170 --> 00:00:49,510
+so it sent us some data. The same for the input
+
+11
+00:00:49,510 --> 00:00:53,760
+where we even used that data with $event if you remember this.
+
+12
+00:00:53,790 --> 00:00:57,600
+There, we get data from the input element.
+
+13
+00:00:57,600 --> 00:01:00,990
+This is exactly the behavior we need now with our own components,
+
+14
+00:01:00,990 --> 00:01:08,130
+we need to be able to send data into a component or receive data, receive an event and Angular of course
+
+15
+00:01:08,370 --> 00:01:11,670
+gives us great tools to implement this flow.
+
+16
+00:01:11,730 --> 00:01:17,490
+We can use property in event binding not only on HTML elements and their native properties and events
+
+17
+00:01:17,490 --> 00:01:19,300
+as we did thus far,
+
+18
+00:01:19,410 --> 00:01:24,450
+we can also use it on directives and we also did this with ngClass and ngStyle,
+
+19
+00:01:24,480 --> 00:01:27,980
+there we use property binding but and that is important,
+
+20
+00:01:28,020 --> 00:01:34,920
+we can also use it on our own components and bind to our own custom properties and custom events.
+
+21
+00:01:35,010 --> 00:01:36,940
+We can emit our own events,
+
+22
+00:01:36,950 --> 00:01:41,760
+that is what I'll dive into in the next lecture starting with custom property binding.
+

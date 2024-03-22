@@ -1,0 +1,156 @@
+1
+00:00:02,220 --> 00:00:07,640
+So how should you prepare your Angular application for deployment?
+
+2
+00:00:07,650 --> 00:00:13,050
+There are a couple of steps through which you should walk and through which I'll walk you now
+
+3
+00:00:13,050 --> 00:00:17,660
+and the first is that you should use and check environment variables.
+
+4
+00:00:17,680 --> 00:00:23,220
+That's something we haven't done thus far and I will show you what I mean with that point and how you
+
+5
+00:00:23,220 --> 00:00:25,320
+can use environment variables,
+
+6
+00:00:25,320 --> 00:00:29,110
+what that is and why you might want to use that.
+
+7
+00:00:29,130 --> 00:00:30,540
+Well of course you should
+
+8
+00:00:30,570 --> 00:00:36,730
+also polish and test your code and that is what we did throughout this course already,
+
+9
+00:00:36,810 --> 00:00:45,000
+for example in the optimizations and modules course section, I already showed you some important polishments
+
+10
+00:00:45,060 --> 00:00:48,670
+or code optimizations like lazy loading.
+
+11
+00:00:48,720 --> 00:00:55,290
+So it's of course things like that which you should implement and obviously, you should test your application,
+
+12
+00:00:55,500 --> 00:01:01,980
+run it, try out different things, try working with it as your users would work with it.
+
+13
+00:01:02,310 --> 00:01:08,130
+Once you're done with all of that, you can build your application for production and that means that
+
+14
+00:01:08,130 --> 00:01:14,850
+you run a command that takes all your TypeScript code, compiles it to Javascript, then bundles all your
+
+15
+00:01:14,850 --> 00:01:18,890
+code together, translates it into Angular language
+
+16
+00:01:18,900 --> 00:01:25,020
+so to say, so that the Angular renderer can work with it in the browser and bundle everything up and
+
+17
+00:01:25,110 --> 00:01:32,190
+optimize it to be as small as possible because the application you're shipping has to be downloaded
+
+18
+00:01:32,190 --> 00:01:38,940
+by every user using your website and therefore, it should be as small as possible so that your users
+
+19
+00:01:38,940 --> 00:01:45,880
+have to download as little as possible and you do all that with the ng build --prod command.
+
+20
+00:01:46,020 --> 00:01:51,840
+You already saw that in the optimizations module because you also need to run this to implement ahead
+
+21
+00:01:51,870 --> 00:01:58,200
+of time compilation and that's just one of the many optimizations the Angular CLI does for you behind
+
+22
+00:01:58,200 --> 00:01:59,990
+the scenes.
+
+23
+00:02:00,030 --> 00:02:07,860
+Now once you're done with that, once you built your app, you can deploy these build artifacts, these generated
+
+24
+00:02:07,860 --> 00:02:10,890
+files to a static host
+
+25
+00:02:10,980 --> 00:02:19,830
+and now what is a static host? A static host is a web server that is capable of serving HTML, Javascript
+
+26
+00:02:19,920 --> 00:02:26,970
+and CSS but that's not capable of running any server-side language, like PHP or NodeJS.
+
+27
+00:02:26,970 --> 00:02:28,110
+Why?
+
+28
+00:02:28,110 --> 00:02:35,250
+Because you only need HTML, Javascript and CSS because an Angular app is made up of just that.
+
+29
+00:02:35,370 --> 00:02:37,440
+Of course you can have some back-end code,
+
+30
+00:02:37,440 --> 00:02:40,330
+for example we are using Firebase in this course.
+
+31
+00:02:40,380 --> 00:02:45,360
+This could be your own back-end which you wrote with your own language and you should definitely check out
+
+32
+00:02:45,360 --> 00:02:46,120
+my MEAN.
+
+33
+00:02:46,150 --> 00:02:51,950
+Course regarding that because there I do show you how to build your own back-end with NodeJS as well
+
+34
+00:02:52,140 --> 00:02:56,880
+but if you're just working with Angular, if you're just building a single page application and you're
+
+35
+00:02:56,880 --> 00:03:03,420
+not working on the back-end on your own, then you in the end have just HTML, Javascript and CSS and all
+
+36
+00:03:03,420 --> 00:03:08,040
+you need for that is a web server that is capable of serving these files.
+
+37
+00:03:08,040 --> 00:03:11,010
+So now, let's walk through these steps together,
+
+38
+00:03:11,010 --> 00:03:14,490
+most importantly the build and the deployment steps of course
+
+39
+00:03:14,640 --> 00:03:16,650
+and let's see how that works.
+

@@ -1,0 +1,96 @@
+1
+00:00:02,160 --> 00:00:08,310
+So we added this angular, universal pre rendering, how would you now deploy this application with
+
+2
+00:00:08,310 --> 00:00:14,970
+that added, you would basically still deploy to dist folder, but now you need to deploy it to a server
+
+3
+00:00:14,970 --> 00:00:22,440
+which is capable of running a node server because your hosting service where you deploy server Jast,
+
+4
+00:00:22,440 --> 00:00:28,060
+who needs to execute that server JS file, it needs to run that on the server.
+
+5
+00:00:28,290 --> 00:00:29,790
+That's really important to understand.
+
+6
+00:00:30,030 --> 00:00:36,500
+This file needs to be run on the server and therefore you can't use HWC as free anymore.
+
+7
+00:00:36,510 --> 00:00:40,830
+For example, you need some server where you can start that file and run it.
+
+8
+00:00:41,430 --> 00:00:47,610
+With such a server though, you just ship the content of the disk folder to it and then configure it
+
+9
+00:00:47,610 --> 00:00:48,360
+to run the server.
+
+10
+00:00:48,360 --> 00:00:50,270
+Jaspal and you're done.
+
+11
+00:00:50,400 --> 00:00:51,750
+This is how you would deploy it.
+
+12
+00:00:51,840 --> 00:00:53,510
+Still deploy the content of this.
+
+13
+00:00:53,610 --> 00:00:56,910
+But now to a server, which is not a static server, but one running.
+
+14
+00:00:56,910 --> 00:01:00,420
+Notice that it for angular universal.
+
+15
+00:01:00,660 --> 00:01:02,040
+I hope this is helpful.
+
+16
+00:01:02,310 --> 00:01:04,590
+You can always dive much deeper into this.
+
+17
+00:01:04,590 --> 00:01:06,990
+By the way, this is a basic introduction.
+
+18
+00:01:07,020 --> 00:01:08,880
+This is how it works in a nutshell.
+
+19
+00:01:09,090 --> 00:01:12,090
+This is what it does on the fly pre rendering.
+
+20
+00:01:12,090 --> 00:01:16,590
+Always keep in mind you have a single page application again once it runs on a client.
+
+21
+00:01:17,070 --> 00:01:25,140
+And if you want to dive deeper, you can visit universal dot, angular dot io to find server resources
+
+22
+00:01:25,140 --> 00:01:32,490
+and to get a page off that project where you can also learn more post questions or issues to be precise
+
+23
+00:01:32,610 --> 00:01:34,170
+and dive deeper into that.
+
+24
+00:01:34,830 --> 00:01:36,450
+So with that, let's move on.
+

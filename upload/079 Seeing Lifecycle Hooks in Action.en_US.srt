@@ -1,0 +1,632 @@
+1
+00:00:02,910 --> 00:00:05,360
+So we learned about all these hooks,
+
+2
+00:00:05,390 --> 00:00:09,450
+now let's see what they actually do. In the server element component,
+
+3
+00:00:09,450 --> 00:00:10,100
+this is the component
+
+4
+00:00:10,140 --> 00:00:11,810
+I will choose for demo purposes,
+
+5
+00:00:11,820 --> 00:00:14,440
+we already get the constructor in ngOnInit.
+
+6
+00:00:14,730 --> 00:00:23,400
+So in the constructor, I will simply log constructor called so that we can see when this happens in
+
+7
+00:00:23,400 --> 00:00:29,850
+the console and I'll do the same for ngOnInit but of course here I'll say ngOnInit called. Of
+
+8
+00:00:29,850 --> 00:00:31,870
+course I will add the other hooks then too
+
+9
+00:00:31,890 --> 00:00:34,010
+but let's start with these two
+
+10
+00:00:34,110 --> 00:00:40,130
+and if we reload the application here, we see right at the top, constructor called ngOnInit called
+
+11
+00:00:40,380 --> 00:00:46,410
+and for every new server we add, we see this again of course because a new instance of this component
+
+12
+00:00:46,410 --> 00:00:51,390
+was created and therefore all these hooks are executed again because it's a brand new instance, doesn't
+
+13
+00:00:51,390 --> 00:00:57,630
+have anything in common besides the class it was created of with the first instance of that component
+
+14
+00:00:57,630 --> 00:00:58,330
+here.
+
+15
+00:00:58,770 --> 00:01:02,040
+So that is constructor in ngOnInit,
+
+16
+00:01:02,070 --> 00:01:05,750
+now I told you that ngOnChanges would run first.
+
+17
+00:01:05,760 --> 00:01:07,990
+So let's implement ngOnChanges
+
+18
+00:01:08,160 --> 00:01:16,700
+and this would be enough, though it is a good practice to implement the onChanges interface too and that
+
+19
+00:01:16,700 --> 00:01:22,290
+is true for all hooks. Implementing the method alone will do the trick but it is a good practice to be
+
+20
+00:01:22,290 --> 00:01:28,260
+very explicit about which interfaces your component users or which methods your components will have.
+
+21
+00:01:28,260 --> 00:01:32,250
+So therefore implementing these interfaces is a really good practice,
+
+22
+00:01:32,280 --> 00:01:38,610
+it's very clear then which methods may be called in your component and which methods you won't have.
+
+23
+00:01:38,650 --> 00:01:42,920
+Now here, we're getting a lot of imports which is why I will split this up
+
+24
+00:01:43,080 --> 00:01:50,520
+and as you can already see, you have to import all these interfaces, onInit and onChanges.
+
+25
+00:01:50,520 --> 00:01:53,370
+So ngOnChanges runs first as I told you,
+
+26
+00:01:53,370 --> 00:01:59,260
+so let's say ngOnChanges here and this hook here actually receives an argument.
+
+27
+00:01:59,280 --> 00:02:01,120
+It's the only hook that does,
+
+28
+00:02:01,170 --> 00:02:09,390
+here we receive a changes argument which is of type SimpleChanges which also needs to be imported
+
+29
+00:02:09,450 --> 00:02:11,330
+from @Angular/core.
+
+30
+00:02:11,700 --> 00:02:18,110
+So I will simply log changes here, so that we can have a look at it and see what's inside.
+
+31
+00:02:18,510 --> 00:02:19,670
+So let's save this
+
+32
+00:02:19,950 --> 00:02:23,960
+and here are the top again, we see constructor called ngOnChanges called
+
+33
+00:02:23,970 --> 00:02:28,890
+as mentioned before, ngOnInit and then we see the SimpleChanges.
+
+34
+00:02:28,950 --> 00:02:36,660
+That's an object which has an element which is of type SimpleChange and element of course is our bound
+
+35
+00:02:36,660 --> 00:02:38,020
+property, here
+
+36
+00:02:38,040 --> 00:02:41,800
+it's this property name, that's the name we see reflected here
+
+37
+00:02:42,150 --> 00:02:45,560
+and then Angular simply gives us some information.
+
+38
+00:02:45,630 --> 00:02:47,230
+What's the current value?
+
+39
+00:02:47,340 --> 00:02:49,510
+Well that's the object with just a test,
+
+40
+00:02:49,520 --> 00:02:53,410
+test server and of type server. Is this the first change?
+
+41
+00:02:53,430 --> 00:02:55,600
+Yes it is, we just initialized it.
+
+42
+00:02:55,800 --> 00:02:57,380
+And what's the previous value?
+
+43
+00:02:57,390 --> 00:03:00,000
+There is no value because we didn't
+
+44
+00:03:00,210 --> 00:03:02,530
+didn't change this before.
+
+45
+00:03:02,760 --> 00:03:06,540
+Now to see that ngOnChanges actually gets fired more than once,
+
+46
+00:03:06,600 --> 00:03:09,380
+I'll add something to this app just for demo purposes,
+
+47
+00:03:09,570 --> 00:03:13,580
+I'll add a button, change first element to my app component template above
+
+48
+00:03:13,600 --> 00:03:19,820
+this list of server elements, give it some bootstrap styling here but that's not really important.
+
+49
+00:03:19,830 --> 00:03:24,710
+More important, give it a click listener, onChangeFirst would be a name you could choose
+
+50
+00:03:25,500 --> 00:03:30,430
+and then in the app.component.ts file, I went to change the name of the first element.
+
+51
+00:03:30,450 --> 00:03:35,520
+Now for this, I also need to change the way we pass this element to the server component.
+
+52
+00:03:35,520 --> 00:03:42,600
+Right now, we receive the full element, the full object and I will leave this here for demo purposes,
+
+53
+00:03:42,600 --> 00:03:44,600
+so that we can reference this code
+
+54
+00:03:44,700 --> 00:03:50,280
+but now I only expect to get the name because the name is the only thing I'm outputting here anyways.
+
+55
+00:03:50,550 --> 00:03:53,850
+So I'm duplicating this and I will comment out the old code
+
+56
+00:03:53,940 --> 00:03:59,970
+and now we only output the name because all the other element information was projected via ng-content
+
+57
+00:04:00,000 --> 00:04:02,950
+into this element anyways, into this component.
+
+58
+00:04:03,300 --> 00:04:05,360
+So we only get the name now,
+
+59
+00:04:05,550 --> 00:04:11,460
+this name will simply be a string, we added input so that it can be bound from outside
+
+60
+00:04:11,700 --> 00:04:13,750
+and we're outputting name here.
+
+61
+00:04:13,830 --> 00:04:15,230
+So in app component,
+
+62
+00:04:15,450 --> 00:04:22,980
+when we loop through this, I will now actually bind the name too and I will bind to server element name and
+
+63
+00:04:22,980 --> 00:04:27,800
+you wouldn't need to bind server element here anymore because that is not used
+
+64
+00:04:27,810 --> 00:04:30,390
+but I will leave it here for reference.
+
+65
+00:04:30,390 --> 00:04:32,970
+So this is now how we pass the data, how
+
+66
+00:04:32,970 --> 00:04:38,090
+we passed the name. In the app.component.ts file here in onChangeFirst,
+
+67
+00:04:38,270 --> 00:04:43,530
+I will now access my server elements, the first element and therefore this will fail if we were to empty
+
+68
+00:04:43,550 --> 00:04:47,360
+this array and set the name to changed.
+
+69
+00:04:47,550 --> 00:04:53,910
+So again, I did these changes so that we can really see when ngOnChanges gets fired and we couldn't
+
+70
+00:04:53,910 --> 00:05:01,500
+use the element as an object because objects are the reference types, so we passed the object via input,
+
+71
+00:05:01,610 --> 00:05:06,110
+therefore both properties in the server element component,
+
+72
+00:05:06,240 --> 00:05:13,800
+this one here and the object in the array of server elements here in the app component, they both point to
+
+73
+00:05:13,800 --> 00:05:15,500
+the same place in memory
+
+74
+00:05:15,600 --> 00:05:21,150
+and therefore if we change the name there, it will update in the child component, in the server element
+
+75
+00:05:21,150 --> 00:05:28,310
+component but it will not trigger ngOnChanges because technically, the property we're binding to, we use
+
+76
+00:05:28,310 --> 00:05:31,840
+here with @input, that didn't change the value of that didn't change it,
+
+77
+00:05:31,860 --> 00:05:33,980
+it's still the same object in memory.
+
+78
+00:05:34,020 --> 00:05:38,550
+So it simply this difference between reference and primitive types and you should look this up if
+
+79
+00:05:38,550 --> 00:05:40,110
+that's all brand new to you,
+
+80
+00:05:40,200 --> 00:05:44,150
+it's a Javascript concept, has nothing to do with TypeScript or Angular.
+
+81
+00:05:44,520 --> 00:05:50,170
+So that is why now I'm binding to a primitive with name which is just a string and therefore,
+
+82
+00:05:50,250 --> 00:05:54,560
+ngOnChanges should get fired again if I click the change first element button,
+
+83
+00:05:54,690 --> 00:05:55,590
+let's do that
+
+84
+00:05:55,770 --> 00:05:57,600
+and indeed, it does.
+
+85
+00:05:57,600 --> 00:06:02,890
+Note that the constructor and ngOnInit weren't called but ngOnChanges was
+
+86
+00:06:03,060 --> 00:06:08,880
+and here now we also see the previous value and the new value and therefore, this hook could be interesting
+
+87
+00:06:08,880 --> 00:06:14,850
+to you if you want to react to any changes and then do something with the old values, store it
+
+88
+00:06:14,880 --> 00:06:17,510
+before it gets dumped or something like that,
+
+89
+00:06:17,910 --> 00:06:20,010
+that's ngOnChanges.
+
+90
+00:06:20,010 --> 00:06:22,360
+We get a couple of our other hooks, so let's move on.
+
+91
+00:06:22,500 --> 00:06:26,330
+Besides ngOnChanges and ngOnInit, we get
+
+92
+00:06:26,340 --> 00:06:27,500
+do check
+
+93
+00:06:27,900 --> 00:06:32,060
+and as I said, this also needs to be imported from @angular/core.
+
+94
+00:06:32,070 --> 00:06:36,880
+This will give us a method which is executed on every change detection run.
+
+95
+00:06:36,900 --> 00:06:40,580
+So ngDoCheck is the method we need for this
+
+96
+00:06:40,740 --> 00:06:44,820
+and here we can simply console log
+
+97
+00:06:44,850 --> 00:06:47,910
+ngDoCheck called,
+
+98
+00:06:48,120 --> 00:06:54,740
+so let's see when this gets called. If this reloads, you see it gets called right at the beginning,
+
+99
+00:06:54,900 --> 00:06:55,910
+then one more time here
+
+100
+00:06:55,920 --> 00:06:58,470
+but that is only because we're running in development mode,
+
+101
+00:06:58,550 --> 00:07:04,740
+there Angular has one extra change detection cycle but it also gets called if I click this button as you
+
+102
+00:07:04,740 --> 00:07:08,660
+can see and if I click this button a couple of times here.
+
+103
+00:07:08,820 --> 00:07:16,170
+So ngDoCheck as I told you gets called whenever Angular checks for any changes and there are a couple
+
+104
+00:07:16,170 --> 00:07:23,340
+of triggers which trigger this method and event was called by clicking or a promise gave us back
+
+105
+00:07:23,340 --> 00:07:23,880
+some data,
+
+106
+00:07:23,880 --> 00:07:28,020
+so a lot of triggers for ngDoCheck.
+
+107
+00:07:28,070 --> 00:07:33,420
+So that is not something where you want to run amazingly powerful code in because that would cost you a
+
+108
+00:07:33,420 --> 00:07:34,720
+lot of performance
+
+109
+00:07:34,950 --> 00:07:40,560
+but the fact that change detection runs as often as it does on its own is not a problem
+
+110
+00:07:40,620 --> 00:07:47,010
+and this can be a great hook if you want to check, if you do need to change something manually because
+
+111
+00:07:47,070 --> 00:07:50,260
+Angular didn't pick it up or something like that.
+
+112
+00:07:50,850 --> 00:08:00,650
+So the next hook is afterContentInit, this needs to be imported from @angular/core too, this
+
+113
+00:08:00,650 --> 00:08:01,620
+interface
+
+114
+00:08:02,090 --> 00:08:07,350
+and with that we need to implement ngAfterContentInit.
+
+115
+00:08:07,400 --> 00:08:15,350
+Now let's call this console log ngAfterContentInit called.
+
+116
+00:08:15,790 --> 00:08:25,810
+If we do this here, you will see that here it is, there it is called after do check and it is called only
+
+117
+00:08:25,930 --> 00:08:33,210
+once because it doesn't get initialized again. Remember, content is the thing we projected into this through 
+
+118
+00:08:33,250 --> 00:08:34,290
+ng-content,
+
+119
+00:08:34,360 --> 00:08:37,390
+so this here will be our content in the end.
+
+120
+00:08:38,350 --> 00:08:39,430
+Let's move on.
+
+121
+00:08:40,110 --> 00:08:48,960
+The next hook then is and this is getting long here so I will split this up over multiple lines too, all
+
+122
+00:08:48,960 --> 00:08:50,970
+these interfaces I'm implementing,
+
+123
+00:08:51,360 --> 00:08:59,960
+so the next hook will be AfterContentChecked, like this. This also needs to be imported from @angular/core
+
+124
+00:09:00,010 --> 00:09:06,210
+and it requires us to implement a method, ngAfterContentChecked
+
+125
+00:09:06,440 --> 00:09:14,000
+and well now I'm just going to copy the code from ngAfterContentInit and replace init with checked.
+
+126
+00:09:14,570 --> 00:09:16,800
+If we save this and have a look at it,
+
+127
+00:09:16,980 --> 00:09:22,100
+you see here it is called and here it is called again after do check, which makes sense because it is
+
+128
+00:09:22,100 --> 00:09:24,670
+called after each change detection cycle.
+
+129
+00:09:25,850 --> 00:09:28,660
+Well now I'm going to copy these two here
+
+130
+00:09:29,630 --> 00:09:32,570
+and also I will add two new interfaces,
+
+131
+00:09:33,330 --> 00:09:42,360
+the first one being AfterViewInit and then AfterViewChecked, both need to be imported from
+
+132
+00:09:42,390 --> 00:09:51,770
+@angular/core too. Now this require me to have ngAfterViewInit as a method and ngAfterViewChecked
+
+133
+00:09:51,930 --> 00:09:55,960
+and I will replace the text here in the console log
+
+134
+00:09:56,100 --> 00:09:59,400
+so that we can see when these get called.
+
+135
+00:09:59,500 --> 00:10:06,800
+So if we log this, you see it happens after the content has been checked. Well and with that, we're almost
+
+136
+00:10:06,800 --> 00:10:07,620
+at the end,
+
+137
+00:10:07,670 --> 00:10:15,770
+the remaining piece is ngOnDestroy and onDestroy is called, well right before this gets destroyed,
+
+138
+00:10:15,920 --> 00:10:17,660
+this component gets destroyed.
+
+139
+00:10:17,720 --> 00:10:25,050
+So let's add it here on the implements list, on the interface list I should say and make sure to add the
+
+140
+00:10:25,070 --> 00:10:30,290
+import from @angular/core and then you need to implement ngOnDestroy
+
+141
+00:10:30,290 --> 00:10:36,890
+and here I will say ngOnDestroy called.
+
+142
+00:10:36,980 --> 00:10:44,500
+Now to be able to actually see this being destroyed, I will add a new button,
+
+143
+00:10:44,530 --> 00:10:56,300
+button destroy first component and give it a class of button and then btn-danger to make it red and here I'll
+
+144
+00:10:56,300 --> 00:10:58,620
+add a click listener, onDestroyFirst.
+
+145
+00:10:58,650 --> 00:11:04,150
+I will copy that, add my method here
+
+146
+00:11:04,290 --> 00:11:04,530
+in
+
+147
+00:11:04,550 --> 00:11:06,110
+just onDestroyFirst of course,
+
+148
+00:11:06,110 --> 00:11:11,990
+just the name. We'll add it here to my TypeScript code and there I will something call server elements, the splice
+
+149
+00:11:11,990 --> 00:11:17,190
+method splicing at the first element and then just one element therefore removing it.
+
+150
+00:11:17,480 --> 00:11:22,170
+So with this, we should now see all the hooks called, view checked and so on
+
+151
+00:11:22,250 --> 00:11:28,040
+and if I destroy the component, you see ngOnDestroy was called because we removed it from the
+
+152
+00:11:28,040 --> 00:11:28,560
+array,
+
+153
+00:11:28,580 --> 00:11:34,080
+therefore ngFor reran and didn't render this first element because it was removed,
+
+154
+00:11:34,130 --> 00:11:35,920
+therefore it was removed from the DOM,
+
+155
+00:11:35,930 --> 00:11:38,320
+hence this component hook was called.
+
+156
+00:11:38,660 --> 00:11:41,340
+So these are all the lifecycle hooks in action,
+
+157
+00:11:41,420 --> 00:11:48,800
+you rarely need to use all of them but some of them can be very helpful for your application to hook
+
+158
+00:11:48,800 --> 00:11:53,000
+into a specific piece, a specific face and run your code.
+

@@ -1,0 +1,136 @@
+1
+00:00:02,380 --> 00:00:09,040
+With our child routes added in the last lecture, let's now make these links work again so that we can
+
+2
+00:00:09,040 --> 00:00:16,960
+really choose an item from that list. The place to make these links work of course is in our recipe list,
+
+3
+00:00:17,440 --> 00:00:18,900
+the recipe item here,
+
+4
+00:00:18,970 --> 00:00:23,080
+that is where we have an anchor tag and that is where we should set the link.
+
+5
+00:00:23,080 --> 00:00:25,880
+We can set a link with routerLink
+
+6
+00:00:26,140 --> 00:00:29,300
+but now we get a dynamic segment in the path.
+
+7
+00:00:29,530 --> 00:00:36,730
+So now I will bind routerLink with square brackets because now I want to pass this array which allows
+
+8
+00:00:36,730 --> 00:00:41,320
+me to really configure segment for segment of my path.
+
+9
+00:00:41,560 --> 00:00:48,270
+Now the first segment is also the only segment, that will be the ID I want to load.
+
+10
+00:00:48,280 --> 00:00:56,460
+So I will use a relative path because this element here, the list already is loaded at /recipes,
+
+11
+00:00:56,680 --> 00:01:02,500
+so whenever I just add the ID here, that is already all I want because then we're going to end up at
+
+12
+00:01:02,500 --> 00:01:04,410
+recipes/id.
+
+13
+00:01:04,480 --> 00:01:11,030
+Now to get the ID, I need to pass this extra information to the recipe-item component.
+
+14
+00:01:11,050 --> 00:01:14,510
+We're not doing this right now, so let's do that.
+
+15
+00:01:14,530 --> 00:01:20,520
+I will add a new property binding here, so I will add the index here
+
+16
+00:01:21,600 --> 00:01:27,270
+and the index will simply be a number and I will add @input at the beginning.
+
+17
+00:01:27,690 --> 00:01:34,230
+With this, I can now pass in the index of this item from outside and I'll do this from the recipe-list
+
+18
+00:01:34,230 --> 00:01:38,720
+component, here besides sending the recipe itself,
+
+19
+00:01:39,030 --> 00:01:45,090
+I can now also pass the index and of course, I have to retrieve that from my ngFor loop.
+
+20
+00:01:45,210 --> 00:01:52,530
+So here I'll simply bind i to index to get the index of each iteration basically and then
+
+21
+00:01:52,530 --> 00:01:59,450
+I'll pass this index i to the app-recipe-item and bind it to the index property there,
+
+22
+00:01:59,550 --> 00:02:05,410
+this property we just created. As a side note, with the ID being passed to this component
+
+23
+00:02:05,420 --> 00:02:12,120
+now, you theoretically could update this component to now use our recipe service and the getRecipe method
+
+24
+00:02:12,120 --> 00:02:18,600
+we just created to fetch the recipe by ID but I will leave it as it is here but that would be one way
+
+25
+00:02:18,600 --> 00:02:21,900
+of refactoring or restructuring this component.
+
+26
+00:02:21,900 --> 00:02:28,200
+The important thing for us now is that we have the index property in this component now and that is
+
+27
+00:02:28,230 --> 00:02:30,110
+all we need for this link.
+
+28
+00:02:30,300 --> 00:02:35,110
+So I want to pass the index here and keep in mind, this is for a single component,
+
+29
+00:02:35,160 --> 00:02:39,510
+so that index will be different for each instance of this component.
+
+30
+00:02:39,510 --> 00:02:44,480
+So if we save this, we can see it already at the bottom of the page,
+
+31
+00:02:44,480 --> 00:02:48,960
+this looks all right and I can switch between 0 and 1.
+
+32
+00:02:49,180 --> 00:02:51,370
+So that looks pretty good,
+
+33
+00:02:51,380 --> 00:02:57,460
+now it would also be nice to style the active item here though and that is something I'll do in the
+
+34
+00:02:57,460 --> 00:02:58,260
+next lecture.
+

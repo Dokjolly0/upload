@@ -1,0 +1,88 @@
+1
+00:00:02,320 --> 00:00:08,580
+We finished for now all our recipes components, let's work on the shopping list now.
+
+2
+00:00:09,020 --> 00:00:11,240
+Now the shopping list component,
+
+3
+00:00:11,320 --> 00:00:20,660
+if we have a look at it here in our files, here in the HTML file, we already added some content to its
+
+4
+00:00:20,930 --> 00:00:22,650
+template here
+
+5
+00:00:22,760 --> 00:00:29,210
+but instead of saying the list, I want to output an unordered list of type list group or of the class list
+
+6
+00:00:29,210 --> 00:00:31,940
+group I should say, so using this Bootstrap class
+
+7
+00:00:31,960 --> 00:00:35,280
+and in there, I want to have clickable list items,
+
+8
+00:00:35,330 --> 00:00:42,260
+so I'll add an anchor tag pointing to just hash for now again to make sure it doesn't reload the page accidentally
+
+9
+00:00:42,830 --> 00:00:46,980
+and then add some Bootstrap classes or one class to be precise,
+
+10
+00:00:47,120 --> 00:00:53,210
+the list group item class to make this look like an item in this unordered list and I'll even get rid
+
+11
+00:00:53,210 --> 00:00:55,180
+of the anchor tag here, of the ref
+
+12
+00:00:55,190 --> 00:01:01,990
+I should say and therefore set an inline style to enforce a cursor which looks like the pointer.
+
+13
+00:01:02,150 --> 00:01:09,530
+The reason why I'm removing this is, I will later use this like a button and therefore, I don't need this
+
+14
+00:01:09,620 --> 00:01:11,090
+ref element there,
+
+15
+00:01:11,090 --> 00:01:14,720
+it would simply lead to unwanted behaviors.
+
+16
+00:01:14,720 --> 00:01:20,100
+So that will be a single element, a single item on our shopping list.
+
+17
+00:01:20,180 --> 00:01:25,370
+Now to display something here, we need an array of ingredients though.
+
+18
+00:01:25,730 --> 00:01:34,190
+So what I'll do for now is, I'll add my ingredients property here to the shopping list and this will
+
+19
+00:01:34,190 --> 00:01:35,500
+be an empty array
+
+20
+00:01:35,750 --> 00:01:41,090
+but now just like with the recipe, we're going to use ingredients a lot throughout our app,
+
+21
+00:01:41,090 --> 00:01:45,790
+also in the recipe section, so we probably should also create a model for this.
+
+22
+00:01:45,860 --> 00:01:47,820
+Let's do this in the next lecture.
+

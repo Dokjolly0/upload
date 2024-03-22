@@ -1,0 +1,224 @@
+1
+00:00:02,270 --> 00:00:10,850
+Now, let's also dive in to the remaining piece and that is of course storing recipes on a server
+
+2
+00:00:10,850 --> 00:00:20,010
+and for that, I want to add a new effect, store recipes, which also gets the @effect decorator
+
+3
+00:00:20,010 --> 00:00:28,550
+and here, we again listen to our actions observable stream and use ofType to react only to certain types
+
+4
+00:00:28,550 --> 00:00:35,750
+of actions and we need to add a new action for this and that will be our store recipes
+
+5
+00:00:35,750 --> 00:00:40,210
+action which gets this identifier here,
+
+6
+00:00:40,220 --> 00:00:42,140
+store recipes, like this.
+
+7
+00:00:45,200 --> 00:00:47,780
+Let's export a class here as well,
+
+8
+00:00:47,780 --> 00:00:55,550
+store recipes which implements action,
+
+9
+00:00:55,590 --> 00:01:04,530
+this has a readonly type of store recipes and we don't need to pass the recipes along because they're
+
+10
+00:01:04,530 --> 00:01:07,470
+already part of our NgRx store.
+
+11
+00:01:07,720 --> 00:01:12,150
+I'll add this to the union type even though we're not going to use this action in a reducer but we
+
+12
+00:01:12,270 --> 00:01:14,970
+are going to use it here in recipe effects.
+
+13
+00:01:15,000 --> 00:01:25,510
+So here, let's now wait for recipes actions store recipes and thereafter, I'll add a good old switchMap
+
+14
+00:01:25,510 --> 00:01:33,280
+here as we did before too, not interested in any data about my action because it doesn't have a payload
+
+15
+00:01:33,310 --> 00:01:34,350
+which I would need.
+
+16
+00:01:34,480 --> 00:01:42,690
+Indeed what I want to do here though is I want to run the code which we currently run in here, in store
+
+17
+00:01:42,750 --> 00:01:45,180
+recipes in the data storage service.
+
+18
+00:01:45,240 --> 00:01:52,680
+Let's grab that and add it here to switchMap, return this here and run our put request here.
+
+19
+00:01:52,680 --> 00:01:58,780
+Now the thing is of course, there I now need my recipes which are in my store,
+
+20
+00:01:58,800 --> 00:02:02,970
+that is the question, how do we get the recipes from the store?
+
+21
+00:02:02,970 --> 00:02:06,270
+Well, the good thing is, it's relatively easy,
+
+22
+00:02:06,330 --> 00:02:13,940
+we can use a special operator with latest from which is also imported from rxjs/operators
+
+23
+00:02:14,130 --> 00:02:20,460
+and that allows us to merge a value from another observable into this observable stream here and there,
+
+24
+00:02:20,460 --> 00:02:24,630
+I now want to access my store which means I have to inject it here,
+
+25
+00:02:24,750 --> 00:02:28,190
+so my store is injected. For that
+
+26
+00:02:28,190 --> 00:02:32,140
+I want to import the structure of the store from my root reducer,
+
+27
+00:02:32,150 --> 00:02:44,070
+so from app, from store app reducer and assign that generic type down there, fromApp.AppState like this
+
+28
+00:02:44,070 --> 00:02:50,320
+and now with the store injected, we also need to import it. Import wasn't added automatically here, so
+
+29
+00:02:50,320 --> 00:02:57,480
+let's do it manually, let's import store from @ngrx/store.
+
+30
+00:02:57,500 --> 00:03:04,430
+So now with the store injected successfully, here on with latest from, we can use this store
+
+31
+00:03:04,430 --> 00:03:17,750
+select the recipes slice and in switchMap, we now actually get an array as our argument automatically,
+
+32
+00:03:17,920 --> 00:03:26,000
+RxJS gives us this array which holds the data provided by ofType which is our action data which
+
+33
+00:03:26,000 --> 00:03:32,130
+I'm not interested about but also the data from with latest from and that will be our recipes
+
+34
+00:03:32,180 --> 00:03:39,450
+state. Now that gets passed into our function here,
+
+35
+00:03:39,490 --> 00:03:44,630
+now I'm using a syntax called array destructuring here in case you're wondering,
+
+36
+00:03:44,740 --> 00:03:50,710
+this simply means that I use square brackets here in the argument list and I store the two elements
+
+37
+00:03:50,710 --> 00:03:55,330
+that this array will have in variables, that I can now use inside of switchMap,
+
+38
+00:03:55,360 --> 00:04:00,100
+of course you could also accept one argument because you get one argument after all but that argument
+
+39
+00:04:00,100 --> 00:04:05,620
+is an array where the second element is the data from with the latest from and the first element is your
+
+40
+00:04:05,620 --> 00:04:06,080
+action
+
+41
+00:04:06,130 --> 00:04:12,490
+and I'm just using array destructuring. With that I have access to my recipes state and on my recipes
+
+42
+00:04:12,550 --> 00:04:17,900
+state, I can access the recipes of course. That should already be it,
+
+43
+00:04:17,950 --> 00:04:22,550
+this allows us to send the request, here
+
+44
+00:04:22,550 --> 00:04:27,860
+I'm also not really interested in dispatching anything thereafter because I don't need to know once
+
+45
+00:04:27,860 --> 00:04:34,760
+this is done in this application, so we can set dispatch to false here so that NgRx effects knows that
+
+46
+00:04:34,760 --> 00:04:41,570
+this won't dispatch anything and now we can go to the header component again and in the header component,
+
+47
+00:04:41,630 --> 00:04:53,270
+in onSaveData, we can now use this store dispatch new recipe actions and there I have my store recipes
+
+48
+00:04:53,270 --> 00:05:01,400
+action. With that, we can also remove the data storage and the auth service from this file, remove their imports
+
+49
+00:05:01,400 --> 00:05:05,770
+here and remove the entire data storage service file,
+
+50
+00:05:05,780 --> 00:05:16,360
+we don't need that anymore. Let's save all files now and let's give this a try. The app reloads,
+
+51
+00:05:17,380 --> 00:05:19,310
+let's go to recipes here,
+
+52
+00:05:19,660 --> 00:05:28,420
+let's maybe edit this recipe and let's edit the schnitzel as well by adding a couple of exclamation
+
+53
+00:05:28,420 --> 00:05:31,770
+marks each and then hit save data
+
+54
+00:05:32,290 --> 00:05:35,890
+and now let's try reloading and the changes are still there
+
+55
+00:05:35,890 --> 00:05:40,280
+which means they were saved on the backend. And that is it,
+
+56
+00:05:40,300 --> 00:05:49,900
+that now means that our entire logic was restructured such that we indeed use NgRx only in this application.
+

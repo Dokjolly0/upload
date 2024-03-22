@@ -1,0 +1,200 @@
+1
+00:00:02,280 --> 00:00:06,410
+Headers aren't the only thing you can set, for many API endpoints,
+
+2
+00:00:06,420 --> 00:00:12,500
+you can also attach certain query parameters and of course again, it depends on the API endpoint you're
+
+3
+00:00:12,500 --> 00:00:16,620
+sending the request to, which query parameters are supported.
+
+4
+00:00:16,740 --> 00:00:23,370
+For example, the Firebase REST API and you can learn that in the official docs, supports one query parameter
+
+5
+00:00:23,370 --> 00:00:28,490
+which effect we can immediately see. You set parameters by adding the params
+
+6
+00:00:28,530 --> 00:00:35,910
+key here in that same config object where you added headers and you set params equal to new
+
+7
+00:00:35,910 --> 00:00:37,620
+HttpParams.
+
+8
+00:00:37,620 --> 00:00:47,400
+Now just as HTTP headers, you import HttpParams from @angular/common/http. Now
+
+9
+00:00:47,400 --> 00:00:52,140
+HttpParams works a bit differently than HTTP headers, there
+
+10
+00:00:52,410 --> 00:00:59,610
+you can call set and now you can set a param name and a value for that and there for example, you can
+
+11
+00:00:59,610 --> 00:01:06,090
+set print and that is a search param, a query param supported by Firebase, print and you set this
+
+12
+00:01:06,090 --> 00:01:12,920
+to a value, to pretty and this just changes the format in which Firebase returns its data.
+
+13
+00:01:12,930 --> 00:01:14,010
+Now if we save that,
+
+14
+00:01:16,730 --> 00:01:24,140
+this loads and now if I clear that and I click this again and we inspect this request, you see now it has
+
+15
+00:01:24,140 --> 00:01:29,720
+this query parameter attached to the end of the URL and of course you could have added this to
+
+16
+00:01:29,720 --> 00:01:31,710
+the URL yourself up there too,
+
+17
+00:01:31,790 --> 00:01:39,140
+you could have added print equals pretty up there and add, with an ampersand in-between, as many key
+
+18
+00:01:39,140 --> 00:01:42,840
+value pairs as you need or as your API endpoint supports.
+
+19
+00:01:42,920 --> 00:01:48,950
+You can do that here in the URL but by using this params config, it's a bit more convenient because
+
+20
+00:01:48,950 --> 00:01:55,550
+you don't need to concatenate a super long string, you simply set them here with the set method.
+
+21
+00:01:55,550 --> 00:02:02,210
+Now if you wanted to set multiple params, you can simply do this by adding a search params constant
+
+22
+00:02:02,210 --> 00:02:04,130
+or whatever you want to name it,
+
+23
+00:02:04,130 --> 00:02:11,960
+create your new params object there and now here, you can call search params append and append a new param
+
+24
+00:02:11,960 --> 00:02:13,390
+key-value pair, like print
+
+25
+00:02:13,400 --> 00:02:14,650
+pretty. Important
+
+26
+00:02:14,660 --> 00:02:20,860
+however, search params, this object is immutable, so you actually need to overwrite this and therefore
+
+27
+00:02:20,860 --> 00:02:27,310
+this needs to be a variable with a new, with the result of append.
+
+28
+00:02:27,430 --> 00:02:33,250
+So what you would do here in the end is you call append and this returns a new HttpParams object
+
+29
+00:02:33,550 --> 00:02:38,440
+and you store that new object which has these new key-value pairs added to it in the search params
+
+30
+00:02:38,440 --> 00:02:43,690
+variable, overwriting the old one, so you still have a HttpParams object in there but a new one. And
+
+31
+00:02:43,690 --> 00:02:50,590
+if you have multiple key-value pairs, then you simply repeat that step with append, the old ones
+
+32
+00:02:50,590 --> 00:02:51,130
+will be kept
+
+33
+00:02:51,130 --> 00:02:56,140
+but the new ones will be added to a new HttpParams object which will then replace the old
+
+34
+00:02:56,140 --> 00:02:58,540
+one by storing it in that same variable,
+
+35
+00:02:58,540 --> 00:03:03,910
+so here you could also have your custom key which is not supported by Firebase but you can send this, it
+
+36
+00:03:03,910 --> 00:03:10,510
+won't cause any harm and then you simply add your search params here for the params in your config
+
+37
+00:03:10,510 --> 00:03:15,200
+object and this is how you can attach multiple params if you want to.
+
+38
+00:03:15,380 --> 00:03:17,640
+We can see the effect here if I fetch,
+
+39
+00:03:17,830 --> 00:03:21,220
+now you see we have multiple search parameters attached.
+
+40
+00:03:21,220 --> 00:03:27,610
+Again you could have done that directly in the URL but by using the HttpParams object and the configuration
+
+41
+00:03:27,640 --> 00:03:28,390
+object,
+
+42
+00:03:28,390 --> 00:03:33,480
+it's a bit more convenient. Now by the way, in case you're wondering what these parameters do,
+
+43
+00:03:33,580 --> 00:03:34,810
+custom key does nothing,
+
+44
+00:03:34,810 --> 00:03:36,520
+that's just something I came up with,
+
+45
+00:03:36,520 --> 00:03:42,040
+it's not supported by Firebase but as I mentioned, it's also no problem if we add this. Print pretty does
+
+46
+00:03:42,040 --> 00:03:43,560
+something in the response,
+
+47
+00:03:43,570 --> 00:03:45,670
+it prints this in a more pretty way,
+
+48
+00:03:45,700 --> 00:03:50,320
+it adds some extra whitespace and line breaks so that this is a more human readable.
+
+49
+00:03:50,320 --> 00:03:56,170
+Absolutely does not matter for our app where we read this with our code anyways but I just wanted some
+
+50
+00:03:56,170 --> 00:03:58,840
+example to show how to add query parameters.
+

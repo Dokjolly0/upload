@@ -1,0 +1,300 @@
+1
+00:00:02,560 --> 00:00:06,230
+So we already use attribute directives like ngClass and ngStyle,
+
+2
+00:00:06,520 --> 00:00:10,720
+it's even easier to understand what to do once we've built our own one.
+
+3
+00:00:10,720 --> 00:00:16,050
+So I want to build a directive which simply highlights an element I hover over, let's say.
+
+4
+00:00:16,060 --> 00:00:21,340
+Of course I could achieve the same with normal CSS styles but this is just a good demo.
+
+5
+00:00:21,340 --> 00:00:28,900
+So I will create a new folder and I will name it basic-highlight, like this because in there I create
+
+6
+00:00:28,900 --> 00:00:36,970
+a new file, basic-highlight and now directive.ts, so before we always had component files,
+
+7
+00:00:36,970 --> 00:00:39,070
+now this is a new element,
+
+8
+00:00:39,130 --> 00:00:42,850
+it's not a component, it will be a directive hence the file name.
+
+9
+00:00:42,940 --> 00:00:53,970
+Now in this file, I'll export a class which I'll name BasicHighlightDirective, again to be descriptive
+
+10
+00:00:53,970 --> 00:00:58,020
+about what this class is and to make it a directive,
+
+11
+00:00:58,020 --> 00:01:05,430
+just like with a component where we added @component, here we have to add @directive and directive
+
+12
+00:01:05,430 --> 00:01:08,900
+needs to be imported from @angular/core,
+
+13
+00:01:08,940 --> 00:01:16,010
+so make sure to add this import and we need to pass an object to this decorator to configure this directive.
+
+14
+00:01:16,020 --> 00:01:18,260
+Now how do we configure a directive?
+
+15
+00:01:18,330 --> 00:01:25,170
+The one thing our directive absolutely needs is a selector because remember, we do place directives in
+
+16
+00:01:25,170 --> 00:01:28,260
+our template to attach them to elements,
+
+17
+00:01:28,350 --> 00:01:34,740
+so we need to have some way to give Angular that instruction and that is the selector. Here
+
+18
+00:01:34,740 --> 00:01:38,070
+that should also be a unique selector.
+
+19
+00:01:38,070 --> 00:01:46,760
+So typically, here you use a camel case notation to give it appHighlight as a selector or here maybe
+
+20
+00:01:47,040 --> 00:01:50,900
+appBasicHighlight, like this.
+
+21
+00:01:50,910 --> 00:01:53,570
+Now that would select it by element.
+
+22
+00:01:53,640 --> 00:01:59,520
+Now I want to have this attribute style, so I'm going to wrap this in square brackets which means this
+
+23
+00:01:59,520 --> 00:02:02,720
+will now be recognised whenever I add
+
+24
+00:02:02,730 --> 00:02:09,420
+appBasicHighlight without square brackets to an element. Now to show this, we need to do something which
+
+25
+00:02:09,420 --> 00:02:12,830
+gives us some visual clue that this is working.
+
+26
+00:02:12,930 --> 00:02:18,930
+So the basic thing is, the most basic use case is we change let's say the background colour of the element
+
+27
+00:02:19,020 --> 00:02:25,540
+where we attach this directive. For this we need to get access to the element the directive sits on and
+
+28
+00:02:25,550 --> 00:02:30,880
+the cool thing is Angular gives us this access. We can inject the element
+
+29
+00:02:30,890 --> 00:02:37,190
+the directive sits on into this directive and injection is something we'll take a closer look at in
+
+30
+00:02:37,190 --> 00:02:44,160
+the next course module, in the big next course module which is about services, I can say that much.
+
+31
+00:02:44,270 --> 00:02:49,730
+It basically is an easy way to get access to some other classes without having them to instantiate
+
+32
+00:02:49,790 --> 00:02:51,590
+on our own.
+
+33
+00:02:51,620 --> 00:02:56,040
+We do inject by adding the constructor which every TypeScript class has,
+
+34
+00:02:56,240 --> 00:03:02,840
+we don't need to write anything in the constructor body for now but here on the list of arguments, we
+
+35
+00:03:02,840 --> 00:03:08,370
+list a couple of arguments we want to get whenever an instance of this class here is created
+
+36
+00:03:08,450 --> 00:03:11,910
+and of course Angular is responsible for creating these instances.
+
+37
+00:03:11,960 --> 00:03:17,380
+So therefore if we tell it to please give us a specific type of argument,
+
+38
+00:03:17,510 --> 00:03:24,260
+this is what injection is, Angular will try to create this thing we need and give it to us.
+
+39
+00:03:24,560 --> 00:03:32,690
+Well this thing we need in this case simply is a reference to the element the directive was placed on. So
+
+40
+00:03:32,690 --> 00:03:39,590
+an element ref and this name is totally up to you but the type is important, the type has to be element ref,
+
+41
+00:03:39,920 --> 00:03:42,540
+you might recognize this from @ViewChild,
+
+42
+00:03:42,620 --> 00:03:51,920
+there it also was a reference to some element, here it is too. Now to be able to use this data in our class
+
+43
+00:03:51,920 --> 00:03:58,280
+here, everywhere in the class, we can use a TypeScript shortcut of adding private in front of it which
+
+44
+00:03:58,400 --> 00:04:06,200
+will make this both a property of this class, so property element ref and automatically assign this value,
+
+45
+00:04:06,200 --> 00:04:09,570
+so this instance we're getting to this property.
+
+46
+00:04:09,570 --> 00:04:12,320
+Now with that, we got access to the element,
+
+47
+00:04:12,440 --> 00:04:18,260
+now we can use it here in our constructor for example, access the native element and then do something
+
+48
+00:04:18,260 --> 00:04:23,650
+with it. Though a better place than the constructor is onInit
+
+49
+00:04:23,840 --> 00:04:30,810
+and just like the component, the directive also has the ngOnInit lifecycle hook.
+
+50
+00:04:31,790 --> 00:04:38,590
+So here, I can therefore add ngOnInit and in there, we could access element ref,
+
+51
+00:04:38,690 --> 00:04:44,270
+that's the shortcut which automatically gave me this property, access the native element and there access
+
+52
+00:04:44,270 --> 00:04:53,250
+the style and maybe the background color and set this equal to green so that we can see something changed.
+
+53
+00:04:54,090 --> 00:04:59,130
+So what we're doing here is we're getting access to the element the directive was placed on, getting access
+
+54
+00:04:59,130 --> 00:05:03,010
+to that exact element and then we're overriding the style of this element,
+
+55
+00:05:03,030 --> 00:05:05,760
+now let's use this directive. To use it,
+
+56
+00:05:05,790 --> 00:05:07,660
+we have to do two things.
+
+57
+00:05:07,950 --> 00:05:14,060
+First of all like for a component, we have to inform Angular that we have a new directive.
+
+58
+00:05:14,190 --> 00:05:19,130
+Just like with components, it doesn't scan all our files, so it doesn't know.
+
+59
+00:05:19,140 --> 00:05:27,930
+So we have to go to app module and here in declarations, we have to add our BasicHighlightDirective
+
+60
+00:05:28,140 --> 00:05:34,500
+and also add the import pointing to the basic-highlight folder and there to the BasicHighlightDirective
+
+61
+00:05:34,560 --> 00:05:35,940
+file.
+
+62
+00:05:35,940 --> 00:05:40,560
+Now with this, we can use the directive in our app since we informed Angular,
+
+63
+00:05:40,590 --> 00:05:46,560
+now let's use it in our app.component.html file and here below all our lists,
+
+64
+00:05:46,650 --> 00:05:54,960
+I will simply add a new paragraph, style me with basic directive, something like that and now to this
+
+65
+00:05:54,960 --> 00:05:59,130
+paragraph, I can add appBasicHighlight, my own selector.
+
+66
+00:05:59,160 --> 00:06:00,950
+We don't need to set any value
+
+67
+00:06:01,080 --> 00:06:08,690
+and importantly, we don't use square brackets because as I already emphasized, the directive name is just
+
+68
+00:06:08,690 --> 00:06:09,630
+a selector
+
+69
+00:06:09,630 --> 00:06:13,820
+we set up here and the square brackets here are not part of that name,
+
+70
+00:06:13,830 --> 00:06:17,580
+it's part of this selector style telling Angular please
+
+71
+00:06:17,670 --> 00:06:25,390
+select it as an attribute on an element and that's just how we add it here, like an attribute of the paragraph.
+
+72
+00:06:25,410 --> 00:06:32,850
+Now with that if we save this, we indeed see a green paragraph below our list because our directive is
+
+73
+00:06:32,850 --> 00:06:34,270
+doing its job here,
+
+74
+00:06:34,320 --> 00:06:38,390
+it's styling it, so that's our first basic attribute directive.
+
+75
+00:06:38,460 --> 00:06:39,870
+We can enhance this though.
+

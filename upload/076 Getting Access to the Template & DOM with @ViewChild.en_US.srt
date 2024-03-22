@@ -1,0 +1,232 @@
+1
+00:00:02,460 --> 00:00:06,070
+In the last lecture we learned about local references.
+
+2
+00:00:06,120 --> 00:00:15,000
+Now there is also another way of getting access to local references or to any element actually directly
+
+3
+00:00:15,000 --> 00:00:17,270
+from within our typescript code.
+
+4
+00:00:17,270 --> 00:00:23,930
+Right now we're passing the reference here when we serve and we call a method and that works fine.
+
+5
+00:00:24,180 --> 00:00:29,730
+But sometimes you want to get access before we call the method and there is a nice old decorator we
+
+6
+00:00:29,730 --> 00:00:32,670
+can use in typescript to get this access.
+
+7
+00:00:32,700 --> 00:00:40,200
+Let's do the same 40 server content so we're able to quickly duplicate that input and comment outa old
+
+8
+00:00:40,200 --> 00:00:47,610
+solution using two way binding and the new solution will not use to where binding but instead this will
+
+9
+00:00:47,610 --> 00:00:52,880
+now also have a local reference these server content input maybe.
+
+10
+00:00:53,310 --> 00:01:01,050
+Now in the cockpit component I will also comment out the old new server content here and I will add
+
+11
+00:01:01,110 --> 00:01:10,940
+a new property which I'll name server content input now server content input like this is just a property
+
+12
+00:01:11,310 --> 00:01:14,830
+but we can add at view child in front of it.
+
+13
+00:01:14,850 --> 00:01:21,330
+This decorator with parentheses and we need to import view child from at angular core.
+
+14
+00:01:22,320 --> 00:01:24,480
+Now view child like this won't work.
+
+15
+00:01:24,480 --> 00:01:29,240
+We need to pass an argument here and this argument actually is.
+
+16
+00:01:29,310 --> 00:01:36,450
+Lecture or off to element how we want to select the element and select or now not like a CSX selector.
+
+17
+00:01:36,450 --> 00:01:44,370
+But for example we can simply pass as a string the name of a local reference so server content input
+
+18
+00:01:44,550 --> 00:01:46,990
+could now be passed as a string.
+
+19
+00:01:47,370 --> 00:01:53,100
+If you don't want to pass a string but want to select a component you could simply pass to component
+
+20
+00:01:53,130 --> 00:01:54,480
+type here.
+
+21
+00:01:54,480 --> 00:02:00,390
+So in the cockpit we don't use any other components but in the app component we could pass cockpit component
+
+22
+00:02:00,450 --> 00:02:07,230
+so to type like this not like a string to get access to the first occurrence of this cockpit component
+
+23
+00:02:07,290 --> 00:02:08,970
+in the app component.
+
+24
+00:02:08,970 --> 00:02:15,420
+But here I'll switch this back to getting access to the local reference which probably is the use case
+
+25
+00:02:15,420 --> 00:02:17,010
+you will see the most often.
+
+26
+00:02:17,460 --> 00:02:23,470
+And with that we now get access to our server content input.
+
+27
+00:02:23,490 --> 00:02:25,580
+Now what does this actually hold.
+
+28
+00:02:25,590 --> 00:02:34,370
+Then let's quickly comment out this codes that it doesn't break and let's log this server content input
+
+29
+00:02:34,370 --> 00:02:39,750
+so our property here which is kind of set through view child.
+
+30
+00:02:39,750 --> 00:02:45,750
+So with this if at all to comment this out down here so that we can run our app and if I now safe this
+
+31
+00:02:45,750 --> 00:02:51,720
+and we go back to our application and I enter something here and I click ad server we see that this
+
+32
+00:02:51,720 --> 00:02:53,730
+is of type element ref.
+
+33
+00:02:53,970 --> 00:03:00,120
+So unlike the local reference we pass directly from the template why the method which was the element
+
+34
+00:03:00,120 --> 00:03:01,340
+itself.
+
+35
+00:03:01,440 --> 00:03:06,010
+This is of type element ref so we can set this type here.
+
+36
+00:03:06,120 --> 00:03:13,090
+Element ref a reference to that element element ref needs to be imported from at the angular core it's
+
+37
+00:03:13,090 --> 00:03:14,610
+the angular type.
+
+38
+00:03:15,420 --> 00:03:23,040
+So this element ref however has a useful property we can use and that steam native element property
+
+39
+00:03:23,820 --> 00:03:26,710
+we can use server content loops.
+
+40
+00:03:26,760 --> 00:03:34,170
+This server content input here and then native element to get access to the underlying element which
+
+41
+00:03:34,170 --> 00:03:38,820
+now has a value because this will now be the input element.
+
+42
+00:03:38,820 --> 00:03:43,560
+Now we can do the same of course for the on app blueprint method.
+
+43
+00:03:43,560 --> 00:03:52,110
+And with this we get direct access to elements in our Dom in our template through at view child.
+
+44
+00:03:52,110 --> 00:04:00,320
+And you should see that this now works again if we Andrews am content here and collect the buttons works
+
+45
+00:04:00,320 --> 00:04:01,160
+perfectly.
+
+46
+00:04:01,160 --> 00:04:08,780
+Now without two way binding but with local references past two methods or local references fetched through
+
+47
+00:04:08,900 --> 00:04:10,400
+view child.
+
+48
+00:04:10,820 --> 00:04:17,810
+Now one important thing to watch out for is you should not change the element fruit is because of course
+
+49
+00:04:18,140 --> 00:04:25,250
+you could use our server content input the native element and then set value to something right.
+
+50
+00:04:25,280 --> 00:04:26,470
+You can't do this.
+
+51
+00:04:26,600 --> 00:04:32,600
+And if we actually do this like this and I click ads or a blueprint you see something was now added
+
+52
+00:04:32,600 --> 00:04:33,680
+here.
+
+53
+00:04:33,680 --> 00:04:36,740
+I strongly recommend not doing this.
+
+54
+00:04:36,740 --> 00:04:43,430
+You should not access to DRM like this angler offers you a better way of accessing the Dom and you will
+
+55
+00:04:43,430 --> 00:04:46,160
+learn about this in the directives section.
+
+56
+00:04:46,160 --> 00:04:51,030
+Generally you should use the other tools like string interpolation and property binding if you want
+
+57
+00:04:51,030 --> 00:04:55,640
+to output something in the DOM and not directly mess with any element.
+
+58
+00:04:55,660 --> 00:04:59,750
+You can get even though if you have gotten them through angular.
+

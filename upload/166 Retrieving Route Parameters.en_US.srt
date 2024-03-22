@@ -1,0 +1,172 @@
+1
+00:00:02,320 --> 00:00:06,010
+So we added our routes for the edit component,
+
+2
+00:00:06,010 --> 00:00:11,980
+now let's go to that component and retrieve the ID and therefore determine whether we are in editMode
+
+3
+00:00:12,010 --> 00:00:13,480
+or not.
+
+4
+00:00:13,480 --> 00:00:21,610
+I will inject the ActivatedRoute in there as you learned it before from @angular/router and in 
+
+5
+00:00:21,610 --> 00:00:22,230
+ngOnInit,
+
+6
+00:00:22,240 --> 00:00:29,050
+this is a good place to now retrieve the ID. As before, I want to do this dynamically,
+
+7
+00:00:29,070 --> 00:00:33,730
+so I will use my route and the params observable and subscribe to that
+
+8
+00:00:33,820 --> 00:00:41,080
+and here I will receive my params which are of type params and here I then want to retrieve the ID
+
+9
+00:00:41,200 --> 00:00:43,510
+on which I'm currently working.
+
+10
+00:00:43,510 --> 00:00:50,500
+I will store the ID here in a property named or not named, named ID but of type number,
+
+11
+00:00:50,530 --> 00:00:59,380
+so here I will set this ID equal to plus to convert it into a number, params ID because that's the name
+
+12
+00:00:59,380 --> 00:01:03,200
+of our dynamic parameter in our route set up, right?
+
+13
+00:01:03,640 --> 00:01:07,150
+With that, we retrieve that ID here
+
+14
+00:01:07,180 --> 00:01:11,850
+but I also want to find out whether I'm editing the recipe or creating a new one.
+
+15
+00:01:11,980 --> 00:01:16,180
+I actually want to store this information in a new property, editMode
+
+16
+00:01:16,180 --> 00:01:18,700
+maybe, I'll set it to false initially,  
+
+17
+00:01:18,730 --> 00:01:22,370
+so initially you could say we assume that we are creating a new recipe,
+
+18
+00:01:22,390 --> 00:01:24,360
+we are not in editMode.
+
+19
+00:01:24,940 --> 00:01:29,170
+Now I will check this whenever the parameters change,
+
+20
+00:01:29,320 --> 00:01:32,080
+then I will assign a new value to editMode
+
+21
+00:01:32,230 --> 00:01:36,430
+and here I will simply assign the value of the following check,
+
+22
+00:01:36,490 --> 00:01:44,470
+I want to see if params has an ID property. So if it has one, then this will actually be a string with
+
+23
+00:01:44,470 --> 00:01:47,720
+the ID, otherwise it will be undefined.
+
+24
+00:01:48,100 --> 00:01:52,770
+So by comparing it to null and checking if it is not null, I'm checking
+
+25
+00:01:52,780 --> 00:02:02,050
+does it have the ID because params and that there, the ID will only be not undefined if we are in edit
+
+26
+00:02:02,050 --> 00:02:04,700
+mode because then an ID will be present.
+
+27
+00:02:04,990 --> 00:02:07,150
+If this check returns true,
+
+28
+00:02:07,210 --> 00:02:14,380
+so if the ID indeed is undefined and therefore equal to null, this will return false because I'm checking
+
+29
+00:02:14,380 --> 00:02:21,820
+the opposite and therefore, we are in new mode. And we can check this by simply logging it in the console
+
+30
+00:02:21,820 --> 00:02:23,080
+here, editMode,
+
+31
+00:02:23,230 --> 00:02:28,690
+let's see if this works. We're at zero edit here and it returns true
+
+32
+00:02:28,780 --> 00:02:32,370
+and now we're at new and it returns false.
+
+33
+00:02:32,410 --> 00:02:33,690
+So that seems to work,
+
+34
+00:02:33,700 --> 00:02:38,140
+this is a nice way of checking in which mode we are.
+
+35
+00:02:38,140 --> 00:02:43,250
+So with that, we are able to retrieve the ID of the element we want to edit and to find out whether we are
+
+36
+00:02:43,250 --> 00:02:45,060
+in editMode or not,
+
+37
+00:02:45,190 --> 00:02:51,310
+now I want to make this edit link here work and the new recipe link because these are both things which
+
+38
+00:02:51,340 --> 00:02:52,870
+are not working as of now,
+
+39
+00:02:52,870 --> 00:02:54,800
+let's work on this next.
+
+40
+00:02:54,850 --> 00:03:00,070
+And actually this is a nice challenge for you, make these links work.
+
+41
+00:03:00,070 --> 00:03:08,140
+Make sure that when we click this link or this button, we get taken to the recipes new page or the recipes
+
+42
+00:03:08,200 --> 00:03:11,680
+edit page for that respective recipe we had loaded.
+
+43
+00:03:11,680 --> 00:03:16,350
+It's a nice challenge for you, in the next lecture we can view my solution together.
+

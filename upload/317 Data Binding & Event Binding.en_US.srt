@@ -1,0 +1,252 @@
+1
+00:00:02,520 --> 00:00:04,230
+Of course we see no message here
+
+2
+00:00:04,230 --> 00:00:12,420
+and of course we can't dismiss it by clicking because in our alert component here, we do have @input
+
+3
+00:00:12,540 --> 00:00:19,170
+and @output but we're not using property or event binding on our component at the moment because we created
+
+4
+00:00:19,170 --> 00:00:20,160
+it here in code,
+
+5
+00:00:20,250 --> 00:00:24,060
+we can't use the square brackets or the parentheses syntax here.
+
+6
+00:00:24,060 --> 00:00:31,320
+So how can we now pass data into that component or listen to an event or remove that?
+
+7
+00:00:31,320 --> 00:00:40,350
+Well, we simply have to store the component that is created here in some constant or a variable with which
+
+8
+00:00:40,350 --> 00:00:41,940
+we can work thereafter.
+
+9
+00:00:41,940 --> 00:00:43,730
+So here, I will store my component,
+
+10
+00:00:43,740 --> 00:00:46,640
+however it's just a reference, a pointer at that component
+
+11
+00:00:46,830 --> 00:00:50,370
+and therefore I'll name it component ref in this constant.
+
+12
+00:00:50,370 --> 00:00:53,090
+Now we can interact with that component.
+
+13
+00:00:53,370 --> 00:00:56,210
+We can use our component ref here
+
+14
+00:00:56,580 --> 00:01:02,310
+and this has an instance property which gives us access to the concrete instance of this component that
+
+15
+00:01:02,310 --> 00:01:04,600
+was created here.
+
+16
+00:01:04,620 --> 00:01:12,030
+Now this instance should have the properties we added to our component, so it should have a message
+
+17
+00:01:12,120 --> 00:01:18,060
+and a close property because both here are properties of your alert component. And indeed, if we type a
+
+18
+00:01:18,060 --> 00:01:21,340
+dot here, you see close and message here.
+
+19
+00:01:21,360 --> 00:01:27,840
+So now we can set message here equal to the message we're getting as a string and this should ensure
+
+20
+00:01:27,840 --> 00:01:29,970
+that the message is displayed.
+
+21
+00:01:30,000 --> 00:01:36,810
+Let's give this a try and let's save everything and try logging in with wrong credentials again and
+
+22
+00:01:36,810 --> 00:01:38,470
+indeed here is our message,
+
+23
+00:01:38,550 --> 00:01:39,750
+now that's great.
+
+24
+00:01:39,780 --> 00:01:47,860
+Now for closing, we simply manually have to listen to our close event here and for that, I again reach
+
+25
+00:01:47,860 --> 00:01:55,170
+out to the instance and then to close and remember that close in the end here is just an event emitter.
+
+26
+00:01:55,240 --> 00:02:01,350
+Now you learned that you should use event emitter basically only here when it's decorated with @output
+
+27
+00:02:01,450 --> 00:02:07,870
+and whenever you manually subscribe to something, you would want to use a subject, here is basically the
+
+28
+00:02:07,960 --> 00:02:13,360
+only exception to that rule. Since this is a component where we have @output, because we could use this
+
+29
+00:02:13,360 --> 00:02:14,500
+component by a selector as
+
+30
+00:02:14,500 --> 00:02:16,710
+well, we have an event emitter
+
+31
+00:02:16,870 --> 00:02:25,450
+and yet here, I manually want to subscribe and here, this is OK. So here we subscribe to this
+
+32
+00:02:25,830 --> 00:02:31,330
+and whenever this fires, we'll run this function which I pass to subscribe
+
+33
+00:02:31,680 --> 00:02:39,930
+and in there, we essentially want to clear that component reference right. Therefore, let's first of
+
+34
+00:02:39,930 --> 00:02:48,550
+all store the subscription because we should manage this manually here, private close sub which is of
+
+35
+00:02:48,550 --> 00:02:55,470
+type subscription which is imported from RxJS because the event emitter from Angular is based on
+
+36
+00:02:55,470 --> 00:02:59,110
+the subject actually and therefore, it has the same type of subscription.
+
+37
+00:02:59,160 --> 00:03:08,090
+So here, I'll store this close sub and now when we do close it, so when we make it into this function
+
+38
+00:03:08,090 --> 00:03:16,370
+here, we can call this close sub unsubscribe because I want to clear that subscription, because I know
+
+39
+00:03:16,370 --> 00:03:18,470
+that this component will be removed
+
+40
+00:03:20,290 --> 00:03:24,700
+and of course to remove the component, we use our host
+
+41
+00:03:24,700 --> 00:03:30,240
+view container ref and then we can call clear again, to clear all content that was rendered there.
+
+42
+00:03:30,280 --> 00:03:31,240
+Let's give this a try,
+
+43
+00:03:35,720 --> 00:03:38,270
+click on the backdrop and it's gone.
+
+44
+00:03:38,280 --> 00:03:39,780
+Let's try this again,
+
+45
+00:03:41,220 --> 00:03:42,900
+let's also inspect it in the DOM.
+
+46
+00:03:42,900 --> 00:03:45,030
+Here we can see, it is being rendered,
+
+47
+00:03:45,030 --> 00:03:48,090
+that's the app alert component, if I click close,
+
+48
+00:03:48,090 --> 00:03:50,180
+that indeed is removed from the DOM.
+
+49
+00:03:50,250 --> 00:03:56,610
+So this works, one tiny piece of extra clean up I want to do is I also want to clear that subscription
+
+50
+00:03:56,610 --> 00:03:57,000
+here
+
+51
+00:03:57,150 --> 00:04:02,700
+if we get rid of the auth component because if that auth component is removed, we also don't want to have
+
+52
+00:04:02,700 --> 00:04:06,730
+that old subscription here sit around anymore.
+
+53
+00:04:06,720 --> 00:04:16,370
+So I will implement onDestroy here into the auth component, onDestroy of course is imported from 
+
+54
+00:04:16,400 --> 00:04:17,490
+@angular/core
+
+55
+00:04:17,730 --> 00:04:22,910
+and with onDestroy imported, here we have to add ngOnDestroy
+
+56
+00:04:22,910 --> 00:04:28,190
+and there I want to check if we have an active close subscription and if we do have one because we
+
+57
+00:04:28,190 --> 00:04:30,380
+only have one if we show that error alert,
+
+58
+00:04:30,470 --> 00:04:32,920
+therefore we need to check for the existence of this first,
+
+59
+00:04:33,080 --> 00:04:43,110
+if we do have one, then I want to unsubscribe and now this ensures that when we do see that error here
+
+60
+00:04:43,140 --> 00:04:50,010
+and we somehow would get rid of that auth component, we have no real way but still, then we would not have
+
+61
+00:04:50,010 --> 00:04:52,210
+that ongoing subscription anymore.
+
+62
+00:04:52,290 --> 00:04:59,160
+So with that, now I can close this and I'll try again with correct credentials and this now looks way better.
+
+63
+00:04:59,160 --> 00:05:03,360
+So this is how you can dynamically create a component from inside code.
+

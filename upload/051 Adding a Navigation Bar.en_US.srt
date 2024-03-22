@@ -1,0 +1,276 @@
+1
+00:00:02,600 --> 00:00:06,650
+So we added all the components we created to our templates,
+
+2
+00:00:06,680 --> 00:00:09,700
+now let's fine tune them and add the real content
+
+3
+00:00:09,710 --> 00:00:12,190
+we want to have there, starting in the header.
+
+4
+00:00:12,260 --> 00:00:15,450
+Of course I don't want to have this h1 tag here,
+
+5
+00:00:15,470 --> 00:00:21,890
+instead I will use a couple of Bootstrap classes to create a nice looking header. So I'll create a wrapping
+
+6
+00:00:21,980 --> 00:00:28,810
+nav element and on this element, I'll add the navbar class and the navbar-default.
+
+7
+00:00:28,820 --> 00:00:35,140
+Again, these are just Bootstrap classes which will give me this default Bootstrap header. In there,
+
+8
+00:00:35,150 --> 00:00:42,890
+I'll place a container-fluid div to have my own view container basically in there and the first thing
+
+9
+00:00:42,890 --> 00:00:44,690
+I want to have here is a header.
+
+10
+00:00:44,810 --> 00:00:47,800
+For that, we get the navbar header class
+
+11
+00:00:47,810 --> 00:00:51,550
+we can add to a div and in this div, I want to have a clickable header,
+
+12
+00:00:51,560 --> 00:00:54,980
+so I'll add an anchor tag pointing to hash
+
+13
+00:00:54,980 --> 00:01:00,140
+for now, we'll later of course add a route there once we learned how to do this and this should have
+
+14
+00:01:00,140 --> 00:01:06,610
+the class navbar-brand, to give this this brand-like text style,
+
+15
+00:01:06,660 --> 00:01:15,030
+I'll say recipe book here since this is the name of our application. So that's the header part of our
+
+16
+00:01:15,030 --> 00:01:17,850
+header, so this main brand part,
+
+17
+00:01:17,880 --> 00:01:20,730
+now let's work on the actual links. For this,
+
+18
+00:01:20,730 --> 00:01:27,200
+I'll add a div which will receive the collaps class and then the navbar-collaps class.
+
+19
+00:01:27,240 --> 00:01:29,780
+Now, I won't really use the collapse feature,
+
+20
+00:01:29,790 --> 00:01:31,110
+I won't add a hamburger
+
+21
+00:01:31,110 --> 00:01:38,040
+icon here since we will not have many links on our header anyways but this gives us some nice styles
+
+22
+00:01:38,130 --> 00:01:43,080
+and of course, collaps here should have an e at the end, like that.
+
+23
+00:01:43,380 --> 00:01:51,330
+So in here, I now want to have a group of list items, so a group of links in the end, this will be an unordered
+
+24
+00:01:51,330 --> 00:01:57,030
+list with the CSS classes, nav and then navbar-nav.
+
+25
+00:01:57,270 --> 00:02:03,300
+So make sure to create this unordered list with these classes and in there, if we add some list items,
+
+26
+00:02:03,300 --> 00:02:09,180
+they will actually sit next to each other, so they will automatically be positioned correctly by Bootstrap.
+
+27
+00:02:09,630 --> 00:02:12,070
+Each list item should hold a link,
+
+28
+00:02:12,270 --> 00:02:19,510
+so here I'll add an anchor tag, also pointing to just hash for now, one for the recipes section and
+
+29
+00:02:19,510 --> 00:02:23,820
+the second one for the shopping list section.
+
+30
+00:02:23,820 --> 00:02:27,840
+Now with that added, I'll add another area in my header here,
+
+31
+00:02:27,870 --> 00:02:34,530
+this will be another unordered list which will receive the classes, nav and now also navbar-nav
+
+32
+00:02:34,530 --> 00:02:41,850
+like before but then also navbar-right to position these links at the right and actually, this will
+
+33
+00:02:41,850 --> 00:02:46,970
+only be one link here which will receive a class of dropdown, this list item
+
+34
+00:02:46,980 --> 00:02:53,910
+will, because later, we will add our own directive which will turn this into a working dropdown where we
+
+35
+00:02:53,910 --> 00:02:59,430
+will then choose some options to store our data on a server, something we'll also implement later
+
+36
+00:02:59,430 --> 00:03:02,000
+in this course or fetch it from there.
+
+37
+00:03:02,040 --> 00:03:10,260
+So in the dropdown, I simply want to have my dropdown menu which when using Bootstrap is added by adding
+
+38
+00:03:10,350 --> 00:03:14,720
+an unordered list with the class dropdown-menu,
+
+39
+00:03:14,730 --> 00:03:22,920
+so this will hold the items this dropdown and here, I'll add a couple of list items which all hold some
+
+40
+00:03:22,920 --> 00:03:28,390
+links pointing to just hash for now, one for saving data
+
+41
+00:03:29,380 --> 00:03:36,690
+and one for fetching data. Again this will be filled with working code later.
+
+42
+00:03:36,700 --> 00:03:38,000
+So that's my header,
+
+43
+00:03:38,050 --> 00:03:40,060
+let's save it and see how it looks.
+
+44
+00:03:41,130 --> 00:03:42,230
+Looks ok,
+
+45
+00:03:42,240 --> 00:03:45,050
+I don't see my dropdown though,
+
+46
+00:03:45,090 --> 00:03:46,680
+the brand looks off,
+
+47
+00:03:46,890 --> 00:03:49,650
+so I'm not entirely happy with that.
+
+48
+00:03:49,650 --> 00:03:51,590
+Let's see what is wrong.
+
+49
+00:03:51,630 --> 00:03:58,620
+The brand is not working because that should be navbar, not have a h in between, so if you fix this, the
+
+50
+00:03:58,620 --> 00:04:00,330
+brand looks all right.
+
+51
+00:04:00,330 --> 00:04:02,410
+Now what's wrong with the dropdown?
+
+52
+00:04:02,730 --> 00:04:08,350
+Well the dropdown simply misses the link we would see to open the dropdown because this unordered
+
+53
+00:04:08,370 --> 00:04:10,880
+class here simply is the content of the dropdown, 
+
+54
+00:04:10,890 --> 00:04:12,720
+we of course also need a link to trigger it.
+
+55
+00:04:12,720 --> 00:04:15,740
+So let's add an anchor tag pointing to hashtag here
+
+56
+00:04:15,900 --> 00:04:22,100
+where I will say manage, just manage maybe, you could of course change that text and this should have
+
+57
+00:04:22,260 --> 00:04:28,230
+a class of dropdown-toggle because this will be the button toggling the dropdown in the end.
+
+58
+00:04:28,340 --> 00:04:33,390
+Therefore it will have a row of button to add some accessibility to this and also required for this to
+
+59
+00:04:33,390 --> 00:04:34,860
+work correctly though
+
+60
+00:04:35,040 --> 00:04:40,860
+and with this now if we save this, we see the dropdown. It would be nice to have a little arrow next
+
+61
+00:04:40,860 --> 00:04:43,330
+to it indicating that it is a dropdown.
+
+62
+00:04:43,470 --> 00:04:50,730
+So next to manage, I'll add a span with a class of caret which will give us this arrow pointing to the
+
+63
+00:04:50,730 --> 00:04:51,360
+bottom,
+
+64
+00:04:51,390 --> 00:04:53,850
+this arrow here and now we get a dropdown.
+
+65
+00:04:53,850 --> 00:04:58,740
+It won't work if we click it because we haven't added any code which would open the dropdown,
+
+66
+00:04:58,740 --> 00:05:02,050
+we will do this after the directives section though.
+
+67
+00:05:02,400 --> 00:05:04,040
+So the header is now working,
+
+68
+00:05:04,050 --> 00:05:05,320
+with that let's move on
+
+69
+00:05:05,320 --> 00:05:07,170
+and let's work on our recipes section.
+

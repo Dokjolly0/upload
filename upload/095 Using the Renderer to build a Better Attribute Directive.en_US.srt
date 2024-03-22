@@ -1,0 +1,376 @@
+1
+00:00:02,520 --> 00:00:06,900
+In the last lecture, we created our third basic directive and it's doing its job,
+
+2
+00:00:06,910 --> 00:00:11,190
+we learned how to create a selector, how to use that selector, like an attribute
+
+3
+00:00:11,200 --> 00:00:16,540
+in this case since we set up an attribute selector and how to register it in app module, we also learned how
+
+4
+00:00:16,540 --> 00:00:19,420
+to get access to the element the directive sits on.
+
+5
+00:00:19,420 --> 00:00:25,160
+This however is not the best way of changing that style because as you might recall from some earlier
+
+6
+00:00:25,230 --> 00:00:31,310
+lecture in this course, accessing elements directly like this is not a good practice,
+
+7
+00:00:31,420 --> 00:00:38,050
+you should use a different tool which I'll show you in a second because Angular actually is also able
+
+8
+00:00:38,050 --> 00:00:44,960
+to render your templates without a DOM and then these properties might not be available.
+
+9
+00:00:44,980 --> 00:00:51,070
+It could do this when using service workers, so basically some advanced use cases but nonetheless, it's
+
+10
+00:00:51,070 --> 00:00:54,400
+not a good practice to directly access your elements.
+
+11
+00:00:54,400 --> 00:00:56,150
+How should you access them then?
+
+12
+00:00:56,500 --> 00:01:02,350
+Well there is some other helper you can inject, it's the renderer. So let's do this
+
+13
+00:01:02,830 --> 00:01:04,280
+but actually let's not do it
+
+14
+00:01:04,300 --> 00:01:05,940
+in our BasicHighlightDirective,
+
+15
+00:01:06,070 --> 00:01:12,670
+let's create a new one and for this, I will create a new one with the generate command or just g as you
+
+16
+00:01:12,670 --> 00:01:20,540
+learned with the CLI and then directive or just d and then any name of your choice and I'll name this
+
+17
+00:01:20,560 --> 00:01:22,450
+better
+
+18
+00:01:23,280 --> 00:01:25,710
+highlight.
+
+19
+00:01:25,860 --> 00:01:28,250
+So this will give us a new file or two new files.
+
+20
+00:01:28,310 --> 00:01:33,270
+I can delete the testing file and we can also put this into its own folder of course,
+
+21
+00:01:33,270 --> 00:01:35,850
+it's not the default but let's do it here,
+
+22
+00:01:36,000 --> 00:01:37,710
+better-highlight,
+
+23
+00:01:37,740 --> 00:01:44,460
+you could also create a central shared or directives folder where you store all your directives. For
+
+24
+00:01:44,460 --> 00:01:50,580
+now just for demo purposes and to have a clear separation and make this easy to see, I'll put them into individual
+
+25
+00:01:50,580 --> 00:01:57,330
+folders. So better-highlight directive here, in the app module, I will need to adjust my path since I just
+
+26
+00:01:57,330 --> 00:01:59,850
+moved it to the
+
+27
+00:02:00,880 --> 00:02:08,880
+better-highlight folder, so make sure to point to the right path in the right file then. In there we get a selector,
+
+28
+00:02:08,880 --> 00:02:10,580
+appBetterHighlight,
+
+29
+00:02:10,630 --> 00:02:13,350
+now let's inject this better tool
+
+30
+00:02:13,360 --> 00:02:21,770
+I was referring to. It's the renderer which is of type Renderer2
+
+31
+00:02:22,070 --> 00:02:26,440
+and this needs to be imported from @angular/core.
+
+32
+00:02:26,480 --> 00:02:30,570
+Now with this injected, we can use it and I will use ngOnInit again
+
+33
+00:02:30,590 --> 00:02:34,820
+to still stick to this best practice of doing initialization work there.
+
+34
+00:02:34,850 --> 00:02:39,640
+Make sure to import ngOnInit or just onInit here from @angular/core
+
+35
+00:02:39,800 --> 00:02:42,870
+and now let's implement ngOnInit here
+
+36
+00:02:43,280 --> 00:02:45,280
+and there, I can now use the renderer.
+
+37
+00:02:45,560 --> 00:02:51,470
+I do this by calling the property which I created here, the private renderer and there we get a couple
+
+38
+00:02:51,470 --> 00:02:55,730
+of helper methods we can use to work with the DOM basically.
+
+39
+00:02:55,730 --> 00:03:00,530
+Now one important method I'm interested in here is the setStyle method,
+
+40
+00:03:00,530 --> 00:03:04,700
+this method allows us to, guess what? Set the style of some element.
+
+41
+00:03:04,700 --> 00:03:10,130
+Now the problem here is for that, we need to have the element for which we want to set the style
+
+42
+00:03:10,190 --> 00:03:11,240
+and of course in Angular,
+
+43
+00:03:11,240 --> 00:03:15,160
+there are different ways of getting such an element, here in the directive,
+
+44
+00:03:15,170 --> 00:03:16,960
+it's exceptionally simple.
+
+45
+00:03:17,030 --> 00:03:21,440
+We already saw how to get one in the basic directive, the BasicHighlightDirective,
+
+46
+00:03:21,620 --> 00:03:28,310
+we can simply inject the element reference. So I'll add another private property here or argument which
+
+47
+00:03:28,310 --> 00:03:32,980
+will automatically be bound to a private property I should say which I'll name elRef
+
+48
+00:03:33,320 --> 00:03:43,160
+and this will be of type element ref which we then also, as before, need to import here, element ref from
+
+49
+00:03:43,220 --> 00:03:44,860
+@angular/core.
+
+50
+00:03:45,200 --> 00:03:47,800
+Now with this import added here,
+
+51
+00:03:47,810 --> 00:03:52,690
+now I can use this element ref here by calling this elRef
+
+52
+00:03:52,900 --> 00:03:56,850
+and here I then want to access the native element and that's important,
+
+53
+00:03:56,850 --> 00:03:59,190
+we can't pass the reference itself,
+
+54
+00:03:59,200 --> 00:04:04,490
+we need to get access to the underlying element and pass this as a first argument here to setStyle.
+
+55
+00:04:04,720 --> 00:04:10,010
+Now setStyle takes a couple of other arguments, we defined which element we want to style,
+
+56
+00:04:10,030 --> 00:04:12,830
+now we have to define which style we want to set
+
+57
+00:04:13,030 --> 00:04:17,950
+and that would be the background color in our case. With the style property defined,
+
+58
+00:04:17,950 --> 00:04:23,680
+the third argument we pass to the setStyle method is the value we want assign for this property,
+
+59
+00:04:23,680 --> 00:04:29,730
+now we could set the background color here to blue. The fourth and final argument is a flags object,
+
+60
+00:04:29,740 --> 00:04:34,680
+here we can set a couple of flags for this style and this is optional,
+
+61
+00:04:34,690 --> 00:04:35,920
+I will leave it out here.
+
+62
+00:04:36,010 --> 00:04:42,670
+What you could set here are things like if you want to add an important tag, so this exclamation mark,
+
+63
+00:04:42,670 --> 00:04:47,710
+important notation for a style to override other styles or something like that.
+
+64
+00:04:47,740 --> 00:04:51,180
+Now this however does it for my cases here
+
+65
+00:04:51,250 --> 00:04:57,490
+and now if we save this with our better-highlight directive already added to app module, we can go
+
+66
+00:04:57,490 --> 00:04:59,790
+to the app component and add it here too.
+
+67
+00:04:59,980 --> 00:05:05,320
+I will simply duplicate this paragraph here and use appBetterHighlight here,
+
+68
+00:05:05,350 --> 00:05:12,940
+our new directive, again which is available through the selector since we also added it to the app module
+
+69
+00:05:13,300 --> 00:05:17,260
+and then here, I want to style this with a better directive.
+
+70
+00:05:17,470 --> 00:05:24,340
+Now if we save this and let it recompile and reload the browser, we already see the blue background here
+
+71
+00:05:24,370 --> 00:05:25,890
+behind this paragraph.
+
+72
+00:05:25,900 --> 00:05:32,050
+So our new directive here, the better directive is working and now we're using the renderer which is a
+
+73
+00:05:32,050 --> 00:05:34,960
+better approach of accessing the DOM.
+
+74
+00:05:35,060 --> 00:05:37,500
+Now why is it a better approach?
+
+75
+00:05:37,770 --> 00:05:42,360
+Angular is not limited to running in the browser here,
+
+76
+00:05:42,520 --> 00:05:45,580
+it for example also works with service workers
+
+77
+00:05:45,700 --> 00:05:49,800
+and these are environments where you might not have access to the DOM.
+
+78
+00:05:49,840 --> 00:05:56,350
+So if you try to change the DOM as you did here in basic highlight by directly accessing the native
+
+79
+00:05:56,350 --> 00:06:00,860
+element and the style of this element, you might get an error in some circumstances.
+
+80
+00:06:00,940 --> 00:06:07,030
+Now to be honest, in most circumstances you probably don't and you probably also know if your app is
+
+81
+00:06:07,030 --> 00:06:12,970
+going to run in the browser or not, still it is a better practice to use the renderer for DOM access
+
+82
+00:06:13,210 --> 00:06:16,640
+and to use the methods the renderer provides to access the DOM.
+
+83
+00:06:16,900 --> 00:06:22,500
+You can learn more about the renderer in an article after this lecture here if you are interested.
+
+84
+00:06:22,840 --> 00:06:29,920
+Just another note, I had to rerecord this part here because the renderer type here changed from RendererV2
+
+85
+00:06:29,920 --> 00:06:31,790
+to just Renderer2
+
+86
+00:06:31,820 --> 00:06:38,260
+as did some arguments you could pass to setStyle. Therefore in the other videos in this section,
+
+87
+00:06:38,560 --> 00:06:42,670
+you will see that this code looks slightly different, not by much though.
+
+88
+00:06:42,730 --> 00:06:44,050
+Don't get confused by this,
+
+89
+00:06:44,050 --> 00:06:48,850
+the code you see here is the code you should use and the code which will work, all the other code shown
+
+90
+00:06:48,850 --> 00:06:50,980
+in the section of course is not changed,
+
+91
+00:06:50,980 --> 00:06:52,070
+it's still the same,
+
+92
+00:06:52,150 --> 00:06:59,070
+it's only this renderer setStyle method and the renderer type which is now Renderer2 and not RendererV2
+
+93
+00:06:59,080 --> 00:07:00,680
+as you will see in the other videos.
+
+94
+00:07:00,850 --> 00:07:02,590
+With that, let's move on.
+

@@ -1,0 +1,440 @@
+1
+00:00:02,340 --> 00:00:05,440
+So now the alert will not be shown here
+
+2
+00:00:05,490 --> 00:00:08,250
+by using ngIf and hence I'll comment this out as well
+
+3
+00:00:08,610 --> 00:00:11,370
+and I'll not add anything to the DOM here,
+
+4
+00:00:11,370 --> 00:00:19,890
+for now at least. Now my goal is to instead create that alert component dynamically and show it dynamically
+
+5
+00:00:19,890 --> 00:00:21,510
+and dynamically is the wrong word
+
+6
+00:00:21,510 --> 00:00:25,840
+maybe, I mean programmatically, from inside code.
+
+7
+00:00:25,920 --> 00:00:34,020
+Now for that, we first of all need a new method because now we have to write some code to show the error
+
+8
+00:00:34,080 --> 00:00:34,770
+alert
+
+9
+00:00:34,770 --> 00:00:36,630
+and I'll turn this into a private method,
+
+10
+00:00:36,690 --> 00:00:41,780
+show error alert.
+
+11
+00:00:41,920 --> 00:00:47,940
+I added this to the auth component and show error alert has to be called whenever we have an error.
+
+12
+00:00:47,950 --> 00:00:54,580
+So here, when we set the error, we now have to call this show error alert
+
+13
+00:00:54,700 --> 00:01:00,670
+and of course we could now also change the get general flow, to not set the error globally on a property
+
+14
+00:01:00,670 --> 00:01:04,610
+here but instead, pass it here into show error alert
+
+15
+00:01:04,690 --> 00:01:06,320
+and that is what I will do here.
+
+16
+00:01:06,340 --> 00:01:09,570
+I'll still set it globally because we use that in the past
+
+17
+00:01:09,580 --> 00:01:16,360
+but we wouldn't need that now because this error property now has no real use because we're not using
+
+18
+00:01:16,360 --> 00:01:17,810
+it in the template anymore.
+
+19
+00:01:17,830 --> 00:01:23,010
+Still I'll leave it here because we used it in the past but you don't need it anymore for this approach.
+
+20
+00:01:23,200 --> 00:01:27,020
+Instead, show error alert will receive the message,
+
+21
+00:01:27,250 --> 00:01:34,660
+so let's accept it here, it will be of type string and in here, the goal now is to dynamically create our
+
+22
+00:01:35,140 --> 00:01:41,390
+alert component. Now for this, you manually need to instantiate a component.
+
+23
+00:01:41,530 --> 00:01:49,080
+Now a simple approach you could take would be that you import your alert component here,
+
+24
+00:01:49,090 --> 00:01:56,470
+so you go to the shared folder, import it from the alert folder and then from there, you import the alert
+
+25
+00:01:56,470 --> 00:01:57,460
+component.
+
+26
+00:01:57,460 --> 00:02:02,530
+Now we have access to the alert component which we defined in that file and now of course, you could
+
+27
+00:02:02,530 --> 00:02:08,620
+think that you simply create an alert component and save it in an alertCmp constant maybe by calling
+
+28
+00:02:08,620 --> 00:02:09,960
+new alert component,
+
+29
+00:02:10,030 --> 00:02:11,980
+it is a class after all.
+
+30
+00:02:11,980 --> 00:02:16,720
+Now this is a valid TypeScript code but it is not valid Angular code,
+
+31
+00:02:16,720 --> 00:02:21,950
+this will not throw an error if you compile it but it also won't work in any way.
+
+32
+00:02:21,970 --> 00:02:27,760
+You can't work with that alert component then in the way Angular needs to work with it because Angular
+
+33
+00:02:27,760 --> 00:02:32,980
+does a lot more than just create an object when it instantiate a component.
+
+34
+00:02:32,980 --> 00:02:34,300
+It needs to wire it up,
+
+35
+00:02:34,300 --> 00:02:37,630
+it needs to wire it up to change detection into the DOM,
+
+36
+00:02:37,630 --> 00:02:44,110
+this here would be a normal Javascript object and that is not what Angular needs. So therefore, you can't
+
+37
+00:02:44,110 --> 00:02:46,770
+create your own component like that,
+
+38
+00:02:46,840 --> 00:02:50,260
+this here won't work.
+
+39
+00:02:50,290 --> 00:02:57,550
+Instead, you need to let Angular create this component and for that, Angular gives you a tool, the component
+
+40
+00:02:57,730 --> 00:03:00,730
+factory. To get access to that tool,
+
+41
+00:03:00,730 --> 00:03:05,170
+you need to inject something and you don't inject the component factory itself,
+
+42
+00:03:05,200 --> 00:03:10,000
+instead you inject a component factory resolver.
+
+43
+00:03:10,240 --> 00:03:13,150
+Now of course, it is up to you how you name that argument
+
+44
+00:03:13,210 --> 00:03:18,260
+and again I'm using that trick here where this automatically gets stored in a private property.
+
+45
+00:03:18,250 --> 00:03:24,760
+It's up to you how you name this but the type thereafter is component factory resolver and that's really
+
+46
+00:03:24,760 --> 00:03:31,000
+important, it has to be the resolver, not the component factory itself. Component factory resolver is then
+
+47
+00:03:31,000 --> 00:03:33,700
+imported from @angular/core.
+
+48
+00:03:33,700 --> 00:03:40,910
+Now with the component factory resolver injected, in show error alert, you now use that resolver
+
+49
+00:03:40,910 --> 00:03:43,540
+to get access to a component factory,
+
+50
+00:03:43,540 --> 00:03:44,730
+yes, sounds strange right?
+
+51
+00:03:44,740 --> 00:03:46,910
+But this is how the flow works.
+
+52
+00:03:46,960 --> 00:03:52,630
+So there, you now use the component factory resolver and there, you have a resolve component factory
+
+53
+00:03:52,630 --> 00:03:57,720
+method which gives you access to a component factory as provided by Angular.
+
+54
+00:03:57,730 --> 00:04:03,340
+Now to that factory, you have to pass the type of your component, which in our case here would be the
+
+55
+00:04:03,610 --> 00:04:04,890
+alert component.
+
+56
+00:04:04,900 --> 00:04:06,720
+Now you don't instantiate this,
+
+57
+00:04:06,730 --> 00:04:09,570
+you don't have new in front of this or anything like that,
+
+58
+00:04:09,670 --> 00:04:11,240
+you just pass in the type
+
+59
+00:04:11,420 --> 00:04:18,760
+so that Angular knows where to look for that component which it then should create for you. This method
+
+60
+00:04:18,760 --> 00:04:28,360
+here will return a component factory or to be precise, an alert component factory, not the component itself,
+
+61
+00:04:28,510 --> 00:04:30,160
+just the factory.
+
+62
+00:04:30,190 --> 00:04:35,920
+So this now is essentially an object that knows how to create alert components, which is a great first
+
+63
+00:04:35,920 --> 00:04:37,620
+step at least.
+
+64
+00:04:37,750 --> 00:04:43,390
+Now with that factory, we can use that factory to create a concrete component
+
+65
+00:04:43,390 --> 00:04:49,820
+but for this, we also need a place where we can attach it in our DOM and we don't have that place yet.
+
+66
+00:04:49,870 --> 00:04:56,800
+We need to tell Angular where we want to add that component and now you could think that you use some
+
+67
+00:04:56,800 --> 00:05:01,300
+way of getting access to some element, let's say here we want to add it, so we added div with a local
+
+68
+00:05:01,300 --> 00:05:02,010
+reference
+
+69
+00:05:02,110 --> 00:05:08,260
+add here and with @ViewChild, we could get access to that as you learned earlier in the course but this
+
+70
+00:05:08,260 --> 00:05:09,910
+is not how it works.
+
+71
+00:05:10,120 --> 00:05:15,760
+Angular needs a view container ref which you might remember from the directives deep dive section. A
+
+72
+00:05:15,800 --> 00:05:23,050
+view container ref is essentially an object managed internally by Angular, which gives Angular a reference,
+
+73
+00:05:23,170 --> 00:05:25,650
+a pointer to a place in the DOM
+
+74
+00:05:25,660 --> 00:05:31,030
+you could say, with which it can interact and this object has more than just like the coordinates where
+
+75
+00:05:31,030 --> 00:05:31,760
+it sits,
+
+76
+00:05:31,840 --> 00:05:38,860
+it has methods like "hey, please create a component here" and we need something like this. Now to get access
+
+77
+00:05:38,860 --> 00:05:41,660
+to such a view container reference,
+
+78
+00:05:41,680 --> 00:05:48,250
+there is a nice trick or actually not a hack, it's the official approach for getting access to it,
+
+79
+00:05:48,370 --> 00:05:56,490
+we can create a helper directive. Now that directive could be named placeholder, you can name it however
+
+80
+00:05:56,490 --> 00:06:00,310
+you want and I'll name it placeholder.directive.ts,
+
+81
+00:06:00,330 --> 00:06:02,740
+that's the file name and in there,
+
+82
+00:06:02,750 --> 00:06:09,570
+we export a class, I created this in a shared folder by the way. I export a class, placeholder directive
+
+83
+00:06:10,610 --> 00:06:14,820
+and that will receive the @directive decorator of course.
+
+84
+00:06:14,840 --> 00:06:26,100
+Now this @directive decorator needs one thing and that's the selector. The selector here should be an attribute
+
+85
+00:06:26,100 --> 00:06:32,010
+selector, so that we can add this directive as an attribute to any element and I'll name this app
+
+86
+00:06:35,180 --> 00:06:37,070
+placeholder, like this,
+
+87
+00:06:37,070 --> 00:06:42,860
+following the naming patterns you should use for naming directives with this camel case notation.
+
+88
+00:06:43,130 --> 00:06:48,000
+So we have the placeholder directive and now this directive needs to do one important thing,
+
+89
+00:06:48,140 --> 00:06:53,280
+it needs to inject the view container ref and you learn this in the directive deep dive section.
+
+90
+00:06:53,630 --> 00:06:58,620
+You can inject a view container ref like this,
+
+91
+00:06:59,360 --> 00:07:07,580
+you need to import view container ref from @angular/core and this automatically gives you access to
+
+92
+00:07:07,730 --> 00:07:12,490
+the reference, to a pointer at the place where this directive is then used.
+
+93
+00:07:12,680 --> 00:07:16,950
+So this will allow you to get information about the place where you use the directive
+
+94
+00:07:17,090 --> 00:07:23,660
+and as I said, that will not just be coordinates but the view container ref has useful methods, for example
+
+95
+00:07:23,660 --> 00:07:27,090
+for creating a component, in that place where it sits.
+
+96
+00:07:27,320 --> 00:07:32,180
+So you essentially get access to the place where the directive is added to and you not just get access
+
+97
+00:07:32,180 --> 00:07:36,680
+in the sense of where is this but also in a sense of please add something there.
+
+98
+00:07:36,740 --> 00:07:43,250
+Now, we need to turn this into a public property, using that TypeScript shortcut where this argument is
+
+99
+00:07:43,280 --> 00:07:46,100
+automatically stored in a property of the same name
+
+100
+00:07:46,220 --> 00:07:53,680
+and this property is publicly accessible, so that we can access that view container ref from outside.
+
+101
+00:07:53,690 --> 00:07:55,110
+Now why do we need that?
+
+102
+00:07:55,160 --> 00:08:03,320
+Because now, we will be able to add the directive to some place in our DOM, in our templates and then
+
+103
+00:08:03,350 --> 00:08:07,070
+get access to it with @ViewChild and then get access to the public
+
+104
+00:08:07,100 --> 00:08:09,140
+view container ref to work with that
+
+105
+00:08:09,140 --> 00:08:11,440
+view container ref of that directive.
+
+106
+00:08:11,490 --> 00:08:14,400
+Let's implement that step-by-step. Before we can do that,
+
+107
+00:08:14,420 --> 00:08:19,930
+let's make sure we also declared that directive in the app module, here
+
+108
+00:08:19,940 --> 00:08:21,660
+the placeholder directive,
+
+109
+00:08:21,700 --> 00:08:24,480
+make sure to also add the import of course
+
+110
+00:08:24,550 --> 00:08:25,780
+and now, let's continue.
+

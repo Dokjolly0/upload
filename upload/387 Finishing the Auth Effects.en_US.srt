@@ -1,0 +1,104 @@
+1
+00:00:02,670 --> 00:00:10,070
+Obviously, this entire NgRx part was pretty extensive, was pretty much for authentication
+
+2
+00:00:10,080 --> 00:00:16,230
+but keep in mind that authentication also is pretty complex in this application because we manage the
+
+3
+00:00:16,230 --> 00:00:18,580
+token lifetime and so on.
+
+4
+00:00:18,690 --> 00:00:25,170
+Now it's basically all managed with NgRx. We were using effects for all the side effects like
+
+5
+00:00:25,220 --> 00:00:29,230
+HTTP requests and local storage and redirection,
+
+6
+00:00:29,370 --> 00:00:34,860
+we're using the reducer for our general state, like the authenticated user, if we have an error and if
+
+7
+00:00:34,860 --> 00:00:41,820
+we're loading and the auth component dispatches our different login or sign-up actions and takes advantage
+
+8
+00:00:41,820 --> 00:00:48,570
+of the error and the loading state. The auth service is used for managing our token timer then, we could
+
+9
+00:00:48,570 --> 00:00:54,200
+move that into @ngrx/effects somehow but we would need a lot of observable magic for this and
+
+10
+00:00:54,210 --> 00:01:01,710
+I think this is just a simpler and easy to understand approach. The auth interceptor and auth guard take
+
+11
+00:01:01,710 --> 00:01:07,740
+advantage of our @ngrx/store and therefore now whilst it was a lot of work, now the entire authentication
+
+12
+00:01:07,740 --> 00:01:15,150
+logic lives in NgRx. Again it was a lot of work but now whatever you add is added with relatively
+
+13
+00:01:15,150 --> 00:01:16,500
+little effort,
+
+14
+00:01:16,500 --> 00:01:20,960
+still of course, using this entire setup is optional.
+
+15
+00:01:21,000 --> 00:01:25,110
+Now what I want to do at this point is, I want to do some cleanup work here,
+
+16
+00:01:25,110 --> 00:01:31,430
+I want to look through my components and remove parts which I don't need anymore or not through my components
+
+17
+00:01:31,470 --> 00:01:38,580
+but at the auth component, remove the injected auth service in the router for example, remove that observable
+
+18
+00:01:38,670 --> 00:01:42,000
+import, the router import which I don't need anymore,
+
+19
+00:01:42,000 --> 00:01:46,140
+the auth service imports here, that should all be good.
+
+20
+00:01:46,200 --> 00:01:54,450
+Now in the auth service, I don't need the auth response data interface anymore. I can remove the user model
+
+21
+00:01:54,450 --> 00:01:58,040
+data therefore, the import, not the model itself
+
+22
+00:01:58,290 --> 00:02:01,650
+and overall, this is looking quite good.
+
+23
+00:02:01,710 --> 00:02:09,810
+Looks like the application is working correctly and now we are taking advantage of NgRx.
+
+24
+00:02:10,140 --> 00:02:19,350
+Let me login here, fetch recipes, that all is working, now all powered through NgRx. Of course, the recipes
+
+25
+00:02:19,350 --> 00:02:26,580
+area is missing but before we tackle that, let's look into two other packages the NgRx team gives
+
+26
+00:02:26,580 --> 00:02:26,820
+us.
+

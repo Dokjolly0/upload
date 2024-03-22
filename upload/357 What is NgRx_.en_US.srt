@@ -1,0 +1,324 @@
+1
+00:00:02,240 --> 00:00:08,420
+This RxJS driven approach has some issues as I outlined, to be precise you could still have an
+
+2
+00:00:08,420 --> 00:00:15,120
+app where state can be updated from anywhere because you maybe failed to set up a clear flow of data.
+
+3
+00:00:15,320 --> 00:00:22,670
+Your state might also possibly be mutable, which means that whilst you might have only a couple of places
+
+4
+00:00:22,670 --> 00:00:29,720
+where your state is intended to change, your code in there might not force you to state the old data
+
+5
+00:00:29,750 --> 00:00:35,480
+by overwriting it with new data and that is what I would recommend doing though because otherwise Angular
+
+6
+00:00:35,480 --> 00:00:42,350
+sometimes doesn't pick up some changes to your state because of the reference type nature of objects
+
+7
+00:00:42,350 --> 00:00:48,590
+and arrays in Javascript, where if you only change a property of an object, the overall object didn't
+
+8
+00:00:48,650 --> 00:00:52,560
+change and therefore such a state change might not get picked up.
+
+9
+00:00:52,730 --> 00:00:59,170
+And in addition, handling side effects and that means things like HTTP requests,
+
+10
+00:00:59,270 --> 00:01:04,580
+it's unclear where this should happen - should you write the code for sending them in a component? Should
+
+11
+00:01:04,580 --> 00:01:05,880
+you do it in a service?
+
+12
+00:01:05,960 --> 00:01:11,690
+And yes, all these problems can of course be solved and you can have a clear route and a clear approach
+
+13
+00:01:11,690 --> 00:01:16,590
+regarding all these things but especially if you're working on a bigger app with a bigger team,
+
+14
+00:01:16,670 --> 00:01:23,330
+it can be hard to enforce the best practices across all team members here and therefore, enforcing a
+
+15
+00:01:23,330 --> 00:01:29,530
+specific pattern might be hard because Angular by default doesn't enforce one and that is where NgRx
+
+16
+00:01:29,540 --> 00:01:30,530
+may help you
+
+17
+00:01:30,530 --> 00:01:33,400
+or to be precise, Redux may help you.
+
+18
+00:01:33,470 --> 00:01:35,930
+Now what is Redux, I just introduced NgRx,
+
+19
+00:01:35,930 --> 00:01:37,460
+what is Redux?
+
+20
+00:01:37,460 --> 00:01:43,270
+Well if you have a ReactJS background, you might already know Redux, otherwise you will learn about it
+
+21
+00:01:43,280 --> 00:01:47,140
+now. Redux is a state management pattern,
+
+22
+00:01:47,210 --> 00:01:52,350
+it's also a library that helps you implement that pattern into any application.
+
+23
+00:01:52,370 --> 00:01:54,000
+The idea behind Redux,
+
+24
+00:01:54,040 --> 00:02:00,290
+so behind that approach for managing state and always keep in mind, state is just data or information
+
+25
+00:02:00,320 --> 00:02:01,400
+in your app,
+
+26
+00:02:01,400 --> 00:02:07,700
+so the idea behind managing that state with Redux is that you have one central store in your entire
+
+27
+00:02:07,700 --> 00:02:11,280
+application that holds your application state,
+
+28
+00:02:11,300 --> 00:02:17,900
+so think of that as a large Javascript object that contains all the data the different parts of your
+
+29
+00:02:17,900 --> 00:02:23,960
+application need, of course kind of categorized in properties that might then hold nested objects
+
+30
+00:02:24,050 --> 00:02:25,310
+but in the end that's the idea,
+
+31
+00:02:25,310 --> 00:02:33,140
+have one large data store. Your different parts of the application, services and components, can still
+
+32
+00:02:33,140 --> 00:02:38,060
+interact with each other but they receive their state from that store,
+
+33
+00:02:38,060 --> 00:02:43,740
+so that store is the single source of truth that manages the entire application state.
+
+34
+00:02:43,790 --> 00:02:48,790
+Now of course, state is not just received, you sometimes also need to change the state,
+
+35
+00:02:48,830 --> 00:02:56,780
+for example when you add a new recipe and for that in the Redux world, you dispatch so-called actions.
+
+36
+00:02:56,810 --> 00:03:02,060
+An action is the end also just a Javascript object with an identifier
+
+37
+00:03:02,060 --> 00:03:07,200
+basically identifying the kind of action you want to perform and optionally, a payload.
+
+38
+00:03:07,250 --> 00:03:10,670
+So if that action needs some extra data to complete,
+
+39
+00:03:10,670 --> 00:03:15,640
+for example if you're creating a new recipe, you would need to attach that recipe data to the action,
+
+40
+00:03:15,710 --> 00:03:20,120
+then you can have that data in the action that is supported by Redux.
+
+41
+00:03:20,150 --> 00:03:23,150
+Now that action doesn't directly reach the store,
+
+42
+00:03:23,150 --> 00:03:30,350
+instead it reaches a so-called reducer. Now a reducer is just a function, a Javascript function that gets
+
+43
+00:03:30,350 --> 00:03:37,610
+the current state which is stored in the store and the action as a input, passed in automatically by
+
+44
+00:03:37,610 --> 00:03:38,690
+the Redux library
+
+45
+00:03:38,750 --> 00:03:43,340
+if you use that and then in the reducer, you can have a look at the action identifier,
+
+46
+00:03:43,340 --> 00:03:50,120
+find out which kind of action it is, for example add a recipe or delete the recipe and then perform code
+
+47
+00:03:50,360 --> 00:03:55,250
+on the state which you also got as an argument to update that state,
+
+48
+00:03:55,250 --> 00:04:03,500
+however in an immutable way, so by copying it and then changing the copy because ultimately, the reducer
+
+49
+00:04:03,650 --> 00:04:10,160
+returns a new state, so it returns a copy of the old state that will have been changed according to the
+
+50
+00:04:10,160 --> 00:04:16,990
+action and that state which is returned by the reducer then is forwarded to the application store where
+
+51
+00:04:16,990 --> 00:04:18,620
+this reduced state,
+
+52
+00:04:18,620 --> 00:04:24,230
+again the state was edited immutably, so without touching the old state instead copying it and
+
+53
+00:04:24,230 --> 00:04:30,440
+then editing the copy, so where this reduced state is then overwriting the old state of the application.
+
+54
+00:04:30,440 --> 00:04:37,270
+That is the Redux pattern and as you can see, it enforces a pretty clean and clear flow of data.
+
+55
+00:04:37,340 --> 00:04:42,660
+We only have one place in the app where we store our data and we only edit it through actions and reducers
+
+56
+00:04:42,660 --> 00:04:47,510
+and we received the state through so-called subscriptions which we can setup.
+
+57
+00:04:47,810 --> 00:04:51,610
+Now if you were using Angular, you could also use the Redux library,
+
+58
+00:04:51,620 --> 00:04:59,720
+it's not restricted to be used with ReactJS only but NgRx is in the end just Angular's implementation
+
+59
+00:04:59,720 --> 00:05:00,910
+of Redux.
+
+60
+00:05:00,910 --> 00:05:09,390
+Now it comes with some differences or Angular specific things, for example the left orange box here,
+
+61
+00:05:09,450 --> 00:05:15,840
+it's deeply integrated into Angular, so it for example comes with injectable services so that you can
+
+62
+00:05:15,870 --> 00:05:21,500
+easily access your application store in any part of your app by simply injecting it.
+
+63
+00:05:21,510 --> 00:05:28,290
+It also embraces RxJS and observables, so all the state is managed as one large observable
+
+64
+00:05:28,320 --> 00:05:31,590
+you could say and that also can yield certain advantages,
+
+65
+00:05:31,590 --> 00:05:37,140
+for example you can use all the observable operators to then edit the state you are fetching in the
+
+66
+00:05:37,140 --> 00:05:41,150
+component where you need it in the way you need it there,
+
+67
+00:05:41,160 --> 00:05:44,220
+this will not change the store state of course
+
+68
+00:05:44,240 --> 00:05:47,040
+and it of course also supports TypeScript.
+
+69
+00:05:47,040 --> 00:05:55,140
+Now in addition, there is one extra part of that state management library which is about side effects.
+
+70
+00:05:55,140 --> 00:06:01,680
+So NgRx also gives you a tool that makes working with side effects easier and side effects, just
+
+71
+00:06:01,680 --> 00:06:07,680
+to bring that back in memory, are things like sending HTTP requests. NgRx also helps with
+
+72
+00:06:07,680 --> 00:06:11,490
+that, traditionally in Redux, that was kind of an open question,
+
+73
+00:06:11,490 --> 00:06:18,390
+it was unclear where you should send such side effects, where you should send such HTTP requests, so typically
+
+74
+00:06:18,450 --> 00:06:25,950
+asynchronous code was always a problem because reducers, I can say that already, only may execute synchronous
+
+75
+00:06:25,950 --> 00:06:26,320
+code,
+
+76
+00:06:26,370 --> 00:06:32,310
+so you must not and you can't send HTTP requests from inside a reducer function for example and
+
+77
+00:06:32,310 --> 00:06:37,830
+therefore it always was kind of an open question in Redux where you should do such asynchronous tasks,
+
+78
+00:06:38,130 --> 00:06:44,130
+NgRx ships with a built-in solution and you will learn about that solution here too.
+
+79
+00:06:44,130 --> 00:06:51,660
+So that was lots of theory, time to finally get back to the code and start implementing that pattern and
+
+80
+00:06:51,660 --> 00:06:52,690
+that package there
+
+81
+00:06:52,710 --> 00:06:53,600
+step-by-step.
+

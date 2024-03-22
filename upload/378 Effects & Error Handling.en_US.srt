@@ -1,0 +1,420 @@
+1
+00:00:02,780 --> 00:00:08,000
+So we're getting started with the defining this effect, we're filtering for specific actions
+
+2
+00:00:08,000 --> 00:00:14,240
+but of course the question is, what do we want to do with these actions then or with the action that
+
+3
+00:00:14,240 --> 00:00:17,810
+we are reacting to? So is in this case to the login start action.
+
+4
+00:00:17,810 --> 00:00:24,830
+Well the login start action should yield us some specific information that we need for logging in and
+
+5
+00:00:25,220 --> 00:00:25,700
+for that,
+
+6
+00:00:25,700 --> 00:00:31,340
+we need to create a new action class here in the auth actions file,
+
+7
+00:00:31,370 --> 00:00:35,790
+the login start class which also implements action,
+
+8
+00:00:35,810 --> 00:00:42,620
+that of course has our readonly type which is login start but it also needs a payload
+
+9
+00:00:42,650 --> 00:00:44,920
+because for logging in, we need what?
+
+10
+00:00:44,930 --> 00:00:50,730
+Well, an e-mail and a password, that is what we currently use in the auth service for login. Here,
+
+11
+00:00:50,780 --> 00:00:54,020
+if you check login, we get e-mail and a password.
+
+12
+00:00:54,020 --> 00:00:56,090
+So in the auth actions, here
+
+13
+00:00:56,090 --> 00:01:01,700
+I also expect to have a payload which essentially is of type object where we have an e-mail key which
+
+14
+00:01:01,700 --> 00:01:05,150
+is a string and a password key which is a string.
+
+15
+00:01:05,150 --> 00:01:09,250
+So this is how such an action should look like, with that defined here,
+
+16
+00:01:09,380 --> 00:01:15,830
+we can go back to the auth effects and now add another rxjs/operator as a second step.
+
+17
+00:01:15,860 --> 00:01:17,450
+First step is that we're filtering,
+
+18
+00:01:17,450 --> 00:01:25,300
+next step now can be a switchMap which allows us, which is imported from rxjs/operators, which
+
+19
+00:01:25,300 --> 00:01:29,550
+allows us to create a new observable by taking another observable's data.
+
+20
+00:01:30,220 --> 00:01:38,410
+So here we get our auth data and we know since we're filtering for the login start action, that the type
+
+21
+00:01:38,410 --> 00:01:43,980
+of this will be auth actions login start, now referring to the class.
+
+22
+00:01:43,990 --> 00:01:53,160
+So this is our type of data and in switchMap, we now can return a new observable and the new observable
+
+23
+00:01:53,170 --> 00:01:59,640
+I want to return here of course uses the Angular HTTP client to send our login request,
+
+24
+00:01:59,650 --> 00:02:03,730
+so just what we previously did in the login function in our service.
+
+25
+00:02:03,730 --> 00:02:11,040
+So we can actually copy this entire code snippet here from the login method here in the auth service
+
+26
+00:02:11,430 --> 00:02:15,320
+and add it to auth effects in this switchMap here.
+
+27
+00:02:15,330 --> 00:02:19,820
+Now important though, this of course requires us to inject the HTTP service,
+
+28
+00:02:19,890 --> 00:02:26,350
+we also need to get access to the auth response data interface, to the environment constant for getting
+
+29
+00:02:26,460 --> 00:02:31,020
+our Firebase API key and we need to extract e-mail and password.
+
+30
+00:02:31,020 --> 00:02:36,840
+Now let's start with extracting e-mail and password because that is of course part of our auth data payload,
+
+31
+00:02:36,840 --> 00:02:46,590
+so here we can just access auth data payload e-mail and auth data payload password.
+
+32
+00:02:46,700 --> 00:02:49,850
+Next, let's inject the Angular HTTP client,
+
+33
+00:02:49,850 --> 00:02:57,110
+so let's go down to the constructor and call private or add private HTTP and referred to the HTTP
+
+34
+00:02:57,110 --> 00:03:03,180
+client imported from @angular/common/http.
+
+35
+00:03:03,450 --> 00:03:12,720
+Let's also get access to the environment constant here which we can find in our environments
+
+36
+00:03:12,720 --> 00:03:18,510
+folder and there in the environment file and regarding the auth response data,
+
+37
+00:03:18,930 --> 00:03:24,780
+that's an interface I'm defining in the auth service. Let's actually copy it from there, not remove it
+
+38
+00:03:24,780 --> 00:03:29,790
+there right now because we still need it for signing up, we will remove it in the future and let's move
+
+39
+00:03:29,790 --> 00:03:32,950
+it over to auth effects as well.
+
+40
+00:03:33,020 --> 00:03:41,540
+So now we have our auth effect for logging in but this effect won't work for a couple of reasons actually.
+
+41
+00:03:41,580 --> 00:03:47,330
+First of all, an effect by default always should return a new action at the end
+
+42
+00:03:47,340 --> 00:03:53,390
+once it's done because this effect itself doesn't change the state right, it just executes some code,
+
+43
+00:03:53,400 --> 00:04:00,480
+nowhere do we touch our reducer or our NgRx state and that's how it should be. But typically once
+
+44
+00:04:00,480 --> 00:04:05,720
+an effect is done, you want to edit the state and that's the same here for logging in.
+
+45
+00:04:05,760 --> 00:04:13,410
+Once we did login, if we did succeed, I of course want to dispatch my login action so that the reducer
+
+46
+00:04:13,440 --> 00:04:16,220
+can take over and create that user object.
+
+47
+00:04:16,560 --> 00:04:23,730
+So therefore, we need to return a new action here at the end of our effects chain here
+
+48
+00:04:23,940 --> 00:04:30,810
+and in addition, we also need to add a special decorator to this auth login property here to turn it into
+
+49
+00:04:30,810 --> 00:04:39,660
+an effect @ngrx/effects is able to pick up later, that is the @effect decorator and effect
+
+50
+00:04:39,720 --> 00:04:44,190
+simply is imported from @ngrx/effects.
+
+51
+00:04:44,190 --> 00:04:48,810
+This is required for @ngrx/effects to pick up this property as an effect,
+
+52
+00:04:48,810 --> 00:04:55,350
+so basically as an effect it wants to handle, it wants to subscribe to and so on. And the next step
+
+53
+00:04:55,350 --> 00:05:02,280
+as I mentioned is of course then also that we return a new action here at the end
+
+54
+00:05:02,430 --> 00:05:09,000
+and since we're in an observable chain, returning a new action simply means that we have to return
+
+55
+00:05:09,180 --> 00:05:11,430
+a new observable.
+
+56
+00:05:11,490 --> 00:05:17,010
+Now of course I only want to log the user in if we haven't got an error from this HTTP request
+
+57
+00:05:17,010 --> 00:05:17,370
+right,
+
+58
+00:05:17,370 --> 00:05:18,700
+that's the same logic here,
+
+59
+00:05:18,700 --> 00:05:20,840
+the auth service for logging in, there
+
+60
+00:05:20,850 --> 00:05:22,350
+we send this request,
+
+61
+00:05:22,380 --> 00:05:25,640
+we catch errors to handle errors and only if we get no error
+
+62
+00:05:25,650 --> 00:05:29,320
+we continue here and then we handle the authentication.
+
+63
+00:05:29,340 --> 00:05:33,420
+I want to do the same here with auth effects but the logic has to be a bit different.
+
+64
+00:05:34,050 --> 00:05:39,510
+It's important to understand that an observable completes whenever an error is thrown,
+
+65
+00:05:39,510 --> 00:05:46,800
+therefore in the auth service, whenever this here yields an error, catch error kicks in and this code never
+
+66
+00:05:46,800 --> 00:05:52,650
+executes and this entire observable dies, which is no problem because when we call login again, a new
+
+67
+00:05:52,650 --> 00:05:54,310
+observable is created.
+
+68
+00:05:54,330 --> 00:05:58,190
+Now it's a bit differently for effects, effects here
+
+69
+00:05:58,200 --> 00:06:00,550
+this is an ongoing observable stream,
+
+70
+00:06:00,570 --> 00:06:07,800
+this must never die, at least not as long as our application is running and therefore, if we would catch
+
+71
+00:06:07,800 --> 00:06:15,030
+an error here by adding catch error here as a next step after switchMap, which we could do because switch
+
+72
+00:06:15,030 --> 00:06:20,790
+map returns an HTTP observable and this could certainly throw an error, if we add the catch error like
+
+73
+00:06:20,790 --> 00:06:22,640
+this or even if we don't
+
+74
+00:06:22,640 --> 00:06:28,980
+add it, if this throws an error, this entire observable stream will die which means that trying to login
+
+75
+00:06:28,980 --> 00:06:35,970
+again will simply not work because this here will never react to another dispatched login start event
+
+76
+00:06:36,000 --> 00:06:44,370
+because this entire observable is dead and therefore, errors have to be handled on a different level.
+
+77
+00:06:44,940 --> 00:06:45,790
+Here,
+
+78
+00:06:45,830 --> 00:06:48,660
+we're creating a new observable and with switchMap,
+
+79
+00:06:48,690 --> 00:06:50,960
+I am returning that new observable here, right?
+
+80
+00:06:51,990 --> 00:06:58,560
+We can call pipe on that inner observable too, previously we hadn't done this but now we need to do it here.
+
+81
+00:06:58,560 --> 00:07:04,770
+This allows us to add operators on this inner observable, not on the overall observable chain
+
+82
+00:07:04,830 --> 00:07:11,910
+and here we can now pipe catch error, which you need to import by the way from rxjs/operators
+
+83
+00:07:13,730 --> 00:07:18,500
+and also pipe map which will execute if we have no error
+
+84
+00:07:18,500 --> 00:07:26,300
+and that also needs to be imported from rxjs/operators. Now catch error of course receives any error
+
+85
+00:07:26,330 --> 00:07:27,840
+we might be getting
+
+86
+00:07:27,890 --> 00:07:30,250
+and now here, we can run our error handling code
+
+87
+00:07:30,260 --> 00:07:33,900
+but most importantly and that is super important to understand, here
+
+88
+00:07:34,010 --> 00:07:41,960
+we have to return a non-error observable so that our overall stream doesn't die and since switchMap
+
+89
+00:07:41,960 --> 00:07:48,290
+returns the result of this inner observable stream as a new observable to the outer chain here, returning
+
+90
+00:07:48,290 --> 00:07:52,140
+a non-error observable in catch error is crucial,
+
+91
+00:07:52,160 --> 00:07:53,960
+so that this erroneous
+
+92
+00:07:54,320 --> 00:08:00,890
+observable in here still yields a non-error observable which is picked up by switchMap which is then
+
+93
+00:08:00,890 --> 00:08:05,140
+returned to this overall stream, to this overall observable chain.
+
+94
+00:08:05,150 --> 00:08:12,560
+So in here, I will therefore use auth which is imported from RxJS which is simply a utility function
+
+95
+00:08:12,560 --> 00:08:16,640
+for creating a new observable, a new observable without an error,
+
+96
+00:08:16,640 --> 00:08:23,000
+I will call auth in here to return a new observable. Now the same inside of map,
+
+97
+00:08:23,130 --> 00:08:28,140
+this by default wouldn't have an error but of course here we also must not create an error,
+
+98
+00:08:28,140 --> 00:08:35,990
+we instead have to return a non-erroneous observable here as well. Now here inside of map,
+
+99
+00:08:36,030 --> 00:08:37,110
+what do I expect?
+
+100
+00:08:37,110 --> 00:08:39,300
+Let's have a look at the auth service,
+
+101
+00:08:39,300 --> 00:08:44,060
+we should get our response data here and therefore let's go back to auth effects,
+
+102
+00:08:44,070 --> 00:08:46,830
+we get response data and ultimately here,
+
+103
+00:08:46,830 --> 00:08:49,610
+I also once use auth to create a new observable.
+
+104
+00:08:49,620 --> 00:08:53,350
+The question now just is, what should be inside of these new observables
+
+105
+00:08:53,370 --> 00:08:54,120
+we're creating here?
+

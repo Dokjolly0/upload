@@ -1,0 +1,184 @@
+1
+00:00:02,380 --> 00:00:06,550
+We're almost done but there is some cleanup work we can do related to that.
+
+2
+00:00:06,550 --> 00:00:12,280
+It's nice that we can now load and store our recipes, that first of all means that we no longer need our
+
+3
+00:00:12,280 --> 00:00:13,940
+default recipes here though.
+
+4
+00:00:14,080 --> 00:00:20,400
+So I will comment that out, just to have it around in case we do need it again or we want that dummy data again
+
+5
+00:00:20,800 --> 00:00:26,860
+but I will initialize the recipes property, which is an array of recipes just as before, as an empty array
+
+6
+00:00:26,860 --> 00:00:31,960
+now so that when our app loads, we have no recipes and we need to load them. That of course is optional
+
+7
+00:00:31,990 --> 00:00:35,060
+but I guess it makes a bit more sense than loading some dummy data,
+
+8
+00:00:35,050 --> 00:00:41,810
+obviously you could do the same in the shopping list area. Now it's the first change and we also have
+
+9
+00:00:41,810 --> 00:00:44,350
+a bug in his application which we should fix.
+
+10
+00:00:44,480 --> 00:00:56,650
+Let's say we add a new recipe here, summer salad, let's add this image here, a juicy summer salad and now the important
+
+11
+00:00:56,650 --> 00:01:01,440
+thing, I won't add any ingredients to that recipe, instead let's save it like this which is valid,
+
+12
+00:01:01,450 --> 00:01:06,280
+we don't need to have ingredients
+
+13
+00:01:06,280 --> 00:01:13,690
+and now let me store that. So let's click save data and on Firebase, you can see there is a new item and that's
+
+14
+00:01:13,690 --> 00:01:14,730
+our summer salad
+
+15
+00:01:14,740 --> 00:01:23,080
+but please note, obviously it has no ingredients. Now generally our app works here but to prevent nasty
+
+16
+00:01:23,080 --> 00:01:30,340
+bugs, when we're fetching the recipes, it would make sense that we make sure that we always have ingredients,
+
+17
+00:01:30,430 --> 00:01:35,620
+even if it's just an empty array but that the data we loaded in the end has some ingredients and this
+
+18
+00:01:35,620 --> 00:01:41,500
+property is not undefined because if we otherwise try to directly interact with the ingredients, we
+
+19
+00:01:41,500 --> 00:01:50,620
+could get errors. And for that, we can simply add pipe here to our fetch recipes HTTP request and add the
+
+20
+00:01:50,710 --> 00:02:01,470
+map operator, which allows us to transform that data. For that we just need to import map from
+
+21
+00:02:01,520 --> 00:02:08,830
+rxjs/operators and this as you learned is an observable operator that allows you to transform the data
+
+22
+00:02:09,100 --> 00:02:15,310
+in an observable chain, so right before subscribe. Here we get our recipes but the recipes that might
+
+23
+00:02:15,310 --> 00:02:23,600
+not have an ingredients property and now here, we can simply return recipes but call map on these too
+
+24
+00:02:23,640 --> 00:02:32,620
+and now this can be confusing, map here in pipe is an rxjs/operator. Map here is called on an array
+
+25
+00:02:32,680 --> 00:02:37,510
+and therefore the normal Javascript array method map, they happen to have the same name but they are
+
+26
+00:02:37,510 --> 00:02:43,660
+not the same function, that's an rxjs/operator called as a function like this inside of pipe, that
+
+27
+00:02:43,750 --> 00:02:45,660
+is a Javascript array method.
+
+28
+00:02:45,820 --> 00:02:49,740
+Now map simply allows us to transform the elements in an array,
+
+29
+00:02:49,810 --> 00:02:55,090
+in this case in the recipes array. It takes an anonymous function which is executed for every element
+
+30
+00:02:55,090 --> 00:02:55,760
+in that array,
+
+31
+00:02:55,870 --> 00:03:00,410
+so therefore for every recipe and we return the transformed recipe.
+
+32
+00:03:00,430 --> 00:03:07,000
+Now here my idea is to return the original recipe but if that recipe doesn't have an ingredients array,
+
+33
+00:03:07,300 --> 00:03:15,100
+to set ingredients to an empty array instead and for this, I will return a new object where I use the
+
+34
+00:03:15,100 --> 00:03:21,340
+spread operator to copy all the properties of recipe, to copy all the existing data and then ingredients
+
+35
+00:03:21,610 --> 00:03:23,260
+will be set equal to
+
+36
+00:03:23,680 --> 00:03:29,560
+and now I'll add a ternary expression where I simply check whether recipe ingredients is true-ish, which
+
+37
+00:03:29,560 --> 00:03:33,130
+it is if it is an array with zero or more elements
+
+38
+00:03:33,370 --> 00:03:37,750
+and if that is the case, then I will set ingredients equal to recipe ingredients which means I will not
+
+39
+00:03:37,750 --> 00:03:40,520
+change it but otherwise, I'll set it to an empty array.
+
+40
+00:03:40,540 --> 00:03:46,120
+So if this here is kind of false, which is the case if ingredients is undefined, if it's not set, then
+
+41
+00:03:46,120 --> 00:03:48,660
+I will set it to an empty array instead
+
+42
+00:03:48,820 --> 00:03:55,270
+and that's just a tiny improvement here in this observable chain, which doesn't break our app, of course
+
+43
+00:03:55,270 --> 00:03:56,340
+it shouldn't.
+
+44
+00:03:56,410 --> 00:04:04,210
+We can still edit our recipe here, interact with it, save that and everything works as before but now
+
+45
+00:04:04,210 --> 00:04:09,670
+we have a little bit more protection against unexpected errors because now we ensure that the ingredients
+
+46
+00:04:09,670 --> 00:04:14,650
+property of the loaded recipes is always set to at least an empty array.
+

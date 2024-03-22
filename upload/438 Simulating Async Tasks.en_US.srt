@@ -1,0 +1,460 @@
+1
+00:00:01,430 --> 00:00:06,630
+With that we get a basic introduction to tests and components and services and where we inject services
+
+2
+00:00:06,630 --> 00:00:15,630
+into components but we haven't really talked about this async thing here and our service thus far was
+
+3
+00:00:15,720 --> 00:00:16,800
+synchronous.
+
+4
+00:00:16,800 --> 00:00:22,400
+So there was no asynchronous task like you might have had when reaching out to a web server.
+
+5
+00:00:22,770 --> 00:00:29,760
+Therefore in the shared folder I create a new service that data service and this service will now actually
+
+6
+00:00:29,760 --> 00:00:33,020
+expose asynchronous function which you want to test.
+
+7
+00:00:33,390 --> 00:00:43,830
+So in hirable also export does class data service and it should have a get details method.
+
+8
+00:00:44,160 --> 00:00:51,630
+Now get details will have a promise to each result promise which is a new promise and my idea you won't
+
+9
+00:00:51,630 --> 00:00:59,460
+like Promise years or all it will get read but it will work where we pass resolve and reject as arguments
+
+10
+00:00:59,460 --> 00:01:06,630
+to the code that we're passing to the promise constructor and that we basically had a time out which
+
+11
+00:01:06,630 --> 00:01:11,550
+will expire after let's say let's make it one and a half second.
+
+12
+00:01:11,850 --> 00:01:18,600
+And here I want to execute a number of functions of course where I simply resolve data so I pass back
+
+13
+00:01:18,600 --> 00:01:20,900
+a string holding data.
+
+14
+00:01:21,300 --> 00:01:25,830
+And outside of this concept of just promise I will simply return this promise.
+
+15
+00:01:25,830 --> 00:01:31,110
+So get details returns a promise and this promise will resolve after one and a half seconds.
+
+16
+00:01:31,110 --> 00:01:36,330
+Now I want to testis back in the user component which is where I want to use it.
+
+17
+00:01:36,480 --> 00:01:46,460
+I will first provide the data service here and I will set up a data property here to data which of course
+
+18
+00:01:46,460 --> 00:01:50,420
+is a string and the constructor of one injected.
+
+19
+00:01:50,420 --> 00:01:57,210
+So I will have nice data servers and check the tears at to inject I was able to do so and keep in mind
+
+20
+00:01:57,210 --> 00:02:03,150
+we can always get the instance by accessing the injectors as we did before.
+
+21
+00:02:03,510 --> 00:02:07,010
+Well back to these spec fall here to write some tests.
+
+22
+00:02:07,110 --> 00:02:11,250
+Thus far we have tests using our user service which is synchronous.
+
+23
+00:02:11,340 --> 00:02:15,320
+No one to fetch my data asynchronously.
+
+24
+00:02:15,390 --> 00:02:22,530
+So first let's do a normal test and see if this works but it probably won't work since I will name it
+
+25
+00:02:22,530 --> 00:02:22,600
+.
+
+26
+00:02:22,620 --> 00:02:31,990
+It shouldn't vegetate as successfully if not called asynchronously.
+
+27
+00:02:31,990 --> 00:02:38,550
+This is not really a great task because here are testing features of the testing package and not of
+
+28
+00:02:38,550 --> 00:02:46,260
+my app but I want to show the difference between this way of setting up tests and using the async function
+
+29
+00:02:46,260 --> 00:02:48,540
+here which will use in a second.
+
+30
+00:02:48,540 --> 00:02:52,890
+So right now we always pass the function as the second argument here.
+
+31
+00:02:53,190 --> 00:03:01,380
+And inside of this bag I would then execute my standard code get access to my application here and now
+
+32
+00:03:01,440 --> 00:03:08,040
+I somehow need to access does get detailed method which happens asynchronously.
+
+33
+00:03:08,040 --> 00:03:15,000
+The thing is I don't necessarily want to execute the real get details method because this method might
+
+34
+00:03:15,000 --> 00:03:17,670
+reach out to a server in a real application.
+
+35
+00:03:17,670 --> 00:03:18,090
+You don't.
+
+36
+00:03:18,090 --> 00:03:21,120
+When I reach out to the server all the time when testing it.
+
+37
+00:03:21,120 --> 00:03:23,100
+Instead you kind of want to fake it.
+
+38
+00:03:23,100 --> 00:03:24,840
+You want to overwrite it.
+
+39
+00:03:24,840 --> 00:03:32,430
+You want to create your fake implementation which still is asynchronous but does something else or does
+
+40
+00:03:32,430 --> 00:03:37,890
+it at least not reach out and provide simply some dummy data the real service would also give you back
+
+41
+00:03:37,920 --> 00:03:38,410
+.
+
+42
+00:03:38,890 --> 00:03:45,600
+So therefore I will create a new world Spight and I will use spy on.
+
+43
+00:03:45,630 --> 00:03:51,480
+And this is another function provided by the testing environment so nothing less specific testing function
+
+44
+00:03:51,480 --> 00:03:51,870
+.
+
+45
+00:03:51,980 --> 00:03:55,780
+And here we Fris tell on what you want to spy.
+
+46
+00:03:56,010 --> 00:04:03,330
+Well the thing I want to spy on is data service which I can get access to like I did here for the users
+
+47
+00:04:03,330 --> 00:04:06,190
+service by using the technology injector.
+
+48
+00:04:06,240 --> 00:04:07,670
+So let's add it here.
+
+49
+00:04:07,710 --> 00:04:14,250
+But now of course let's call it data service and get access to the data service at the data service
+
+50
+00:04:14,250 --> 00:04:16,370
+import for that too.
+
+51
+00:04:17,100 --> 00:04:24,270
+And then we use this data service to spy on the Get details method there you pass it as a string but
+
+52
+00:04:24,270 --> 00:04:28,620
+this name here has to match the method name you want to spy on.
+
+53
+00:04:29,220 --> 00:04:38,370
+Well with this set up what I can do now is I can change something with and and then say return value
+
+54
+00:04:38,380 --> 00:04:38,600
+.
+
+55
+00:04:38,820 --> 00:04:46,800
+So we spy on that means we get informant when everich get details get executed gets executed.
+
+56
+00:04:46,800 --> 00:04:53,520
+So this is what spy on means we listen to it and whenever it gets executed when running a test we won't
+
+57
+00:04:53,520 --> 00:04:54,240
+execute it.
+
+58
+00:04:54,240 --> 00:04:58,970
+Instead we will return a value on our own.
+
+59
+00:04:59,010 --> 00:05:00,620
+Now de-value we will return.
+
+60
+00:05:00,620 --> 00:05:03,210
+Here is Brahmas resolve.
+
+61
+00:05:03,390 --> 00:05:04,310
+Deda.
+
+62
+00:05:04,380 --> 00:05:14,340
+Now what this does behind the scenes is it will execute the code the asynchronous code but it will eventually
+
+63
+00:05:14,430 --> 00:05:21,010
+give us back our own data and not what is asynchronous task would have given us.
+
+64
+00:05:21,570 --> 00:05:24,850
+It will still run in an asynchronous fashion though.
+
+65
+00:05:25,260 --> 00:05:27,500
+So what I can do here is I-Spy on it.
+
+66
+00:05:27,500 --> 00:05:28,660
+I get this data.
+
+67
+00:05:28,830 --> 00:05:33,750
+I can now run the change detection to update my while component.
+
+68
+00:05:33,750 --> 00:05:38,400
+After I got this state a here and then I want to check if this worked.
+
+69
+00:05:38,400 --> 00:05:50,090
+So I will say expect and I expect my app data field to be undefined.
+
+70
+00:05:50,130 --> 00:05:57,810
+Normally I would expect it to be something else because in my user component here in an engine in it
+
+71
+00:05:58,260 --> 00:06:02,330
+I will now use my data service to get the details.
+
+72
+00:06:02,610 --> 00:06:07,410
+And then this is here a promise then used to date I get back.
+
+73
+00:06:07,410 --> 00:06:10,790
+Who said this data equal to the date I get back.
+
+74
+00:06:10,830 --> 00:06:16,790
+That is what I would normally expect to happen so that once promised resolves the day that a promised
+
+75
+00:06:16,790 --> 00:06:20,580
+passes me is stored in the state property here in the test.
+
+76
+00:06:20,580 --> 00:06:26,160
+I'm saying that I expect it to be undefined and the reason why I do expect that is because I know that
+
+77
+00:06:26,160 --> 00:06:33,140
+this will kind of fail and I'll come back to this in a second and before doing so though we should set
+
+78
+00:06:33,150 --> 00:06:37,080
+data here of type string to avoid compilation error.
+
+79
+00:06:37,090 --> 00:06:45,080
+So if an hour test is we get success and that means it does not give us d normally expect resolved we
+
+80
+00:06:45,080 --> 00:06:47,700
+normally expect the result would be to get data right.
+
+81
+00:06:47,700 --> 00:06:51,620
+If I now write this you will see it fails.
+
+82
+00:06:51,630 --> 00:06:54,230
+The reason for that being that it indeed is undefined.
+
+83
+00:06:54,240 --> 00:07:00,000
+So I'm just writing the average case to have a success test here but undefined is not really what we
+
+84
+00:07:00,000 --> 00:07:01,220
+would expect runtime.
+
+85
+00:07:01,230 --> 00:07:09,240
+We would expect data to be undefined at the beginning but to be data is what we return here.
+
+86
+00:07:09,240 --> 00:07:13,470
+A string of name or of content data in the end.
+
+87
+00:07:13,470 --> 00:07:20,540
+So how can we test such a asynchronous task where the stage changes during the runtime.
+
+88
+00:07:20,550 --> 00:07:22,880
+Let's write a second test for this.
+
+89
+00:07:22,890 --> 00:07:30,870
+I will copy the first one here but here I expected so it should fetch the data successfully if called
+
+90
+00:07:30,940 --> 00:07:32,420
+asynchronously.
+
+91
+00:07:32,940 --> 00:07:36,140
+And here I will generally use the same code.
+
+92
+00:07:36,150 --> 00:07:41,330
+It will adjust it but it will use the async function here.
+
+93
+00:07:41,550 --> 00:07:48,630
+That function we're importing from the testing packaging law to pack testing package and I will wrap
+
+94
+00:07:48,780 --> 00:07:52,820
+my callback with that function here.
+
+95
+00:07:52,830 --> 00:08:00,080
+Now what this does is it creates a kind of asynchronous tasking environment for angular 2 if fakes it
+
+96
+00:08:00,160 --> 00:08:00,430
+.
+
+97
+00:08:00,570 --> 00:08:06,180
+It's not really asynchronous but it allows us to run asynchronous tasks there and then that too is aware
+
+98
+00:08:06,180 --> 00:08:12,990
+that there are asynchronous tasks and is able to handle them as if it would handle them in a real application
+
+99
+00:08:12,990 --> 00:08:17,790
+context where they are indeed also asynchronous.
+
+100
+00:08:17,790 --> 00:08:21,080
+To do this I need to add one thing though.
+
+101
+00:08:21,210 --> 00:08:26,660
+After detecting the changes I need to use my fixture and execute when stable.
+
+102
+00:08:26,790 --> 00:08:34,800
+This function on the fixture allows me to react to all asynchronous tasks are finished.
+
+103
+00:08:34,920 --> 00:08:42,420
+So here I can then execute the then function of my promise which well takes a callback to be executed
+
+104
+00:08:42,420 --> 00:08:47,450
+once that is done and inside of this callback I will expect something to happen.
+
+105
+00:08:47,460 --> 00:08:53,400
+So once the asynchronous task has been finished and there I expect it to be data.
+
+106
+00:08:53,550 --> 00:09:00,690
+And now with that nested in there I can now save this and now we get nine successful tests because now
+
+107
+00:09:00,750 --> 00:09:03,440
+we're waiting for asynchronous tasks to finish.
+
+108
+00:09:03,450 --> 00:09:07,020
+It's not really happening asynchronous we're faking it here.
+
+109
+00:09:07,020 --> 00:09:14,070
+Remember we're returning our own value but with async wrapping this callback we're telling too hey we
+
+110
+00:09:14,070 --> 00:09:18,450
+do have some kind of asynchronous task even though the promise resolves instantly.
+
+111
+00:09:18,440 --> 00:09:20,410
+It still is a promise.
+
+112
+00:09:20,430 --> 00:09:24,990
+Wrapping some values and not resolved or not de-value itself.
+
+113
+00:09:25,170 --> 00:09:31,350
+So with async we're now able to call when stable here and wait for our enviroment to stabilize.
+
+114
+00:09:31,350 --> 00:09:37,680
+For all asynchronous tasks to finish and to therefore successfully access to data at a state it would
+
+115
+00:09:37,680 --> 00:09:40,520
+be in a real environment.
+

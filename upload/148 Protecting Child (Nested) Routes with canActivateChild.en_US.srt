@@ -1,0 +1,144 @@
+1
+00:00:02,640 --> 00:00:08,430
+In the last lecture, we added the canActivate guard and it was working fine
+
+2
+00:00:08,560 --> 00:00:13,260
+but it was working for our whole servers path here.
+
+3
+00:00:13,360 --> 00:00:19,420
+Now we could grab it from here and add it to our child to make sure that only the child are protected,
+
+4
+00:00:19,420 --> 00:00:24,380
+the children and not our root path
+
+5
+00:00:24,580 --> 00:00:31,900
+but that is not the easiest way because if we add more child items, we have to add canActivate to each
+
+6
+00:00:31,900 --> 00:00:32,730
+of them.
+
+7
+00:00:33,250 --> 00:00:35,950
+There is another guard we can use,
+
+8
+00:00:35,950 --> 00:00:36,920
+it's pretty similar
+
+9
+00:00:36,940 --> 00:00:38,920
+to canActivate,
+
+10
+00:00:39,010 --> 00:00:41,750
+it's called CanActivateChild. 
+
+11
+00:00:41,800 --> 00:00:43,840
+So let's implement this interface too,
+
+12
+00:00:43,870 --> 00:00:50,280
+you need to import it from @angular/router and this interface requires you to provide a CanActivateChild
+
+13
+00:00:50,320 --> 00:00:59,230
+method in this class which basically takes the same form as the canActivate method, so it has
+
+14
+00:01:00,070 --> 00:01:04,930
+the route and state and it returns an observable, promise or boolean.
+
+15
+00:01:04,990 --> 00:01:08,080
+So this is the form of CanActivateChild.
+
+16
+00:01:08,740 --> 00:01:14,770
+Well and since this is exactly the same form and we want to run the same logic, we can simply call
+
+17
+00:01:15,180 --> 00:01:16,300
+or excuse me, return
+
+18
+00:01:16,360 --> 00:01:18,160
+this canActivate,
+
+19
+00:01:18,340 --> 00:01:24,670
+so the other method we already included and here we simply pass our route and state as arguments since
+
+20
+00:01:24,670 --> 00:01:27,670
+canActivate expect these two arguments.
+
+21
+00:01:27,670 --> 00:01:30,230
+What is the advantage of adding this then?
+
+22
+00:01:30,670 --> 00:01:38,980
+Well since we added the CanActivateChild interface, we can now use a different hook here in our routes, instead
+
+23
+00:01:38,980 --> 00:01:45,940
+of only using canActivate, we can use a different one and I will split this over multiple lines to
+
+24
+00:01:46,180 --> 00:01:48,330
+make it really clear on what's happening,
+
+25
+00:01:48,370 --> 00:01:55,990
+I will comment out canActivate and instead add CanActivateChild. This now also takes
+
+26
+00:01:55,990 --> 00:02:01,420
+an array of services which act as guards which implement the right interfaces
+
+27
+00:02:01,480 --> 00:02:08,710
+and here we can still add the auth guard because the auth guard now is able to do both, protect a single route
+
+28
+00:02:08,770 --> 00:02:15,580
+since we have canActivate implemented or all child routes since we have CanActivateChild implemented
+
+29
+00:02:15,580 --> 00:02:16,350
+too.
+
+30
+00:02:16,750 --> 00:02:22,930
+So with this in place, we should now be able to go to servers, this works but if we try to load a single
+
+31
+00:02:22,930 --> 00:02:23,760
+server,
+
+32
+00:02:24,040 --> 00:02:29,020
+now we get redirected back because now only the child routes are protected,
+
+33
+00:02:29,140 --> 00:02:33,750
+something I can also prove by trying to go to /1/edit,
+
+34
+00:02:34,060 --> 00:02:36,100
+this also navigates us back.
+
+35
+00:02:36,520 --> 00:02:44,530
+So now this is the finegrained control you can implement to protect a whole route and all its child routes
+
+36
+00:02:44,680 --> 00:02:49,520
+or just the child routes, depending on which behavior you need in your app.
+

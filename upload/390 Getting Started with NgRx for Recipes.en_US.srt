@@ -1,0 +1,492 @@
+1
+00:00:02,680 --> 00:00:10,750
+Back to our application then. There is one area, the recipes, which we haven't migrated to NgRx yet and
+
+2
+00:00:10,750 --> 00:00:17,100
+that is what I want to do now and for this in the recipes folder, I'll start by adding a store folder
+
+3
+00:00:17,170 --> 00:00:23,890
+and in that store folder, I want to add a recipe.reducer.ts file, a recipe.actions.ts
+
+4
+00:00:23,890 --> 00:00:30,010
+file and also already, a recipes.effects.ts file because we will certainly need all three
+
+5
+00:00:30,160 --> 00:00:31,100
+things.
+
+6
+00:00:31,270 --> 00:00:33,960
+Now let's start with the recipe reducer
+
+7
+00:00:34,140 --> 00:00:39,910
+and in there, you learned it's basically a function, so we will have to export a function here and
+
+8
+00:00:39,910 --> 00:00:43,500
+that's the recipe reducer function or whatever you want to call it
+
+9
+00:00:43,840 --> 00:00:44,800
+and just as before
+
+10
+00:00:44,800 --> 00:00:52,360
+it is a function which will receive a state and an action and then you have to return
+
+11
+00:00:52,710 --> 00:00:54,350
+a new state in there.
+
+12
+00:00:54,550 --> 00:00:58,960
+Now also just as before, of course we want to have an initial state
+
+13
+00:00:59,080 --> 00:01:06,130
+and I also wanted to find the structure of my state, so how the state will look like. For that I'll export
+
+14
+00:01:06,160 --> 00:01:12,970
+an interface which is my state for this part of the application,
+
+15
+00:01:12,970 --> 00:01:14,340
+so my recipe
+
+16
+00:01:14,360 --> 00:01:14,800
+state
+
+17
+00:01:14,800 --> 00:01:21,150
+so to say and now how does the state for recipes look like?
+
+18
+00:01:21,190 --> 00:01:27,120
+Well if we have a look at the recipes service, we see in the end we're only interested in recipes.
+
+19
+00:01:27,310 --> 00:01:33,340
+We manage that thus far through the recipes changed subject which we use to emit a copy of our recipes
+
+20
+00:01:33,670 --> 00:01:39,630
+but therefore in the end, this recipes array, that is our relevant state for the recipes.
+
+21
+00:01:39,670 --> 00:01:46,840
+So in here, in my state for the recipes part of my @ngrx/store, it makes sense to have the recipes
+
+22
+00:01:47,230 --> 00:01:50,800
+array and this will be of type recipe array,
+
+23
+00:01:50,800 --> 00:01:54,720
+so you need to import that recipe model here.
+
+24
+00:01:54,840 --> 00:01:58,580
+Now that describes how the state will look like for this part of the app,
+
+25
+00:01:58,690 --> 00:02:05,410
+let's now set up the initial state and that will be an object of that type, so of that state type
+
+26
+00:02:05,410 --> 00:02:10,190
+we just defined, hence we need a recipes array and you could start with some recipes here
+
+27
+00:02:10,270 --> 00:02:14,290
+but I will initialize this to be an empty array initially.
+
+28
+00:02:14,290 --> 00:02:16,010
+So that's the first step,
+
+29
+00:02:16,030 --> 00:02:23,550
+now obviously we also need some actions to deal with our recipes and which actions would that be?
+
+30
+00:02:23,560 --> 00:02:32,080
+Well we have actions for a setting multiple recipes at once, getting is not an action, we do this
+
+31
+00:02:32,080 --> 00:02:32,920
+with select.
+
+32
+00:02:32,950 --> 00:02:41,080
+So we have actions for adding a recipe and we also have actions for updating a recipe and deleting a
+
+33
+00:02:41,080 --> 00:02:51,680
+recipe, we'll also need actions for fetching recipes from a server and for restoring recipes on a server.
+
+34
+00:02:51,720 --> 00:02:57,720
+Let's go to the recipe.action file and let's maybe start with the simple actions we have here,
+
+35
+00:02:57,990 --> 00:03:04,860
+so the actions related to setting recipes so that we can see something as quick as possible.
+
+36
+00:03:04,860 --> 00:03:12,540
+So I will add set recipes here and we'll give this this prefix, recipes, that's the feature area and then
+
+37
+00:03:12,600 --> 00:03:13,620
+set recipes,
+
+38
+00:03:13,620 --> 00:03:17,370
+of course the exact string value here is totally up to you.
+
+39
+00:03:17,370 --> 00:03:26,640
+We'll also needs to import that action interface from @ngrx/store so that we can create our
+
+40
+00:03:26,640 --> 00:03:29,760
+action classes and for now I will create one class here,
+
+41
+00:03:29,910 --> 00:03:36,420
+the set recipes class which will of course implement the action interface and which therefore requires
+
+42
+00:03:36,420 --> 00:03:40,540
+a readonly type which is just SET_RECIPES.
+
+43
+00:03:40,620 --> 00:03:44,940
+Now set recipes as the name suggests of course will be responsible for,
+
+44
+00:03:44,940 --> 00:03:45,800
+well guess what?
+
+45
+00:03:45,840 --> 00:03:51,700
+Setting some recipes and hence, we will definitely need a payload here which can now be stored through
+
+46
+00:03:51,700 --> 00:03:57,030
+the constructor and that payload here will just be that array of recipes which I want to set.
+
+47
+00:04:01,590 --> 00:04:11,040
+For that of course, we need to import recipe here from the recipe model.
+
+48
+00:04:11,480 --> 00:04:17,390
+Last but not least, let's create such a union type already so that we can conveniently add a type assignment
+
+49
+00:04:17,510 --> 00:04:25,110
+to the action we're getting in our reducer and that would be the recipes actions, right now simply
+
+50
+00:04:25,200 --> 00:04:27,100
+set recipes
+
+51
+00:04:27,240 --> 00:04:29,570
+and it's of course an exported type.
+
+52
+00:04:31,110 --> 00:04:31,340
+OK,
+
+53
+00:04:31,350 --> 00:04:33,980
+so that's the first action we need,
+
+54
+00:04:34,320 --> 00:04:43,170
+now in the recipe reducer here, we should add logic to set recipes. So later we will have multiple actions,
+
+55
+00:04:43,260 --> 00:04:47,680
+hence a switch statement makes sense to switch on the action type,
+
+56
+00:04:47,730 --> 00:04:52,990
+side note I also of course want to use my initial state here for initializing the state and on the action,
+
+57
+00:04:53,010 --> 00:05:01,020
+I also want to be clear about the type of the action, for that we can import everything as recipes actions
+
+58
+00:05:01,380 --> 00:05:08,740
+from the store, from the recipe actions file and hence here, the type for the action we're getting in the
+
+59
+00:05:08,740 --> 00:05:16,480
+reducer is RecipesActions.RecipesActions. Now in the switch statement,
+
+60
+00:05:16,480 --> 00:05:23,020
+this is the action type we're checking, the first case I want to handle is RecipesActions.SET_RECIPES
+
+61
+00:05:23,020 --> 00:05:29,920
+and of course I will also add a default case where I just return my state unchanged. But back
+
+62
+00:05:29,920 --> 00:05:32,870
+to the recipes, set recipes case, there
+
+63
+00:05:32,890 --> 00:05:38,570
+I also want to return an object or we have to return an object but again, the goal is here to first copy
+
+64
+00:05:38,590 --> 00:05:46,210
+the existing state and now with that being copied, overwrite the recipes in there by taking the recipes
+
+65
+00:05:46,210 --> 00:05:52,540
+we find in the action.payload because the action.payload here of course has an array of recipes.
+
+66
+00:05:52,540 --> 00:05:58,630
+So here, I will just use the spread operator to get my action.payload,
+
+67
+00:05:58,630 --> 00:06:04,240
+this will pull out all the elements from the recipes array I'm getting and add these recipes here to
+
+68
+00:06:04,240 --> 00:06:06,730
+these recipes array of the new state.
+
+69
+00:06:06,910 --> 00:06:10,240
+So that's the reducer and action setup, as a next step
+
+70
+00:06:10,240 --> 00:06:14,710
+let's make sure we dispatch set recipes once we have our recipes
+
+71
+00:06:15,040 --> 00:06:22,370
+and of course let's make sure that we select these recipes to show them on the user interface. Dispatching
+
+72
+00:06:22,400 --> 00:06:28,970
+for now will be done in the data storage service, there we do fetch the recipes and once we have them,
+
+73
+00:06:29,240 --> 00:06:32,380
+right now we're calling recipes service set recipes,
+
+74
+00:06:32,450 --> 00:06:34,510
+that's not what we'll do, instead
+
+75
+00:06:34,550 --> 00:06:38,540
+now, we can remove the auth service by the way, we don't need that here anymore,
+
+76
+00:06:38,540 --> 00:06:48,070
+instead now I want to inject my store here, like this and this needs a generic type, @ngrx/store
+
+77
+00:06:48,100 --> 00:06:53,680
+is by the way of course the package from which you import it and I can also clean up some other imports
+
+78
+00:06:53,680 --> 00:06:58,900
+now that I have a look at it but that's of course not the main goal here, instead the store needs to
+
+79
+00:06:58,900 --> 00:06:59,590
+be imported,
+
+80
+00:06:59,590 --> 00:07:05,470
+it's a generic type and therefore now we need to get our AppState here, even though we're not selecting
+
+81
+00:07:05,560 --> 00:07:07,360
+in this class.
+
+82
+00:07:07,360 --> 00:07:12,850
+Now for this, we first of all should update our app reducer because right now it only knows the shopping
+
+83
+00:07:12,850 --> 00:07:13,990
+list and auth area,
+
+84
+00:07:14,020 --> 00:07:15,450
+well that is about to change though.
+
+85
+00:07:15,460 --> 00:07:23,200
+Let's import everything as from recipes from the recipes store,
+
+86
+00:07:26,050 --> 00:07:28,540
+recipe reducer.
+
+87
+00:07:28,570 --> 00:07:37,150
+Now we should add recipes as a slice in our global state here and reference from recipes state and of
+
+88
+00:07:37,150 --> 00:07:44,920
+course that means that in the app reducer here, I also will add recipes and then from recipes, recipe
+
+89
+00:07:44,920 --> 00:07:46,570
+reducer here.
+
+90
+00:07:46,570 --> 00:07:52,960
+With that the global application reducer is updated and back in the data storage service, we can now import
+
+91
+00:07:52,960 --> 00:07:54,140
+from that reducer,
+
+92
+00:07:54,160 --> 00:08:02,400
+so import everything as from app from that global store app reducer
+
+93
+00:08:02,550 --> 00:08:06,990
+and then we have fromApp.AppState here as the type, as the generic type
+
+94
+00:08:06,990 --> 00:08:13,290
+our store will eventually resolve to. However, I only need the store here to of course dispatch,
+
+95
+00:08:13,290 --> 00:08:19,530
+so here once we've got the recipes, we can call this store dispatch and now we also need the recipes
+
+96
+00:08:19,590 --> 00:08:21,360
+actions to dispatch
+
+97
+00:08:21,390 --> 00:08:28,370
+such an action, so I import everything as recipes actions from
+
+98
+00:08:28,740 --> 00:08:34,970
+the recipes folder, the store folder and from there, the recipe actions file. With the
+
+99
+00:08:34,970 --> 00:08:43,430
+recipes actions imported here in the data storage service, let's create a new recipes, recipes action
+
+100
+00:08:44,250 --> 00:08:51,200
+and that would be the set recipes action to which I pass the recipes we got from the server. So now we're
+
+101
+00:08:51,200 --> 00:08:54,140
+dispatching this set recipes action,
+
+102
+00:08:54,140 --> 00:08:58,180
+now we need to change the places where we're interested in the recipes
+
+103
+00:08:59,000 --> 00:09:02,840
+and that is the case in the recipe list component.
+
+104
+00:09:02,840 --> 00:09:04,240
+So in there,
+
+105
+00:09:04,340 --> 00:09:14,490
+let's now also inject our store which is of type store and again for that, I have to import store from
+
+106
+00:09:14,490 --> 00:09:16,170
+@ngrx/store
+
+107
+00:09:16,170 --> 00:09:18,990
+and now I want to add my AppState
+
+108
+00:09:22,860 --> 00:09:29,830
+by importing from app, from the app reducer and then here it's fromApp.AppState, like this.
+
+109
+00:09:29,940 --> 00:09:37,230
+And now here instead of subscribing to recipe changed on the recipe service, I rather use the store and
+
+110
+00:09:37,230 --> 00:09:45,940
+select the recipes area, however there I don't get a list of recipes, instead I get an object which has
+
+111
+00:09:45,940 --> 00:09:53,560
+a recipes key, I get the state slice of my recipes area but with pipe and map, we can easily transform
+
+112
+00:09:53,560 --> 00:10:00,940
+this, map is imported from rxjs/operators of course, so we can easily transform this now, we get
+
+113
+00:10:00,940 --> 00:10:08,170
+our recipes state and what I want to return here is in the end just my recipes,
+
+114
+00:10:08,540 --> 00:10:11,560
+well we can simply add map like this,
+
+115
+00:10:11,630 --> 00:10:18,280
+pull out the recipes, return them to the next step in line. We could also get rid of that get recipes called
+
+116
+00:10:18,280 --> 00:10:26,500
+here. Now with that change, we can also remove the injected recipe service here in the recipe list. Now
+
+117
+00:10:26,500 --> 00:10:27,520
+let's give this a try,
+
+118
+00:10:27,520 --> 00:10:35,140
+let's save that and here in our application, if I now fetch my recipes, they do show up here.
+
+119
+00:10:35,200 --> 00:10:40,390
+However I'm getting an error if I try to select one which makes sense because keep in mind that the
+
+120
+00:10:40,390 --> 00:10:46,690
+rest of the app still tries to access recipe data from the recipe service but there, our recipes are
+
+121
+00:10:46,690 --> 00:10:52,600
+no longer loaded into because we're now loading them in our @ngrx/store and hence at the moment, only
+
+122
+00:10:52,600 --> 00:10:57,570
+those parts of the app will work where we do access our recipes from the store.
+
+123
+00:10:57,610 --> 00:11:01,090
+So it's time to also adjust other parts of the application.
+

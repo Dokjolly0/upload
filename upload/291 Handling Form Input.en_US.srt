@@ -1,0 +1,184 @@
+1
+00:00:02,160 --> 00:00:05,860
+Now handling form input is something you already learned about throughout this course
+
+2
+00:00:06,030 --> 00:00:08,280
+and here I'll use the template driven approach
+
+3
+00:00:08,280 --> 00:00:12,390
+but of course feel free to use the reactive one if you prefer that.
+
+4
+00:00:12,390 --> 00:00:13,950
+Now we got two inputs,
+
+5
+00:00:13,950 --> 00:00:16,100
+the first one, this e-mail input,
+
+6
+00:00:16,110 --> 00:00:19,310
+this one will get ngModel of course
+
+7
+00:00:19,470 --> 00:00:23,570
+and besides ngModel, it then also needs a name and the name can be e-mail
+
+8
+00:00:23,580 --> 00:00:26,190
+but of course you can take any name you want.
+
+9
+00:00:26,220 --> 00:00:31,980
+I also want to validate whatever the user enters here, so I will add required because this must not be
+
+10
+00:00:31,980 --> 00:00:32,680
+empty
+
+11
+00:00:32,850 --> 00:00:35,190
+and also the e-mail validator,
+
+12
+00:00:35,190 --> 00:00:40,800
+these are both built-in validation directives Angular ships with which allow us to validate the input
+
+13
+00:00:40,980 --> 00:00:48,010
+for being there, for being any input at all and for being a valid e-mail address.
+
+14
+00:00:48,040 --> 00:00:53,160
+Now the password will also receive ngModel and a name which could be password,
+
+15
+00:00:53,230 --> 00:00:54,940
+again that name is up to you
+
+16
+00:00:55,240 --> 00:00:55,840
+and here,
+
+17
+00:00:55,870 --> 00:00:57,480
+that should also be required
+
+18
+00:00:57,730 --> 00:01:03,340
+and I also want to have a minimum length here because we will use Firebase REST API for authenticating
+
+19
+00:01:03,640 --> 00:01:08,320
+and it turns out that this REST API indeed requests us to have at least six characters.
+
+20
+00:01:08,350 --> 00:01:16,480
+So here, we can add the min length validator and give this a value of six, so that passwords shorter than
+
+21
+00:01:16,480 --> 00:01:24,600
+six will not be accepted. Now I want to disable the button if the form is not valid and therefore on this
+
+22
+00:01:24,660 --> 00:01:30,600
+form element, we'll use that trick you already learned about in the forms section, we get access to that
+
+23
+00:01:30,600 --> 00:01:37,110
+form object Angular creates automatically for us by creating a local reference, giving it any name you
+
+24
+00:01:37,110 --> 00:01:43,020
+want, like auth form but that name is up to you and then you set this equal to ngForm and now
+
+25
+00:01:43,020 --> 00:01:48,350
+this will give you access to the Angular form object and we can now use the auth form reference here,
+
+26
+00:01:48,510 --> 00:01:56,300
+for example on this button, to disable it if not auth form valid,
+
+27
+00:01:56,330 --> 00:02:02,220
+so if the auth form is not valid, then the submit button will be disabled. And indeed now, you see it is
+
+28
+00:02:02,220 --> 00:02:06,190
+disabled and if I enter an e-mail address here, it still is disabled.
+
+29
+00:02:06,280 --> 00:02:12,160
+If I start typing a password, it is disabled and only as soon as I have six characters, it gets enabled
+
+30
+00:02:12,270 --> 00:02:23,490
+and if I convert this to something which is not a valid e-mail address, it also gets disabled. So this works,
+
+31
+00:02:23,490 --> 00:02:29,550
+we got working validation. Now of course when we submit the form, we also want to do something,
+
+32
+00:02:30,000 --> 00:02:37,920
+so here on the form element, as you already learned it in the form section, we can add ngSubmit and
+
+33
+00:02:37,920 --> 00:02:46,560
+there, we can trigger the onSubmit method and forward our auth form or just the auth form value, whatever
+
+34
+00:02:46,560 --> 00:02:47,080
+you want,
+
+35
+00:02:47,220 --> 00:02:53,030
+I will submit the entire form. Now in the auth component,
+
+36
+00:02:53,100 --> 00:03:02,460
+we therefore can add onSubmit here and we'll get our form object here which is of type ngForm as
+
+37
+00:03:02,460 --> 00:03:08,660
+an argument and therefore you need to import ngForm from @angular/forms
+
+38
+00:03:08,700 --> 00:03:16,770
+and now here, we can of course for example console log the form value and also call form reset to
+
+39
+00:03:16,770 --> 00:03:18,690
+reset it once we're done.
+
+40
+00:03:18,690 --> 00:03:19,740
+So let's give this a try,
+
+41
+00:03:19,740 --> 00:03:21,060
+let's go back here,
+
+42
+00:03:21,150 --> 00:03:27,810
+let me enter an e-mail address and a password and you see the form was reset correctly, it was disabled
+
+43
+00:03:27,810 --> 00:03:28,090
+again,
+
+44
+00:03:28,100 --> 00:03:31,920
+this button was disabled again and you also see this is the data I got,
+
+45
+00:03:31,920 --> 00:03:38,520
+this is the data I entered. This is now the data we'll use to actually use Firebase to, for a start, create
+
+46
+00:03:38,520 --> 00:03:41,700
+a new user and then, to also of course log users in.
+

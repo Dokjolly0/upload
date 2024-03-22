@@ -1,0 +1,104 @@
+1
+00:00:01,890 --> 00:00:06,150
+Well now did we understood how these tests are generally written.
+
+2
+00:00:06,150 --> 00:00:10,550
+Let's see them in action in the terminal run energy task.
+
+3
+00:00:10,560 --> 00:00:16,800
+Inside this project folder to run our tests fruity Seelye which again already has this test runner and
+
+4
+00:00:16,800 --> 00:00:18,570
+so on built in.
+
+5
+00:00:18,570 --> 00:00:27,540
+Now what this will do is it will start up the testing environment and we can ignore these warnings.
+
+6
+00:00:27,540 --> 00:00:29,180
+It starts up Carmer.
+
+7
+00:00:29,310 --> 00:00:35,640
+And here we see that it executed three of three tests successfully because we have three tests here
+
+8
+00:00:35,640 --> 00:00:35,990
+.
+
+9
+00:00:36,000 --> 00:00:39,150
+Now let's change something to see a test fail.
+
+10
+00:00:39,270 --> 00:00:45,460
+If we go to the app component and change app works to app works without the second piece.
+
+11
+00:00:45,470 --> 00:00:53,400
+So just with one p then D test where we check that it contains app works as well as this test here should
+
+12
+00:00:53,400 --> 00:00:54,620
+fail.
+
+13
+00:00:54,660 --> 00:01:03,090
+So if we save this is here which automatically rerun and now we see two failed tests and now we can
+
+14
+00:01:03,090 --> 00:01:08,250
+simply inspect our log here and it might be a bit hard to read.
+
+15
+00:01:08,250 --> 00:01:11,920
+But basically here is see expected Apteryx to equal appliques.
+
+16
+00:01:11,930 --> 00:01:17,610
+So this is a problem when it failed and the same A-star true down there because both times we're missing
+
+17
+00:01:17,610 --> 00:01:19,980
+the test that we don't have.
+
+18
+00:01:20,010 --> 00:01:24,780
+App works here in the template where we expected to contain Eberts with two.
+
+19
+00:01:24,790 --> 00:01:26,500
+But now it only has one.
+
+20
+00:01:26,880 --> 00:01:31,960
+So this is how we can then interpret these test results and find out what's going on.
+
+21
+00:01:32,100 --> 00:01:37,350
+And I'm going to fix this again to save it and rerun the tests automatically just takes a couple of
+
+22
+00:01:37,350 --> 00:01:40,640
+seconds and now we see they're all successful again.
+
+23
+00:01:40,650 --> 00:01:47,160
+So that's how we run the tests keep us running and how we then see failing as well as successful tests
+
+24
+00:01:47,160 --> 00:01:47,600
+.
+
+25
+00:01:47,610 --> 00:01:53,850
+Now with that running I can add some new things to this application too.
+
+26
+00:01:53,910 --> 00:01:58,280
+Well and Hans a little bit and dive deeper into testing.
+

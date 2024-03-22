@@ -1,0 +1,332 @@
+1
+00:00:01,950 --> 00:00:06,740
+So thus far we had very simple tests checking if components are trade and so on.
+
+2
+00:00:06,780 --> 00:00:14,100
+Let's spice it up and let's add a service to our user folder the user users service Dadds TS file in
+
+3
+00:00:14,100 --> 00:00:19,890
+this file here ival basically export my user service class as you know it.
+
+4
+00:00:19,890 --> 00:00:25,630
+And in this class I want to have a user object which I can retrieve from my component.
+
+5
+00:00:26,070 --> 00:00:33,740
+So here I'll have my user and this shell be an object where the name is Max just like that.
+
+6
+00:00:33,750 --> 00:00:34,600
+That is all.
+
+7
+00:00:34,680 --> 00:00:37,090
+This is a very very very simple service.
+
+8
+00:00:37,170 --> 00:00:39,370
+And here my user component it engine in it.
+
+9
+00:00:39,390 --> 00:00:42,150
+I want to say this user equals.
+
+10
+00:00:42,360 --> 00:00:44,830
+Well then I need to inject my service here.
+
+11
+00:00:45,000 --> 00:00:52,520
+So let's inject user service here of type user service as we learn it from the Course as to import appeared
+
+12
+00:00:52,520 --> 00:00:53,250
+to you.
+
+13
+00:00:53,580 --> 00:01:01,190
+And then I can say this user service user notes that this is no asynchronous task or anything like this
+
+14
+00:01:01,200 --> 00:01:07,410
+as it happens synchronously but we do inject something of course for this to work we need to provide
+
+15
+00:01:07,410 --> 00:01:11,790
+it and we're providing it on this level should be enough.
+
+16
+00:01:11,790 --> 00:01:19,140
+So providers user service like this what that application should work but how would we make testing
+
+17
+00:01:19,140 --> 00:01:19,850
+work.
+
+18
+00:01:20,160 --> 00:01:23,560
+Well we want to get the username from the service.
+
+19
+00:01:23,640 --> 00:01:26,270
+So let's create a new test for that.
+
+20
+00:01:26,280 --> 00:01:34,440
+We should use the user name from the service because in our component here we're assigning our user
+
+21
+00:01:34,440 --> 00:01:36,780
+property to the user from the service.
+
+22
+00:01:36,780 --> 00:01:40,080
+So that is what I'm testing here.
+
+23
+00:01:40,080 --> 00:01:48,390
+So again let's write the logic here and I will basically copy that into that years so that I also get
+
+24
+00:01:48,390 --> 00:01:50,070
+my app.
+
+25
+00:01:50,070 --> 00:01:53,920
+But now I also somehow want to inject my service.
+
+26
+00:01:53,940 --> 00:02:00,160
+So how do we forsaid to inject this user service into the component in our testing environment.
+
+27
+00:02:00,300 --> 00:02:12,330
+Well by creating a user server's variable here whereas say fixture debug element injector to get access
+
+28
+00:02:12,330 --> 00:02:20,100
+to the Englad to injector get and now a user service which I also need to add as an import at the top
+
+29
+00:02:20,100 --> 00:02:20,500
+.
+
+30
+00:02:20,700 --> 00:02:26,910
+What this does is it uses the two injector which exists and which is well part of this component.
+
+31
+00:02:26,910 --> 00:02:32,950
+We now created and tails it please get me an instance of this user services how we do it.
+
+32
+00:02:33,150 --> 00:02:40,590
+And as a side note you can learn more about different ways of injecting this in the document in this
+
+33
+00:02:40,590 --> 00:02:41,400
+article.
+
+34
+00:02:41,520 --> 00:02:47,510
+I will give you at the end of this module so that the user service year.
+
+35
+00:02:47,700 --> 00:03:02,040
+And with that user service I can now say that I expect my users service user name to equal the app user
+
+36
+00:03:02,250 --> 00:03:05,700
+name like that.
+
+37
+00:03:06,020 --> 00:03:12,240
+And if I saved this it will we execute our tests and we should now see five successful tests but we
+
+38
+00:03:12,240 --> 00:03:17,180
+don't so we can't read name of undefined what went wrong here.
+
+39
+00:03:17,370 --> 00:03:19,170
+Well the following went wrong.
+
+40
+00:03:19,170 --> 00:03:24,190
+We're getting this property from this service because we inject it.
+
+41
+00:03:24,210 --> 00:03:29,520
+We do this an engine in it but we're missing one thing which happens automatically in the app running
+
+42
+00:03:29,520 --> 00:03:31,080
+in the browser but not here.
+
+43
+00:03:31,410 --> 00:03:39,270
+We need to run change detection to update our properties and so on after running does after injecting
+
+44
+00:03:39,270 --> 00:03:40,110
+the service.
+
+45
+00:03:40,110 --> 00:03:46,260
+Now we see we get a successful test because now we're trying to access our user name property on the
+
+46
+00:03:46,260 --> 00:03:52,890
+component after we update it and we need to update it because it isn't in the same state as at the beginning
+
+47
+00:03:52,890 --> 00:03:52,950
+.
+
+48
+00:03:52,950 --> 00:03:57,720
+We injected the service and got data from there even though that happened synchronously but it's still
+
+49
+00:03:57,720 --> 00:04:00,430
+not to state the same state as in well.
+
+50
+00:04:00,450 --> 00:04:06,780
+Our code here where it is and you find at the beginning well with that now it would be interesting to
+
+51
+00:04:06,780 --> 00:04:10,020
+see if our NGF thing here works correctly.
+
+52
+00:04:10,020 --> 00:04:15,960
+So we want to check if we see the user name if we are locked in and if we don't see it if we are not
+
+53
+00:04:15,960 --> 00:04:16,800
+locked in.
+
+54
+00:04:17,040 --> 00:04:25,560
+So it is time to create some new tests and we should display the user name if the user is locked in
+
+55
+00:04:25,560 --> 00:04:25,660
+.
+
+56
+00:04:25,680 --> 00:04:35,060
+I'd say so let's execute this code here then and I can generally copy the code from the last test here
+
+57
+00:04:35,500 --> 00:04:36,170
+though.
+
+58
+00:04:36,190 --> 00:04:42,550
+Now I want to do something different I also want to compile my code.
+
+59
+00:04:42,810 --> 00:04:46,860
+So are my templates so I will get access or get access to decompile template.
+
+60
+00:04:46,860 --> 00:04:53,730
+I should say so here I will access my fixture to debug element and there the native element which is
+
+61
+00:04:53,730 --> 00:04:55,000
+my template.
+
+62
+00:04:55,200 --> 00:05:07,200
+And then here I want to check if while I expect my compiled template I expect it to have a paragraph
+
+63
+00:05:07,200 --> 00:05:18,150
+element of course and there the text content is expected to let's say contain the user name cell app
+
+64
+00:05:18,270 --> 00:05:22,290
+user name that should work but only if we're locked in.
+
+65
+00:05:22,290 --> 00:05:30,010
+So if I run it right now we see it fails it can't find it because we have Please log in first in our
+
+66
+00:05:30,010 --> 00:05:32,460
+text because we are not locked in.
+
+67
+00:05:32,520 --> 00:05:34,780
+So we have to change this.
+
+68
+00:05:34,800 --> 00:05:38,340
+I actually don't have to access my user service like this anymore.
+
+69
+00:05:38,340 --> 00:05:45,270
+It will still get injected here but I don't want to access it like I do in the test before so I don't
+
+70
+00:05:45,270 --> 00:05:48,370
+need to explicitly name it here.
+
+71
+00:05:48,420 --> 00:05:54,570
+I don't need to retrieve it from the unchecked or I should say it can be done by Englad you automatically
+
+72
+00:05:54,590 --> 00:05:55,070
+.
+
+73
+00:05:55,440 --> 00:05:59,590
+And then here instead I want to do something different.
+
+74
+00:05:59,880 --> 00:06:08,880
+I want to access my app and set is locked in to true in this test so that when I now save it we now
+
+75
+00:06:08,880 --> 00:06:18,750
+see six successful tests on the other hand I should see something else than the username if I'm not
+
+76
+00:06:18,750 --> 00:06:19,920
+locked in.
+
+77
+00:06:19,920 --> 00:06:24,240
+So here we shouldn't display the username.
+
+78
+00:06:24,240 --> 00:06:29,520
+If user is not locked in.
+
+79
+00:06:29,520 --> 00:06:32,810
+So hearable get rid of my app is log in overwriting.
+
+80
+00:06:32,820 --> 00:06:34,700
+I will still detect changes.
+
+81
+00:06:34,740 --> 00:06:44,520
+But here I expect my text content to not contain this name so not to contain if I save this it should
+
+82
+00:06:44,520 --> 00:06:48,280
+rerun and now we should have seven successful tests and we do.
+
+83
+00:06:48,540 --> 00:06:54,490
+And this is how we can test a couple of things and see if our app behaves as intended here.
+

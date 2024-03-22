@@ -1,0 +1,268 @@
+1
+00:00:02,420 --> 00:00:06,680
+Welcome to another course module. By now, the basics should be set
+
+2
+00:00:06,800 --> 00:00:09,810
+and we had a closer look at what makes up an Angular app.
+
+3
+00:00:09,890 --> 00:00:14,500
+Now chances are you already encountered your first error in your app,
+
+4
+00:00:14,510 --> 00:00:17,700
+we even had some errors together in the apps we built.
+
+5
+00:00:17,750 --> 00:00:23,870
+Now fixing these errors is of course very important and not always straightforward,
+
+6
+00:00:23,880 --> 00:00:29,120
+that is why in this section, we're going to have a brief look at the tools we have at our disposal for
+
+7
+00:00:29,120 --> 00:00:32,280
+fixing errors in our Angular app.
+
+8
+00:00:32,450 --> 00:00:39,420
+Here's a little example app attached to this lecture which looks nice but won't work as expected.
+
+9
+00:00:39,590 --> 00:00:42,570
+We are on our servers dashboard you could say
+
+10
+00:00:42,710 --> 00:00:45,610
+but if I click add server to add a new server,
+
+11
+00:00:45,770 --> 00:00:46,840
+watch what happens,
+
+12
+00:00:46,880 --> 00:00:48,030
+we get an error.
+
+13
+00:00:48,200 --> 00:00:54,290
+Now you might get such errors a lot and generally, you might not always have your developer console open,
+
+14
+00:00:54,320 --> 00:00:56,440
+though for developing that's a good idea
+
+15
+00:00:56,720 --> 00:01:01,550
+but if something doesn't work the way you expect it to work, like here when you click the button and nothing
+
+16
+00:01:01,550 --> 00:01:02,320
+happens,
+
+17
+00:01:02,480 --> 00:01:07,670
+opening the console, the developer tools and there, the Javascript console is a great idea.
+
+18
+00:01:07,670 --> 00:01:13,310
+Now here, we clearly get an error message and error messages have gotten better in Angular,
+
+19
+00:01:13,340 --> 00:01:16,760
+so chances are the error message is indeed helpful.
+
+20
+00:01:16,760 --> 00:01:18,510
+So let's have a look at the error message,
+
+21
+00:01:18,560 --> 00:01:22,960
+you should find it right at the top and here it says that in app component,
+
+22
+00:01:23,090 --> 00:01:28,150
+that's the first important information piece, in the inline template,
+
+23
+00:01:28,160 --> 00:01:34,110
+then this would be the line number and then the column where in the line, so line 4,
+
+24
+00:01:34,160 --> 00:01:35,850
+now let's see if that is helpful,
+
+25
+00:01:36,080 --> 00:01:39,800
+that there the error was caused because we cannot read the property
+
+26
+00:01:39,800 --> 00:01:46,250
+push of undefined. Well, we get a couple of useful information pieces here,
+
+27
+00:01:46,420 --> 00:01:51,190
+so let's go to the app component then and let's have a look at it.
+
+28
+00:01:52,010 --> 00:01:53,350
+If we go there,
+
+29
+00:01:53,420 --> 00:02:01,310
+well the line 4 argument is only kind of helpful because line 4 is neither the problematic code in our
+
+30
+00:02:01,310 --> 00:02:04,910
+template nor in the TypeScript file. The report says
+
+31
+00:02:04,910 --> 00:02:05,590
+line 4
+
+32
+00:02:05,600 --> 00:02:11,840
+because in the end everything gets merged together and rebuilt, so that is where probably the code then is
+
+33
+00:02:11,840 --> 00:02:15,940
+triggered in line 4 in the final code but not in our code.
+
+34
+00:02:15,980 --> 00:02:20,890
+Still, we get one important clue here, property push of undefined.
+
+35
+00:02:21,170 --> 00:02:27,070
+So we try to call push on something which is not defined at the point of time we do call it.
+
+36
+00:02:27,410 --> 00:02:32,690
+So if we have a look at our code here, we see that there is only one place where we call push and
+
+37
+00:02:32,690 --> 00:02:34,230
+that is of course here in the
+
+38
+00:02:34,270 --> 00:02:39,470
+onAddServer method which makes sense because this is the method which gets triggered once we click the
+
+39
+00:02:39,470 --> 00:02:40,030
+button.
+
+40
+00:02:40,100 --> 00:02:46,750
+So that would have been another way of finding where the problematic code has to be as this error occurred
+
+41
+00:02:46,760 --> 00:02:48,120
+when we click the button,
+
+42
+00:02:48,230 --> 00:02:52,040
+it probably is somewhere in the method which is then executed.
+
+43
+00:02:52,070 --> 00:02:57,560
+So here there's something wrong with pushing, though not with pushing itself,
+
+44
+00:02:57,620 --> 00:03:01,290
+remember it said push of undefined.
+
+45
+00:03:01,580 --> 00:03:07,480
+So the thing we're calling push on is undefined, so that would be this servers.
+
+46
+00:03:07,490 --> 00:03:10,280
+How can these servers be undefined,
+
+47
+00:03:10,280 --> 00:03:12,740
+we do declare it up here, right?
+
+48
+00:03:12,950 --> 00:03:15,070
+That's exactly the issue in this case.
+
+49
+00:03:15,110 --> 00:03:18,200
+We do declare it here but we don't define it,
+
+50
+00:03:18,380 --> 00:03:19,940
+we tell TypeScript,
+
+51
+00:03:20,030 --> 00:03:24,050
+there's going to be a property called servers but we don't initialize it.
+
+52
+00:03:24,080 --> 00:03:26,220
+It doesn't have any value assigned to it,
+
+53
+00:03:26,240 --> 00:03:29,400
+it's not an empty array, it's not a string, it's nothing.
+
+54
+00:03:29,720 --> 00:03:38,400
+So to fix our code, we simply have to make sure that before trying to push a new item on servers, we set
+
+55
+00:03:38,420 --> 00:03:42,660
+servers to an array because otherwise, it could be anything, it's undefined in the end,
+
+56
+00:03:42,680 --> 00:03:45,370
+so pushing is not supported here.
+
+57
+00:03:45,680 --> 00:03:50,630
+So what we can do is we can simply initialize an empty array at the beginning and with this little change
+
+58
+00:03:50,630 --> 00:03:51,590
+in place,
+
+59
+00:03:51,590 --> 00:03:55,270
+this should now work as expected once it reloads and we click add server,
+
+60
+00:03:55,280 --> 00:03:58,590
+now we can add our servers to this list.
+
+61
+00:03:58,700 --> 00:04:03,260
+So this was a brief example for a potential error message,
+
+62
+00:04:03,260 --> 00:04:07,780
+how to read it and how to try to get to the root of the error.
+
+63
+00:04:07,880 --> 00:04:12,480
+Now of course, it's impossible for me to show all possible error messages and what can go wrong
+
+64
+00:04:12,790 --> 00:04:18,560
+and there are some more tricky error messages but it's always great to not panic but have a look at
+
+65
+00:04:18,560 --> 00:04:23,330
+the message, read which file it points to, read the exact message,
+
+66
+00:04:23,360 --> 00:04:28,700
+there are even error messages in Angular which are much clearer than the one I just showed you.
+
+67
+00:04:28,850 --> 00:04:33,950
+And with that, you should be able to narrow down the issue and hopefully, solve it.
+

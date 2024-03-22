@@ -1,0 +1,132 @@
+1
+00:00:02,780 --> 00:00:09,470
+Sometimes you not only want to pre-populate a default the user entered but you also want to instantly
+
+2
+00:00:09,500 --> 00:00:11,490
+react to any changes.
+
+3
+00:00:11,600 --> 00:00:16,670
+Right now, everything about this form here only updates once I click submit,
+
+4
+00:00:16,730 --> 00:00:20,240
+then I get this form object where I can retrieve the value.
+
+5
+00:00:20,270 --> 00:00:26,470
+We don't use two-way binding, ngModel is either used without any binding or with one-way binding
+
+6
+00:00:26,600 --> 00:00:33,130
+but sometimes you instantly want to check something or simply repeat whatever the user entered,
+
+7
+00:00:33,560 --> 00:00:37,390
+let's show an example. For this question here, 
+
+8
+00:00:37,400 --> 00:00:43,330
+I'm going to add a new form-group, Bootstrap style here below the dropdown,
+
+9
+00:00:43,520 --> 00:00:48,360
+I want to have a text area let's say to also introduce a new input,
+
+10
+00:00:48,380 --> 00:00:49,720
+let's name it
+
+11
+00:00:49,790 --> 00:00:57,290
+questionAnswer. I don't need the ID here, don't need columns,
+
+12
+00:00:57,360 --> 00:00:59,800
+I want to have three rows let's say
+
+13
+00:00:59,940 --> 00:01:02,720
+and I'll also distribute this over multiple lines
+
+14
+00:01:02,850 --> 00:01:08,550
+and now we could add ngModel to get access to whatever the user entered as a reply
+
+15
+00:01:09,060 --> 00:01:18,400
+but maybe for some reason, we instantly want to repeat this reply. So below this we could say your reply
+
+16
+00:01:18,840 --> 00:01:22,920
+and now we want to output the answer to the question.
+
+17
+00:01:23,490 --> 00:01:31,290
+Well for this, we could still use two-way binding on ngModel here and bind it to the answer property
+
+18
+00:01:31,290 --> 00:01:32,270
+here,
+
+19
+00:01:32,310 --> 00:01:35,840
+of course we need to introduce this answer property then there
+
+20
+00:01:35,880 --> 00:01:38,490
+and answer could be an empty string by default.
+
+21
+00:01:38,880 --> 00:01:45,900
+With this in place, let me also add a CSS class to the text area, form-control to give it some nice
+
+22
+00:01:45,900 --> 00:01:47,080
+styling.
+
+23
+00:01:47,550 --> 00:01:55,920
+If this reloads, we see our text area here and if I enter valid data here, for my first pet let's say,
+
+24
+00:01:56,880 --> 00:02:03,150
+a rabbit named Nelly, you instantly see that here. So you can still use two-way binding
+
+25
+00:02:03,150 --> 00:02:11,610
+and actually if I submit the whole form and open up the developer tools, you'll see in the value object,
+
+26
+00:02:11,790 --> 00:02:14,960
+this is still part of this value object,
+
+27
+00:02:14,970 --> 00:02:17,690
+it just is updated with every keystroke
+
+28
+00:02:17,760 --> 00:02:24,030
+but of course if we submit it, we will get a snapshot of the value at a point of time we hit submit.
+
+29
+00:02:24,090 --> 00:02:26,760
+So two-way binding is still possible,
+
+30
+00:02:26,820 --> 00:02:33,750
+you can still use ngModel with two-way binding and with that, you saw all three forms. No binding
+
+31
+00:02:33,750 --> 00:02:37,170
+to just tell Angular that an input is a control,
+
+32
+00:02:37,320 --> 00:02:43,860
+one-way binding to give that control a default value and two-way binding to instantly output it or do
+
+33
+00:02:43,860 --> 00:02:46,330
+whatever you want to do with that value.
+

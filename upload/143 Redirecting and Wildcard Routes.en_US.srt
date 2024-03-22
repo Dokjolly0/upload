@@ -1,0 +1,228 @@
+1
+00:00:02,550 --> 00:00:05,820
+You already learned a lot about routing.
+
+2
+00:00:05,900 --> 00:00:12,410
+We're nearing the end but did you ever wonder what happens if we enter something here which we don't
+
+3
+00:00:12,410 --> 00:00:16,840
+cover, like let's say just slash something.
+
+4
+00:00:16,950 --> 00:00:23,190
+We get an error because clearly, we don't have a route with slash something here.
+
+5
+00:00:23,310 --> 00:00:26,440
+So that is something we probably want to improve,
+
+6
+00:00:26,520 --> 00:00:30,390
+we want to do some 404 error handling,
+
+7
+00:00:30,390 --> 00:00:33,740
+we maybe want to redirect the user to a specific page
+
+8
+00:00:33,750 --> 00:00:37,350
+whenever he tries to visit a page we don't have.
+
+9
+00:00:37,680 --> 00:00:40,070
+These are the topics I'll focus on next,
+
+10
+00:00:40,140 --> 00:00:42,800
+setting up a router which handles all routes
+
+11
+00:00:42,810 --> 00:00:50,100
+we don't have set up and redirecting requests, not necessarily to topics you use together but also not
+
+12
+00:00:50,100 --> 00:00:51,820
+that uncommon.
+
+13
+00:00:51,870 --> 00:00:55,430
+So let's start with redirecting.
+
+14
+00:00:55,510 --> 00:01:01,660
+Let's say we add a new component to our application and I will use the CLI for this with the gc for
+
+15
+00:01:01,660 --> 00:01:04,620
+generate component command and I'll name it
+
+16
+00:01:04,660 --> 00:01:10,780
+page-not-found, the page not found component which was added here in our app folder, in this new page
+
+17
+00:01:10,780 --> 00:01:15,490
+not found folder. I'll get rid of the spec file
+
+18
+00:01:15,490 --> 00:01:23,250
+and here, I will simply say in the template, this page was not found, something like this.
+
+19
+00:01:23,250 --> 00:01:29,190
+Now I want to render this page in let's say the case that we visit a certain route,
+
+20
+00:01:29,320 --> 00:01:29,910
+I'll add it
+
+21
+00:01:29,920 --> 00:01:37,730
+here at the bottom where the path is for now something and in this something case here,
+
+22
+00:01:38,070 --> 00:01:41,220
+I want to load my page not found component.
+
+23
+00:01:41,730 --> 00:01:44,510
+Of course, make sure that you added it to declarations and so on
+
+24
+00:01:44,520 --> 00:01:47,280
+because we're still using it in our app of course.
+
+25
+00:01:48,090 --> 00:01:55,440
+So with this in place, if we now save this, go back to our application and visit slash something, we of
+
+26
+00:01:55,440 --> 00:01:58,600
+course see this page was not found.
+
+27
+00:01:58,600 --> 00:02:06,360
+Now let's change something to not found and let's make sure that once we add another new route which
+
+28
+00:02:06,360 --> 00:02:14,460
+then is something let's say, we don't also have to add component here but we redirect to another route,
+
+29
+00:02:14,790 --> 00:02:17,890
+to the not found route maybe. For this,
+
+30
+00:02:17,910 --> 00:02:21,570
+we get another property we can add to any route config here,
+
+31
+00:02:21,600 --> 00:02:28,380
+so of course to any of the other routes. If you don't want to specify a component to load, you can say
+
+32
+00:02:28,770 --> 00:02:30,280
+redirectTo.
+
+33
+00:02:30,540 --> 00:02:36,540
+Now this is an alternative to component, component loads the specific component, redirectTo redirects to
+
+34
+00:02:36,540 --> 00:02:37,730
+another path.
+
+35
+00:02:38,010 --> 00:02:44,680
+So here, you can specify any path and the path maybe now is /not-found.
+
+36
+00:02:44,700 --> 00:02:49,800
+So now if you do this, you'll see that it automatically redirected,
+
+37
+00:02:49,810 --> 00:02:52,690
+so let me show you this again by typing slash something,
+
+38
+00:02:52,680 --> 00:02:56,600
+watch the URL, it redirects to /not-found
+
+39
+00:02:56,690 --> 00:02:59,410
+and all the other routes of course still work.
+
+40
+00:02:59,420 --> 00:03:02,800
+So this is how we can use redirection.
+
+41
+00:03:02,840 --> 00:03:09,020
+Now of course, it's not very convenient to define slash something here because you probably can't define
+
+42
+00:03:09,230 --> 00:03:13,730
+all possible wrong URLs the user can enter.
+
+43
+00:03:13,850 --> 00:03:21,710
+So a more convenient way to catch all routes which are not covered by your app is to use the double
+
+44
+00:03:21,710 --> 00:03:28,710
+asterisk route here, this is the wildcard route which means catch all paths
+
+45
+00:03:28,730 --> 00:03:32,280
+you don't know and the order is super important here.
+
+46
+00:03:32,660 --> 00:03:40,190
+Make sure that this very generic route is the last one in your array of routes because your routes get
+
+47
+00:03:40,190 --> 00:03:42,580
+parsed from top to bottom here,
+
+48
+00:03:42,770 --> 00:03:48,140
+so if this was actually at the beginning, you would always get redirected
+
+49
+00:03:48,230 --> 00:03:54,980
+as I can quickly show you by saving this like this, now no matter where you click, you always are redirected
+
+50
+00:03:55,090 --> 00:03:56,740
+to not found.
+
+51
+00:03:56,750 --> 00:04:00,710
+So make sure this is the last route here in your set up
+
+52
+00:04:00,710 --> 00:04:09,090
+and with this, now all the other routes work but if you enter anything invalid here, you always get
+
+53
+00:04:09,090 --> 00:04:16,050
+redirected to not found because now you're using this wildcard route, catching all routes which are
+
+54
+00:04:16,110 --> 00:04:22,770
+unknown to Angular at this point of time once it reaches this line here and which then redirects to the
+
+55
+00:04:22,770 --> 00:04:27,950
+not found route which displays the page not found page or component.
+
+56
+00:04:27,960 --> 00:04:32,240
+This is how you can redirect and make sure you catch routes
+
+57
+00:04:32,370 --> 00:04:34,170
+you're not covering right now.
+

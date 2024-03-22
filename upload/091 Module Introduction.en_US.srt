@@ -1,0 +1,76 @@
+1
+00:00:02,410 --> 00:00:08,350
+Time to take another look at directives and not only repeat quickly what we've learned thus far but also
+
+2
+00:00:08,440 --> 00:00:13,990
+learn how to build our own directives and really dive into the difference between attribute and structural
+
+3
+00:00:13,990 --> 00:00:14,600
+directives
+
+4
+00:00:14,620 --> 00:00:18,130
+and what this star means on the structural directives.
+
+5
+00:00:18,580 --> 00:00:20,280
+Well, I already said it right,
+
+6
+00:00:20,290 --> 00:00:27,190
+we get attribute and structural directives. Attribute directives are called like this because they sit
+
+7
+00:00:27,280 --> 00:00:32,860
+on elements, just like attributes and structural directives basically do the same
+
+8
+00:00:32,880 --> 00:00:37,250
+but they also change the structure of the DOM around this element.
+
+9
+00:00:37,330 --> 00:00:44,490
+If you have ngIf on a paragraph, if that condition is false, this paragraph is removed from the DOM,
+
+10
+00:00:44,500 --> 00:00:47,110
+so the overall view container is affected,
+
+11
+00:00:47,260 --> 00:00:51,840
+whereas on the attribute directive, you never destroy an element from the DOM,
+
+12
+00:00:51,940 --> 00:00:54,280
+you only change properties of that element,
+
+13
+00:00:54,280 --> 00:00:56,480
+for example the backgroundColor.
+
+14
+00:00:56,650 --> 00:01:02,980
+So that is why we have attribute directives only affecting the element they sit on and structural directives
+
+15
+00:01:03,070 --> 00:01:08,200
+which also affect the whole DOM or the view container, the area around the element which they
+
+16
+00:01:08,200 --> 00:01:09,930
+were placed on.
+
+17
+00:01:09,970 --> 00:01:11,290
+That is the difference,
+
+18
+00:01:11,290 --> 00:01:17,020
+now with that let's briefly have a look at the directives we already know and how to use them before we
+
+19
+00:01:17,020 --> 00:01:21,290
+then dive into building our own ones and learn more about structural directives.
+

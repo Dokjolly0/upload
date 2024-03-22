@@ -1,0 +1,300 @@
+1
+00:00:02,300 --> 00:00:09,440
+So back in the project, it's time for new components or for new routes because thus far, we have our recipes
+
+2
+00:00:09,440 --> 00:00:17,270
+and we have our shopping list area, we now need some area where we can sign in and my idea here is that
+
+3
+00:00:17,360 --> 00:00:24,170
+in our application here, we have an auth page, an authentication page where users can sign up and log
+
+4
+00:00:24,170 --> 00:00:29,210
+in and that auth page is of course available in an unauthenticated state,
+
+5
+00:00:29,210 --> 00:00:34,910
+so the user doesn't need to be logged in to visit that auth page because forcing the user to being logged
+
+6
+00:00:34,910 --> 00:00:38,140
+in would defeat the purpose of an authenticated page.
+
+7
+00:00:38,560 --> 00:00:44,540
+The recipes page on the other hand, that page should be locked down and should not be available if the
+
+8
+00:00:44,540 --> 00:00:46,180
+user is not logged in
+
+9
+00:00:46,190 --> 00:00:50,570
+and the same for that manage dropdown, it should only be shown if the user is logged in
+
+10
+00:00:50,570 --> 00:00:52,940
+because otherwise, you can't interact with that
+
+11
+00:00:52,940 --> 00:00:58,040
+or we could but these actions shouldn't do anything because that will actually change to requests that
+
+12
+00:00:58,040 --> 00:01:04,190
+need authentication to work. The shopping list should always be accessible, though of course you are free
+
+13
+00:01:04,190 --> 00:01:12,200
+to also edit this and log both routes down if you're not authenticated. With that, let's start by adding
+
+14
+00:01:12,260 --> 00:01:21,370
+a new area in this application which I'll create here in my app folder which I'll name auth and in there,
+
+15
+00:01:21,550 --> 00:01:29,490
+we need an auth.component.ts file and an auth.component.html file, which is the template for the
+
+16
+00:01:29,500 --> 00:01:30,860
+auth component.
+
+17
+00:01:31,090 --> 00:01:40,180
+Now in our auth.component.ts file, we export a class, auth component and as learned, such a component
+
+18
+00:01:40,180 --> 00:01:44,050
+is created by adding the @component decorator
+
+19
+00:01:44,050 --> 00:01:49,080
+and there we need to define a selector, which in my case here will be app auth
+
+20
+00:01:49,180 --> 00:01:54,910
+and we also need to tell Angular where to find our template and that of course will be my auth.component.html
+
+21
+00:01:54,910 --> 00:01:58,910
+file in the same folder as this component lives.
+
+22
+00:01:58,950 --> 00:02:04,280
+Now as you also learned, a component needs to be declared such that Angular understands it
+
+23
+00:02:04,420 --> 00:02:09,500
+and for this, we can go to the app module and here, we simply add it to our declarations array,
+
+24
+00:02:09,610 --> 00:02:16,210
+the auth component, simply add it here and make sure you also add an import path to that newly created file.
+
+25
+00:02:17,900 --> 00:02:21,260
+With all of that out of the way, this new component exists,
+
+26
+00:02:21,260 --> 00:02:24,780
+now of course we can work on that template here
+
+27
+00:02:24,950 --> 00:02:34,130
+and for this, I'll add a bootstrap row, so a div with class row and a column, xs-12 to take the full width
+
+28
+00:02:34,160 --> 00:02:36,500
+on all screen sizes and in there,
+
+29
+00:02:36,500 --> 00:02:42,680
+I want to have a form and that form should be my sign up and login form and we'll add a button
+
+30
+00:02:42,680 --> 00:02:47,420
+that allows the user to toggle between both modes. In the form,
+
+31
+00:02:47,480 --> 00:02:54,710
+I'll add my form group div which is a bootstrap class to wrap a label and an input together basically
+
+32
+00:02:55,220 --> 00:03:01,670
+and I'll will then add a label here for my e-mail input let's say, that also means that here we should
+
+33
+00:03:01,670 --> 00:03:08,600
+add an input with class form control so that it looks good because the class form control is offered
+
+34
+00:03:08,600 --> 00:03:13,740
+by bootstrap and I will give this my e-mail type here,
+
+35
+00:03:13,790 --> 00:03:19,100
+it will also get the ID of e-mail for accessibility reasons so that this belongs to this label.
+
+36
+00:03:19,310 --> 00:03:21,590
+And with that, we should have that first input,
+
+37
+00:03:21,590 --> 00:03:23,660
+let's now add a second input,
+
+38
+00:03:23,660 --> 00:03:26,390
+this will be the input for the password,
+
+39
+00:03:26,390 --> 00:03:33,740
+so the for type and ID here will also be password, type password ensures that the characters are hidden
+
+40
+00:03:34,720 --> 00:03:43,550
+and we also need a button of course, so let's add another div here with a button which also
+
+41
+00:03:43,550 --> 00:03:44,390
+gets the class button
+
+42
+00:03:44,390 --> 00:03:52,090
+primary where we can say sign up for now and this will later also dynamically change the text based
+
+43
+00:03:52,090 --> 00:03:58,590
+on the mode we're in because for that, I will add another button and another div below that and there
+
+44
+00:03:58,600 --> 00:04:07,030
+I will simply say switch to login which of course later will also have a dynamic caption and with that,
+
+45
+00:04:07,060 --> 00:04:14,180
+let's make sure we can see that by ensuring that we can load this component or this component route
+
+46
+00:04:14,200 --> 00:04:19,990
+here and for that in app routing module, I want to register a new route which loads the auth page.
+
+47
+00:04:19,990 --> 00:04:28,330
+So here, we can register a new path which can just be auth, the name is up to you though or the path is
+
+48
+00:04:28,330 --> 00:04:35,510
+up to you which you want to use and there, the component I want to load will be the auth component
+
+49
+00:04:35,510 --> 00:04:40,130
+and for that to work, you need to make sure that you add the import path up there to the auth component.
+
+50
+00:04:41,230 --> 00:04:48,490
+If you now save all of that and you enter /auth here, this is the form we're getting,
+
+51
+00:04:49,060 --> 00:04:52,240
+doesn't look too bad, of course you can change the styling,
+
+52
+00:04:52,240 --> 00:04:56,200
+actually I will change it a little bit, there are a couple of things I'm not liking,
+
+53
+00:04:56,200 --> 00:05:05,510
+I want to add more distance, more spacing between these two buttons here or actually move them in the
+
+54
+00:05:05,510 --> 00:05:06,650
+same row,
+
+55
+00:05:08,610 --> 00:05:17,110
+like this maybe, yes that looks better and also reduce the width of that a little bit on the bigger
+
+56
+00:05:17,110 --> 00:05:18,430
+devices,
+
+57
+00:05:18,430 --> 00:05:24,850
+so there I want to work with col-md-6, which is a bootstrap class which gives us a more narrow column
+
+58
+00:05:25,480 --> 00:05:33,560
+and I want to add an offset of three so that this is nicely centered
+
+59
+00:05:33,780 --> 00:05:37,480
+so here, that looks better.
+
+60
+00:05:37,590 --> 00:05:38,160
+This is it,
+
+61
+00:05:38,160 --> 00:05:40,170
+this is the form we'll work with.
+
+62
+00:05:40,170 --> 00:05:46,830
+Now of course, we later also will add logic to make sure that we automatically are redirected to the
+
+63
+00:05:46,830 --> 00:05:47,330
+auth page
+
+64
+00:05:47,340 --> 00:05:54,300
+if we're not logged in and we can't visit recipes if we are not logged in but for now,
+
+65
+00:05:54,300 --> 00:05:57,140
+we'll manually go to that auth page here.
+
+66
+00:05:57,150 --> 00:06:04,080
+One thing I will already add though is in the header, a new link that allows us to go to that auth page,
+
+67
+00:06:04,080 --> 00:06:07,410
+let me replicate a shopping list link here and now,
+
+68
+00:06:07,650 --> 00:06:11,810
+that first shopping list link will go to the authenticate route,
+
+69
+00:06:11,850 --> 00:06:20,090
+so the text is authenticate, the router link points at /auth therefore and if we save that, now we
+
+70
+00:06:20,090 --> 00:06:23,650
+can go to that route with that navigation link here,
+
+71
+00:06:23,660 --> 00:06:24,220
+perfect.
+
+72
+00:06:24,230 --> 00:06:27,330
+So this is the basic setup with which we'll start,
+
+73
+00:06:27,410 --> 00:06:34,040
+of course we're far from being done because whilst we have this page now, the work just starts and as
+
+74
+00:06:34,040 --> 00:06:39,230
+a first step, let's make sure we can switch between login and sign up mode here and thereafter, let's
+
+75
+00:06:39,220 --> 00:06:41,890
+add the logic to actually sign up users and log them in.
+

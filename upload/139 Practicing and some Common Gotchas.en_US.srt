@@ -1,0 +1,320 @@
+1
+00:00:02,740 --> 00:00:06,740
+So now that we learned a lot about navigating passing parameters,
+
+2
+00:00:07,180 --> 00:00:13,030
+let's improve our app a little bit by going to the users component where we have a list of links in
+
+3
+00:00:13,030 --> 00:00:20,300
+the end to single users and let's add the routerLink here, pass an array as an argument
+
+4
+00:00:20,410 --> 00:00:24,490
+and here, we want to target /users and we already created our route, right?
+
+5
+00:00:24,490 --> 00:00:31,370
+We have /users, /ID and /name, so we can use that information here in users component,
+
+6
+00:00:31,390 --> 00:00:34,720
+the second element here in this array there should be the ID
+
+7
+00:00:34,960 --> 00:00:41,110
+and since we have a for loop where we loop through all our users, we can easily dynamically add the ID
+
+8
+00:00:41,110 --> 00:00:45,840
+here by accessing user ID and the same for the name,
+
+9
+00:00:45,850 --> 00:00:51,270
+the third element, the third segment in this path, the user name, we can access username.
+
+10
+00:00:51,280 --> 00:00:54,100
+This is how we can dynamically construct such a link
+
+11
+00:00:54,250 --> 00:00:58,610
+and you already saw this with the navigate method a couple of lectures earlier.
+
+12
+00:00:59,080 --> 00:01:00,860
+So this is our routerLink here,
+
+13
+00:01:00,970 --> 00:01:02,840
+let's do the same for the servers.
+
+14
+00:01:02,950 --> 00:01:04,760
+So here in the servers component,
+
+15
+00:01:04,890 --> 00:01:08,800
+let's also replace the five here with server ID.
+
+16
+00:01:08,830 --> 00:01:14,920
+We do have a server ID if we have a look at the ServersService, you see we have IDs and names
+
+17
+00:01:14,920 --> 00:01:15,490
+here.
+
+18
+00:01:15,700 --> 00:01:22,060
+So we want to pass the ID and we can now do this by dynamic fetching it here and I will remove edit
+
+19
+00:01:22,180 --> 00:01:27,760
+though because I not only want to load the edit component here, I want to load the single server component
+
+20
+00:01:27,780 --> 00:01:30,240
+instead. With my link added here,
+
+21
+00:01:30,280 --> 00:01:32,200
+we need to add the fitting route,
+
+22
+00:01:32,230 --> 00:01:39,490
+so in our app module here, we need to add another route where we have servers and then just ID to load
+
+23
+00:01:39,490 --> 00:01:42,630
+a single server with the server component here.
+
+24
+00:01:42,640 --> 00:01:48,200
+Right now, we're always loading the edit-server.component so make sure to add this extra route and of
+
+25
+00:01:48,200 --> 00:01:51,720
+course, this will be loaded because we remove the edit at the end,
+
+26
+00:01:51,860 --> 00:01:53,870
+so we're not editing this anymore,
+
+27
+00:01:53,930 --> 00:01:56,200
+this just loads the single component.
+
+28
+00:01:56,450 --> 00:02:02,570
+And of course now, in this single server component, this one here where we want to output our server data, we
+
+29
+00:02:02,570 --> 00:02:05,850
+need to get that data we pass in the route path
+
+30
+00:02:05,850 --> 00:02:09,740
+in the URL. We pass the ID there,
+
+31
+00:02:09,800 --> 00:02:16,600
+we do have the ServersService where we are able to get a server by ID and we already do this in our server
+
+32
+00:02:16,610 --> 00:02:22,080
+component here in ngOnInit, right now always for the server with the ID one.
+
+33
+00:02:22,310 --> 00:02:30,130
+So now, use your chance to update this code to do this with the ID being passed with our route.
+
+34
+00:02:30,230 --> 00:02:34,040
+You learn everything you need for this, time for you to do it on your own,
+
+35
+00:02:34,040 --> 00:02:39,610
+I will give you a chance to pause this video before we do this together.
+
+36
+00:02:39,690 --> 00:02:45,690
+So were you successful? Let's try it together. Of course to get access to the router parameter, we need
+
+37
+00:02:45,690 --> 00:02:47,790
+to inject our activated route.
+
+38
+00:02:47,790 --> 00:02:54,630
+So we learned how to do this, add this route property and make it of type ActivatedRoute which you need to import
+
+39
+00:02:54,630 --> 00:03:02,340
+from @angular/router and now in ngOnInit, you can get your ID from this ActivatedRoute from
+
+40
+00:03:02,340 --> 00:03:03,980
+the snapshot,
+
+41
+00:03:03,990 --> 00:03:05,650
+the params object here
+
+42
+00:03:05,850 --> 00:03:12,920
+and then the ID which is encoded in the URL and now you can use this ID here to get that server.
+
+43
+00:03:12,930 --> 00:03:22,370
+Now if you also want to react to any changes thereafter, you need to subscribe to your params observable
+
+44
+00:03:22,560 --> 00:03:25,930
+here and basically do the same.
+
+45
+00:03:25,950 --> 00:03:28,310
+You get the params here which is of type params,
+
+46
+00:03:28,320 --> 00:03:31,340
+make sure to import that from @angular/router
+
+47
+00:03:31,890 --> 00:03:38,430
+and once you get this, you can get a new server whenever your params should change. So here, you could
+
+48
+00:03:38,430 --> 00:03:46,460
+then access params ID like this to update the server whenever change is triggered on this page.
+
+49
+00:03:46,470 --> 00:03:54,750
+So with this in place, if we reload our app and go to servers, you'll see we get an error here which makes sense
+
+50
+00:03:55,290 --> 00:04:02,640
+because keep in mind on our servers component here, we still are always loading our single server component
+
+51
+00:04:03,540 --> 00:04:05,510
+and therefore, we are also loading it
+
+52
+00:04:05,580 --> 00:04:07,930
+if we don't have this ID available.
+
+53
+00:04:08,100 --> 00:04:12,560
+So for now I will comment this out, we will soon learn how we can nest
+
+54
+00:04:12,620 --> 00:04:19,650
+another router in there to have some kind of child routing, to load this route dynamically next to our
+
+55
+00:04:20,010 --> 00:04:20,880
+menu here.
+
+56
+00:04:20,880 --> 00:04:23,220
+So for now, I simply comment it out.
+
+57
+00:04:23,530 --> 00:04:25,380
+If I now click on a server here,
+
+58
+00:04:27,020 --> 00:04:28,430
+we still get an error
+
+59
+00:04:28,540 --> 00:04:32,210
+and now this can be a tricky one to spot, what's going wrong here?
+
+60
+00:04:34,190 --> 00:04:41,330
+The issue is if we parse a parameter from our URL, it will always be a string because our whole URL
+
+61
+00:04:41,330 --> 00:04:48,910
+is simply just text, so ID here will actually not be one in the case of /1,
+
+62
+00:04:49,010 --> 00:04:51,770
+it will be a string of one.
+
+63
+00:04:51,890 --> 00:04:58,880
+So if we try to get a server by this ID, it will actually search a server which has an ID of one but a
+
+64
+00:04:58,880 --> 00:04:59,960
+string one,
+
+65
+00:04:59,990 --> 00:05:02,010
+however we use numbers here.
+
+66
+00:05:02,450 --> 00:05:08,660
+So we simply have to make sure to convert our ID to a number and we can do this by adding a plus in
+
+67
+00:05:08,660 --> 00:05:14,240
+front of it and this is perfectly fine to do. With that, you're making sure that the ID you're retrieving is
+
+68
+00:05:14,240 --> 00:05:15,930
+treated as a number,
+
+69
+00:05:15,950 --> 00:05:21,560
+of course you also need to make sure to do this here in your observable, so convert the params here
+
+70
+00:05:21,560 --> 00:05:23,250
+to a number too.
+
+71
+00:05:23,420 --> 00:05:28,620
+So with that if we now click on servers and choose a server, you see production server here,
+
+72
+00:05:28,670 --> 00:05:30,350
+test server in this case
+
+73
+00:05:30,530 --> 00:05:33,810
+and with that, this is now working as expected.
+
+74
+00:05:34,010 --> 00:05:38,170
+We now improved our app because now we got working links here,
+
+75
+00:05:38,180 --> 00:05:42,470
+we get working links here and we're loading the correct server.
+
+76
+00:05:42,470 --> 00:05:47,420
+So with that, we added a lot but we see that our app has some limitations,
+
+77
+00:05:47,450 --> 00:05:53,570
+it would be nice if we don't load a new page with the user or the server here but load it next to our
+
+78
+00:05:53,570 --> 00:06:01,190
+menu in both cases. So we somehow need some nested routing, some child routes kind of, to have a router
+
+79
+00:06:01,220 --> 00:06:02,600
+inside a router.
+
+80
+00:06:02,600 --> 00:06:05,870
+Let's have a closer look at this in the next lectures.
+

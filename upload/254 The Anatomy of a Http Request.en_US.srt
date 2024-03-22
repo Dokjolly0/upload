@@ -1,0 +1,128 @@
+1
+00:00:02,280 --> 00:00:07,980
+Before we start sending requests, it's important to understand the anatomy of an HTTP request
+
+2
+00:00:08,420 --> 00:00:15,150
+because a HTTP request is made up of a couple of core parts which we'll all have a look at in this module
+
+3
+00:00:15,150 --> 00:00:18,650
+here when it comes to configuring them when sending a request.
+
+4
+00:00:18,720 --> 00:00:24,410
+The most important part about a request of course is the URL you are sending the request to,
+
+5
+00:00:24,450 --> 00:00:31,290
+that's also called the API endpoint and it is something like yourdomain.com/posts/1
+
+6
+00:00:31,290 --> 00:00:36,480
+for example, the exact path here of course depends on the API you're interacting with.
+
+7
+00:00:37,320 --> 00:00:43,030
+However, when communicating with a RESTful API, it's not just about the URL but also about the
+
+8
+00:00:43,050 --> 00:00:49,170
+HTTP verb you're using, something like post, get, put. This defines which kind of request you want to
+
+9
+00:00:49,170 --> 00:00:49,630
+send
+
+10
+00:00:49,710 --> 00:00:52,530
+to that endpoint, do you want to store a new data?
+
+11
+00:00:52,590 --> 00:00:53,910
+Do you want to fetch data?
+
+12
+00:00:53,940 --> 00:00:55,920
+Do you want to replace existing data?
+
+13
+00:00:56,040 --> 00:01:02,220
+The HTTP verb makes that clear but it always depends on the API you're working with, which endpoints and
+
+14
+00:01:02,220 --> 00:01:04,690
+which verbs for these endpoints are available,
+
+15
+00:01:04,740 --> 00:01:10,200
+so the official docs for the API is always the place to go, unless you're of course writing your own API
+
+16
+00:01:10,350 --> 00:01:14,950
+in which case you of course know which endpoint supports which operations.
+
+17
+00:01:15,050 --> 00:01:20,750
+Now, when we're sending a request, it's nice to know where and how to send it to that place but you often
+
+18
+00:01:20,750 --> 00:01:25,490
+also need to set additional metadata, the so-called headers of a request.
+
+19
+00:01:25,560 --> 00:01:31,640
+Now these are kind of optional or to be precise, some default headers will be appended to a request for
+
+20
+00:01:31,640 --> 00:01:37,750
+you by the browser and by Angular but you can also append your own headers and that is therefore also
+
+21
+00:01:37,760 --> 00:01:39,740
+something we'll have a look at.
+
+22
+00:01:39,830 --> 00:01:44,150
+Now last but not least, for some HTTP verbs,
+
+23
+00:01:44,180 --> 00:01:46,880
+you can also add a body to your request,
+
+24
+00:01:46,910 --> 00:01:49,540
+that's the core data that is attached to a request.
+
+25
+00:01:49,580 --> 00:01:55,730
+For example if you're sending a post request to create a new piece of data on the server, well then of
+
+26
+00:01:55,730 --> 00:02:00,680
+course you should attach the information about that piece of data to your request and you would do
+
+27
+00:02:00,680 --> 00:02:02,250
+that in the request body.
+
+28
+00:02:02,360 --> 00:02:08,630
+Therefore a request body can be set on post, put and patch requests which are requests that do alter
+
+29
+00:02:08,630 --> 00:02:12,380
+data on the server by adding or replacing it.
+
+30
+00:02:12,410 --> 00:02:15,260
+Now that's the general anatomy of a HTTP request,
+
+31
+00:02:15,260 --> 00:02:20,840
+let's now have a look at how Angular helps us with writing or with creating such requests,
+
+32
+00:02:20,930 --> 00:02:25,370
+how we can work with them, how we can work with the response and what else Angular has to offer.
+

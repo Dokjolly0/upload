@@ -1,0 +1,420 @@
+1
+00:00:02,240 --> 00:00:08,470
+Back in the application, let's actually create a new dummy service to highlight what's going on.
+
+2
+00:00:08,520 --> 00:00:13,610
+I'll name this logging.service.ts file, that's the file name and I added next to the app
+
+3
+00:00:13,730 --> 00:00:14,540
+module,
+
+4
+00:00:14,690 --> 00:00:16,730
+though that doesn't really matter.
+
+5
+00:00:16,730 --> 00:00:25,130
+There, let me export the logging service and first of all, let's provide it by adding @injectable with
+
+6
+00:00:25,130 --> 00:00:28,790
+the object passed to it where we set provided in to route.
+
+7
+00:00:28,790 --> 00:00:35,030
+Now as you learned, this will provide the same instance of the service to the entire application. Here,
+
+8
+00:00:35,120 --> 00:00:44,090
+I'll add a last log property which is a string and initially it's undefined and then I'll add a print
+
+9
+00:00:44,240 --> 00:00:54,950
+log method here, where I get a message which is a string and first of all, I simply console log that message
+
+10
+00:00:54,950 --> 00:01:02,810
+but I also set this last log equal to the message and prior to setting this equal, I do log the last
+
+11
+00:01:02,810 --> 00:01:03,220
+log,
+
+12
+00:01:03,230 --> 00:01:04,610
+so the old last log
+
+13
+00:01:04,610 --> 00:01:08,630
+therefore. So we took the message and what was previously in the log
+
+14
+00:01:08,630 --> 00:01:12,220
+and then we overwrite what's previously in the log with the new message.
+
+15
+00:01:12,230 --> 00:01:17,450
+Of course, this is just a demo, not important to this application but important for understanding the
+
+16
+00:01:17,450 --> 00:01:20,060
+different service instance of things.
+
+17
+00:01:20,060 --> 00:01:24,120
+Now let's call this in app component in ngOnInit, there
+
+18
+00:01:24,200 --> 00:01:30,950
+let's simply inject the logging service, which is of type logging service,
+
+19
+00:01:30,950 --> 00:01:34,190
+make sure to add the import path here and in ngOnInit,
+
+20
+00:01:34,190 --> 00:01:40,940
+we can now call this logging service, print log hello from app component
+
+21
+00:01:43,490 --> 00:01:45,000
+ngOnInit.
+
+22
+00:01:45,000 --> 00:01:53,430
+Now let's also add it in our shopping list component. There in the shopping list component,
+
+23
+00:01:53,430 --> 00:01:55,770
+we also have ngOnInit,
+
+24
+00:01:55,770 --> 00:02:05,220
+so let's inject the logging service here as well, again make sure to add the right import path and in
+
+25
+00:02:05,220 --> 00:02:06,700
+ngOnInit, here
+
+26
+00:02:06,830 --> 00:02:17,160
+let's simply set this logging service, call print log and there I print Hello from shopping list component
+
+27
+00:02:17,640 --> 00:02:19,520
+ngOnInit.
+
+28
+00:02:19,920 --> 00:02:22,260
+OK, so I've got two places where I use that service,
+
+29
+00:02:22,260 --> 00:02:28,860
+now let's switch to the console in the dev tools and actually logout and reload the app.
+
+30
+00:02:29,310 --> 00:02:29,470
+OK,
+
+31
+00:02:29,550 --> 00:02:35,580
+so now we see hello from app component ngOnInit and then we see undefined, undefined is simply
+
+32
+00:02:35,580 --> 00:02:39,790
+stemming from that last log which I'm printing here,
+
+33
+00:02:40,020 --> 00:02:45,910
+now let's navigate to shopping list. You see hello from shopping list ngOnInit and you see
+
+34
+00:02:45,930 --> 00:02:51,180
+hello from app component ngOnInit because this is now our last log which was stored,
+
+35
+00:02:51,180 --> 00:02:51,420
+right
+
+36
+00:02:51,420 --> 00:02:52,540
+we do store it here,
+
+37
+00:02:52,590 --> 00:02:58,110
+so we're printing this the second time print log is called. This kind of proves that we're using one
+
+38
+00:02:58,110 --> 00:03:02,850
+and the same instance in the entire application because we're using the service in two different components
+
+39
+00:03:03,180 --> 00:03:08,520
+and yet, we're using the same object, otherwise last log would be undefined here as well. It isn't
+
+40
+00:03:08,580 --> 00:03:16,300
+and therefore we have proof that it's the same object as before. Let's change this by not using @injectable
+
+41
+00:03:16,300 --> 00:03:21,540
+with provided in root here but let's instead provide that service in the app module,
+
+42
+00:03:21,540 --> 00:03:29,370
+there, we can add providers and we provide the logging service. Let me switch back to authenticate and
+
+43
+00:03:29,370 --> 00:03:32,160
+reload, same output as before,
+
+44
+00:03:32,170 --> 00:03:33,430
+let's go to shopping list,
+
+45
+00:03:33,430 --> 00:03:34,660
+same output as before
+
+46
+00:03:34,720 --> 00:03:43,010
+because providing in the app module has the same effect as using @injectable. Let's get rid of that
+
+47
+00:03:43,040 --> 00:03:44,110
+as well,
+
+48
+00:03:44,120 --> 00:03:46,330
+let's now use an eagerly loaded module,
+
+49
+00:03:46,370 --> 00:03:53,850
+the core module, that is eagerly loaded because we import it here into the app module. There,
+
+50
+00:03:53,910 --> 00:03:58,090
+I already do provide services here so I kind of think that proves the point
+
+51
+00:03:58,160 --> 00:04:03,330
+but let's now add the logging service here, add the import as well,
+
+52
+00:04:03,430 --> 00:04:09,230
+save that, go to authenticate and reload, same output as before, go to shopping list,
+
+53
+00:04:09,350 --> 00:04:11,470
+same output as before.
+
+54
+00:04:11,480 --> 00:04:13,490
+Now let's change that,
+
+55
+00:04:13,670 --> 00:04:21,350
+let's remove logging service from the core module and let's instead provide it here in the app module
+
+56
+00:04:21,380 --> 00:04:22,210
+as before
+
+57
+00:04:22,420 --> 00:04:26,490
+but let's now also provide it in the shopping list module. There,
+
+58
+00:04:26,590 --> 00:04:30,510
+I'll add providers and I'll provide the logging service as well.
+
+59
+00:04:30,520 --> 00:04:33,100
+So now I'm providing it in a lazy loaded module,
+
+60
+00:04:33,190 --> 00:04:41,060
+the shopping list module and in an eagerly loaded module, my app module. Let's go to authenticate and reload,
+
+61
+00:04:41,060 --> 00:04:42,540
+same output as before,
+
+62
+00:04:42,560 --> 00:04:43,790
+let's go to shopping list,
+
+63
+00:04:44,090 --> 00:04:50,330
+oh now the output is different, because we're now using two different objects, two different instances
+
+64
+00:04:50,690 --> 00:04:53,420
+of that same service.
+
+65
+00:04:53,420 --> 00:05:00,340
+We're using a separate instance in our application in general for the service provided in app module
+
+66
+00:05:00,530 --> 00:05:06,230
+but since the shopping list module brings its own instance by providing the logging service again here,
+
+67
+00:05:06,800 --> 00:05:11,810
+the shopping list module and all the components in there use a separate instance of the logging
+
+68
+00:05:11,810 --> 00:05:16,730
+service, they don't use the application-wide available instance, they use their own instance created
+
+69
+00:05:16,730 --> 00:05:18,640
+by that child injector.
+
+70
+00:05:18,680 --> 00:05:21,350
+Now if you need that behaviour, definitely use it,
+
+71
+00:05:21,350 --> 00:05:22,490
+nothing wrong with that,
+
+72
+00:05:22,490 --> 00:05:23,390
+this is not a bug,
+
+73
+00:05:23,390 --> 00:05:30,560
+this is an intended feature but in general, you should think twice before you provide a service in any
+
+74
+00:05:30,680 --> 00:05:36,110
+other module than the app module because often, it's not the wanted behaviour and you then suddenly
+
+75
+00:05:36,110 --> 00:05:40,110
+have strange bugs when you're using different instances in your application.
+
+76
+00:05:40,130 --> 00:05:45,830
+So if you need that behaviour, use it but generally be aware that there are differences in the instances
+
+77
+00:05:45,830 --> 00:05:50,030
+you get when you provide services in lazy loaded modules.
+
+78
+00:05:50,030 --> 00:05:56,720
+This also includes modules that you import into lazy loaded modules, for example
+
+79
+00:05:56,810 --> 00:06:02,010
+if I comment this out in the shopping list module and I comment this out in the app module, let's provide
+
+80
+00:06:02,020 --> 00:06:09,690
+the service in the shared module. The shared module here in the shared folder, the shared module of course
+
+81
+00:06:09,690 --> 00:06:15,200
+is also able to add providers and let's provide the logging service here now.
+
+82
+00:06:15,210 --> 00:06:22,020
+Now the shared module is imported by the app module and there therefore it is an eagerly loaded module
+
+83
+00:06:22,440 --> 00:06:26,280
+but it's also imported into the shopping list module.
+
+84
+00:06:26,310 --> 00:06:32,580
+Now there, the shared module to the shopping list module is also eagerly loaded but the shopping
+
+85
+00:06:32,580 --> 00:06:34,660
+list module itself is lazy loaded,
+
+86
+00:06:34,740 --> 00:06:40,860
+turning this here in this place, the shared module in this place also into a lazy loaded module.
+
+87
+00:06:40,860 --> 00:06:47,430
+So here the shared module is both, it is lazy loaded in the shopping list or through the shopping list module
+
+88
+00:06:47,700 --> 00:06:55,620
+and it's eagerly loaded into the app module and the effect is that if we reload here, that works and
+
+89
+00:06:55,620 --> 00:07:02,170
+we see the output here on the app component but we have the same issue in quotation mark before because
+
+90
+00:07:02,170 --> 00:07:08,400
+the shopping list module still use its its own instance because it imports the shared module into it
+
+91
+00:07:08,880 --> 00:07:12,710
+and that is the most problematic bug
+
+92
+00:07:12,720 --> 00:07:19,530
+you often end up with when providing services in other modules. You might be providing a service in something
+
+93
+00:07:19,530 --> 00:07:25,170
+like a shared module, where you think yes I'm going to put all my shared services into this but you
+
+94
+00:07:25,170 --> 00:07:30,350
+might still have shared services that should use the same instance across your entire application.
+
+95
+00:07:30,360 --> 00:07:36,060
+Well as soon as you're importing your shared module into a lazy loaded module, the services provided
+
+96
+00:07:36,060 --> 00:07:42,360
+in the shared module will be recreated for the lazy loaded module and all of a sudden, you might have
+
+97
+00:07:42,360 --> 00:07:44,340
+a behaviour you don't want.
+
+98
+00:07:44,340 --> 00:07:49,500
+So whilst providing a service directly in the lazy loaded module might be something you control deliberately,
+
+99
+00:07:49,830 --> 00:07:54,600
+providing it in a shared module is a common gotcha where you think you use the same service instance
+
+100
+00:07:54,600 --> 00:07:57,140
+in the entire app when you don't.
+
+101
+00:07:57,390 --> 00:08:02,580
+I know this can be difficult to wrap your head around but this is a crucial thing and a common source
+
+102
+00:08:02,580 --> 00:08:08,250
+of bugs and therefore the rule of thumb is that you provide services through @injectable or in the
+
+103
+00:08:08,250 --> 00:08:13,920
+app module, if you do it differently, you should have a strong reason and you should either be able to
+
+104
+00:08:13,920 --> 00:08:20,970
+rule out that this module you're adding the service in is loaded lazily or you deliberately want multiple
+
+105
+00:08:20,970 --> 00:08:21,630
+instances.
+

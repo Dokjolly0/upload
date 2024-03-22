@@ -1,0 +1,120 @@
+1
+00:00:02,260 --> 00:00:04,040
+Hi, everyone, welcome to this video.
+
+2
+00:00:04,270 --> 00:00:13,180
+In this video, Wiltern online only angular application into offline available one by adding a service
+
+3
+00:00:13,180 --> 00:00:16,510
+worker and as you will see, does a super easy to do with Angular.
+
+4
+00:00:16,600 --> 00:00:22,570
+And I will show you how to turn into such an application and how you can then also configure it to fully
+
+5
+00:00:22,570 --> 00:00:23,650
+meet your needs.
+
+6
+00:00:23,680 --> 00:00:24,970
+So let's dive in.
+
+7
+00:00:28,620 --> 00:00:34,560
+We'll start with this very simple, angular application here, and you can find to code to that project
+
+8
+00:00:34,560 --> 00:00:40,770
+attached to this video, and this is obviously a very well simple, not too exciting, angular app.
+
+9
+00:00:41,040 --> 00:00:48,870
+It is rendering a list of blog posts, dummy blog posts, which are fetched in our app component here
+
+10
+00:00:48,960 --> 00:00:50,560
+from Jason Placeholder.
+
+11
+00:00:50,610 --> 00:00:57,660
+All that is just a page exposing a dummy rest API, which you can use to get some demo data to display
+
+12
+00:00:57,660 --> 00:00:58,410
+on your page.
+
+13
+00:00:58,590 --> 00:01:01,680
+You can also send dummy post requests to them and so on.
+
+14
+00:01:01,950 --> 00:01:03,260
+But that's not what we'll do.
+
+15
+00:01:03,450 --> 00:01:05,010
+We'll focus on getting data.
+
+16
+00:01:05,160 --> 00:01:08,000
+So this is normal a'la app.
+
+17
+00:01:08,010 --> 00:01:12,060
+Not too many features, but it represents a typical angular app.
+
+18
+00:01:12,090 --> 00:01:16,080
+We got more than one component and we also got our posts.
+
+19
+00:01:16,110 --> 00:01:20,910
+And if you watch closely, you'll see them all using some special fund, which I'm actually pulling
+
+20
+00:01:20,910 --> 00:01:23,190
+in in my index HTML file here.
+
+21
+00:01:23,310 --> 00:01:28,110
+I'm importing this OSVALD font here from Google fonts.
+
+22
+00:01:28,440 --> 00:01:30,840
+So this is what makes up our angular app.
+
+23
+00:01:31,050 --> 00:01:38,280
+Now if we inspected in Chrome, we can go to the application tab here and developer tools and we can
+
+24
+00:01:38,280 --> 00:01:41,910
+turn this to offline mode, which means we're still online.
+
+25
+00:01:41,910 --> 00:01:44,640
+We don't have to quit our wi fi network.
+
+26
+00:01:44,970 --> 00:01:48,050
+But this will simulate that we got no Internet connection.
+
+27
+00:01:48,060 --> 00:01:54,120
+And if I now reload the page, well, obviously I get an error that we don't have an Internet connection.
+
+28
+00:01:54,360 --> 00:01:56,470
+If I go back online, it works again.
+
+29
+00:01:57,120 --> 00:02:03,270
+Now, let's see how we can actually fix this or change this behavior with the help of a service worker
+
+30
+00:02:03,270 --> 00:02:07,230
+and how we can easily add such a service worker to the app with angular.
+

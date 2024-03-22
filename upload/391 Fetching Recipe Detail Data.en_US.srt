@@ -1,0 +1,400 @@
+1
+00:00:02,430 --> 00:00:08,220
+So at the moment, in our application, we can fetch recipes but as soon as we try to visit one, we'll get
+
+2
+00:00:08,220 --> 00:00:12,630
+an error because we were failing to load the ingredients here
+
+3
+00:00:12,630 --> 00:00:16,830
+but the bigger problem is that we're failing to load the overall recipe details.
+
+4
+00:00:16,880 --> 00:00:22,530
+The reason for that is that if we have a look at our recipe detail component here, we are of
+
+5
+00:00:22,530 --> 00:00:30,000
+course still fetching our recipe here with get recipe from our recipe service but we now no longer load
+
+6
+00:00:30,060 --> 00:00:32,370
+our recipes into the recipe service,
+
+7
+00:00:32,430 --> 00:00:39,380
+we instead load them into NgRx because not here but because in a data storage service, we dispatched
+
+8
+00:00:39,380 --> 00:00:46,620
+the loaded recipes with set recipes and that of course uses NgRx. Hence the goal has to be that
+
+9
+00:00:46,620 --> 00:00:53,070
+we also fetch our recipes on the detail and then also on the edit component from our store
+
+10
+00:00:53,070 --> 00:01:00,270
+and for that we'll have to rewrite our logic there a little bit because at the moment, our logic is such
+
+11
+00:01:00,270 --> 00:01:08,460
+that we basically load our recipes or we loaded our recipes in the service, in the recipe service and
+
+12
+00:01:08,460 --> 00:01:11,430
+then we store them here in the recipes array in the service
+
+13
+00:01:11,430 --> 00:01:17,980
+so that we thereafter could simply access the recipes from that array with get recipes or get recipe.
+
+14
+00:01:18,030 --> 00:01:25,430
+That's not how NgRx works, there we always access the store and the data in it by using select
+
+15
+00:01:25,500 --> 00:01:31,200
+and we always get back an observable, so we have no synchronous call as we have it here to get back
+
+16
+00:01:31,200 --> 00:01:31,890
+a recipe,
+
+17
+00:01:31,890 --> 00:01:37,680
+we always get back an observable that might then give us a recipe depending on what we select. Even
+
+18
+00:01:37,680 --> 00:01:39,600
+if that happens almost instantly,
+
+19
+00:01:39,600 --> 00:01:45,150
+it's still technically an observable, so therefore we first of all will have to inject our store here
+
+20
+00:01:45,240 --> 00:01:49,950
+into the recipe-detail component and then we can see how we proceed regarding that.
+
+21
+00:01:49,950 --> 00:01:55,340
+So I'll inject my store imported from @ngrx/store,
+
+22
+00:01:55,440 --> 00:02:06,720
+we'll also need to get information about our App Store, our App Store structure by importing that information
+
+23
+00:02:06,720 --> 00:02:13,350
+from the root store file at the App Store folder and the app reducer file and then here we can assign
+
+24
+00:02:13,350 --> 00:02:18,340
+this generic fromApp.AppState type as we did it before.
+
+25
+00:02:18,620 --> 00:02:22,290
+OK, so now we know more about our store,
+
+26
+00:02:22,290 --> 00:02:27,570
+now here we have a problem. Getting route params already is done through an observable,
+
+27
+00:02:27,570 --> 00:02:34,300
+so now we want to add yet another observable to then take these route params and get our recipe.
+
+28
+00:02:34,500 --> 00:02:42,080
+Now the first way of how we could do this would be that we create a new observable chain inside of that
+
+29
+00:02:42,200 --> 00:02:49,700
+function we passed to subscribe of that outer chain where we select our recipes part of the store and
+
+30
+00:02:49,700 --> 00:02:54,370
+then we can use pipe here in this inner observable now, on this selection
+
+31
+00:02:54,380 --> 00:03:00,830
+observable to transform the data we're getting with map and for that, we need map from rxjs
+
+32
+00:03:00,920 --> 00:03:08,030
+operators and we need map because here we get our recipes state and what we really want in the end of
+
+33
+00:03:08,030 --> 00:03:11,330
+course is a single recipe for that given ID.
+
+34
+00:03:11,840 --> 00:03:20,180
+So here, we can then simply return recipes state recipes and here
+
+35
+00:03:20,210 --> 00:03:28,730
+as I said, I want a single recipe, we can use find for that and find takes a function where we get each
+
+36
+00:03:28,730 --> 00:03:36,650
+recipe but also the index of each recipe and we here want to find the recipe where the
+
+37
+00:03:36,740 --> 00:03:44,900
+index of the element we're currently looking at with that find method, where that index is equal to this
+
+38
+00:03:44,950 --> 00:03:46,310
+ID.
+
+39
+00:03:46,400 --> 00:03:49,220
+So this could be our logic for retrieving one recipe,
+
+40
+00:03:49,220 --> 00:03:51,020
+now here I'm just mapping this,
+
+41
+00:03:51,020 --> 00:03:59,620
+so now we can subscribe on that inner observable, so on that store selection
+
+42
+00:03:59,690 --> 00:04:06,800
+observable, at this point, we will get a single recipe and then we could say this recipe equals recipe.
+
+43
+00:04:06,830 --> 00:04:12,650
+So now we're taking advantage of this store observable, let's save this and let's see if it works, if
+
+44
+00:04:12,650 --> 00:04:19,880
+this reloads, first of all we now need to fetch data and then here, that looks good.
+
+45
+00:04:19,880 --> 00:04:25,640
+So this works, a more elegant way of handling this would be to convert this all into one big observable
+
+46
+00:04:25,700 --> 00:04:29,790
+chain even though you can also leave it like this and could use it like that
+
+47
+00:04:29,960 --> 00:04:36,140
+but if you wanted to convert it to one larger observable chain, then you would have to call pipe on that
+
+48
+00:04:36,140 --> 00:04:43,270
+params observable here and add a map operator as your first operator, here
+
+49
+00:04:43,320 --> 00:04:48,040
+you then get this params object which we previously got in subscribe,
+
+50
+00:04:48,060 --> 00:04:51,170
+we will change our subscribe logic soon and there,
+
+51
+00:04:51,180 --> 00:05:03,370
+I want to return plus params ID to get that ID and in the next step, we would add a switchMap
+
+52
+00:05:03,670 --> 00:05:10,780
+to switch our observable from the route params observable to the store observable. Here we would get the
+
+53
+00:05:11,050 --> 00:05:22,720
+ID and we would return this store select recipes in the end to kick off that store
+
+54
+00:05:22,720 --> 00:05:28,850
+observable for the recipes slice and thereafter, in yet another next step,
+
+55
+00:05:28,850 --> 00:05:30,680
+we would use map here.
+
+56
+00:05:30,680 --> 00:05:36,770
+So let's cut that and remove that pipe method therefore, we would add map as yet another step in this
+
+57
+00:05:36,830 --> 00:05:38,270
+main pipe here.
+
+58
+00:05:38,330 --> 00:05:42,970
+However he would get the recipe state but this ID is now not set at this point
+
+59
+00:05:42,970 --> 00:05:47,680
+here. To set it, we can set it here in the switchMap,
+
+60
+00:05:47,680 --> 00:05:51,970
+we can set this ID equal to ID because we're getting the ID here as an argument,
+
+61
+00:05:51,970 --> 00:05:53,290
+thanks to map.
+
+62
+00:05:53,440 --> 00:05:59,940
+Now this ID is available here and we can filter on our recipes state for that single recipe
+
+63
+00:06:00,010 --> 00:06:03,610
+and last but not least, now we have a subscribe function here
+
+64
+00:06:06,800 --> 00:06:10,660
+with one too many closing parentheses,
+
+65
+00:06:10,670 --> 00:06:14,090
+now we have a subscribe function here where we get our single recipe.
+
+66
+00:06:14,120 --> 00:06:20,180
+So now if we save that, we should have the same setup where we can now fetch recipes and still view the
+
+67
+00:06:20,180 --> 00:06:27,620
+details with this observable chain. The same approach or a relatively equal approach can be used on
+
+68
+00:06:27,620 --> 00:06:33,780
+the recipe edit page. There, we also load a recipe when we initialize the form
+
+69
+00:06:33,950 --> 00:06:39,520
+and this now also has to be done with the help of our store observable.
+
+70
+00:06:39,560 --> 00:06:44,600
+So just as on the detail page, let's start by injecting the store here,
+
+71
+00:06:44,960 --> 00:06:48,260
+import it from @ngrx/store of course
+
+72
+00:06:48,260 --> 00:06:56,990
+and let's also import everything as from app, from our store app reducer file to assign that generic
+
+73
+00:06:56,990 --> 00:07:00,040
+type here fromApp.AppState
+
+74
+00:07:00,350 --> 00:07:05,710
+and now down there where we previously selected our recipe like this, that won't work anymore,
+
+75
+00:07:05,720 --> 00:07:09,610
+instead here we now select the recipes on our store and
+
+76
+00:07:09,660 --> 00:07:16,140
+then again we can use pipe here and add the map operator which you still need to import from rxjs
+
+77
+00:07:16,140 --> 00:07:20,090
+operators of course and with the map operator added here,
+
+78
+00:07:20,480 --> 00:07:23,150
+we again get our recipe state at this point,
+
+79
+00:07:23,150 --> 00:07:34,410
+we're only interested in a single recipe though, hence in here we can return recipe state.recipes
+
+80
+00:07:34,410 --> 00:07:36,580
+and then find a single recipe
+
+81
+00:07:36,720 --> 00:07:42,450
+and then again here, we get a recipe in the index passed in automatically into this function we pass
+
+82
+00:07:42,450 --> 00:07:47,850
+to find and we want to return true if the index matches this.ID,
+
+83
+00:07:47,850 --> 00:07:57,240
+so the ID we extracted from the route params in ngOnInit since we do call init form inside of our
+
+84
+00:07:57,240 --> 00:07:59,680
+subscription here, this is finding
+
+85
+00:07:59,700 --> 00:08:03,950
+and we can rely on the ID being set at this point of time.
+
+86
+00:08:04,020 --> 00:08:11,150
+So now here, we basically return a single recipe, in the next step,
+
+87
+00:08:11,220 --> 00:08:16,970
+we can now use that recipe and therefore the next step is to subscribe,
+
+88
+00:08:17,120 --> 00:08:25,160
+we get our recipe here and now all that code that relies on the recipe, so all this code here, has to
+
+89
+00:08:25,160 --> 00:08:30,230
+be moved into the subscription because only in there our recipe is available.
+
+90
+00:08:30,230 --> 00:08:31,280
+Well let's give this a try,
+
+91
+00:08:31,280 --> 00:08:37,290
+let's fetch our data and let's try editing a recipe and
+
+92
+00:08:37,340 --> 00:08:42,860
+this looks quite good. Now changing this or saving changes won't work yet because we're not handing this
+
+93
+00:08:42,860 --> 00:08:43,320
+through
+
+94
+00:08:43,490 --> 00:08:48,470
+NgRx at this point but we can load the details which is looking pretty good.
+
+95
+00:08:48,470 --> 00:08:54,890
+Again of course, changing anything here will not have any effect because we're not using NgRx for service
+
+96
+00:08:55,040 --> 00:08:56,220
+right now.
+
+97
+00:08:56,810 --> 00:08:57,790
+Of course we have a problem
+
+98
+00:08:57,820 --> 00:09:04,430
+if I reload whilst I'm on such a detail page though, there we don't really load that data, so that
+
+99
+00:09:04,430 --> 00:09:11,110
+will be the next step that we can also reload these pages and that is simply related to our resolver
+
+100
+00:09:11,110 --> 00:09:12,290
+not working correctly.
+

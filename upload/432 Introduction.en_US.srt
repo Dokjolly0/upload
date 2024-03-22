@@ -1,0 +1,76 @@
+1
+00:00:01,590 --> 00:00:05,880
+Welcome to a new model for this course we learned a lot about English too.
+
+2
+00:00:05,970 --> 00:00:11,440
+But the one thing we haven't covered is testing unit tests to be precise.
+
+3
+00:00:11,580 --> 00:00:17,340
+While the reason for this is that I really wanted to focus on the angle to code and not confuse people
+
+4
+00:00:17,340 --> 00:00:21,220
+with mixing in some non-English to testing code.
+
+5
+00:00:21,450 --> 00:00:23,710
+That being said testing is something.
+
+6
+00:00:23,840 --> 00:00:24,130
+Wait.
+
+7
+00:00:24,150 --> 00:00:29,790
+A lot of people might want to do in their project which actually improves your project and hence I will
+
+8
+00:00:29,790 --> 00:00:36,570
+give you an introduction this module and that is important and introduction you will learn how you can
+
+9
+00:00:36,570 --> 00:00:38,650
+write your task to have the Angua Seelye.
+
+10
+00:00:38,670 --> 00:00:41,850
+You will also find resources for non-C like projects.
+
+11
+00:00:41,910 --> 00:00:48,300
+You will learn how a task generally works and why you might want to test and which tasks and utilities
+
+12
+00:00:48,550 --> 00:00:49,830
+to office you.
+
+13
+00:00:50,100 --> 00:00:53,760
+I will give you or it will explain some example tests.
+
+14
+00:00:53,760 --> 00:01:00,750
+For example we will test a basic component a service and a pipe but thereafter it's really up to you
+
+15
+00:01:00,810 --> 00:01:08,190
+to use the resources I also provide to dive deeper into it because testing alone won't be enough content
+
+16
+00:01:08,190 --> 00:01:13,620
+for let's say a 15 hour course and it's not what this course is about and it's not what discourse should
+
+17
+00:01:13,620 --> 00:01:14,450
+be about.
+
+18
+00:01:14,670 --> 00:01:15,440
+But with.
+
+19
+00:01:15,510 --> 00:01:16,290
+Let's dive in
+

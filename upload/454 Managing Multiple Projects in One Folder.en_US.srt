@@ -1,0 +1,248 @@
+1
+00:00:02,150 --> 00:00:06,210
+And with this, we're done with managing our application.
+
+2
+00:00:06,500 --> 00:00:11,600
+Now, there is so much you can do, but you hopefully got a good overview of the different features
+
+3
+00:00:11,600 --> 00:00:12,900
+and the ecosystem here.
+
+4
+00:00:13,370 --> 00:00:17,690
+Now, want to come back to one thing I mentioned earlier, multiple projects.
+
+5
+00:00:18,140 --> 00:00:24,890
+Now, I mentioned that inside of a singular project or folder, I should say, you can have multiple
+
+6
+00:00:24,890 --> 00:00:25,660
+projects.
+
+7
+00:00:26,150 --> 00:00:31,550
+Now, you start with one project, but you can actually add a new one with energy generate and then
+
+8
+00:00:31,550 --> 00:00:37,520
+you can generate one of two project types, a library or an application.
+
+9
+00:00:38,630 --> 00:00:44,960
+Now, let's start with an application here, if I type and generate application, and I may be named
+
+10
+00:00:44,960 --> 00:00:51,920
+as backend because let's say I have my back end UI for my administrators and a front end UI for my end
+
+11
+00:00:51,920 --> 00:00:56,210
+users, if I hit enter here, this will go ahead.
+
+12
+00:00:57,110 --> 00:01:03,110
+And ask me the same questions I got when I created this project where I want to add routing and which
+
+13
+00:01:03,110 --> 00:01:08,300
+Stolle preprocessor I want to use, and now you see it adds a new project folder here.
+
+14
+00:01:08,600 --> 00:01:15,770
+And in that project's folder, it has this subfolder named backend, which is the name I chose, which
+
+15
+00:01:15,770 --> 00:01:23,870
+basically has a new angular project in it, a bit slimmer because they share the same root angular Jason
+
+16
+00:01:23,870 --> 00:01:30,230
+file and package jasen file here, but it's own dedicated config files, its own source folder.
+
+17
+00:01:30,230 --> 00:01:35,010
+And in there basically what we already know, this is a separate, angular application.
+
+18
+00:01:35,720 --> 00:01:41,540
+Now we could surface which with engy serve and then project equals backend.
+
+19
+00:01:42,260 --> 00:01:46,610
+This is important of course otherwise and you wouldn't know that it should use this project.
+
+20
+00:01:46,980 --> 00:01:48,710
+You can set the default project.
+
+21
+00:01:48,710 --> 00:01:54,650
+Angular serve were engie serve for any other command will use in the angler Jason file there.
+
+22
+00:01:54,650 --> 00:02:00,950
+At the very bottom you have this default project setting which in my case is set to my starting project,
+
+23
+00:02:00,950 --> 00:02:02,000
+angular config.
+
+24
+00:02:02,360 --> 00:02:07,790
+And if you set this then engy server for engy build without any extra FLAC will always run against this
+
+25
+00:02:07,790 --> 00:02:08,840
+project here.
+
+26
+00:02:08,840 --> 00:02:10,340
+I ran it against backend.
+
+27
+00:02:10,670 --> 00:02:19,460
+So unsurprisingly, if I visit localhost 4200, I now see this brand new project backend being served
+
+28
+00:02:19,460 --> 00:02:19,750
+here.
+
+29
+00:02:20,900 --> 00:02:24,590
+Now you could argue that this is an ugly project structure, though.
+
+30
+00:02:24,710 --> 00:02:28,880
+Having a projects folder as part of our other main project.
+
+31
+00:02:28,880 --> 00:02:30,390
+I'm not too happy with this.
+
+32
+00:02:30,920 --> 00:02:32,700
+Well, we can do better.
+
+33
+00:02:33,200 --> 00:02:38,270
+Let's go back to the main terminal and to the folder where we create our new angle, a project, and
+
+34
+00:02:38,270 --> 00:02:39,440
+now let's create a new one.
+
+35
+00:02:39,440 --> 00:02:40,520
+Engine new.
+
+36
+00:02:40,740 --> 00:02:45,620
+And now let's say we're building a singular shop, but it's totally up to you.
+
+37
+00:02:45,620 --> 00:02:46,910
+Does this just a dummy name?
+
+38
+00:02:47,720 --> 00:02:52,880
+Now, you might remember that there is Tarshish help, which you can use to run some commands.
+
+39
+00:02:52,880 --> 00:02:55,760
+And there was a create application FLAC.
+
+40
+00:02:57,610 --> 00:03:01,030
+And I will set this here to false.
+
+41
+00:03:02,230 --> 00:03:09,820
+Now, if we now run this, something interesting will happen, it now will generate some files, but
+
+42
+00:03:09,820 --> 00:03:12,130
+actually less files than before.
+
+43
+00:03:12,820 --> 00:03:19,610
+It will installs on the penances, but it will not create a brand new angle or application by default.
+
+44
+00:03:20,050 --> 00:03:24,180
+Instead, let's wait for this to finish and see what it gives us instead.
+
+45
+00:03:24,220 --> 00:03:28,130
+Once it finishes, it gives us a folder that looks like this.
+
+46
+00:03:28,150 --> 00:03:29,500
+So we have to config files.
+
+47
+00:03:29,500 --> 00:03:36,190
+We know, but of course the app folder is missing and now indeed here we can simply run and generate
+
+48
+00:03:36,650 --> 00:03:38,230
+application, for example.
+
+49
+00:03:39,130 --> 00:03:39,850
+Back end.
+
+50
+00:03:40,730 --> 00:03:48,500
+And what it will do now is it will create that new projects folder thereafter and create it in their.
+
+51
+00:03:49,820 --> 00:03:55,070
+So you see, here it is, so now we have to cleaner structure, which is nice if you have multiple angular
+
+52
+00:03:55,070 --> 00:03:57,240
+projects in one root folder.
+
+53
+00:03:57,680 --> 00:04:03,080
+Now every project will have its own subfolder in the projects folder, which I would argue is cleaner
+
+54
+00:04:03,080 --> 00:04:04,160
+than what we had before.
+
+55
+00:04:04,340 --> 00:04:10,160
+So in case you want to work with multiple projects instead of one angular managed folder, this is how
+
+56
+00:04:10,160 --> 00:04:11,480
+I would recommend that you do it.
+
+57
+00:04:11,750 --> 00:04:18,470
+Create the project with engine you your name and then dash, dash, create dash applications set to
+
+58
+00:04:18,470 --> 00:04:20,270
+false enter after.
+
+59
+00:04:20,300 --> 00:04:23,830
+Add your different applications with the energy generate comment.
+
+60
+00:04:24,920 --> 00:04:28,670
+Now, although of course you cannot just generate applications.
+
+61
+00:04:28,670 --> 00:04:31,790
+So Web applications, you can also generate libraries.
+
+62
+00:04:32,090 --> 00:04:33,620
+Let's take a closer look at that.
+

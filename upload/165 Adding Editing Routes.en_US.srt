@@ -1,0 +1,160 @@
+1
+00:00:02,550 --> 00:00:04,790
+So with child routing almost finished,
+
+2
+00:00:04,910 --> 00:00:10,680
+let's make sure that we can create new recipes and that we can edit the existing ones.
+
+3
+00:00:11,040 --> 00:00:14,260
+So for this, we need a new component,
+
+4
+00:00:14,280 --> 00:00:17,060
+so let's generate this first. I'll use the CLI
+
+5
+00:00:17,090 --> 00:00:23,580
+again with ng g c and I want to store it in the recipes folder
+
+6
+00:00:23,580 --> 00:00:31,110
+and here, I will name it recipe-edit and I don't want to create this spec file which is why I set it
+
+7
+00:00:31,110 --> 00:00:32,580
+to false.
+
+8
+00:00:32,640 --> 00:00:39,130
+So with this ,if I shrink down the other files, we get this new recipe edit folder here with the recipe
+
+9
+00:00:39,130 --> 00:00:45,060
+edit component. We'll work on the content of this file after the forms section
+
+10
+00:00:45,240 --> 00:00:51,960
+but I already want to load it and I want to retrieve the route parameter. So to load this, what I
+
+11
+00:00:51,960 --> 00:01:02,290
+will do is I will go to my AppRoutingModule and I will register a new route here. The first route is for
+
+12
+00:01:02,350 --> 00:01:04,650
+a new recipe,
+
+13
+00:01:04,870 --> 00:01:10,650
+so maybe new would be a good path so that we have /recipes/new in the end
+
+14
+00:01:10,960 --> 00:01:18,900
+and with that, we could load our recipe-edit component here and of course you need to add the import here
+
+15
+00:01:18,910 --> 00:01:23,440
+from the newly created recipes /recipe-edit folder.
+
+16
+00:01:23,440 --> 00:01:29,590
+Also make sure that it was added to the app module and this is done automatically as always by the CLI
+
+17
+00:01:29,610 --> 00:01:35,440
+but you need to ensure that it is added to declarations and as an import here at the top, to have it
+
+18
+00:01:35,440 --> 00:01:38,860
+work correctly and to be able to load it.
+
+19
+00:01:38,870 --> 00:01:50,150
+So with that added here, we have our new recipe route. Now I'll duplicate it to also have a :id/edit
+
+20
+00:01:50,300 --> 00:01:56,960
+route maybe, so that we have the ID available in this route because we need to load it but I want
+
+21
+00:01:56,960 --> 00:02:00,870
+to have a /edit at the end so that it's clear that we're in editMode.
+
+22
+00:02:01,370 --> 00:02:05,290
+And this is the same component, that's also the recipe-edit component,
+
+23
+00:02:05,570 --> 00:02:11,170
+I will in the component determine whether we are in editMode or not.
+
+24
+00:02:11,210 --> 00:02:18,680
+Now with this set up here, if we go back to the application and we enter /edit after this, we see
+
+25
+00:02:18,740 --> 00:02:20,240
+recipe-edit works,
+
+26
+00:02:20,330 --> 00:02:25,090
+so that's great but we will see something maybe unexpected
+
+27
+00:02:25,190 --> 00:02:33,550
+if I try to go to /recipes/new. Now we try to load the detail component and therefore, we
+
+28
+00:02:33,550 --> 00:02:39,050
+get an error because it basically failed to get a recipe with the ID new
+
+29
+00:02:39,310 --> 00:02:41,870
+and that's exactly what went wrong here.
+
+30
+00:02:41,950 --> 00:02:51,070
+If we visit recipes/new, due to the way how we ordered our routes, it will try to parse new as
+
+31
+00:02:51,070 --> 00:02:58,060
+an ID because the route with the dynamic ID parameter comes before the route definition where we have
+
+32
+00:02:58,060 --> 00:03:00,540
+new hardcoded into the path.
+
+33
+00:03:00,910 --> 00:03:07,870
+So we should switch these two routes, so that the new route comes before the route with the dynamic parameter,
+
+34
+00:03:07,870 --> 00:03:15,190
+otherwise how would Angular know if whatever we pass right now should be interpreted as the new hardcoded
+
+35
+00:03:15,190 --> 00:03:18,510
+path or as a dynamic parameter.
+
+36
+00:03:18,820 --> 00:03:24,680
+So with this order, now we should be able to load new without any issues.
+
+37
+00:03:24,680 --> 00:03:32,220
+If we hit enter, that looks all right and we can also still load the existing recipes. So with that, these paths
+
+38
+00:03:32,230 --> 00:03:34,440
+are set up too, the missing piece is
+
+39
+00:03:34,440 --> 00:03:41,830
+now to retrieve the ID in the recipe-edit component and to determine whether we are in editMode or
+
+40
+00:03:41,830 --> 00:03:42,280
+not.
+

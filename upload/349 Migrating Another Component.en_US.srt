@@ -1,0 +1,152 @@
+1
+00:00:02,070 --> 00:00:04,940
+So now that we also migrated this directive,
+
+2
+00:00:04,940 --> 00:00:07,220
+let's migrate more components.
+
+3
+00:00:07,220 --> 00:00:10,470
+And the next step probably would be to migrate
+
+4
+00:00:10,470 --> 00:00:11,520
+the WelcomeComponent.
+
+5
+00:00:13,110 --> 00:00:14,810
+Now here, in this component,
+
+6
+00:00:14,810 --> 00:00:17,410
+we therefore also turn this to standalone
+
+7
+00:00:17,410 --> 00:00:20,090
+by setting standalone to true,
+
+8
+00:00:20,090 --> 00:00:22,630
+and now, we can readd this import
+
+9
+00:00:22,630 --> 00:00:26,650
+and also add DetailsComponent to imports here,
+
+10
+00:00:26,650 --> 00:00:28,370
+because, as mentioned before,
+
+11
+00:00:28,370 --> 00:00:31,130
+if you wanna use a standalone component or directive
+
+12
+00:00:31,130 --> 00:00:32,350
+in another component,
+
+13
+00:00:32,350 --> 00:00:36,810
+you have to add it to the imports array of that component.
+
+14
+00:00:36,810 --> 00:00:40,040
+In this case, the WelcomeComponent wants to use app-details,
+
+15
+00:00:40,040 --> 00:00:42,510
+so we have to add DetailsComponent here
+
+16
+00:00:42,510 --> 00:00:46,200
+as an import to the file, and then mention it here
+
+17
+00:00:46,200 --> 00:00:48,403
+in the imports array of this component.
+
+18
+00:00:49,670 --> 00:00:51,970
+Now, with that, it will fail however.
+
+19
+00:00:51,970 --> 00:00:55,070
+Now, for one, we now should remove DetailsComponent
+
+20
+00:00:55,070 --> 00:00:59,300
+from imports here, not because it's needed technically,
+
+21
+00:00:59,300 --> 00:01:02,240
+but because in this module, we only added it,
+
+22
+00:01:02,240 --> 00:01:05,560
+because the WelcomeComponent needed the DetailsComponent,
+
+23
+00:01:05,560 --> 00:01:08,800
+but since the WelcomeComponent is now itself specifying
+
+24
+00:01:08,800 --> 00:01:10,560
+the DetailsComponent already,
+
+25
+00:01:10,560 --> 00:01:13,380
+we no longer have to do that here in the module,
+
+26
+00:01:13,380 --> 00:01:16,370
+because the AppComponent is not using it.
+
+27
+00:01:16,370 --> 00:01:18,200
+If it would be, we would keep it here,
+
+28
+00:01:18,200 --> 00:01:22,230
+but since it's not, we can remove it here and remove this.
+
+29
+00:01:22,230 --> 00:01:24,100
+But that's not the reason for the error,
+
+30
+00:01:24,100 --> 00:01:26,960
+the reason for the error is that the WelcomeComponent,
+
+31
+00:01:26,960 --> 00:01:30,310
+of course, must not be added to declarations anymore,
+
+32
+00:01:30,310 --> 00:01:32,480
+because it is now standalone,
+
+33
+00:01:32,480 --> 00:01:34,673
+we added this flag to it after all.
+
+34
+00:01:35,600 --> 00:01:38,050
+Now, we have to do what we did before therefore,
+
+35
+00:01:38,050 --> 00:01:40,310
+instead of adding it to declarations,
+
+36
+00:01:40,310 --> 00:01:42,370
+we should add it to imports,
+
+37
+00:01:42,370 --> 00:01:45,810
+and with that, we migrated another component successfully
+
+38
+00:01:45,810 --> 00:01:47,323
+and the app still works.
+

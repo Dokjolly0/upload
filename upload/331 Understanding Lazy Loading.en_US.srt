@@ -1,0 +1,128 @@
+1
+00:00:02,130 --> 00:00:09,750
+Now that we covered the important module types you can find in an Angular app, with the feature module
+
+2
+00:00:09,750 --> 00:00:11,720
+being the most important one,
+
+3
+00:00:11,760 --> 00:00:21,180
+let's dive into our first optimization concept because thus far, this entire code splitting of separating
+
+4
+00:00:21,180 --> 00:00:29,850
+our modules into separate modules was only cosmetical, it makes our code in the individual modules
+
+5
+00:00:29,850 --> 00:00:36,870
+leaner and it can help us with maintaining that code but it doesn't influence the performance of our
+
+6
+00:00:36,870 --> 00:00:39,150
+application at all.
+
+7
+00:00:39,150 --> 00:00:45,000
+This will change now because now we'll have a look at a concept called lazy loading and using multiple
+
+8
+00:00:45,000 --> 00:00:51,530
+modules, to be precise using multiple feature modules, is a prerequisite for that.
+
+9
+00:00:51,540 --> 00:00:53,340
+Now what is lazy loading?
+
+10
+00:00:53,340 --> 00:00:55,150
+Consider this application,
+
+11
+00:00:55,320 --> 00:00:57,560
+we have three routes - 
+
+12
+00:00:57,600 --> 00:01:03,250
+our root route, slash nothing, /products and /admin
+
+13
+00:01:03,420 --> 00:01:06,290
+and of course, we have a user visiting this page.
+
+14
+00:01:06,450 --> 00:01:10,770
+Now every route is associated with a module,
+
+15
+00:01:11,280 --> 00:01:17,100
+our app module and then our different feature modules where each module of course might have multiple
+
+16
+00:01:17,100 --> 00:01:22,090
+components, multiple directives, pipes and so on that belong to it.
+
+17
+00:01:22,110 --> 00:01:29,490
+Now when our user visits the root route, we of course load that first module and we do the same when
+
+18
+00:01:29,490 --> 00:01:32,040
+we visit the different other pages
+
+19
+00:01:32,040 --> 00:01:33,480
+or do we?
+
+20
+00:01:33,510 --> 00:01:41,400
+Well actually at the moment, when we're not using lazy loading, whenever we visit any page, we load everything
+
+21
+00:01:41,400 --> 00:01:47,260
+but wouldn't it make more sense to only load products and admin when we actually visit these pages,
+
+22
+00:01:47,370 --> 00:01:54,840
+so that we only load the code that belongs to these areas of our application, that we only load the code
+
+23
+00:01:54,840 --> 00:01:57,930
+that belongs to these areas when we really need it.
+
+24
+00:01:57,930 --> 00:02:00,920
+That's the idea of lazy loading. With lazy loading,
+
+25
+00:02:00,920 --> 00:02:08,910
+we initially only load our root route content, so only the app module code and the code of all the components
+
+26
+00:02:08,910 --> 00:02:15,270
+that are registered there and we don't load the other modules and only when we visit another module,
+
+27
+00:02:15,270 --> 00:02:21,270
+like the admin module, so the admin route here, we load the admin module code and the code of all the
+
+28
+00:02:21,270 --> 00:02:29,130
+components that belongs to that module and the fact or the advantage of this is that initially, we download
+
+29
+00:02:29,310 --> 00:02:34,110
+a smaller code bundle and we download more code when we need it
+
+30
+00:02:34,290 --> 00:02:40,800
+but initially our app is able to start faster because it has to download and parse less code on the
+
+31
+00:02:40,800 --> 00:02:44,430
+first visit of a certain route and that's the advantage.
+
+32
+00:02:44,760 --> 00:02:50,280
+So let's now see how we do implement lazy loading in our app and let's see its effect.
+

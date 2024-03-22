@@ -1,0 +1,164 @@
+1
+00:00:02,200 --> 00:00:08,090
+Now that we had a look at how we can send requests, how we can post data, how we can get data,
+
+2
+00:00:08,110 --> 00:00:14,620
+let's finish this basic requests setting up by making sure that we can also clear our posts, so that we
+
+3
+00:00:14,620 --> 00:00:16,260
+can delete data
+
+4
+00:00:16,540 --> 00:00:22,300
+and for that of course, definitely feel free to pause this video and try it on your own first. Try making
+
+5
+00:00:22,300 --> 00:00:28,660
+sure that whenever this onClearPosts method runs, which will happen when we click that clear posts
+
+6
+00:00:28,720 --> 00:00:35,710
+button up there, that whenever this method runs, that you send a request that deletes all the posts on
+
+7
+00:00:35,710 --> 00:00:36,450
+the back-end.
+
+8
+00:00:36,490 --> 00:00:38,170
+You learned everything you need for that,
+
+9
+00:00:38,200 --> 00:00:45,450
+so here's your chance to pause the video and try it on your own. Were you successful?
+
+10
+00:00:45,460 --> 00:00:47,360
+Well it's not that hard,
+
+11
+00:00:47,470 --> 00:00:51,250
+it's almost the same type of request we sent before.
+
+12
+00:00:51,260 --> 00:00:56,770
+Now let's keep the structure of sending the requests in the post service.
+
+13
+00:00:56,890 --> 00:01:00,720
+So in there, I will add a new method which I'll name delete post,
+
+14
+00:01:00,730 --> 00:01:04,380
+of course you can name it also clear post or whatever you want.
+
+15
+00:01:04,570 --> 00:01:12,580
+Now in there, I will use the HttpClient because that is our central client for all HTTP requests
+
+16
+00:01:12,580 --> 00:01:19,140
+we want to send from inside our Angular app and there, we can now use the delete method which will send
+
+17
+00:01:19,180 --> 00:01:25,880
+a delete request. Now this method requires a URL to which it should send the request and since
+
+18
+00:01:25,900 --> 00:01:27,820
+I want to clear all posts,
+
+19
+00:01:28,000 --> 00:01:35,170
+I will grab this URL which targets the overall posts node and send my request there, so that all
+
+20
+00:01:35,170 --> 00:01:42,510
+the posts there get deleted. Now if I want to be informed about that deletion process in the component,
+
+21
+00:01:42,810 --> 00:01:44,300
+which in this case I want
+
+22
+00:01:44,310 --> 00:01:47,050
+but if you chose a different solution, that's fine too
+
+23
+00:01:47,220 --> 00:01:52,950
+but if I want to be informed in a component, I will return my observable here and I will not subscribe
+
+24
+00:01:52,950 --> 00:02:00,150
+here in the service but instead now in the app component, in onClearPosts, I can reach out to the post
+
+25
+00:02:00,240 --> 00:02:02,370
+service and call delete posts
+
+26
+00:02:02,370 --> 00:02:06,320
+and since this returns an observable, we now have to subscribe here.
+
+27
+00:02:06,600 --> 00:02:09,090
+Now why do I want to subscribe here?
+
+28
+00:02:09,090 --> 00:02:15,900
+Well if I deleted all posts, I also want to clear my loaded posts array here in the component. So I will
+
+29
+00:02:15,900 --> 00:02:22,770
+add a method here where I don't really care about the result of our request or of the response but
+
+30
+00:02:22,770 --> 00:02:30,000
+I know that this function here will only run if it succeeded and therefore here, I will then simply just
+
+31
+00:02:30,000 --> 00:02:36,990
+set this loaded post equal to an empty array again to reset it and with these changes to the service
+
+32
+00:02:36,990 --> 00:02:37,910
+and to the component,
+
+33
+00:02:38,370 --> 00:02:44,160
+if we go back to our application and we let this reload, if I click clear posts, you see eventually it
+
+34
+00:02:44,160 --> 00:02:50,100
+gets rid of all the posts and on Firebase, we also see that this posts node does not exist anymore
+
+35
+00:02:50,280 --> 00:02:58,570
+and of course, we can still add new posts here. So all our old functionality still is there,
+
+36
+00:02:58,570 --> 00:03:03,940
+the only thing we have of course is that currently we got no logic to automatically update our list
+
+37
+00:03:03,940 --> 00:03:06,490
+down there once we added a new post.
+
+38
+00:03:06,490 --> 00:03:11,470
+Now you can definitely score some bonus points if you implement this, I'll not do it here because it's
+
+39
+00:03:11,470 --> 00:03:18,070
+not really related to the fetching of data, just to how you react to the sending of a post being done.
+
+40
+00:03:18,070 --> 00:03:22,780
+So with that, we had a thorough look at different kinds of requests we can send.
+
+41
+00:03:22,900 --> 00:03:24,660
+Now what if something goes wrong?
+

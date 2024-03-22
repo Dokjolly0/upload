@@ -1,0 +1,128 @@
+1
+00:00:02,510 --> 00:00:06,860
+Thus far, we learned a lot about the template driven approach and how we can create great forms
+
+2
+00:00:06,860 --> 00:00:08,000
+with it.
+
+3
+00:00:08,000 --> 00:00:12,130
+Now let's move on, let's leave the world of validating the user input here
+
+4
+00:00:12,500 --> 00:00:19,160
+and let's say we want to define some default values which should be displayed, for example on the
+
+5
+00:00:19,160 --> 00:00:20,320
+dropdown here.
+
+6
+00:00:20,450 --> 00:00:22,370
+Right now, it's empty by default,
+
+7
+00:00:22,430 --> 00:00:23,430
+well would be nice if
+
+8
+00:00:23,450 --> 00:00:26,250
+one of the two questions would be selected, right?
+
+9
+00:00:26,420 --> 00:00:30,430
+For this, we can change the way we add ngModel.
+
+10
+00:00:30,440 --> 00:00:36,210
+Right now, we add it like this, without property or event binding nor two-way data binding,
+
+11
+00:00:36,560 --> 00:00:43,490
+well we can use it together with property binding, so let's add some square brackets around it, no
+
+12
+00:00:43,490 --> 00:00:47,250
+parentheses so we're not using two-way by binding as of now
+
+13
+00:00:47,540 --> 00:00:51,460
+and now we can bind it to a value and remember with it,
+
+14
+00:00:51,470 --> 00:00:58,460
+I mean the control, this input here which is turned into a control by Angular in the background.
+
+15
+00:00:58,730 --> 00:01:05,930
+So this select here can now be bound to a default value and you could either hardcode a string
+
+16
+00:01:05,930 --> 00:01:06,560
+into there,
+
+17
+00:01:06,560 --> 00:01:09,650
+don't forget the single quotation marks in this case
+
+18
+00:01:09,650 --> 00:01:13,490
+or you set up a property, like let's say default
+
+19
+00:01:13,550 --> 00:01:17,900
+question which would be pet. Pet
+
+20
+00:01:17,900 --> 00:01:24,010
+because that is one of the two valid values, the other one being teacher for this question here.
+
+21
+00:01:24,260 --> 00:01:30,970
+So now we can bind this to default question and if we now save this and let it reload, you'll see that
+
+22
+00:01:30,970 --> 00:01:33,300
+now pet is selected
+
+23
+00:01:33,440 --> 00:01:40,160
+and of course if we switch this to teacher, well it shouldn't be a surprise that the other value is
+
+24
+00:01:40,160 --> 00:01:41,040
+selected.
+
+25
+00:01:41,150 --> 00:01:44,060
+So now all of a sudden, we're using a default value
+
+26
+00:01:44,420 --> 00:01:49,290
+and of course this does not only work for the dropdown, it would also work for the username,
+
+27
+00:01:49,370 --> 00:01:55,340
+you could point to a default string there, pre-populating this field with a default username.
+
+28
+00:01:55,340 --> 00:02:00,980
+Very useful and something you should definitely keep in mind, that you are not limited to using
+
+29
+00:02:00,980 --> 00:02:02,880
+ngModel without any bindings,
+
+30
+00:02:02,960 --> 00:02:07,880
+you can use one-way binding, property binding to set a default value.
+
+31
+00:02:07,880 --> 00:02:10,370
+Of course this value can still be overwritten,
+
+32
+00:02:10,400 --> 00:02:13,250
+you can still pick a different option here.
+

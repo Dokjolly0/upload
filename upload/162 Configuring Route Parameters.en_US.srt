@@ -1,0 +1,296 @@
+1
+00:00:02,470 --> 00:00:08,500
+In the last lecture, we started adding our child routes and now loading the recipe detail component doesn't
+
+2
+00:00:08,500 --> 00:00:09,720
+work anymore.
+
+3
+00:00:09,880 --> 00:00:15,330
+The reason for this is that here, we use recipe all over the place and that's a property of this
+
+4
+00:00:15,340 --> 00:00:16,190
+component
+
+5
+00:00:16,390 --> 00:00:21,100
+but it's a property set through property binding with @input in front of it,
+
+6
+00:00:21,100 --> 00:00:25,270
+so it awaits to be set from outside the component.
+
+7
+00:00:25,510 --> 00:00:30,220
+Since this component is set through routing though, this won't work anymore,
+
+8
+00:00:30,280 --> 00:00:36,900
+so we have to change how we receive the recipe here, how we set the recipe and we can change it
+
+9
+00:00:36,910 --> 00:00:45,070
+because keep in mind, in our route which we define here, we pass this ID which is a dynamic parameter.
+
+10
+00:00:45,520 --> 00:00:53,770
+So we should be able to load a recipe by the ID, which will simply refer to the position in the array
+
+11
+00:00:53,770 --> 00:00:55,540
+of recipes.
+
+12
+00:00:55,540 --> 00:00:57,290
+So here is your challenge,
+
+13
+00:00:57,430 --> 00:01:05,950
+try fixing the recipe-detail component to somehow use that ID to update the recipe which is displayed,
+
+14
+00:01:06,100 --> 00:01:08,810
+to fetch it from the recipe service.
+
+15
+00:01:08,830 --> 00:01:13,820
+Of course you will need to implement some method in the recipe service which allows you to get that.
+
+16
+00:01:14,060 --> 00:01:19,620
+Here's your chance to pause the video, thereafter I will solve it together with you.
+
+17
+00:01:23,420 --> 00:01:25,100
+So were you successful?
+
+18
+00:01:25,130 --> 00:01:28,930
+Let's fix it together. In the recipe detail component,
+
+19
+00:01:28,970 --> 00:01:33,480
+we clearly can remove @input because that's not how we receive the value anymore,
+
+20
+00:01:33,590 --> 00:01:37,160
+so we can also remove the import of @input.
+
+21
+00:01:37,340 --> 00:01:43,710
+That of course also means before we forget it that in the recipe-item component, we can remove the
+
+22
+00:01:43,720 --> 00:01:49,870
+onSelected click listener here because that will not be how we passed the value anymore
+
+23
+00:01:50,270 --> 00:01:53,640
+and of course we could also remove the onSelected method here,
+
+24
+00:01:53,710 --> 00:01:59,090
+that is something we don't need anymore. Of course that also allows us to remove the recipes service
+
+25
+00:01:59,090 --> 00:02:01,280
+from this component and remove the import,
+
+26
+00:02:01,340 --> 00:02:05,850
+so we're cleaning up quite a lot here. In the recipe-list component,
+
+27
+00:02:05,870 --> 00:02:07,880
+we don't have to change anything
+
+28
+00:02:07,910 --> 00:02:13,650
+and in the recipe component itself here, we already did make a change and add the router outlet.
+
+29
+00:02:14,000 --> 00:02:19,670
+So now in the recipe-detail component, we somehow need to get our single recipe and we know that we will
+
+30
+00:02:19,670 --> 00:02:22,170
+get the ID from the router.
+
+31
+00:02:22,460 --> 00:02:29,540
+So let's first fetch this ID and you learned that for this, we need to get access to the ActivatedRoute.
+
+32
+00:02:29,720 --> 00:02:33,710
+So let's inject it here, of type ActivatedRoute,
+
+33
+00:02:33,890 --> 00:02:42,470
+make sure to add this import here from @angular/router. This import is important to enable TypeScript
+
+34
+00:02:42,470 --> 00:02:44,890
+to identify the type you are trying to inject here
+
+35
+00:02:44,890 --> 00:02:47,170
+and with that, Angular is able to use it.
+
+36
+00:02:47,420 --> 00:02:53,600
+So now we get this route and now we have two ways of retrieving the ID.
+
+37
+00:02:53,630 --> 00:02:59,380
+The first one would be to simply bind it to route snap,
+
+38
+00:02:59,390 --> 00:03:10,840
+excuse me, this route snapshot params ID but this will only work for the first time if we loaded detail
+
+39
+00:03:10,830 --> 00:03:11,900
+component.
+
+40
+00:03:12,270 --> 00:03:19,410
+Now keep in mind, the menu where we can click on one is on the left, so we will be able to choose a new
+
+41
+00:03:19,410 --> 00:03:20,310
+recipe
+
+42
+00:03:20,370 --> 00:03:27,450
+whilst we still see the details of another one. So we probably want to react to changes in our recipe
+
+43
+00:03:27,500 --> 00:03:30,560
+ID because that's absolutely possible in our app.
+
+44
+00:03:30,870 --> 00:03:33,880
+So that is not the approach I want to use,
+
+45
+00:03:34,050 --> 00:03:41,850
+instead what I want to do is I want to use my route, the params observable and subscribe to that observable.
+
+46
+00:03:41,850 --> 00:03:48,760
+Now with that, we can react to any changes in our route params and we will get them here, of type params
+
+47
+00:03:48,780 --> 00:03:57,860
+as we learned, to be imported from @angular/router and now, now we can really react to a new ID.
+
+48
+00:03:58,260 --> 00:04:03,300
+So we should probably store that ID here in a property of our class,
+
+49
+00:04:03,330 --> 00:04:12,600
+it will be of type number, so we should set this ID equals to params ID, though we know that what we
+
+50
+00:04:12,600 --> 00:04:15,180
+get back here will be a string,
+
+51
+00:04:15,210 --> 00:04:19,080
+so we should cast it to a number by adding a plus in front of it.
+
+52
+00:04:19,350 --> 00:04:26,400
+So now we will have an ID in the form of a number which we can use to identify our recipe.
+
+53
+00:04:27,030 --> 00:04:29,540
+Well with this information,
+
+54
+00:04:29,880 --> 00:04:35,550
+we want to load our recipe from the recipe service and for that, we need to change our recipe service
+
+55
+00:04:35,550 --> 00:04:43,050
+because right now, we got no way of loading a single recipe by ID. That's something we can easily implement
+
+56
+00:04:43,050 --> 00:04:51,180
+though, we can simply implement a getRecipe method which takes an ID of type number and then we can
+
+57
+00:04:51,180 --> 00:04:57,070
+simply return this recipes and select the item at this index,
+
+58
+00:04:57,070 --> 00:05:02,680
+we could also rename ID to index to make really clear what that number will be in the end.
+
+59
+00:05:03,560 --> 00:05:11,780
+You could also call slice before doing that because slice would now give you a copy of your array, though
+
+60
+00:05:11,840 --> 00:05:14,260
+it won't be a deep copy,
+
+61
+00:05:14,300 --> 00:05:20,790
+so the objects still are the same anyways, so you can also directly return the object like this.
+
+62
+00:05:20,810 --> 00:05:26,720
+You could of course also create a hard copy of the object with object assigned for example.
+
+63
+00:05:26,720 --> 00:05:28,070
+That's not what I want to do here though,
+
+64
+00:05:28,070 --> 00:05:30,480
+so we return a single recipe.
+
+65
+00:05:30,500 --> 00:05:37,640
+Now back in the recipe-detail.component.ts file, after fetching an ID and storing it, I want
+
+66
+00:05:37,640 --> 00:05:40,070
+to fetch the new recipe
+
+67
+00:05:40,340 --> 00:05:49,020
+and I will later also show why I needed to store the ID here. So let's fetch the recipe using our recipe
+
+68
+00:05:49,020 --> 00:05:57,410
+service whenever the ID changes, then I will call getRecipe and pass my ID as an argument. And with
+
+69
+00:05:57,410 --> 00:06:06,420
+that, we should be able to indeed make our application to work again by going manually to recipes zero,
+
+70
+00:06:06,740 --> 00:06:09,350
+we indeed see the detail view
+
+71
+00:06:09,380 --> 00:06:10,780
+for the schnitzel
+
+72
+00:06:11,120 --> 00:06:13,390
+and with one for the burger.
+
+73
+00:06:13,460 --> 00:06:14,920
+So that is working,
+
+74
+00:06:14,930 --> 00:06:19,820
+now we also need to enable these links here to work again because right now, they're not doing anything.
+

@@ -1,0 +1,215 @@
+1
+00:00:02,360 --> 00:00:04,060
+Time to fire that sign up method,
+
+2
+00:00:04,100 --> 00:00:09,950
+for that let's go back to the auth component and here in onSubmit, before we reset the form, instead
+
+3
+00:00:09,950 --> 00:00:12,110
+of logging our values,
+
+4
+00:00:12,140 --> 00:00:16,490
+I want to extract my e-mail which I can by accessing form value
+ 
+00:00:16,490 --> 00:00:19,870
+e-mail and the same for the password,
+
+5
+00:00:19,930 --> 00:00:25,070
+so my password will be form value password,
+
+6
+00:00:25,220 --> 00:00:32,090
+of course you could also add an extra check first of all where you check if the form is not valid
+
+7
+00:00:32,090 --> 00:00:35,320
+by adding an exclamation mark and then you just return.
+
+8
+00:00:35,360 --> 00:00:40,820
+Normally, this method should not be triggered if the form is invalid because we disable the submit button
+
+9
+00:00:40,820 --> 00:00:46,520
+but if a user should hack away into that and kind of manually enable that button which you can do with
+
+10
+00:00:46,520 --> 00:00:48,770
+the browser developer tools of course,
+
+11
+00:00:48,920 --> 00:00:55,700
+well then we still have this in line and this still gives us an extra validation step. If the user disables
+
+12
+00:00:55,700 --> 00:00:57,950
+this as well which would also be possible,
+
+13
+00:00:57,950 --> 00:01:03,170
+well then the data, the incorrect data will simply be sent to the back-end and will fail there. If a user
+
+14
+00:01:03,170 --> 00:01:07,890
+wants a bad user experience and forces himself into that, we can't do anything about this
+
+15
+00:01:07,970 --> 00:01:13,730
+but having that extra step makes sense I guess. More importantly though, we are extracting e-mail and password
+
+16
+00:01:14,090 --> 00:01:19,130
+and therefore now, we need to inject the auth service into the auth component so that we can call that
+
+17
+00:01:19,250 --> 00:01:26,620
+sign up method we just added. For that, let's add a constructor and store the auth service in a private property
+
+18
+00:01:26,620 --> 00:01:34,750
+named auth service, like this, of course make sure you do import your auth service therefore and with the auth
+
+19
+00:01:34,750 --> 00:01:37,000
+service injected, in here,
+
+20
+00:01:37,000 --> 00:01:43,350
+let's call this auth service sign up and forward that e-mail and password which you extracted and thereafter,
+
+21
+00:01:43,390 --> 00:01:45,730
+we can reset that form.
+
+22
+00:01:46,240 --> 00:01:52,270
+Now in the auth service in the last lecture, we set up that sign up method such that it returns this prepared
+
+23
+00:01:52,300 --> 00:01:59,350
+observable which is ready to send this request here and therefore we have to subscribe to the response
+
+24
+00:01:59,440 --> 00:02:07,480
+or to the return value of sign up which is that observable. Now in that response here, we get our response
+
+25
+00:02:07,510 --> 00:02:12,350
+data if the authentication or if the sign up succeeds,
+
+26
+00:02:12,370 --> 00:02:19,240
+so here let's simply log the response data for now and of course we might also get an error and for
+
+27
+00:02:19,240 --> 00:02:23,680
+that, let's grab that error and console log that as well
+
+28
+00:02:23,680 --> 00:02:31,660
+if one should occur. Good, with all of that out of the way, this should actually be working.
+
+29
+00:02:31,720 --> 00:02:37,390
+One thing that's missing by the way, now that I look at this we'll add it later, is the login mode currently
+
+30
+00:02:37,390 --> 00:02:41,190
+is not respected. At the moment we always send a sign up request here,
+
+31
+00:02:41,290 --> 00:02:45,540
+of course we want to change this and actually let's implement it right now already,
+
+32
+00:02:45,610 --> 00:02:48,670
+let's check this isLoginMode.
+
+33
+00:02:48,970 --> 00:02:54,130
+If we're are logging in, then at the moment we can't do anything because we only added the sign up logic
+
+34
+00:02:54,130 --> 00:02:58,930
+thus far and therefore right now we can only do something in the else block, in the else block
+
+35
+00:02:58,930 --> 00:03:03,160
+I simply want to send this HTTP request, here
+
+36
+00:03:03,220 --> 00:03:07,460
+we can't do anything at the moment, resetting the form is something I always want to do.
+
+37
+00:03:07,600 --> 00:03:18,370
+So now with that out of the way, let's go back to our user interface and let's enter our e-mail and password
+
+38
+00:03:18,550 --> 00:03:20,270
+and let's try logging in
+
+39
+00:03:20,410 --> 00:03:24,620
+and that should actually not work and indeed, we see no output there.
+
+40
+00:03:24,640 --> 00:03:31,840
+So now let's try signing up by switching to sign up and entering our credentials, you can enter any credentials
+
+41
+00:03:31,840 --> 00:03:34,590
+you want, click sign up and this looks good,
+
+42
+00:03:34,810 --> 00:03:42,220
+we get back a response which has that kind response, which has that e-mail expires in, that token which
+
+43
+00:03:42,220 --> 00:03:47,380
+is this cryptic string, local ID which is that automatically generated user ID,
+
+44
+00:03:47,530 --> 00:03:52,870
+that looks quite good. If we have a look at our Firebase web console here under users and you click
+
+45
+00:03:52,870 --> 00:03:54,480
+that refresh button,
+
+46
+00:03:54,520 --> 00:03:56,530
+you also should see the user here,
+
+47
+00:03:56,530 --> 00:04:02,350
+so this is looking really good and this seems to work. Now as an additional check, if you use that exact
+
+48
+00:04:02,350 --> 00:04:06,370
+same data again or at least the same e-mail address again,
+
+49
+00:04:06,550 --> 00:04:12,160
+now you should get an error because that user already exists and therefore here I get a 400 error
+
+50
+00:04:12,490 --> 00:04:20,080
+where if you dig into that error field, you see I got a code 400 with a message of e-mail exists,
+
+51
+00:04:20,110 --> 00:04:25,360
+which is kind of a code Firebase gives us telling us that this e-mail address already exists.
+
+52
+00:04:25,360 --> 00:04:28,390
+This is something we can now use to handle that error
+
+53
+00:04:28,390 --> 00:04:33,670
+and I also want to show a loading spinner whilst we are waiting for this to be submitted.
+

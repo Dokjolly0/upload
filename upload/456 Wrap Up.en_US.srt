@@ -1,0 +1,76 @@
+1
+00:00:02,030 --> 00:00:04,290
+And this is it for this module.
+
+2
+00:00:04,610 --> 00:00:10,220
+Now, there is always more you can cover, but I've found it important to all to point you at the official
+
+3
+00:00:10,220 --> 00:00:16,040
+docs so that you know where you can dive deeper if something is unclear or you are interested in one
+
+4
+00:00:16,040 --> 00:00:19,720
+specific features, because Angela is a huge topic.
+
+5
+00:00:19,970 --> 00:00:21,210
+It's the framework.
+
+6
+00:00:21,230 --> 00:00:25,850
+And then as you saw in this module, decentered Seelie ecosystem thing.
+
+7
+00:00:26,210 --> 00:00:31,610
+That's why, as some people refer to ANGULAR as a platform, because it's more than just the framework,
+
+8
+00:00:31,670 --> 00:00:34,940
+it's also all these extra tools and helpers and features.
+
+9
+00:00:34,970 --> 00:00:40,460
+And this ecosystem, of course, also keeps on evolving, which is why the official docs are a great
+
+10
+00:00:40,460 --> 00:00:44,100
+resource to dive into the specific features you might be interested in.
+
+11
+00:00:44,660 --> 00:00:50,180
+Now, of course, discourse is about angular, the framework and how we build web applications with
+
+12
+00:00:50,180 --> 00:00:50,330
+it.
+
+13
+00:00:50,690 --> 00:00:56,060
+That always was the heart of the course and that is honestly what most developers are interested in.
+
+14
+00:00:56,210 --> 00:01:01,430
+You want to learn how to write and build angular applications, but if you want to take your knowledge
+
+15
+00:01:01,430 --> 00:01:07,520
+to the next step and maybe get a bit more productive with all these Seelie commands with deployment,
+
+16
+00:01:07,640 --> 00:01:13,730
+with maybe custom schematics and so on, then this module hopefully showed you what you can do there,
+
+17
+00:01:13,910 --> 00:01:20,720
+where you can learn more and how to read all these configuration files, how to use all these commands,
+
+18
+00:01:20,840 --> 00:01:22,730
+how to manage your projects.
+
+19
+00:01:23,240 --> 00:01:24,850
+So I hope this was helpful.
+

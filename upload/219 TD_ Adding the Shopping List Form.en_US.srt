@@ -1,0 +1,171 @@
+1
+00:00:02,450 --> 00:00:04,970
+So let's start working on that shopping list form.
+
+2
+00:00:05,150 --> 00:00:07,940
+As mentioned, I want to use the template driven approach.
+
+3
+00:00:08,120 --> 00:00:15,960
+So in the shopping list edit component here, we already got our form element up here, now Angular
+ 
+00:00:16,010 --> 00:00:16,460
+already
+
+4
+00:00:16,550 --> 00:00:23,030
+take control over this and we already get the forms module added in app module by default,
+
+5
+00:00:23,030 --> 00:00:25,690
+we of course will need this too.
+
+6
+00:00:26,420 --> 00:00:33,580
+So with the form here, we now can start working on our form controls.
+
+7
+00:00:33,830 --> 00:00:36,890
+I will get rid of these local references,
+
+8
+00:00:36,890 --> 00:00:39,550
+I will no longer use that approach,
+
+9
+00:00:39,560 --> 00:00:44,140
+I will also get rid of the click listener on the add button, instead
+
+10
+00:00:44,180 --> 00:00:51,310
+I want to use ngSubmit to submit the form and then call onAddItem here.
+
+11
+00:00:51,350 --> 00:00:57,680
+I also will get access to the form created by Angular and as you learned, we can get access by placing a
+
+12
+00:00:57,680 --> 00:01:00,480
+local reference on the form element
+
+13
+00:01:00,800 --> 00:01:06,590
+and now this would give us access to the form element itself but by setting this equal to ngForm,
+
+14
+00:01:06,980 --> 00:01:13,570
+we get access to this Javascript object Angular created behind the scenes and now we can simply pass
+
+15
+00:01:13,570 --> 00:01:17,680
+this object to this onAddItem method.
+
+16
+00:01:17,860 --> 00:01:23,290
+So that is how we can submit the form but we also should register some controls.
+
+17
+00:01:23,290 --> 00:01:25,020
+We get a couple of controls here,
+
+18
+00:01:25,120 --> 00:01:29,520
+let's start with the first one. Here on the name control,
+
+19
+00:01:29,530 --> 00:01:33,440
+I will assign a name, so the name attribute of name,
+
+20
+00:01:33,460 --> 00:01:39,850
+so a lot of names here but of course the name between the quotation marks is the name of the property we'll
+
+21
+00:01:39,940 --> 00:01:48,700
+later have in this form object Angular created and I will assign ngModel to this input, so that
+
+22
+00:01:48,730 --> 00:01:53,830
+we register it as a control in our template driven form.
+
+23
+00:01:53,890 --> 00:02:02,350
+Now for the second input, the name will be amount and then I'll also add ngModel and make sure that
+
+24
+00:02:02,360 --> 00:02:04,330
+you import it from forms module,
+
+25
+00:02:04,330 --> 00:02:11,890
+otherwise this is not available, so we should have this control added to our form too. And the add button
+
+26
+00:02:11,890 --> 00:02:15,950
+here will submit the form because it's only button of type submit,
+
+27
+00:02:16,000 --> 00:02:24,660
+the other two buttons are of type button. So in onAddItem, in this TypeScript file now, I no longer will
+
+28
+00:02:24,660 --> 00:02:30,510
+use my element refs here, so I can remove these declarations here,
+
+29
+00:02:30,540 --> 00:02:36,510
+I can get rid of the @ViewChild in element ref import and I can get rid of these two lines where I extract
+
+30
+00:02:36,510 --> 00:02:37,790
+the data.
+
+31
+00:02:37,890 --> 00:02:43,830
+I still want to create a new ingredient but now we will simply get the form here and it will be of
+
+32
+00:02:43,830 --> 00:02:45,860
+ngForm, so of this type.
+
+33
+00:02:46,200 --> 00:02:54,260
+Since this is the form, we will get the value of the form on the value property.
+
+34
+00:02:54,320 --> 00:03:03,450
+Now we can simply use the value and access name to get the name of the ingredient and value amount to
+
+35
+00:03:03,450 --> 00:03:09,780
+get the amount because name and amount were the names we specified here in our template on these input
+
+36
+00:03:09,810 --> 00:03:10,650
+elements.
+
+37
+00:03:11,820 --> 00:03:13,480
+Well, let's see if this works.
+
+38
+00:03:13,500 --> 00:03:23,490
+If I save this and we go back to the shopping list, ng serve is still running, here if I add Bread one,
+
+39
+00:03:24,330 --> 00:03:32,220
+that looks good. Works like before but now using the better approach of using the built-in tools and
+
+40
+00:03:32,280 --> 00:03:35,120
+therefore building a better form.
+
+41
+00:03:35,130 --> 00:03:40,710
+Now we can also take advantage of validation and so on and that is something I will do in the next lecture
+
+42
+00:03:40,720 --> 00:03:41,020
+.
+

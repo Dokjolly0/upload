@@ -1,0 +1,88 @@
+1
+00:00:02,260 --> 00:00:05,780
+So that's it for the HTTP module,
+
+2
+00:00:05,830 --> 00:00:10,730
+quite a long module where you learned a lot about the Angular HttpClient.
+
+3
+00:00:10,770 --> 00:00:15,930
+Now the most common task you will do is of course that you send requests by using post, get
+
+4
+00:00:15,970 --> 00:00:21,790
+and so on by adding a URL, possibly a request body and maybe some request headers.
+
+5
+00:00:22,060 --> 00:00:26,860
+This will be your bread and butter thing and therefore this is the task you should practice and you
+
+6
+00:00:26,860 --> 00:00:33,790
+should feel confident about. Always remember that these methods, like get and post give you back an
+
+7
+00:00:33,790 --> 00:00:39,790
+observable to which you have to subscribe to actually kick of the request and to send it. Since it
+
+8
+00:00:39,790 --> 00:00:47,170
+is an observable, you can use operators, rxjs/operators to transform the data, log data, catch
+
+9
+00:00:47,260 --> 00:00:53,470
+errors or whatever you want to do but ultimately, you need to subscribe and you can do this in a service
+
+10
+00:00:53,500 --> 00:00:59,110
+or in a component depending on where you need to work with the response and in the subscribe method,
+
+11
+00:00:59,500 --> 00:01:05,530
+you pass in a function to handle the data you get back and possibly also an error handling function,
+
+12
+00:01:05,530 --> 00:01:06,850
+like this one.
+
+13
+00:01:07,150 --> 00:01:10,600
+This is how you generally work with HTTP requests.
+
+14
+00:01:10,600 --> 00:01:16,990
+Now you've got advanced features, like the possibility of setting what you want to observe if you are
+
+15
+00:01:16,990 --> 00:01:27,010
+interested in the response or just the body of the response or all the events, which type of data should
+
+16
+00:01:27,010 --> 00:01:27,970
+be returned,
+
+17
+00:01:27,970 --> 00:01:34,720
+you can set query params and you have that very useful features, auth interceptors which can really help
+
+18
+00:01:34,720 --> 00:01:41,080
+you save time and code if you have some header that needs to be appended to every outgoing request for
+
+19
+00:01:41,080 --> 00:01:42,040
+example
+
+20
+00:01:42,100 --> 00:01:46,470
+and as I already mentioned, we'll see interceptors in action again later in the course
+
+21
+00:01:46,510 --> 00:01:49,910
+once we add authentication. For now, this is it,
+
+22
+00:01:49,930 --> 00:01:55,270
+let's now move on to the course project and practice using these HTTP requests there.
+

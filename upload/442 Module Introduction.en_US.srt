@@ -1,0 +1,88 @@
+1
+00:00:02,370 --> 00:00:07,410
+Throughout this course, you learn a lot about angular, of course, the framework, how to build amazing
+
+2
+00:00:07,410 --> 00:00:09,880
+apps with it and the many features it includes.
+
+3
+00:00:10,320 --> 00:00:16,410
+Now, what's all the part of Angular and therefore could also call ANGULAR a platform and not just a
+
+4
+00:00:16,410 --> 00:00:23,070
+framework, is the SEAL, AI and the entire infrastructure it gives you around your projects and around
+
+5
+00:00:23,070 --> 00:00:25,990
+your code, because the code, of course, is the heart.
+
+6
+00:00:26,190 --> 00:00:29,310
+The framework allows us to build amazing web applications.
+
+7
+00:00:29,580 --> 00:00:35,370
+But with the SEAL, AI and the project which is configured and a lot of useful tools around declined
+
+8
+00:00:35,370 --> 00:00:42,360
+around your projects, you actually also can have a very easy and great time building, publishing,
+
+9
+00:00:42,360 --> 00:00:44,940
+deploying and managing your angular projects.
+
+10
+00:00:45,060 --> 00:00:49,540
+And that's exactly what we'll have a closer look at this module in detail.
+
+11
+00:00:49,560 --> 00:00:55,680
+We'll have a look at Angella Project and the different configuration files again so that we understand
+
+12
+00:00:55,680 --> 00:00:58,760
+what we really can do there and what their role is.
+
+13
+00:00:59,280 --> 00:01:05,380
+You will see how you can create and manage projects and many things inside of these projects.
+
+14
+00:01:05,880 --> 00:01:11,460
+We'll take a look at something which is called Schematics and Builders, which is a set of pretty cool
+
+15
+00:01:11,460 --> 00:01:18,090
+features, which is included in angular projects at the angular Seelie and which is worth knowing about.
+
+16
+00:01:18,510 --> 00:01:24,870
+We'll have a look at projects, apps and also how to build libraries, because thus far in this course,
+
+17
+00:01:24,870 --> 00:01:27,710
+of course, you learned how to build Web applications with ANGULAR.
+
+18
+00:01:27,930 --> 00:01:32,160
+Now, what have you wanted to build a library that can be used in multiple projects.
+
+19
+00:01:32,190 --> 00:01:33,570
+That's also something we'll have a look at.
+
+20
+00:01:33,840 --> 00:01:36,390
+And we'll also have a look at a couple of other things.
+
+21
+00:01:36,570 --> 00:01:40,850
+For example, at deployment, browser support and much more.
+
+22
+00:01:40,860 --> 00:01:41,940
+So let's dive in.
+

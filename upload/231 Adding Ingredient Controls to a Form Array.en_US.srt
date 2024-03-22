@@ -1,0 +1,252 @@
+1
+00:00:02,220 --> 00:00:04,830
+So let's work on our ingredients list,
+
+2
+00:00:04,910 --> 00:00:10,300
+the base form is working but of course we got another control which we haven't added yet,
+
+3
+00:00:10,420 --> 00:00:13,720
+this is this array of ingredients.
+
+4
+00:00:13,770 --> 00:00:22,440
+So when we initialize the form, we actually will have one other default value for the recipe ingredients,
+
+5
+00:00:22,440 --> 00:00:33,160
+this will be a new formArray and you should import formArray from @angular/forms. This formArray
+
+6
+00:00:33,160 --> 00:00:39,670
+is initialized with a default value of an empty array because we don't have any ingredients by default.
+
+7
+00:00:40,940 --> 00:00:45,610
+Now with this if that is our default, what do we overwrite
+
+8
+00:00:45,630 --> 00:00:47,300
+it to here in edit mode?
+
+9
+00:00:48,460 --> 00:00:53,170
+Well there, we will simply need to check if we have any ingredients to begin with
+
+10
+00:00:53,170 --> 00:00:58,650
+because theoretically, you could create a recipe without ingredients.
+
+11
+00:00:58,680 --> 00:01:09,230
+So here what I want to do is I want to check if my recipe which I loaded, if it does have ingredients,
+
+12
+00:01:09,310 --> 00:01:16,170
+so if that is defined, I know I can safely use them.
+
+13
+00:01:16,190 --> 00:01:24,340
+So in this case, I want to use all the ingredients so I can simply loop through them with a for/of loop,
+
+14
+00:01:24,550 --> 00:01:29,370
+so for a single ingredient of my
+
+15
+00:01:31,730 --> 00:01:40,370
+ingredients, I can go through all of them and I can push them onto my recipe ingredients formArray which
+
+16
+00:01:40,370 --> 00:01:42,930
+has a push method. Here
+
+17
+00:01:43,070 --> 00:01:44,700
+I don't push the ingredient,
+
+18
+00:01:45,080 --> 00:01:53,600
+I push a new FormGroup instead because I do have two controls which will control a single ingredient,
+
+19
+00:01:53,960 --> 00:01:55,490
+the name and the amount.
+
+20
+00:01:55,730 --> 00:02:03,320
+So these will be grouped in a FormGroup and here, I will have a name which is now a new FormControl
+
+21
+00:02:03,890 --> 00:02:11,110
+with a default value of ingredient name and I will have an amount, control,
+
+22
+00:02:11,150 --> 00:02:18,410
+also a new FormControl which has the default value, ingredient amount, not name, amount.
+
+23
+00:02:18,410 --> 00:02:20,000
+So that is a FormGroup
+
+24
+00:02:20,000 --> 00:02:25,100
+I will push onto this array because again we have two controls here,
+
+25
+00:02:25,130 --> 00:02:27,570
+validation will follow later
+
+26
+00:02:27,890 --> 00:02:30,710
+and with that, we get a default value for recipe ingredients
+
+27
+00:02:30,710 --> 00:02:40,370
+if we have a recipe and if this recipe then has ingredients. With that, we can assign the ingredients control
+
+28
+00:02:40,370 --> 00:02:46,780
+down there and it simply is our recipe ingredients which already is this new formArray here.
+
+29
+00:02:47,530 --> 00:02:49,530
+So that's looking all right,
+
+30
+00:02:49,600 --> 00:02:55,600
+let's see if it works and for that of course, we need to synchronize our array with our HTML
+
+31
+00:02:55,630 --> 00:02:56,430
+code.
+
+32
+00:02:56,620 --> 00:03:02,820
+So in the recipe edit component, if we scroll down to that section where we want to use the array, I'll first
+
+33
+00:03:02,860 --> 00:03:08,080
+work on the div which wraps the whole section we're going to use, here
+
+34
+00:03:08,110 --> 00:03:12,170
+I need to add the formArray name directive.
+
+35
+00:03:12,190 --> 00:03:18,520
+This will then be bound to ingredients because ingredients keep in mind,, is the name of our formArray
+
+36
+00:03:18,540 --> 00:03:19,490
+here,
+
+37
+00:03:19,570 --> 00:03:25,200
+so that assigns that in this area, we're going to handle this array of controls.
+
+38
+00:03:25,300 --> 00:03:29,930
+Now each control of course is now going to be our row here,
+
+39
+00:03:30,370 --> 00:03:39,550
+so on this row, I can place the formGroupName directive referring to the individual formGroupName
+
+40
+00:03:39,580 --> 00:03:48,700
+because remember, in our array, we will have form groups as each pair of name and amount control creates
+
+41
+00:03:48,700 --> 00:03:50,500
+a FormGroup.
+
+42
+00:03:50,500 --> 00:03:52,200
+Now what's the name of the form group
+
+43
+00:03:52,210 --> 00:03:55,840
+though, we didn't assign it because it's part of the array.
+
+44
+00:03:56,380 --> 00:04:04,480
+Well we learned how to get this name, we need to add ngFor to this div and then we can loop
+
+45
+00:04:04,480 --> 00:04:07,810
+through all the ingredients, through all the controls
+
+46
+00:04:07,810 --> 00:04:09,930
+I should say in our array.
+
+47
+00:04:10,330 --> 00:04:21,840
+So I can loop through the ingredient control of my recipe form and there, get the ingredients control,
+
+48
+00:04:21,960 --> 00:04:27,280
+get is a method which gives us access to that and here, all the controls of this control.
+
+49
+00:04:27,840 --> 00:04:32,880
+So this gives us access to all the controls and the individual control is now saved in the ingredient
+
+50
+00:04:32,880 --> 00:04:42,270
+control property or the variable we can use in the template and I can also extract the index of the current iteration
+
+51
+00:04:42,600 --> 00:04:45,570
+which will be the name for my FormGroup,
+
+52
+00:04:45,570 --> 00:04:52,670
+so with property binding, I can now bind i here. This should give me the form group,
+
+53
+00:04:52,680 --> 00:04:59,040
+now we also need to populate these inputs and there it's very easy because now we're inside the form
+
+54
+00:04:59,040 --> 00:05:02,910
+group and there we have names, we have name and amount,
+
+55
+00:05:03,090 --> 00:05:09,570
+so here we can again use formControlName, set this equal to name for the first control and formControlName
+
+56
+00:05:09,570 --> 00:05:12,990
+equal to amount for the second one.
+
+57
+00:05:13,600 --> 00:05:16,620
+Let's see if that works as expected.
+
+58
+00:05:16,770 --> 00:05:18,690
+Well it already looks pretty good to me,
+
+59
+00:05:18,690 --> 00:05:20,840
+here we got buns and meat
+
+60
+00:05:21,060 --> 00:05:24,760
+and if we added the schnitzel, we got meat and french fries.
+
+61
+00:05:24,810 --> 00:05:26,930
+So that gets populated correctly,
+
+62
+00:05:26,970 --> 00:05:31,100
+this is working as intended. With that we got our array added,
+
+63
+00:05:31,320 --> 00:05:37,020
+now of course we also need to add a way for us to dynamically add new items to that.
+

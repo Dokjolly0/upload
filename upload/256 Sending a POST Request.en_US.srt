@@ -1,0 +1,544 @@
+1
+00:00:02,390 --> 00:00:07,480
+Now attached, you find this project here. It's an Angular project which I opened here,
+
+2
+00:00:07,580 --> 00:00:13,430
+a very simple project where we have a form, a template driven form where we can enter a title, content
+
+3
+00:00:13,430 --> 00:00:19,960
+and then send that post here, like a very simple post in a simple block, to store it on Firebase
+
+4
+00:00:20,150 --> 00:00:27,110
+and later we also want to add logic to fetch all posts that we stored on Firebase and to clear all posts
+
+5
+00:00:27,170 --> 00:00:28,140
+there.
+
+6
+00:00:28,160 --> 00:00:33,010
+But for now, let's say go with creating a new post and for that, if we have a look at our code,
+
+7
+00:00:33,140 --> 00:00:39,050
+you only have the app component and there in the app.component.ts file, you have onCreatePost which
+
+8
+00:00:39,050 --> 00:00:43,000
+will actually get some post data in this format.
+
+9
+00:00:43,070 --> 00:00:50,120
+Now let's first of all log that to validate that this is correct and that this works.
+
+10
+00:00:50,120 --> 00:00:57,130
+For that, I opened the developer tools here and now let's write a new post with some content and click
+
+11
+00:00:57,130 --> 00:00:59,510
+send post and we see that here.
+
+12
+00:00:59,510 --> 00:01:00,520
+So this seems to work,
+
+13
+00:01:00,530 --> 00:01:01,660
+that's perfect,
+
+14
+00:01:01,700 --> 00:01:05,390
+now of course we could reset that form here too if we wanted to but I'm fine
+
+15
+00:01:05,390 --> 00:01:12,570
+like this. The goal now of course is to not just log that here but to instead send an HTTP request and
+
+16
+00:01:12,570 --> 00:01:12,990
+for that,
+
+17
+00:01:12,990 --> 00:01:15,900
+we need Angular's help, to be precise
+
+18
+00:01:15,900 --> 00:01:22,950
+we need to unlock a new feature so to say. In the app module, we have to add a new core Angular module
+
+19
+00:01:22,950 --> 00:01:25,680
+or a new module baked into the Angular framework
+
+20
+00:01:25,680 --> 00:01:29,440
+I should say, which is the HttpClient module.
+
+21
+00:01:29,460 --> 00:01:41,000
+For that, you simply import HttpClient module here from @angular/common/http.
+
+22
+00:01:41,340 --> 00:01:48,780
+So that package name is @angular/common/http and you import the HttpClient module.
+
+23
+00:01:48,780 --> 00:01:56,250
+Now you add that HttpClient module here in your imports array, just like that.
+
+24
+00:01:56,270 --> 00:02:03,560
+This now unlocks the client Angular offers in your whole project and with that, we can now start sending
+
+25
+00:02:03,560 --> 00:02:06,160
+requests in our app component here.
+
+26
+00:02:06,530 --> 00:02:12,410
+In there, we now just need to inject our HttpClient and I'll store it in a property which I just
+
+27
+00:02:12,410 --> 00:02:20,390
+name HTTP and it's the HttpClient which you need to import from 
+
+28
+00:02:20,810 --> 00:02:22,000
+@angular/common/http,
+
+29
+00:02:22,010 --> 00:02:24,760
+so make sure to add this import at the top of your path.
+
+30
+00:02:26,470 --> 00:02:29,770
+Now with it imported, we can use it to send HTTP requests
+
+31
+00:02:29,800 --> 00:02:31,450
+and how does this work now?
+
+32
+00:02:31,450 --> 00:02:38,270
+Now let's say here in onCreatePost once we got that post data, we want to send it to Firebase. For this,
+
+33
+00:02:38,270 --> 00:02:43,760
+we can use that injected HTTP service and there, you have a couple of methods.
+
+34
+00:02:43,840 --> 00:02:47,780
+These methods are mostly named like the HTTP verbs,
+
+35
+00:02:48,100 --> 00:02:54,510
+so you have get, you have delete, you have post and that will allow you to send different kinds of requests.
+
+36
+00:02:54,580 --> 00:02:59,350
+Now here since I want to store data, I'll start with a post request.
+
+37
+00:02:59,350 --> 00:03:02,860
+Now you call this method and it takes a couple of arguments,
+
+38
+00:03:02,860 --> 00:03:08,620
+the first argument is the URL you want to send this request to and that is the URL you can
+
+39
+00:03:08,620 --> 00:03:10,770
+find in your Firebase real-time database,
+
+40
+00:03:10,810 --> 00:03:17,410
+this URL or at least this URL is a part of the URL we'll send the request to. So paste that in here
+
+41
+00:03:17,590 --> 00:03:19,830
+but this is not the entire URL.
+
+42
+00:03:20,060 --> 00:03:26,140
+Now on a custom or on different REST APIs you were communicating with, you would have clearly defined
+
+43
+00:03:26,170 --> 00:03:32,500
+endpoints, like /posts/add or something like this, to which you have to send your request and the official
+
+44
+00:03:32,500 --> 00:03:38,680
+docs of the API you're working with would tell you which API endpoint to send the request to. For
+
+45
+00:03:38,680 --> 00:03:45,550
+Firebase, it's a bit differently, you have this starting point URL here and then you can add your own
+
+46
+00:03:45,910 --> 00:03:50,920
+segments after that and this will get replicated as folders in this database
+
+47
+00:03:50,920 --> 00:03:54,960
+so to say and this looks like you're directly talking to the database
+
+48
+00:03:55,030 --> 00:03:59,080
+but keep in mind that Firebase only abstracts this away from you,
+
+49
+00:03:59,200 --> 00:04:03,190
+you are still communicating with a REST API provided by Firebase,
+
+50
+00:04:03,190 --> 00:04:08,990
+they just translate your path you're sending it to to a folder structure in your database,
+
+51
+00:04:08,990 --> 00:04:14,380
+you're not communicating directly with the database here and I'm stressing this because it is important
+
+52
+00:04:14,380 --> 00:04:20,680
+to keep in mind that you never communicate directly with a database from inside your Angular app.
+
+53
+00:04:20,830 --> 00:04:26,270
+So let's say here, we want to have a node, a folder so to say named posts,
+
+54
+00:04:26,350 --> 00:04:29,040
+well then we would simply add posts as a segment here
+
+55
+00:04:29,170 --> 00:04:32,570
+and important, for Firebase you need to add .json,
+
+56
+00:04:32,620 --> 00:04:34,680
+this simply is a Firebase requirement,
+
+57
+00:04:34,690 --> 00:04:38,040
+it's not a Angular requirement, not a REST API requirement,
+
+58
+00:04:38,170 --> 00:04:40,950
+only a requirement by that Firebase REST API.
+
+59
+00:04:42,130 --> 00:04:46,520
+This now allows us to send a post request to that URL. Now
+
+60
+00:04:46,720 --> 00:04:52,150
+since it's a post request, it doesn't work just like this however, a post request also needs a request
+
+61
+00:04:52,150 --> 00:04:53,410
+body.
+
+62
+00:04:53,410 --> 00:04:59,470
+Now this post method here works such that it takes more than one argument, it has at least two required
+
+63
+00:04:59,500 --> 00:05:00,450
+arguments,
+
+64
+00:05:00,460 --> 00:05:06,490
+the second argument being the request body. So we pass one additional argument here and that could be
+
+65
+00:05:06,490 --> 00:05:12,400
+our post data, so the data we want to store, this data. Now, very important,
+
+66
+00:05:12,430 --> 00:05:18,790
+you normally send JSON data when interacting with a RESTful API and actually, that will happen here
+
+67
+00:05:18,790 --> 00:05:19,500
+as well
+
+68
+00:05:19,630 --> 00:05:26,170
+but the Angular HttpClient will take our Javascript object here and automatically convert it to JSON
+
+69
+00:05:26,170 --> 00:05:32,230
+data for us. So it will still send JSON data and we'll see this in a second when we inspect that request
+
+70
+00:05:32,230 --> 00:05:39,110
+in the browser developer tools but Angular will transform this automatically for us.
+
+71
+00:05:39,280 --> 00:05:45,100
+Now with this, we have a request that should work, it has all the core data it needs - the URL and the request
+
+72
+00:05:45,100 --> 00:05:45,510
+body
+
+73
+00:05:45,760 --> 00:05:48,880
+and for now, we don't need to set any other data.
+
+74
+00:05:48,880 --> 00:05:51,250
+Now let's save this and let's give it a try, shall we?
+
+75
+00:05:52,260 --> 00:05:54,760
+So let's go back to our application,
+
+76
+00:05:54,910 --> 00:06:01,300
+enter some content here and click send post.
+
+77
+00:06:01,870 --> 00:06:02,980
+Did something happen?
+
+78
+00:06:02,980 --> 00:06:04,870
+Let's check Firebase.
+
+79
+00:06:04,900 --> 00:06:08,720
+Well I don't see any data here and we would see it here.
+
+80
+00:06:08,740 --> 00:06:10,440
+Let's check the Network tab,
+
+81
+00:06:10,480 --> 00:06:14,940
+so in the browser developer tools, in the Chrome developer tools, go to Network tab
+
+82
+00:06:14,940 --> 00:06:17,930
+here, you see a bunch of network requests actually,
+
+83
+00:06:17,950 --> 00:06:23,770
+these are all the files that are downloaded as part of your Angular application and also Javascript
+
+84
+00:06:23,770 --> 00:06:24,460
+files and so on.
+
+85
+00:06:24,910 --> 00:06:25,720
+Let's clear that,
+
+86
+00:06:25,750 --> 00:06:30,190
+let's simply send another post and we don't see any request here,
+
+87
+00:06:30,220 --> 00:06:37,300
+so somehow this request is not being sent and that happens on purpose.
+
+88
+00:06:37,300 --> 00:06:44,910
+Angular heavily uses observable as you already learned and HTTP requests are also managed via observable
+
+89
+00:06:45,040 --> 00:06:49,320
+because they are a perfect scenario or a use case for observables.
+
+90
+00:06:49,630 --> 00:06:51,310
+We can wrap them and we can
+
+91
+00:06:51,310 --> 00:06:56,750
+then subscribe to them to get informed about the response and to handle errors and so on.
+
+92
+00:06:56,800 --> 00:06:59,530
+The thing just is, Angular is smart
+
+93
+00:06:59,530 --> 00:07:07,090
+so to say. If you're not subscribing to that prepared HTTP request you could say, so to that observable
+
+94
+00:07:07,090 --> 00:07:13,720
+that wraps your HTTP request, if you're not subscribing to it, then Angular and RxJS know that no
+
+95
+00:07:13,720 --> 00:07:18,720
+one's interested in the response and therefore, the request doesn't even get sent because if no one's
+
+96
+00:07:18,730 --> 00:07:26,050
+interested in the response, then it won't send the request. So post indeed will return an observable,
+
+97
+00:07:26,860 --> 00:07:32,990
+as you can also see here. It does not give us the response or anything like that as a return value,
+
+98
+00:07:32,990 --> 00:07:34,410
+it gives us an observable
+
+99
+00:07:34,460 --> 00:07:38,840
+that wraps your request and to get access to the response, you have to call
+
+100
+00:07:38,870 --> 00:07:46,180
+subscribe here and this will then be your response date actually because Angular, the HttpClient
+
+101
+00:07:46,190 --> 00:07:51,560
+I should say, will do even more than just giving you the response, it will automatically extract the
+
+102
+00:07:51,560 --> 00:07:53,670
+data attached to the response,
+
+103
+00:07:53,810 --> 00:07:59,710
+so the response body and give you that, though you also have ways of accessing the full response as you
+
+104
+00:07:59,710 --> 00:08:01,630
+will learn later.
+
+105
+00:08:01,640 --> 00:08:07,190
+So for now, let's simply console log that response data to get a feeling for whether that works and what
+
+106
+00:08:07,190 --> 00:08:08,720
+we get here.
+
+107
+00:08:08,900 --> 00:08:10,610
+So let's save this
+
+108
+00:08:10,610 --> 00:08:15,450
+and now with the subscription set up and with us subscribing here, by the way you don't need to manage
+
+109
+00:08:15,450 --> 00:08:19,750
+the subscription in unsubscribe because it will complete after being done anyways
+
+110
+00:08:19,850 --> 00:08:24,080
+and it's an observable provided by Angular for which you never need to manage subscriptions
+
+111
+00:08:24,590 --> 00:08:26,040
+but that's just a side note,
+
+112
+00:08:26,090 --> 00:08:29,790
+so now let's simply test this. Here,
+
+113
+00:08:29,830 --> 00:08:32,310
+let me clear all network requests again,
+
+114
+00:08:32,320 --> 00:08:38,750
+well actually let's first of all open the console again and let's now try this again,
+
+115
+00:08:38,750 --> 00:08:43,510
+send a post and now we get a log here which looks good.
+
+116
+00:08:43,610 --> 00:08:48,680
+Let's ignore what's in there for now, it's a Javascript object, we can see that but it has a name and
+
+117
+00:08:48,680 --> 00:08:50,580
+then some cryptic key here.
+
+118
+00:08:50,600 --> 00:08:52,580
+Let's have a look at the network tab
+
+119
+00:08:52,700 --> 00:08:54,560
+and there we also see that request now,
+
+120
+00:08:54,650 --> 00:08:59,840
+we actually see two requests even, two requests to the post endpoint.
+
+121
+00:08:59,940 --> 00:09:05,520
+Now that's just a characteristic of browsers when sending post requests, so not to /posts but of
+
+122
+00:09:05,520 --> 00:09:06,720
+type posts,
+
+123
+00:09:06,870 --> 00:09:08,970
+then they always send two requests.
+
+124
+00:09:09,150 --> 00:09:12,960
+The first one if you click on that is of type options,
+
+125
+00:09:13,020 --> 00:09:18,950
+that's a different HTTP verb that will first of all check whether the post request is allowed to be sent
+
+126
+00:09:19,080 --> 00:09:23,820
+and if that gets a success response, it will send the actual request which is this one
+
+127
+00:09:23,820 --> 00:09:26,820
+and there you see that was of type post,
+
+128
+00:09:26,820 --> 00:09:29,670
+this was the URL it sent it to,
+
+129
+00:09:29,760 --> 00:09:31,060
+it succeeded.
+
+130
+00:09:31,080 --> 00:09:36,740
+These are the response headers we got back by Firebase and these are the request headers we sent and
+
+131
+00:09:36,780 --> 00:09:43,800
+for example, this one and the content type headers were added automatically to the request sent for
+
+132
+00:09:43,800 --> 00:09:50,550
+you by Angular. You didn't add these headers, they were added by Angular and here in the request payload,
+
+133
+00:09:50,550 --> 00:09:54,610
+you also see that JSON data that was attached for you.
+
+134
+00:09:54,690 --> 00:09:59,720
+You can also of course see the response here which is the response we logged to the console.
+
+135
+00:09:59,820 --> 00:10:02,220
+So this is how we send HTTP requests
+
+136
+00:10:02,400 --> 00:10:08,670
+and besides the general syntax, the core takeaway is that requests are only sent when you subscribe.
+

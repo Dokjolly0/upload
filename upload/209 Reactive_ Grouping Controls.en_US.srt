@@ -1,0 +1,192 @@
+1
+00:00:02,360 --> 00:00:05,660
+In the last lecture, I was already mentioning that
+
+2
+00:00:05,710 --> 00:00:09,140
+get also takes the path to an element.
+
+3
+00:00:09,310 --> 00:00:10,930
+What did I mean with that?
+
+4
+00:00:11,380 --> 00:00:12,630
+It's very simple,
+
+5
+00:00:12,940 --> 00:00:21,130
+you can specify a path here because you might have a nested form. Let's say username and e-mail should
+
+6
+00:00:21,130 --> 00:00:22,900
+be inside a FormGroup,
+
+7
+00:00:22,960 --> 00:00:26,170
+we used such forms in the template driven approach too.
+
+8
+00:00:26,200 --> 00:00:29,850
+So here, we could create a FormGroup named userData
+
+9
+00:00:30,010 --> 00:00:37,630
+and now this is a new FormGroup again. FormGroup is not only there to be used on the overall form, that
+
+10
+00:00:37,630 --> 00:00:44,100
+just happens to be a FormGroup too but you can still have form groups in the form groups.
+
+11
+00:00:44,140 --> 00:00:50,730
+So here we could have a FormGroup which of course like the outer FormGroup for the overall form, also
+
+12
+00:00:50,740 --> 00:00:52,800
+takes a Javascript object
+
+13
+00:00:53,140 --> 00:00:59,320
+and now we can add our form controls inside of this group,
+
+14
+00:00:59,440 --> 00:01:02,400
+so now we have a nested form.
+
+15
+00:01:02,560 --> 00:01:08,350
+We need to reflect this in our HTML template because right now if we have a look at our form, it
+
+16
+00:01:08,350 --> 00:01:09,330
+will break,
+
+17
+00:01:09,340 --> 00:01:11,550
+you'll see this in the console.
+
+18
+00:01:12,070 --> 00:01:19,960
+We get an error because correctly, it cannot find a control with the name username because on the overall
+
+19
+00:01:19,960 --> 00:01:22,200
+form, there is no such control,
+
+20
+00:01:22,210 --> 00:01:25,190
+it's nested in the userData FormGroup.
+
+21
+00:01:25,180 --> 00:01:34,420
+So first of all, we need to update our synchronization and we easily do this by wrapping our form controls
+
+22
+00:01:34,420 --> 00:01:38,040
+here in another element like a div for example,
+
+23
+00:01:38,260 --> 00:01:43,330
+so the e-mail and username would be the two controls we wrap in there to replicate the structure
+
+24
+00:01:43,330 --> 00:01:45,230
+we have in the TypeScript object
+
+25
+00:01:45,580 --> 00:01:50,670
+and on this div, we place the formGroupName directive.
+
+26
+00:01:50,830 --> 00:01:59,800
+So you kind of could see the schema here, formControlName to tell Angular which property in our
+
+27
+00:01:59,990 --> 00:02:06,250
+TypeScript object representing the form relates to which input and formGroupName to tell it the same
+
+28
+00:02:06,250 --> 00:02:07,930
+for a FormGroup,
+
+29
+00:02:07,930 --> 00:02:11,730
+so depending on whether you have a new FormGroup or new FormControl here.
+
+30
+00:02:12,040 --> 00:02:17,020
+So here, the formGroupName is userData with a capital D
+
+31
+00:02:17,020 --> 00:02:21,130
+and now with this tiny addition, I don't need to change anything else,
+
+32
+00:02:21,130 --> 00:02:24,980
+it's almost working again but we still get this error
+
+33
+00:02:24,980 --> 00:02:30,740
+here or a different error but still related to the topic, that valid cannot be read on null.
+
+34
+00:02:30,880 --> 00:02:37,190
+Well that makes sense because get username still fails because what are we trying to do here?
+
+35
+00:02:37,240 --> 00:02:45,250
+We try to get a form control with the name username on our signupForm, we don't have that here,
+
+36
+00:02:45,410 --> 00:02:48,690
+we have it nested in userData but that's not the same.
+
+37
+00:02:49,010 --> 00:02:55,820
+So we need to update get to point to the path or to contain the path to that username and that would be
+
+38
+00:02:55,820 --> 00:02:59,810
+userData.username and it's as simple as this.
+
+39
+00:02:59,840 --> 00:03:03,170
+You structure your path separated with dots,
+
+40
+00:03:03,350 --> 00:03:07,060
+so if you have a new object, just place a dot in between.
+
+41
+00:03:07,370 --> 00:03:14,060
+So let's paste it everywhere where we used one of these nested controls for e-mail as well
+
+42
+00:03:14,060 --> 00:03:21,050
+therefore and if we now save this, it should update and not display any errors any more,
+
+43
+00:03:21,110 --> 00:03:28,460
+instead we should see the behavior we saw before with the messages we get if we entered invalid data
+
+44
+00:03:28,670 --> 00:03:33,310
+because now the form is working again taking into account form groups,
+
+45
+00:03:33,350 --> 00:03:36,530
+so nesting inside of our form now.
+
+46
+00:03:36,680 --> 00:03:40,940
+And as you saw, it was really easy to reflect this in our HTML code,
+
+47
+00:03:40,940 --> 00:03:43,440
+IT's all about keeping that in sync
+
+48
+00:03:43,460 --> 00:03:44,150
+in the end.
+

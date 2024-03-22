@@ -1,0 +1,216 @@
+1
+00:00:02,260 --> 00:00:04,170
+So were you successful?
+
+2
+00:00:04,180 --> 00:00:06,090
+Here is my solution.
+
+3
+00:00:06,280 --> 00:00:14,110
+As I said, I want to implement child routes, so I will do this by going to the AppRoutingModule here
+
+4
+00:00:14,740 --> 00:00:19,080
+and on my recipes, I'll add the children property.
+
+5
+00:00:19,390 --> 00:00:26,040
+Now children also takes an array of routes and each route still is just a Javascript object, here
+
+6
+00:00:26,230 --> 00:00:33,410
+the first route I want to have is the empty path so that we just visit /recipes/,
+
+7
+00:00:33,430 --> 00:00:40,600
+the default case. Here I want to load that new component I was referring to which will simply hold the
+
+8
+00:00:40,600 --> 00:00:43,210
+text we have in this ng-template for now.
+
+9
+00:00:43,210 --> 00:00:47,410
+Now for this, I will quickly create this component and I'll use the CLI
+
+10
+00:00:47,410 --> 00:00:55,450
+for that, with ng g c I can generate a new component and this component should now go into the
+
+11
+00:00:55,720 --> 00:01:00,140
+recipes folder, so recipes and then slash
+
+12
+00:01:00,400 --> 00:01:03,780
+and here, you may simply choose that folder,
+
+13
+00:01:03,940 --> 00:01:11,420
+so recipes and I will name it recipe-start, so the recipe-start component, with spec false I prevent
+
+14
+00:01:11,470 --> 00:01:14,020
+this spec file from being generated.
+
+15
+00:01:14,440 --> 00:01:18,310
+So with that, we got our recipe-start component here
+
+16
+00:01:18,760 --> 00:01:23,860
+and as I mentioned before, all I will do is I will output here, maybe in a h3 tag now,
+
+17
+00:01:24,070 --> 00:01:26,540
+please select a recipe,
+
+18
+00:01:26,560 --> 00:01:32,310
+so really simple. With that set up, with our start component set up here,
+
+19
+00:01:32,380 --> 00:01:34,060
+I now want to use that,
+
+20
+00:01:34,090 --> 00:01:37,440
+it has been added to app module automatically by the CLI
+
+21
+00:01:37,450 --> 00:01:39,700
+so make sure that this is the case
+
+22
+00:01:39,870 --> 00:01:45,110
+and now in the AppRoutingModule here, I will load this component, 
+
+23
+00:01:45,320 --> 00:01:48,770
+so the recipe-start component,
+
+24
+00:01:48,970 --> 00:01:49,830
+this one here.
+
+25
+00:01:49,930 --> 00:01:53,890
+Make sure to add the import at the top from 
+
+26
+00:01:53,920 --> 00:01:57,530
+./recipes/recipe-start/recipe-start.component
+
+27
+00:01:57,730 --> 00:02:03,930
+and with that added, we got our first component which can be displayed inside of our recipes component.
+
+28
+00:02:04,150 --> 00:02:10,030
+Let's try this out because that should be all we need to get started with it. In the recipes component because
+
+29
+00:02:10,030 --> 00:02:11,880
+again this is and that's important,
+
+30
+00:02:11,950 --> 00:02:17,570
+this is the component, the recipe component here is the component where our child routes are registered.
+
+31
+00:02:17,680 --> 00:02:23,470
+So it is in this components template that we need to provide a router outlet for the child routes to
+
+32
+00:02:23,470 --> 00:02:24,460
+be rendered.
+
+33
+00:02:24,850 --> 00:02:26,400
+So I will do this here.
+
+34
+00:02:26,530 --> 00:02:34,710
+I will add a router outlet here and when I save this with ng serve running, this looks pretty good,
+
+35
+00:02:34,720 --> 00:02:40,710
+we see please select a recipe and clearly that is not a paragraph anymore, so it seems to be our new component.
+
+36
+00:02:40,930 --> 00:02:46,420
+Of course if we click somewhere, that doesn't work anymore because we only have the router outlet there,
+
+37
+00:02:46,540 --> 00:02:50,320
+our old logic of loading a recipe is completely broken
+
+38
+00:02:50,470 --> 00:02:52,390
+but we will restore it soon.
+
+39
+00:02:52,390 --> 00:02:57,210
+Actually we can already take the first step for restoring that functionality,
+
+40
+00:02:57,220 --> 00:03:01,820
+I'll add another path here to the child routes of recipe component.
+
+41
+00:03:02,410 --> 00:03:10,050
+That path should be :id, so a dynamic segment added after /recipes,
+
+42
+00:03:10,090 --> 00:03:12,250
+that's of course something you have to keep in mind.
+
+43
+00:03:12,310 --> 00:03:17,100
+All child routes always come after the path of the parent route,
+
+44
+00:03:17,140 --> 00:03:25,600
+so all these routes here will have /recipes in front of it. So at /recipes/id with
+
+45
+00:03:25,600 --> 00:03:38,390
+ID being a dynamic parameter, here I want to load my recipe-detail component.
+
+46
+00:03:38,440 --> 00:03:40,830
+We also need to add the import to that component
+
+47
+00:03:40,840 --> 00:03:41,820
+up here of course,
+
+48
+00:03:41,830 --> 00:03:47,970
+so from the recipes folder, then recipe detail and then the recipe-detail component file. With that,
+
+49
+00:03:48,190 --> 00:03:54,250
+we now at least have a route which would allow us to load this component and we can kind of see this
+
+50
+00:03:54,250 --> 00:03:57,010
+in action if we manually enter one here
+
+51
+00:03:57,010 --> 00:04:01,570
+let's say. It tries to load the recipe-detail component,
+
+52
+00:04:01,780 --> 00:04:08,740
+of course it will break because there we try to output data which we no longer get because our old logic
+
+53
+00:04:08,770 --> 00:04:14,530
+of transferring data from the list item to the detail component doesn't work anymore
+
+54
+00:04:14,740 --> 00:04:19,640
+but we will fix it and we'll actually start fixing it in the next lecture.
+

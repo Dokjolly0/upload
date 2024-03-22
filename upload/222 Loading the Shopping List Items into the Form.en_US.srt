@@ -1,0 +1,140 @@
+1
+00:00:02,280 --> 00:00:08,200
+In the last lectures we did a lot of setup to get the information about the item we're about to edit.
+
+2
+00:00:08,220 --> 00:00:11,250
+Now let's edit it.
+
+3
+00:00:11,480 --> 00:00:16,610
+I want to get the item we want to edit and for this in a shopping list service.
+
+4
+00:00:16,610 --> 00:00:24,620
+I'll need a new method which is simply get ingredient which expects to get the index a number and which
+
+5
+00:00:24,620 --> 00:00:29,600
+will simply return as the ingredient from our ingredients array.
+
+6
+00:00:29,590 --> 00:00:32,600
+So the ingredient at this index.
+
+7
+00:00:32,600 --> 00:00:35,180
+So with that returned we now can reach out.
+
+8
+00:00:35,180 --> 00:00:42,350
+Q Does new method in our shopping added component and store it in the edited item maybe which is an
+
+9
+00:00:42,350 --> 00:00:45,360
+ingredient self type ingredient.
+
+10
+00:00:45,530 --> 00:00:53,310
+And we do this whenever we get a new information that we're in the edit mode I should say so here added
+
+11
+00:00:53,310 --> 00:00:59,930
+that item will be said equals you reaching out to the shopping service to the item we get from the get
+
+12
+00:00:59,930 --> 00:01:01,280
+ingredient method.
+
+13
+00:01:01,280 --> 00:01:07,700
+And here we simply pass our index so with this we get a lot of information here.
+
+14
+00:01:07,700 --> 00:01:14,320
+Now we need to update our form if we are in edit mode and for this I want to get access to the forum.
+
+15
+00:01:14,510 --> 00:01:22,910
+Now on the form we do have a local reference f we can use this together with at view child to get access
+
+16
+00:01:22,910 --> 00:01:23,920
+to it.
+
+17
+00:01:23,930 --> 00:01:31,070
+So here I will actually use at view child and make sure to add the import from at English core.
+
+18
+00:01:31,850 --> 00:01:41,180
+I will reach out to F and this will be the shopping list forum of type and G forum.
+
+19
+00:01:41,290 --> 00:01:43,910
+So make sure to assign this type here.
+
+20
+00:01:44,020 --> 00:01:49,480
+Now once we got all the new information inside of the subscribe callback and that is of course important
+
+21
+00:01:49,720 --> 00:01:51,000
+outside of there.
+
+22
+00:01:51,010 --> 00:01:57,190
+This will not be run each time we get a new information but it might be run before we got any information
+
+23
+00:01:57,190 --> 00:01:58,270
+at all.
+
+24
+00:01:58,300 --> 00:02:01,680
+So outside would be wrong inside of this callback here.
+
+25
+00:02:02,020 --> 00:02:10,390
+I want to reach out to my forum and call set value here and now I want to assign a new value for the
+
+26
+00:02:10,390 --> 00:02:18,600
+name I will use my editor's item and year the name and for amount you guessed it.
+
+27
+00:02:18,610 --> 00:02:24,550
+I'll also use my added that item and then the amount and this should make sure that when ever we select
+
+28
+00:02:24,550 --> 00:02:29,820
+a new item we actually populate the forum with the right values.
+
+29
+00:02:29,890 --> 00:02:38,220
+We can already try this with any sort of running once our page reloads if I click here.
+
+30
+00:02:38,220 --> 00:02:41,350
+We indeed select the correct item.
+
+31
+00:02:41,520 --> 00:02:44,130
+So dad is working as expected.
+
+32
+00:02:44,130 --> 00:02:50,880
+Of course it still adds it as a new items that we need to make sure that if we are editing we correctly
+
+33
+00:02:50,880 --> 00:02:56,880
+rename this button to to update or something like this and that we then also do update the item and
+
+34
+00:02:56,880 --> 00:02:58,020
+don't add a new one.
+
+35
+00:02:58,020 --> 00:02:59,910
+Let's do this in the next lecture.
+

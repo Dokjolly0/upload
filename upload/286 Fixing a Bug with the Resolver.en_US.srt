@@ -1,0 +1,76 @@
+1
+00:00:02,110 --> 00:00:07,780
+If I do fetch my recipes and I try to edit one of them, for example I want to add an exclamation mark
+
+2
+00:00:07,780 --> 00:00:08,570
+here,
+
+3
+00:00:08,590 --> 00:00:11,370
+you'll see that these changes are not saved and
+
+4
+00:00:11,420 --> 00:00:16,780
+the reason for that is the resolver which is used whenever we visit the recipe detail route.
+
+5
+00:00:16,780 --> 00:00:23,380
+It fetches new recipes from the server and that simply overwrites our existing recipes, including our
+
+6
+00:00:23,380 --> 00:00:25,390
+changes to these recipes.
+
+7
+00:00:25,390 --> 00:00:32,920
+Now the solution is to first check whether we do have recipes and only fetch new ones if we don't.
+
+8
+00:00:32,920 --> 00:00:38,250
+So I can inject my recipes service here
+
+9
+00:00:41,050 --> 00:00:44,400
+like this, import it from recipe service.
+
+10
+00:00:44,740 --> 00:00:52,660
+With this injected, we can get our recipes from this recipe service get recipes
+
+11
+00:00:52,660 --> 00:00:56,590
+and now we can check if recipes length is equal to zero,
+
+12
+00:00:56,590 --> 00:01:01,390
+then this means we have no recipes and we should fetch them, otherwise
+
+13
+00:01:01,510 --> 00:01:07,480
+if this is not zero, we can just return these recipes because then, we do have recipes so no need
+
+14
+00:01:07,480 --> 00:01:15,280
+to fetch them again. With that change, we can still reload the page whilst we're on it but we can also
+
+15
+00:01:15,280 --> 00:01:17,960
+of course reload the app somewhere else and just fetch data
+
+16
+00:01:18,340 --> 00:01:25,200
+but now if I edit this, indeed the changes are saved. If I reload and I
+
+17
+00:01:25,310 --> 00:01:32,120
+then get my old data because I didn't save them to the server before my changes but they were saved
+
+18
+00:01:32,120 --> 00:01:36,860
+locally and if I would have chosen save data, we would have also saved them on a server.
+
+19
+00:01:37,100 --> 00:01:40,820
+So this is a tiny adjustment which we should make to avoid strange bugs.
+

@@ -1,0 +1,244 @@
+1
+00:00:02,330 --> 00:00:08,400
+In the last video, we created this filter, pipe here, which allows us to filter our servers for their state
+
+2
+00:00:08,410 --> 00:00:10,690
+and it seems to work great.
+
+3
+00:00:10,720 --> 00:00:18,220
+We do have a certain issue with it though, if we allow the user to add a new server and I will quickly
+
+4
+00:00:18,220 --> 00:00:25,690
+add this functionality by going to my template and by adding a line break and then a button with the
+
+5
+00:00:25,690 --> 00:00:36,890
+classes btn and btn-primary where I say add server which will execute new method, onAddServer like
+
+6
+00:00:36,890 --> 00:00:44,940
+this and then in the app component, I will quickly add this method, onAddServer and here, I will simply take
+
+7
+00:00:44,940 --> 00:00:48,150
+my servers, push a new server on it
+
+8
+00:00:48,270 --> 00:00:54,540
+and of course this will just be a generic server here which will have the instance type of let's say
+
+9
+00:00:54,540 --> 00:00:58,670
+a small, a name of new server,
+
+10
+00:00:58,740 --> 00:01:00,430
+let's keep it super simple here,
+
+11
+00:01:00,570 --> 00:01:05,810
+a status of stable and started could be new date
+
+12
+00:01:05,820 --> 00:01:10,530
+and then the same date as all the other servers here, this is not the recording date
+
+13
+00:01:10,530 --> 00:01:15,020
+as a side note, just like or the way you want it.
+
+14
+00:01:15,270 --> 00:01:17,940
+So with this, we are able to add a new server
+
+15
+00:01:18,330 --> 00:01:23,970
+and if I now click onAddServer, you'll see it's getting added here. If I filter for stable though and I
+
+16
+00:01:23,970 --> 00:01:30,870
+hit this button, you don't see it getting added here but it is there, you can see if I remove the filter
+
+17
+00:01:30,870 --> 00:01:31,900
+altogether.
+
+18
+00:01:32,190 --> 00:01:38,490
+So I added a couple of servers and now we can filter for them again but they weren't added whilst we had
+
+19
+00:01:38,550 --> 00:01:40,190
+this list filtered
+
+20
+00:01:40,560 --> 00:01:47,010
+and this is actually not a bug. I'll quickly reload this and filter for stable again so that
+
+21
+00:01:47,010 --> 00:01:49,520
+you can see this, if I hit enter here,
+
+22
+00:01:49,860 --> 00:01:55,330
+as mentioned it's not getting added but it's there, you can see as soon as we clear our filter.
+
+23
+00:01:55,380 --> 00:02:03,270
+Now the reason for this behavior is that Angular is, thankfully I should say, not rerunning our pipe on
+
+24
+00:02:03,270 --> 00:02:03,840
+the data
+
+25
+00:02:03,850 --> 00:02:06,390
+whenever this data changes.
+
+26
+00:02:06,510 --> 00:02:14,160
+So as soon as we change what we enter here and even if we would only add a blank space and then remove
+
+27
+00:02:14,160 --> 00:02:18,170
+it, we would update our pipe again as you can see.
+
+28
+00:02:18,360 --> 00:02:25,440
+So adding the input or changing the input of the pipe will trigger a recalculation, really will
+
+29
+00:02:25,440 --> 00:02:31,670
+trigger the pipe being applied to the data again but changing the data won't trigger this
+
+30
+00:02:31,710 --> 00:02:38,780
+and this is a good behavior because otherwise, Angular would have to run this pipe or rerun the pipe whenever
+
+31
+00:02:38,820 --> 00:02:41,640
+any data on the page changes.
+
+32
+00:02:41,640 --> 00:02:45,800
+This would be really bad because that would cost a lot of performance
+
+33
+00:02:45,870 --> 00:02:53,700
+and this is also the reason why no built-in filter pipe exists because filtering you would say is a
+
+34
+00:02:53,880 --> 00:02:55,030
+pretty common task
+
+35
+00:02:55,170 --> 00:03:00,990
+but the Angular team decided against adding such a pipe because you typically have a high performance
+
+36
+00:03:00,990 --> 00:03:01,540
+cost
+
+37
+00:03:01,560 --> 00:03:06,610
+if you want to enforce it being updated even if you are in filter mode.
+
+38
+00:03:06,990 --> 00:03:10,490
+So by default, it doesn't work here but we can force it to work
+
+39
+00:03:10,500 --> 00:03:18,480
+but again, be aware that the following change will make sure that whenever we change data on the page,
+
+40
+00:03:18,600 --> 00:03:22,410
+our pipe is recalculated you could say.
+
+41
+00:03:22,590 --> 00:03:25,210
+So this might lead to performance issues,
+
+42
+00:03:25,290 --> 00:03:29,550
+so you should know what you're doing which is why I'm really emphasizing this.
+
+43
+00:03:29,550 --> 00:03:36,180
+You can force this pipe to be updated whenever the data changes by adding a second property to the pipe
+
+44
+00:03:36,180 --> 00:03:37,270
+decorator,
+
+45
+00:03:37,290 --> 00:03:42,450
+it's called pure and you can set it to false. By default,
+
+46
+00:03:42,450 --> 00:03:44,900
+this is true and doesn't need to be added.
+
+47
+00:03:45,060 --> 00:03:51,530
+Now if you do this and the app reloads, let's filter for stable servers and add new servers
+
+48
+00:03:51,690 --> 00:03:54,140
+and now you see they get added here too.
+
+49
+00:03:54,180 --> 00:03:59,080
+The reason simply is that the pipe now gets recalculated whenever data changes
+
+50
+00:03:59,160 --> 00:04:04,460
+and as mentioned before, this can lead to performance issues but might be what you're interested in.
+
+51
+00:04:04,470 --> 00:04:06,030
+So it is fine to use it,
+
+52
+00:04:06,030 --> 00:04:12,200
+this is what is pure property is therefore, you can set it to false which basically means this is not,
+
+53
+00:04:12,240 --> 00:04:20,520
+you could say purely focusing on whether the pipe arguments changed but now it will also be recalculated whenever
+
+54
+00:04:20,610 --> 00:04:22,210
+anything changes on the page
+
+55
+00:04:22,230 --> 00:04:27,950
+and again this might be a bad behavior, I'm just emphasizing this because it's so important to understand
+
+56
+00:04:28,020 --> 00:04:31,030
+but if you know what you're doing, if you do need this behavior,
+
+57
+00:04:31,110 --> 00:04:32,270
+definitely go ahead, 
+
+58
+00:04:32,270 --> 00:04:35,700
+set pure to false and you are good to go.
+
+59
+00:04:35,700 --> 00:04:38,050
+And with that, we now get a working filter pipe
+
+60
+00:04:38,050 --> 00:04:41,650
+with this little downside of potentially hitting performance issues
+
+61
+00:04:41,790 --> 00:04:43,720
+if we have a very long list here.
+

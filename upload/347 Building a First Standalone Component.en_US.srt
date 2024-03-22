@@ -1,0 +1,820 @@
+1
+00:00:02,040 --> 00:00:04,700
+So how are standalone components built?
+
+2
+00:00:04,700 --> 00:00:08,107
+Well, it turns out that you just build a regular component,
+
+3
+00:00:08,107 --> 00:00:10,060
+as you already know it,
+
+4
+00:00:10,060 --> 00:00:13,970
+and then you add a special property, a special flag,
+
+5
+00:00:13,970 --> 00:00:18,020
+to the object that is passed to the @Component decorator.
+
+6
+00:00:18,020 --> 00:00:20,861
+And that's the standalone flag, which is a Boolean,
+
+7
+00:00:20,861 --> 00:00:22,833
+which should be true.
+
+8
+00:00:23,690 --> 00:00:26,790
+False is the default and does not have to be added.
+
+9
+00:00:26,790 --> 00:00:30,090
+True sets this to be a standalone component.
+
+10
+00:00:30,090 --> 00:00:34,230
+And internally, this will change many things.
+
+11
+00:00:34,230 --> 00:00:37,912
+Because now, this component can be used in other components
+
+12
+00:00:37,912 --> 00:00:42,327
+without declaring it, though you still need to make Angular
+
+13
+00:00:42,327 --> 00:00:44,490
+aware of it.
+
+14
+00:00:44,490 --> 00:00:46,910
+If you change this to true, and you save this,
+
+15
+00:00:46,910 --> 00:00:50,350
+you will note that now the app fails.
+
+16
+00:00:50,350 --> 00:00:53,836
+It fails because this is now a standalone component,
+
+17
+00:00:53,836 --> 00:00:58,293
+but it is still declared in NgModule, and that is wrong.
+
+18
+00:00:59,240 --> 00:01:01,650
+Because now, when you switch this to standalone,
+
+19
+00:01:01,650 --> 00:01:04,762
+you should no longer declare such a component,
+
+20
+00:01:04,762 --> 00:01:08,793
+in this case, the DetailsComponent, in any NgModules.
+
+21
+00:01:10,460 --> 00:01:12,580
+So therefore, here, we should get rid of it.
+
+22
+00:01:12,580 --> 00:01:15,010
+Remove it from the declarations array
+
+23
+00:01:15,010 --> 00:01:17,530
+and remove the import.
+
+24
+00:01:17,530 --> 00:01:21,400
+With that, if we save this, it kind of works.
+
+25
+00:01:21,400 --> 00:01:22,680
+But it's actually gone.
+
+26
+00:01:22,680 --> 00:01:26,270
+We no longer see the details part down there.
+
+27
+00:01:26,270 --> 00:01:28,420
+Now, we also don't see an error in the console,
+
+28
+00:01:28,420 --> 00:01:30,340
+but it's gone.
+
+29
+00:01:30,340 --> 00:01:33,154
+The reason for that is that it's actually not yet known
+
+30
+00:01:33,154 --> 00:01:34,690
+by Angular.
+
+31
+00:01:34,690 --> 00:01:38,040
+Now, all Angular sees is that, in the WelcomeComponent,
+
+32
+00:01:38,040 --> 00:01:40,703
+there is an unknown HTML element,
+
+33
+00:01:40,703 --> 00:01:44,000
+and therefore, it does not output anything.
+
+34
+00:01:44,000 --> 00:01:47,692
+Because, yes, we as a developer know that DetailsComponent
+
+35
+00:01:47,692 --> 00:01:51,013
+is the element, or the component, with that selector,
+
+36
+00:01:51,013 --> 00:01:53,500
+but Angular doesn't know that.
+
+37
+00:01:53,500 --> 00:01:56,440
+Because even if you switch to standalone components,
+
+38
+00:01:56,440 --> 00:01:59,951
+you still must make Angular aware of those components.
+
+39
+00:01:59,951 --> 00:02:03,270
+But you don't have to do it in a module anymore.
+
+40
+00:02:03,270 --> 00:02:05,330
+At least, not necessarily.
+
+41
+00:02:05,330 --> 00:02:08,193
+Instead, what you have to do, is you have to go
+
+42
+00:02:08,193 --> 00:02:12,980
+to the component that should use this standalone component.
+
+43
+00:02:12,980 --> 00:02:16,610
+And, of course, one standalone component could be used
+
+44
+00:02:16,610 --> 00:02:18,839
+in multiple components.
+
+45
+00:02:18,839 --> 00:02:21,210
+But here, we only have one component
+
+46
+00:02:21,210 --> 00:02:24,430
+that's using app-details, and that's the WelcomeComponent.
+
+47
+00:02:24,430 --> 00:02:26,520
+So we have to go to that component.
+
+48
+00:02:26,520 --> 00:02:31,520
+And there, we have to add an imports property to this object
+
+49
+00:02:32,190 --> 00:02:35,033
+that's passed to the component decorator.
+
+50
+00:02:36,180 --> 00:02:40,375
+And here, we have to point at the standalone components
+
+51
+00:02:40,375 --> 00:02:42,811
+we wanna use in this component.
+
+52
+00:02:42,811 --> 00:02:45,750
+So in this case, I wanna use the DetailsComponent.
+
+53
+00:02:45,750 --> 00:02:49,770
+Hence, I point at it by importing DetailsComponent
+
+54
+00:02:49,770 --> 00:02:50,933
+and adding it here.
+
+55
+00:02:52,070 --> 00:02:54,770
+However, you'll note that if I now save this,
+
+56
+00:02:54,770 --> 00:02:58,164
+it indeed fails because this imports property
+
+57
+00:02:58,164 --> 00:03:00,798
+can only be set if the WelcomeComponent
+
+58
+00:03:00,798 --> 00:03:04,433
+is also a standalone component, which it is not.
+
+59
+00:03:05,430 --> 00:03:07,780
+Now, we'll switch it to a standalone component
+
+60
+00:03:07,780 --> 00:03:08,770
+in the future.
+
+61
+00:03:08,770 --> 00:03:11,240
+For the moment, let's instead get rid of that here
+
+62
+00:03:11,240 --> 00:03:12,590
+by commenting it out.
+
+63
+00:03:12,590 --> 00:03:14,650
+And let's find a different way.
+
+64
+00:03:14,650 --> 00:03:16,000
+Because I did mention before,
+
+65
+00:03:16,000 --> 00:03:18,581
+that one good thing about standalone components
+
+66
+00:03:18,581 --> 00:03:22,015
+is that you can combine them with NgModules,
+
+67
+00:03:22,015 --> 00:03:25,416
+so that you can migrate to standalone components
+
+68
+00:03:25,416 --> 00:03:27,460
+in a smooth way.
+
+69
+00:03:27,460 --> 00:03:30,020
+You don't have to rewrite your entire application,
+
+70
+00:03:30,020 --> 00:03:32,970
+instead, you can start switching individual components
+
+71
+00:03:32,970 --> 00:03:35,166
+to standalone components and still use them
+
+72
+00:03:35,166 --> 00:03:38,897
+in your other components that are part of NgModules.
+
+73
+00:03:40,180 --> 00:03:42,409
+If you wanna use a standalone component
+
+74
+00:03:42,409 --> 00:03:45,741
+in the various components that make up a module,
+
+75
+00:03:45,741 --> 00:03:48,982
+all you have to do is go to that module,
+
+76
+00:03:48,982 --> 00:03:51,580
+in this case, the AppModule.
+
+77
+00:03:51,580 --> 00:03:53,135
+And now, instead of adding
+
+78
+00:03:53,135 --> 00:03:56,250
+the standalone component here, to declarations,
+
+79
+00:03:56,250 --> 00:03:58,160
+you add it to imports.
+
+80
+00:03:58,160 --> 00:04:01,550
+In the past, you typically added other modules here.
+
+81
+00:04:01,550 --> 00:04:04,708
+Now, with the introduction of this standalone components,
+
+82
+00:04:04,708 --> 00:04:06,900
+directives, and pipes feature,
+
+83
+00:04:06,900 --> 00:04:10,293
+you add all your standalone components, directives, or pipes
+
+84
+00:04:10,293 --> 00:04:14,027
+that should be usable by the other components of this module
+
+85
+00:04:14,027 --> 00:04:16,860
+here, to this imports array.
+
+86
+00:04:16,860 --> 00:04:18,960
+So in this case, DetailsComponent,
+
+87
+00:04:18,960 --> 00:04:22,180
+which now, also, must be imported here.
+
+88
+00:04:22,180 --> 00:04:26,185
+It's imported and then added to imports here.
+
+89
+00:04:26,185 --> 00:04:28,600
+With that, everything compiles,
+
+90
+00:04:28,600 --> 00:04:31,240
+and we see our standalone component again.
+
+91
+00:04:31,240 --> 00:04:32,870
+And if I open the console,
+
+92
+00:04:32,870 --> 00:04:35,430
+you see that clicks are also still registered.
+
+93
+00:04:35,430 --> 00:04:39,710
+And all of that works, except for the custom directive.
+
+94
+00:04:39,710 --> 00:04:43,528
+That does not work. The highlighting is gone.
+
+95
+00:04:43,528 --> 00:04:45,550
+Now, we'll fix this in a second,
+
+96
+00:04:45,550 --> 00:04:49,760
+but before we fix it, let me come back to this AppModule.
+
+97
+00:04:49,760 --> 00:04:52,172
+What's the idea of standalone components
+
+98
+00:04:52,172 --> 00:04:54,730
+if we still have to add them here?
+
+99
+00:04:54,730 --> 00:04:56,221
+I mean, the only thing that changed
+
+100
+00:04:56,221 --> 00:04:58,942
+is that we now add them in a different place,
+
+101
+00:04:58,942 --> 00:05:00,860
+here, in the AppModule.
+
+102
+00:05:00,860 --> 00:05:03,590
+And we now, actually, have more code to write,
+
+103
+00:05:03,590 --> 00:05:06,376
+because we did have to add this standalone flag
+
+104
+00:05:06,376 --> 00:05:08,270
+to the DetailsComponent.
+
+105
+00:05:08,270 --> 00:05:10,000
+Well, this is only the case
+
+106
+00:05:10,000 --> 00:05:11,860
+because this standalone component
+
+107
+00:05:11,860 --> 00:05:14,171
+only gets used in one other component,
+
+108
+00:05:14,171 --> 00:05:16,940
+which is part of an NgModule.
+
+109
+00:05:16,940 --> 00:05:20,130
+So we're in the middle of a migration process here.
+
+110
+00:05:20,130 --> 00:05:23,726
+It will be less code if you only have standalone components
+
+111
+00:05:23,726 --> 00:05:26,097
+or if you have a standalone component
+
+112
+00:05:26,097 --> 00:05:30,240
+that's used in a bunch of other standalone components.
+
+113
+00:05:30,240 --> 00:05:32,730
+Here, we have the worst of both worlds.
+
+114
+00:05:32,730 --> 00:05:34,924
+So we didn't actually gain anything yet,
+
+115
+00:05:34,924 --> 00:05:38,330
+but we'll get there over the next minutes.
+
+116
+00:05:38,330 --> 00:05:40,010
+This is, however, how we can add
+
+117
+00:05:40,010 --> 00:05:41,750
+such a standalone component.
+
+118
+00:05:41,750 --> 00:05:43,868
+And therefore, in the essence, all you have to do
+
+119
+00:05:43,868 --> 00:05:48,306
+is set this flag and then add it to imports
+
+120
+00:05:48,306 --> 00:05:51,377
+either in an NgModule, or,
+
+121
+00:05:51,377 --> 00:05:55,210
+if WelcomeComponent would be a standalone component itself,
+
+122
+00:05:55,210 --> 00:05:58,040
+here, with help of imports, like this.
+
+123
+00:05:58,040 --> 00:06:00,659
+But that is something I'll get back to.
+
+124
+00:06:00,659 --> 00:06:03,013
+Before we get back to this, let's make sure
+
+125
+00:06:03,013 --> 00:06:06,053
+that our custom directive is working again, though.
+
+126
+00:06:06,920 --> 00:06:09,308
+Our custom directive is not working anymore,
+
+127
+00:06:09,308 --> 00:06:11,953
+because while I do still use it here
+
+128
+00:06:11,953 --> 00:06:15,668
+in the template of my DetailsComponent,
+
+129
+00:06:15,668 --> 00:06:19,030
+this component is a standalone component,
+
+130
+00:06:19,030 --> 00:06:22,143
+and therefore, decoupled from an NgModule.
+
+131
+00:06:23,060 --> 00:06:25,459
+Yes, it still has to be imported there,
+
+132
+00:06:25,459 --> 00:06:28,330
+but it's not aware of any other things
+
+133
+00:06:28,330 --> 00:06:31,920
+that might be made available by that module.
+
+134
+00:06:31,920 --> 00:06:33,980
+Specifically, the DetailsComponent
+
+135
+00:06:33,980 --> 00:06:35,985
+does not know about the SharedModule,
+
+136
+00:06:35,985 --> 00:06:39,130
+because it's only imported into this module,
+
+137
+00:06:39,130 --> 00:06:42,940
+it's not receiving anything from that module.
+
+138
+00:06:42,940 --> 00:06:44,765
+It is, however, the SharedModule
+
+139
+00:06:44,765 --> 00:06:46,315
+that has my HighlightDirective.
+
+140
+00:06:47,530 --> 00:06:49,770
+Now, what if I wanna use this directive here,
+
+141
+00:06:49,770 --> 00:06:51,710
+in the DetailsComponent?
+
+142
+00:06:51,710 --> 00:06:54,850
+Well, there are two possible solutions.
+
+143
+00:06:54,850 --> 00:06:57,593
+We could turn the HighlightDirective
+
+144
+00:06:57,593 --> 00:07:00,160
+into a standalone directive,
+
+145
+00:07:00,160 --> 00:07:02,497
+because standalone directives can be imported
+
+146
+00:07:02,497 --> 00:07:05,470
+into any other components where we wanna use them,
+
+147
+00:07:05,470 --> 00:07:08,120
+including standalone components.
+
+148
+00:07:08,120 --> 00:07:10,900
+But let's say that's not an option yet.
+
+149
+00:07:10,900 --> 00:07:13,400
+We need to keep it in this module right now,
+
+150
+00:07:13,400 --> 00:07:15,790
+because we're in the middle of a migration process
+
+151
+00:07:15,790 --> 00:07:17,560
+and we don't wanna turn this directive
+
+152
+00:07:17,560 --> 00:07:19,363
+into a standalone directive yet.
+
+153
+00:07:20,200 --> 00:07:24,310
+Well, that's no problem, because in my standalone component,
+
+154
+00:07:24,310 --> 00:07:28,450
+the DetailsComponent here, I can add the imports property,
+
+155
+00:07:28,450 --> 00:07:30,350
+which I already mentioned before.
+
+156
+00:07:30,350 --> 00:07:33,340
+And you cannot just import other standalone components
+
+157
+00:07:33,340 --> 00:07:35,479
+or directives that should be usable
+
+158
+00:07:35,479 --> 00:07:38,270
+inside of that components template,
+
+159
+00:07:38,270 --> 00:07:40,984
+but you can also import other modules.
+
+160
+00:07:40,984 --> 00:07:44,378
+As I mentioned, you can combine standalone components,
+
+161
+00:07:44,378 --> 00:07:48,670
+directives, and pipes with NgModules, just as you need it,
+
+162
+00:07:48,670 --> 00:07:51,931
+so that you can have a smooth migration process.
+
+163
+00:07:51,931 --> 00:07:56,380
+So here, I can import the SharedModule, like this.
+
+164
+00:07:56,380 --> 00:08:00,190
+Add the import up here, and add it to imports here.
+
+165
+00:08:00,190 --> 00:08:03,250
+And with that, if I save this, this works again.
+
+166
+00:08:03,250 --> 00:08:06,320
+I got my styling back, because my HighlightDirective
+
+167
+00:08:06,320 --> 00:08:08,300
+is now doing its job again.
+
+168
+00:08:08,300 --> 00:08:10,460
+Because now, the standalone component
+
+169
+00:08:10,460 --> 00:08:12,380
+knows about this module,
+
+170
+00:08:12,380 --> 00:08:15,400
+and about the things exported by that module,
+
+171
+00:08:15,400 --> 00:08:17,500
+like the HighlightDirective,
+
+172
+00:08:17,500 --> 00:08:20,163
+and therefore, the directive is able to work again.
+
+173
+00:08:21,160 --> 00:08:24,800
+Now, as a side effect, since in this simple Demo App,
+
+174
+00:08:24,800 --> 00:08:27,284
+the DetailsComponent is the only component
+
+175
+00:08:27,284 --> 00:08:30,824
+that uses this directive, I can actually get rid of
+
+176
+00:08:30,824 --> 00:08:33,468
+the SharedModule here, in the AppModule,
+
+177
+00:08:33,468 --> 00:08:35,560
+because the other two components in there
+
+178
+00:08:35,560 --> 00:08:38,440
+are not using anything from that module.
+
+179
+00:08:38,440 --> 00:08:40,717
+If they would be using anything from that module,
+
+180
+00:08:40,717 --> 00:08:42,238
+we, of course, would have to keep
+
+181
+00:08:42,238 --> 00:08:44,318
+the SharedModule import here.
+
+182
+00:08:44,318 --> 00:08:47,527
+But with this Demo App, we can get rid of the import here,
+
+183
+00:08:47,527 --> 00:08:50,480
+and we don't have to add it to imports here.
+
+184
+00:08:50,480 --> 00:08:52,120
+And the app still works.
+
+185
+00:08:52,120 --> 00:08:55,120
+The directive is still doing its job, because now,
+
+186
+00:08:55,120 --> 00:08:57,853
+my standalone component, the DetailsComponent,
+
+187
+00:08:57,853 --> 00:09:01,969
+is directly importing that SharedModule.
+
+188
+00:09:01,969 --> 00:09:05,164
+So that's, now, how we can get started with that.
+
+189
+00:09:05,164 --> 00:09:08,453
+But we're still in the middle of our migration process here,
+
+190
+00:09:08,453 --> 00:09:10,870
+learning about standalone components
+
+191
+00:09:10,870 --> 00:09:13,086
+and how we can blend them
+
+192
+00:09:13,086 --> 00:09:16,290
+into an existing module-based Angular app.
+
+193
+00:09:16,290 --> 00:09:18,680
+Which is important because, for the near future,
+
+194
+00:09:18,680 --> 00:09:21,620
+that is what you're most likely going to do.
+
+195
+00:09:21,620 --> 00:09:23,533
+And even in the long-term future,
+
+196
+00:09:23,533 --> 00:09:26,851
+you will always work on some Angular applications
+
+197
+00:09:26,851 --> 00:09:28,900
+that will use modules,
+
+198
+00:09:28,900 --> 00:09:31,430
+but wanna move to standalone components,
+
+199
+00:09:31,430 --> 00:09:33,290
+or simply wanna use both.
+
+200
+00:09:33,290 --> 00:09:35,463
+And that is absolutely possible.
+
+201
+00:09:36,520 --> 00:09:38,760
+But now, let's actually dig deeper
+
+202
+00:09:38,760 --> 00:09:40,650
+into standalone components,
+
+203
+00:09:40,650 --> 00:09:42,879
+and let's migrate all these components
+
+204
+00:09:42,879 --> 00:09:44,516
+to standalone components,
+
+205
+00:09:44,516 --> 00:09:47,463
+so that we can see how that will work.
+

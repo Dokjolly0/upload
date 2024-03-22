@@ -1,0 +1,320 @@
+1
+00:00:02,710 --> 00:00:09,870
+In the last lecture, we configured our form here, we added some control by placing ngModel on the
+
+2
+00:00:09,870 --> 00:00:10,870
+inputs,
+
+3
+00:00:11,160 --> 00:00:17,900
+now let's make this form submittable so that we can actually see what the user entered.
+
+4
+00:00:17,910 --> 00:00:21,780
+For this, I'll go to my app component,
+
+5
+00:00:21,780 --> 00:00:24,480
+I already do have a method here which you will use later,
+
+6
+00:00:24,480 --> 00:00:31,680
+let's ignore it for now and I'll add a new method, onSubmit maybe, this should be triggered whenever this
+
+7
+00:00:31,680 --> 00:00:36,050
+form is submitted by the user. In onSubmit,
+
+8
+00:00:36,060 --> 00:00:38,810
+I want to output whatever the user entered,
+
+9
+00:00:39,180 --> 00:00:41,430
+well first of all we need to call this method,
+
+10
+00:00:41,430 --> 00:00:45,750
+so back in the template, how can we call onSubmit?
+
+11
+00:00:45,750 --> 00:00:51,840
+Now you might think that a good place would be on a click listener on this button here at the bottom right, because
+
+12
+00:00:51,840 --> 00:00:54,570
+this is a button we click when we want to submit the form,
+
+13
+00:00:54,750 --> 00:00:58,560
+however this is not the best place to do it.
+
+14
+00:00:58,560 --> 00:01:01,440
+Keep in mind that this button here is type submit,
+
+15
+00:01:01,440 --> 00:01:08,070
+so if we click it as it is placed inside of an HTML form element, something else will happen,
+
+16
+00:01:08,100 --> 00:01:13,690
+The default behavior of HTML will be triggered to call it like this.
+
+17
+00:01:13,830 --> 00:01:21,340
+If you have a button in a form element, this button will submit the form, will send a request normally
+
+18
+00:01:21,360 --> 00:01:25,420
+but besides that, it will also trigger a Javascript event,
+
+19
+00:01:25,520 --> 00:01:29,730
+the submit event that's built into Javascript, built into HTML
+
+20
+00:01:29,740 --> 00:01:35,200
+you could say. Angular takes advantage of this and gives a directive
+
+21
+00:01:35,310 --> 00:01:39,080
+we can place on this form element as a whole,
+
+22
+00:01:39,180 --> 00:01:45,240
+it is called ngSubmit and it actually only gives us one event we can listen to,
+
+23
+00:01:45,240 --> 00:01:47,860
+so let's wrap it in parentheses.
+
+24
+00:01:47,880 --> 00:01:55,170
+This event made available by the ngSubmit directive will be fired whenever this form is submitted,
+
+25
+00:01:55,170 --> 00:01:58,470
+so whenever this default behavior is triggered
+
+26
+00:01:58,480 --> 00:02:05,400
+and here, we can call onSubmit like this and to show you that this works,
+
+27
+00:02:05,400 --> 00:02:09,730
+I will simply go into onSubmit and log submitted here,
+
+28
+00:02:09,900 --> 00:02:11,480
+just like that.
+
+29
+00:02:11,520 --> 00:02:18,950
+Now if we save this and let it recompile, let's go back and let's open up the developer tools and if
+
+30
+00:02:18,950 --> 00:02:23,030
+I now hit the submit button, you see submitted here on the right
+
+31
+00:02:23,150 --> 00:02:26,360
+because indeed, the form gets submitted.
+
+32
+00:02:26,630 --> 00:02:33,800
+Now it would be nice to see the actual values of the form though, to see that form object and to see
+
+33
+00:02:33,800 --> 00:02:38,790
+it, we have to go back to our template because we're in the template driven approach,
+
+34
+00:02:38,780 --> 00:02:45,320
+so as a rule of thumb, everything you do you do it in the template, everything you want to change about
+
+35
+00:02:45,320 --> 00:02:48,850
+this form, you want to add as functionality,
+
+36
+00:02:48,860 --> 00:02:53,000
+you do it in a template. On this form object,
+
+37
+00:02:53,000 --> 00:02:56,120
+we want to get access to the form created by Angular.
+
+38
+00:02:56,330 --> 00:03:01,730
+Now you learned about local references you can place on HTML elements to get access to them,
+
+39
+00:03:02,030 --> 00:03:10,050
+so we could place #f on the form element and now we could access this form element on the f
+
+40
+00:03:10,070 --> 00:03:16,430
+reference in our template and we could pass f as an argument to the onSubmit method and print it
+
+41
+00:03:16,430 --> 00:03:17,280
+there.
+
+42
+00:03:17,300 --> 00:03:19,870
+So now we know that we get the form
+
+43
+00:03:20,000 --> 00:03:24,470
+and actually, this will be of type element ref as we learned.
+
+44
+00:03:24,560 --> 00:03:29,760
+So if we import element ref and make this of type element ref here and we output the form here,
+
+45
+00:03:29,990 --> 00:03:34,440
+so this element, if we now go back to this and hit submit,
+
+46
+00:03:34,670 --> 00:03:41,660
+yes we did see the form object, we see some strange classes here, I will come back to them but that still is not what
+
+47
+00:03:41,660 --> 00:03:42,540
+we want,
+
+48
+00:03:42,740 --> 00:03:48,770
+it's not a Javascript object created by Angular but this object is there, we just need to know how to
+
+49
+00:03:48,770 --> 00:03:54,980
+get to it and there actually is a trick you could call it but it's no trick, it's the default way to
+
+50
+00:03:54,980 --> 00:03:58,260
+get access to this automatically created object,
+
+51
+00:03:58,520 --> 00:04:01,620
+you set this local reference equal to something.
+
+52
+00:04:01,640 --> 00:04:08,900
+Now we haven't done that yet but we can set it equal to something exposed by this
+
+53
+00:04:09,050 --> 00:04:09,920
+form here,
+
+54
+00:04:09,920 --> 00:04:17,180
+keep in mind the form element is kind of a selector for a directive built into Angular which will create
+
+55
+00:04:17,180 --> 00:04:24,290
+this Javascript object automatically and then it will expose some data we can fetch here on this form element.
+
+56
+00:04:24,590 --> 00:04:29,140
+We can get access to it by writing ngForm here between the quotation marks.
+
+57
+00:04:29,150 --> 00:04:32,820
+So this might look super strange but what this in the end does is
+
+58
+00:04:33,050 --> 00:04:39,950
+it tells Angular hey please give me access to this form you created automatically.
+
+59
+00:04:39,950 --> 00:04:42,130
+That's just something you have to keep in mind,
+
+60
+00:04:42,260 --> 00:04:49,830
+this is how you get access to the form, to this Javascript object created by Angular automatically.
+
+61
+00:04:49,940 --> 00:04:56,670
+So therefore here where we get this form, we now still pass it,
+
+62
+00:04:56,690 --> 00:05:01,800
+now this will no longer be an element ref, so let's remove this type here, instead
+
+63
+00:05:01,820 --> 00:05:05,710
+this will now be of ngForm.
+
+64
+00:05:05,720 --> 00:05:12,710
+So let's import ngForm from @angular/forms and kind of makes sense that it is of type ngForm
+
+65
+00:05:12,840 --> 00:05:15,950
+because that is what we're accessing here,
+
+66
+00:05:15,950 --> 00:05:18,620
+this automatically created form.
+
+67
+00:05:18,740 --> 00:05:24,950
+Now let's print it to the console one more time and let's actually enter something into these fields to
+
+68
+00:05:24,950 --> 00:05:26,900
+see that it worked.
+
+69
+00:05:27,110 --> 00:05:35,420
+If I now type submit here, you see that now we get an ngForm object, an object which we certainly didn't
+
+70
+00:05:35,420 --> 00:05:36,200
+create
+
+71
+00:05:36,500 --> 00:05:38,640
+and there, we have a lot of properties,
+
+72
+00:05:38,650 --> 00:05:40,980
+we'll have a close look at those later.
+
+73
+00:05:41,000 --> 00:05:43,390
+We also do have a value property
+
+74
+00:05:43,460 --> 00:05:50,630
+and if we expand this, we indeed see a couple of key-value pairs here where we have the names of the
+
+75
+00:05:50,630 --> 00:05:57,970
+controls, so the names we set up here and the name attribute like username and email,
+
+76
+00:05:58,010 --> 00:05:59,090
+we find them here
+
+77
+00:05:59,210 --> 00:06:01,300
+and then the values the user entered.
+
+78
+00:06:01,550 --> 00:06:07,990
+And this is how we can submit such a form and how we can also get access to the form object created by
+
+79
+00:06:08,030 --> 00:06:08,870
+Angular,
+
+80
+00:06:08,870 --> 00:06:13,430
+we also see that our setup of controls also work.
+

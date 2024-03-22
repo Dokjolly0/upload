@@ -1,0 +1,140 @@
+1
+00:00:02,860 --> 00:00:09,040
+In the last lectures, we learned how we can register controls and how we can submit the form and also which
+
+2
+00:00:09,040 --> 00:00:11,900
+properties this form has. Now
+
+3
+00:00:11,920 --> 00:00:19,100
+right now, we submit the form by passing the form which we get via ngForm here to the onSubmit method,
+
+4
+00:00:19,360 --> 00:00:24,320
+this is absolutely fine and probably the approach you will use in many use cases.
+
+5
+00:00:24,700 --> 00:00:28,030
+I just want to bring some other approach to your attention.
+
+6
+00:00:28,330 --> 00:00:30,400
+You don't have to submit it here.
+
+7
+00:00:30,670 --> 00:00:37,930
+Remember the components section where we learned about @ViewChild which allowed us to access a
+
+8
+00:00:37,930 --> 00:00:45,020
+local reference, an element controlled or which holds a local reference in our TypeScript code.
+
+9
+00:00:45,370 --> 00:00:48,860
+Well in the end, we do just have such a local reference here
+
+10
+00:00:48,970 --> 00:00:56,620
+and whilst that might not point to an element ref but to the ngForm object, it still is a local reference
+
+11
+00:00:56,620 --> 00:01:00,390
+in our template so we can also use @ViewChild here.
+
+12
+00:01:00,700 --> 00:01:08,020
+So I will simply comment out this onSubmit method here so that we have it in the code you can find
+
+13
+00:01:08,020 --> 00:01:15,010
+attached to this module and show you an alternative approach. In this alternative approach,
+
+14
+00:01:15,010 --> 00:01:21,640
+I will use @ViewChild, this decorator you learned about in the component section, so make sure to import
+
+15
+00:01:21,640 --> 00:01:23,680
+it from @angular/core
+
+16
+00:01:24,320 --> 00:01:29,350
+and I want to get access to the element which has the local reference f on it.
+
+17
+00:01:29,350 --> 00:01:33,760
+So I pass f as a string, as an argument to @ViewChild
+
+18
+00:01:33,970 --> 00:01:40,180
+and then I could simply store this in a variable named signupForm, any name you like, which will be of
+
+19
+00:01:40,180 --> 00:01:43,870
+type ngForm of course. Now in onSubmit,
+
+20
+00:01:43,960 --> 00:01:48,580
+I could output this signupForm, like this
+
+21
+00:01:48,700 --> 00:01:54,620
+and you should see that if I now submit this again, we still have this form
+
+22
+00:01:54,660 --> 00:02:00,120
+and I can also enter something so that we can see that this works too if we have a look at the value.
+
+23
+00:02:00,160 --> 00:02:05,200
+So this gives us access to the very same form without passing it to onSubmit,
+
+24
+00:02:05,200 --> 00:02:11,120
+this is especially useful if you need to access the form, not just at the point of time when you submit it
+
+25
+00:02:11,290 --> 00:02:12,740
+but also earlier
+
+26
+00:02:13,000 --> 00:02:17,320
+and I will show a use case for this in a later lecture.
+
+27
+00:02:17,320 --> 00:02:22,240
+For now, let's keep in mind that this is another way of getting access to the form in our TypeScript
+
+28
+00:02:22,240 --> 00:02:28,360
+code, a perfectly valid way of getting access and before diving deeper into why this might be useful
+
+29
+00:02:28,360 --> 00:02:35,120
+or when we could use that, let's actually understand how we can control the validity of the form.
+
+30
+00:02:35,140 --> 00:02:40,900
+So to determine whether the form is valid, if we entered a valid e-mail address here or not because right now
+
+31
+00:02:40,900 --> 00:02:45,040
+I can submit anything, no matter if this is invalid, if this is empty,
+
+32
+00:02:45,130 --> 00:02:49,940
+it would be nice if we could add such validation and take advantage of the tools Angular
+
+33
+00:02:50,110 --> 00:02:56,860
+gives us there to possibly also enhance the user experience by placing a red border around invalid elements
+
+34
+00:02:57,040 --> 00:02:58,710
+or something like this.
+
+35
+00:02:58,750 --> 00:03:01,780
+We'll have a look at validation in the next lectures.
+

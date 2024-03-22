@@ -1,0 +1,240 @@
+1
+00:00:02,620 --> 00:00:08,370
+In the last lecture we found out that Angular tracks the state of each control of the form, whether it's
+
+2
+00:00:08,370 --> 00:00:13,720
+valid and so on and conditionally also adds these CSS classes.
+
+3
+00:00:13,740 --> 00:00:20,400
+Now with that information, we can go back to our form and you take advantage of it. Before diving into
+
+4
+00:00:20,400 --> 00:00:22,040
+the CSS classes,
+
+5
+00:00:22,140 --> 00:00:26,000
+the easiest way of taking advantage is down here on the submit button,
+
+6
+00:00:26,160 --> 00:00:29,160
+let's disable the button if the form is not valid.
+
+7
+00:00:29,430 --> 00:00:36,720
+So I'll just split this over multiple lines and add some property binding, I want to bind to the disabled property
+
+8
+00:00:36,870 --> 00:00:42,480
+which will add the or which will set the disable state of this button to true or false depending on
+
+9
+00:00:42,480 --> 00:00:43,710
+some condition
+
+10
+00:00:43,800 --> 00:00:45,830
+and I will specify the condition here.
+
+11
+00:00:45,830 --> 00:00:48,650
+Now I could set it true here to always disable it,
+
+12
+00:00:48,720 --> 00:00:54,310
+that of course is not super useful, instead here I want to check whether the form,
+
+13
+00:00:54,390 --> 00:00:58,930
+remember we do have access to it on this f local reference here,
+
+14
+00:00:59,370 --> 00:01:02,900
+so if this form is valid, which would be precise
+
+15
+00:01:02,910 --> 00:01:09,870
+if it is not valid. So if this form is not valid, the button should be disabled and we can actually see
+
+16
+00:01:09,870 --> 00:01:11,700
+this once this reloads and
+
+17
+00:01:11,700 --> 00:01:19,630
+now the button is disabled and only if I enter some valid values here, I can hit the submit button again.
+
+18
+00:01:19,650 --> 00:01:22,140
+So this is the first improvement in place,
+
+19
+00:01:22,260 --> 00:01:27,350
+the second improvement is to take advantage of these CSS classes.
+
+20
+00:01:27,360 --> 00:01:33,510
+We do get these classes added automatically, so we can now go to the stylesheet of this app component
+
+21
+00:01:34,140 --> 00:01:39,030
+and we could say that on ng-invalid, we want to give it a red border,
+
+22
+00:01:39,030 --> 00:01:41,370
+so one pixel solid red.
+
+23
+00:01:41,550 --> 00:01:43,750
+Sounds like a solid idea, doesn't it?
+
+24
+00:01:44,100 --> 00:01:46,410
+Well if we do this, you see everything is red
+
+25
+00:01:46,410 --> 00:01:49,990
+now, the two controls but also the overall form.
+
+26
+00:01:50,010 --> 00:01:54,360
+The reason for this is that our overall form is also invalid
+
+27
+00:01:54,540 --> 00:02:01,800
+and that Angular also adds the ng-invalid class, CSS class to the form element.
+
+28
+00:02:01,800 --> 00:02:07,560
+So a better approach would be to make sure that is not added to the form.
+
+29
+00:02:07,560 --> 00:02:14,820
+Now there are a couple ways of doing this and it's all just pure CSS logic, one idea would be that
+
+30
+00:02:14,850 --> 00:02:21,360
+we want to be inside of the form element but then it would still place these red borders around grouping
+
+31
+00:02:21,390 --> 00:02:22,180
+divs,
+
+32
+00:02:22,200 --> 00:02:24,890
+we will have a look at what I mean with this later.
+
+33
+00:02:24,900 --> 00:02:30,910
+So the best way is to simply be explicit that we want to add it on inputs for example
+
+34
+00:02:30,990 --> 00:02:38,310
+and of course you could also add select here, so input with ng-invalid or select with ng-invalid and which
+
+35
+00:02:38,340 --> 00:02:40,190
+other elements you have.
+
+36
+00:02:40,320 --> 00:02:41,510
+Just be creative here,
+
+37
+00:02:41,670 --> 00:02:46,890
+there are different ways of achieving this goal, in the end you just want to make sure that the border is applied
+
+38
+00:02:46,890 --> 00:02:49,110
+to the right controls.
+
+39
+00:02:49,110 --> 00:02:54,810
+Now with this in place, we see that now we only have a red border around the invalid controls but we
+
+40
+00:02:54,810 --> 00:03:01,260
+do have the border right from the start which is also not great because I at least want to give the
+
+41
+00:03:01,260 --> 00:03:06,780
+user the chance of changing it before showing a warning, showing that it's wrong.
+
+42
+00:03:06,780 --> 00:03:12,590
+So a better approach might be to make sure that we only add a red border to an input which has the CSS
+
+43
+00:03:12,590 --> 00:03:14,320
+class, ng-invalid
+
+44
+00:03:14,490 --> 00:03:22,040
+and also the CSS class ng-touched, so that the user has to at least click into it. Now by default,
+
+45
+00:03:22,050 --> 00:03:23,440
+we don't see anything red
+
+46
+00:03:23,490 --> 00:03:25,370
+even though the form is invalid
+
+47
+00:03:25,530 --> 00:03:29,290
+but if we click in there and decide yeah I'm done this is my value,
+
+48
+00:03:29,490 --> 00:03:34,080
+well now you see we have a red border because now we had a chance of changing it,
+
+49
+00:03:34,140 --> 00:03:35,300
+we didn't change it,
+
+50
+00:03:35,310 --> 00:03:36,380
+it is invalid
+
+51
+00:03:36,390 --> 00:03:37,820
+and we want to show this
+
+52
+00:03:37,980 --> 00:03:42,940
+and with that, we're taking advantage of this form state handled by Angular.
+
+53
+00:03:43,110 --> 00:03:47,430
+We disable the button and we show a visual feedback to the user.
+
+54
+00:03:47,430 --> 00:03:49,460
+Now you could of course go much further,
+
+55
+00:03:49,470 --> 00:03:58,950
+you could also add a warning message below this input here for example and output please enter a valid
+
+56
+00:03:59,700 --> 00:04:04,050
+value or be more precise than that of course
+
+57
+00:04:04,320 --> 00:04:10,960
+and add ngIf to conditionally show this if the input value is wrong.
+
+58
+00:04:11,160 --> 00:04:19,050
+Well this gives us one additional problem though, how do we determine whether this input here or this
+
+59
+00:04:19,060 --> 00:04:22,240
+control here does hold a wrong value.
+
+60
+00:04:22,350 --> 00:04:24,970
+We'll take a closer look in the next lecture.
+

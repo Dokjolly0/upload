@@ -1,0 +1,464 @@
+1
+00:00:02,380 --> 00:00:07,560
+Why is our authentication status ignored when we try to fetch data?
+
+2
+00:00:07,570 --> 00:00:14,050
+Well because just because we know that we are authenticated and that we have that token somewhere in
+
+3
+00:00:14,050 --> 00:00:20,830
+our user object, Firebase doesn't know that, we're not attaching it to that outgoing request and therefore
+
+4
+00:00:20,830 --> 00:00:24,660
+Firebase has no chance of understanding that we have a valid token.
+
+5
+00:00:24,940 --> 00:00:32,860
+We need to add that token to the outgoing request to let Firebase know about that and for that, we need
+
+6
+00:00:32,860 --> 00:00:39,010
+to manipulate our outgoing HTTP requests that are related to data storing and fetching.
+
+7
+00:00:39,010 --> 00:00:45,100
+Hence we need to look into the data storage service, where we have fetch recipes and store recipes
+
+8
+00:00:45,460 --> 00:00:53,860
+and these requests here now need to be edited such that we do attach our token to them, the token we
+
+9
+00:00:53,860 --> 00:00:56,500
+are storing in the user object in the auth service.
+
+10
+00:00:59,390 --> 00:01:07,380
+For that, let's inject that auth service here into the data storage service, of course make sure you add the import
+
+11
+00:01:07,380 --> 00:01:13,790
+path and now we need to get access to the user in both store recipes and fetch recipes
+
+12
+00:01:14,190 --> 00:01:16,070
+because we need to get the token there.
+
+13
+00:01:16,260 --> 00:01:21,360
+Now we could set up a subscription to the user but I don't care about every change to the user,
+
+14
+00:01:21,390 --> 00:01:26,970
+instead when we try to store or fetch recipes, I just want to get the token of the currently authenticated
+
+15
+00:01:26,970 --> 00:01:27,490
+user,
+
+16
+00:01:27,540 --> 00:01:36,270
+I don't want to have an ongoing subscription. Hence in the auth service, we now should also store the token
+
+17
+00:01:36,270 --> 00:01:41,670
+or the user in a way that we can access it through different means, so not through a subject which is
+
+18
+00:01:41,670 --> 00:01:47,940
+great for reactively updating the user interface but that we also have a way of on-demand fetching
+
+19
+00:01:47,940 --> 00:01:49,650
+of the user data.
+
+20
+00:01:49,680 --> 00:01:52,320
+Now there are a couple of different ways of achieving that,
+
+21
+00:01:52,590 --> 00:01:59,290
+since we're only interested in the token, we could just store the token here in a variable which is null
+
+22
+00:01:59,310 --> 00:02:04,920
+initially and which will hold a string eventually, where we set the token whenever we also emit a new
+
+23
+00:02:04,920 --> 00:02:05,430
+subject,
+
+24
+00:02:05,490 --> 00:02:12,060
+that would be possible and wouldn't be wrong but we can actually also use a different type of subject
+
+25
+00:02:12,060 --> 00:02:12,870
+here.
+
+26
+00:02:12,900 --> 00:02:20,010
+This subject is a subject to which we can subscribe and we'll get information whenever new data is emitted.
+
+27
+00:02:20,070 --> 00:02:27,210
+Now actually, there is a different type of subject RxJS offers which is called behavior subject.
+
+28
+00:02:27,330 --> 00:02:32,820
+Now this is also imported from RxJS and generally, it behaves just like the other subject,
+
+29
+00:02:33,090 --> 00:02:39,080
+which means we can call next, to emit a value and we can subscribe to it to be informed about new values.
+
+30
+00:02:39,090 --> 00:02:46,680
+The difference is that behavior subject also gives subscribers immediate access to the previously
+
+31
+00:02:46,680 --> 00:02:52,020
+emitted value even if they haven't subscribed at the point of time that value was emitted.
+
+32
+00:02:52,050 --> 00:02:57,270
+That means we can get access to be currently active user even if we only subscribe
+
+33
+00:02:57,460 --> 00:02:59,740
+after that user has been emitted.
+
+34
+00:02:59,910 --> 00:03:05,610
+So this means when we fetch data and we need that token at this point of time, even if the user logged
+
+35
+00:03:05,610 --> 00:03:11,700
+in before that point of time which will have been the case, we get access to that latest user.
+
+36
+00:03:11,700 --> 00:03:16,680
+Now therefore behavior subject also needs to be initialized with a starting value, which in my case
+
+37
+00:03:16,680 --> 00:03:17,640
+will be null here,
+
+38
+00:03:17,700 --> 00:03:22,710
+it has to be a user object and null is a valid replacement because I don't want to start off with a
+
+39
+00:03:22,710 --> 00:03:24,030
+user.
+
+40
+00:03:24,060 --> 00:03:27,200
+Now we don't need to change anything in the auth service,
+
+41
+00:03:27,270 --> 00:03:35,430
+we still emit our user as we do before with the next function but in our data storage service, now we
+
+42
+00:03:35,430 --> 00:03:41,700
+can reach out to the auth service user, get the currently active user and be done with that
+
+43
+00:03:41,700 --> 00:03:48,040
+and that's just what I want to do here, for example when we fetch recipes. So here, we reach out to the
+
+44
+00:03:48,040 --> 00:03:49,930
+auth service, there to the user
+
+45
+00:03:49,930 --> 00:03:56,020
+and now the thing just is I don't want to set up an ongoing subscription and still I need to subscribe
+
+46
+00:03:56,020 --> 00:03:57,790
+to get that user,
+
+47
+00:03:57,790 --> 00:04:02,050
+so to make sure I only get the user once and thereafter I'm done,
+
+48
+00:04:02,050 --> 00:04:09,400
+of course we could manually immediately call unsubscribe thereafter or you use pipe and then a special
+
+49
+00:04:09,460 --> 00:04:11,710
+operator RxJS gives you
+
+50
+00:04:11,710 --> 00:04:19,300
+and that would be the take operator. Take is also imported from rxjs/operator and take is
+
+51
+00:04:19,300 --> 00:04:24,650
+called as a function and you simply pass a number to it and I pass one here
+
+52
+00:04:24,730 --> 00:04:31,690
+and what this tells RxJS is that I only want to take one value from that observable and thereafter,
+
+53
+00:04:31,690 --> 00:04:34,050
+it should automatically unsubscribe.
+
+54
+00:04:34,120 --> 00:04:38,370
+So this manages the subscription for me, gives me the latest user and unsubscribes
+
+55
+00:04:38,560 --> 00:04:44,510
+and I'm not getting future users because I just want to get them on demand when fetch recipes is called,
+
+56
+00:04:44,530 --> 00:04:49,420
+so whenever this code executes. I don't want to set up an ongoing subscription which gives me users at
+
+57
+00:04:49,420 --> 00:04:51,570
+a point of time I don't need them anymore.
+
+58
+00:04:51,850 --> 00:04:57,430
+So thereafter here in subscribe, I get my user object but only once and we don't need to manually
+
+59
+00:04:57,430 --> 00:05:06,820
+unsubscribe. In there we can then use this HTTP request observable and set it up in there and attach
+
+60
+00:05:06,880 --> 00:05:09,220
+our token which we get out of the user.
+
+61
+00:05:09,310 --> 00:05:15,070
+The problem just is here, we're in subscribe of an observable and here, we create yet another observable. 
+
+62
+00:05:15,340 --> 00:05:21,010
+In the end, I want to return this observable here but returning from inside subscribe doesn't work, we have
+
+63
+00:05:21,010 --> 00:05:28,390
+to return on the top level of this method. The solution is that we pipe these two observables, the user
+
+64
+00:05:28,390 --> 00:05:34,360
+observable and the HTTP observable together into one big observable and now this is getting a
+
+65
+00:05:34,360 --> 00:05:41,560
+bit more advanced here, related to RxJS but still, pretty easy to understand in the end. You simply
+
+66
+00:05:41,560 --> 00:05:51,220
+add another operator here to pipe for the user observable and there, we can use exhaustMap. exhaustMap
+
+67
+00:05:51,220 --> 00:05:56,530
+is also imported from rxjs/operators and whilst the name might look strange, it does something
+
+68
+00:05:56,530 --> 00:06:03,250
+very simple. It waits for the first observable, for the user observable to complete which will happen
+
+69
+00:06:03,310 --> 00:06:11,430
+after we took the latest user. Thereafter, it gives us that user, so in exhaustMap we pass in a function,
+
+70
+00:06:11,820 --> 00:06:18,450
+there we get the data from that previous observable and now we return a new observable in there which
+
+71
+00:06:18,450 --> 00:06:23,510
+will then replace our previous observable in that entire observable chain.
+
+72
+00:06:23,580 --> 00:06:28,680
+So we start of with a user observable and once we're done with that, this will be replaced in that
+
+73
+00:06:28,690 --> 00:06:35,170
+observable chain with the inner observable we return inside of that function we pass to exhaustMap.
+
+74
+00:06:35,760 --> 00:06:46,200
+So in there, I will return this HTTP request where I get my recipes. This is now returned inside of exhaust
+
+75
+00:06:46,260 --> 00:06:55,190
+map and therefore this entire observable chain now switches to this HTTP observable. Now regarding map
+
+76
+00:06:55,610 --> 00:06:57,820
+and tap which we used before,
+
+77
+00:06:58,070 --> 00:07:07,800
+we can cut that and since we already are in a pipe method call here and we added take and exhaustMap,
+
+78
+00:07:07,870 --> 00:07:16,540
+we simply add the other two operators as next steps after the exhaustMap
+
+79
+00:07:16,880 --> 00:07:19,630
+and then we return this overall observable.
+
+80
+00:07:19,640 --> 00:07:25,340
+This means that we can still subscribe to that observable returned by fetch recipes and in the end, it
+
+81
+00:07:25,340 --> 00:07:29,000
+will be an HTTP observable because we switch it here.
+
+82
+00:07:29,000 --> 00:07:32,780
+We then also apply all the other operations we did and to the outside world,
+
+83
+00:07:32,780 --> 00:07:39,590
+nothing will change but inside, we utilize this user observable, cut the user out of it
+
+84
+00:07:39,590 --> 00:07:47,150
+one time only, unsubscribe to that observable and then automatically replace it with a new observable
+
+85
+00:07:47,150 --> 00:07:51,740
+here.
+
+86
+00:07:51,740 --> 00:07:53,960
+Now of course, this alone doesn't do everything,
+
+87
+00:07:53,960 --> 00:07:55,130
+we got the user now,
+
+88
+00:07:55,130 --> 00:07:56,790
+now we can extract the token
+
+89
+00:07:56,900 --> 00:08:00,140
+and how do we add the token now to this request?
+
+90
+00:08:00,170 --> 00:08:06,650
+Well for Firebase and the real time database rest API which we're targeting here, we add a token as a
+
+91
+00:08:06,650 --> 00:08:14,810
+query parameter in the URL. For other APIs, you add it as a header in the request, for the Firebase
+
+92
+00:08:14,810 --> 00:08:19,820
+real time database API, you add it as a query parameter.
+
+93
+00:08:19,820 --> 00:08:20,860
+That's just how it is,
+
+94
+00:08:20,900 --> 00:08:23,650
+you can read that in the official Firebase docs.
+
+95
+00:08:23,690 --> 00:08:26,420
+Now to add a query parameter, we got two options - 
+
+96
+00:08:26,420 --> 00:08:31,280
+we can do it manually by setting a question mark and then the parameter name has to be auth,
+
+97
+00:08:31,310 --> 00:08:38,330
+that is what you can learn to Firebase docs and you set it equal to plus user
+
+98
+00:08:38,360 --> 00:08:43,010
+token or to not set it manually like this,
+
+99
+00:08:43,010 --> 00:08:49,490
+you add a second argument to the get method which is an object where you can set the params as you
+
+100
+00:08:49,490 --> 00:08:57,650
+learned in the HttpClient module and there, you set the new HTTP params object here
+
+101
+00:08:58,090 --> 00:09:07,190
+where you call set and then you set auth equal to user.token, like that and HTTP params needs
+
+102
+00:09:07,190 --> 00:09:10,790
+to be imported from @angular/common/http.
+
+103
+00:09:14,530 --> 00:09:14,990
+Now
+
+104
+00:09:15,000 --> 00:09:18,390
+what if that token would for some reason be undefined?
+
+105
+00:09:18,600 --> 00:09:21,590
+If that would happen, we wouldn't have a big problem,
+
+106
+00:09:21,630 --> 00:09:26,970
+our request would just fail because we send an invalid token to the back-end then but we will later
+
+107
+00:09:26,970 --> 00:09:30,660
+also add code to automatically log the user out when a token expired,
+
+108
+00:09:30,810 --> 00:09:35,430
+so we shouldn't even get into such a situation. So let's save that,
+
+109
+00:09:39,800 --> 00:09:48,860
+let's go back to authenticate and login here and let's now try and fetch data and that looks quite
+
+110
+00:09:48,860 --> 00:09:49,220
+good. 
+
+111
+00:09:49,220 --> 00:09:50,230
+Here's our data
+
+112
+00:09:50,240 --> 00:09:59,500
+and if we inspect the network tab and I have a look at this request, this it is, here under headers, let
+
+113
+00:09:59,500 --> 00:10:06,280
+me increase this a little bit in size, here under headers, you see that this auth parameter was added and
+
+114
+00:10:06,280 --> 00:10:07,490
+that this is our token
+
+115
+00:10:07,540 --> 00:10:10,810
+and it seems to work since we fetched all the recipes.
+
+116
+00:10:10,900 --> 00:10:13,030
+So that is working, which of course is great.
+

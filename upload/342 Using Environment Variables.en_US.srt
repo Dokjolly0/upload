@@ -1,0 +1,236 @@
+1
+00:00:02,410 --> 00:00:09,310
+So here's the application we built, this project we worked on, the folder structure you already know and
+
+2
+00:00:09,700 --> 00:00:15,520
+let's assume that our code is already optimized and that we tested this thoroughly and therefore, the
+
+3
+00:00:15,520 --> 00:00:19,530
+only thing that's missing is that we deploy this application.
+
+4
+00:00:19,570 --> 00:00:25,570
+Now before we do that, let me dive into that environment variable thing which you saw on the slides and
+
+5
+00:00:25,570 --> 00:00:34,450
+that is a feature that's actually built into every project you build with the Angular CLI. In the source
+
+6
+00:00:34,450 --> 00:00:37,110
+folder, you have your app folder, there
+
+7
+00:00:37,140 --> 00:00:43,230
+you also have an environments folder. In that environments folder, you have two files,
+
+8
+00:00:43,300 --> 00:00:46,740
+environment.ts and environment.prod.ts
+
+9
+00:00:46,800 --> 00:00:47,720
+.
+
+10
+00:00:47,770 --> 00:00:53,710
+Now we're not using these files but what you could do here, you see you have an exported constant
+
+11
+00:00:53,770 --> 00:00:54,710
+in the 
+
+12
+00:00:54,730 --> 00:00:55,050
+environment.ts
+
+13
+00:00:55,060 --> 00:01:00,010
+and in the environment.prod.ts file, it's the same constant with the same name,
+
+14
+00:01:00,010 --> 00:01:03,640
+you can add key-value pairs to that constant.
+
+15
+00:01:03,760 --> 00:01:10,990
+For example if you were using an API that requires some API key and actually, we are using something
+
+16
+00:01:10,990 --> 00:01:15,730
+like this and hence I will show you how to use this environment variable in a second, if you are using
+
+17
+00:01:15,730 --> 00:01:23,590
+something like this, then you can store that API key here, you can import that environment constant here
+
+18
+00:01:23,680 --> 00:01:31,870
+into your files to use that API key and what the CLI, the Angular CLI does for you is that it
+
+19
+00:01:31,870 --> 00:01:37,420
+will automatically swap these two files when you are building for production.
+
+20
+00:01:37,510 --> 00:01:44,200
+So during development, this environment.ts file and the value you have in here will be used and during
+
+21
+00:01:44,200 --> 00:01:46,810
+production, this constant will be used instead
+
+22
+00:01:46,810 --> 00:01:48,430
+and this is swapped automatically,
+
+23
+00:01:48,430 --> 00:01:52,170
+you don't need to write any special code for this behavior to occur.
+
+24
+00:01:52,180 --> 00:01:53,470
+Now why is this useful?
+
+25
+00:01:53,740 --> 00:01:58,960
+Well you might have certain values that differ from development to production.
+
+26
+00:01:59,020 --> 00:02:04,690
+You might have some API keys that are meant to use during development and then you have different keys,
+
+27
+00:02:04,780 --> 00:02:09,460
+which maybe are more restrictive, for production or any other value.
+
+28
+00:02:09,490 --> 00:02:15,100
+You can store anything in here, any value which you need in your other files and you have the option
+
+29
+00:02:15,340 --> 00:02:23,380
+of using different values for production and development. Now as I mentioned, we are using such an API
+
+30
+00:02:23,410 --> 00:02:34,540
+key, we are using that in our auth service. In the auth service, we're sending requests to the Firebase
+
+31
+00:02:34,930 --> 00:02:43,940
+back-end APIs here, to sign a new user up or to log a user in and there, I'm referring to that key thing
+
+32
+00:02:43,940 --> 00:02:44,330
+here,
+
+33
+00:02:44,360 --> 00:02:44,790
+right,
+
+34
+00:02:44,810 --> 00:02:51,380
+we're using that Firebase API key here. Check the authentication section where I add this in case you
+
+35
+00:02:51,380 --> 00:02:53,040
+haven't seen this code before.
+
+36
+00:02:53,330 --> 00:03:00,140
+This key is the same here for signing users up and for signing users in and therefore, we could of course
+
+37
+00:03:00,140 --> 00:03:03,260
+manage it in a constant inside of this file
+
+38
+00:03:03,260 --> 00:03:09,320
+but especially if we were using that in other files as well, it's definitely worth moving that into this
+
+39
+00:03:09,320 --> 00:03:12,230
+environment file in the environments folder.
+
+40
+00:03:12,230 --> 00:03:14,970
+So here, I'll name this Firebase API key,
+
+41
+00:03:14,990 --> 00:03:16,340
+the name is totally up to you
+
+42
+00:03:16,520 --> 00:03:23,440
+and the value is then just that key-value here. Now with that stored in the environment.ts file, we
+
+43
+00:03:23,440 --> 00:03:29,900
+should also copy that into these environment.prod.ts file because this is the file that will be
+
+44
+00:03:29,900 --> 00:03:32,300
+used when you build for production
+
+45
+00:03:32,300 --> 00:03:38,570
+and now with these keys added here, you can go back to the auth service and there, you now need to import
+
+46
+00:03:38,780 --> 00:03:41,220
+these environment values.
+
+47
+00:03:41,330 --> 00:03:48,470
+So here, you can import environment, which is the name of that exported constant, from
+
+48
+00:03:48,470 --> 00:03:55,360
+and now you simply point at the environments folder and there the environment file, not environment prod
+
+49
+00:03:55,390 --> 00:03:56,490
+but just environment
+
+50
+00:03:56,510 --> 00:04:02,840
+and again this will be swapped automatically for you by the Angular CLI when you build for production.
+
+51
+00:04:02,840 --> 00:04:09,390
+Now you can use that environment constant here and in the places where we are using that key, here for
+
+52
+00:04:09,390 --> 00:04:17,820
+example, you get rid of that key and instead, you add environment.firebaseAPIKey to that string
+
+53
+00:04:18,270 --> 00:04:20,440
+and therefore, use that as a key-value.
+
+54
+00:04:20,760 --> 00:04:27,030
+The same of course here for signing users in, remove it here and add this environment.firebaseAPIKey
+
+55
+00:04:27,060 --> 00:04:28,130
+thing.
+
+56
+00:04:28,350 --> 00:04:34,650
+Now that's a tiny thing but the advantage here really is that you can swap values from development to
+
+57
+00:04:34,650 --> 00:04:35,890
+production, here
+
+58
+00:04:35,910 --> 00:04:40,890
+we're not doing that but of course that would be an option and it's a powerful tool that can really
+
+59
+00:04:40,890 --> 00:04:42,060
+help you with development.
+

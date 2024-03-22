@@ -1,0 +1,240 @@
+1
+00:00:02,610 --> 00:00:05,120
+We of course added navigation to our page
+
+2
+00:00:05,310 --> 00:00:06,960
+but one issue is that
+
+3
+00:00:06,960 --> 00:00:14,290
+whilst it does work fine, we get no visual indication of what the currently active route is.
+
+4
+00:00:14,400 --> 00:00:21,150
+It would be nice if the selected tab would change and that of course is only a CSS thing because
+
+5
+00:00:21,150 --> 00:00:26,730
+if you check your app component here, you'll see we get this active class on the list item which determines
+
+6
+00:00:26,730 --> 00:00:28,880
+whether this is marked as active
+
+7
+00:00:28,950 --> 00:00:35,670
+if this link gets the right CSS classes or not. So it would be nice if we could dynamically
+
+8
+00:00:35,670 --> 00:00:37,910
+set this class.
+
+9
+00:00:37,920 --> 00:00:44,730
+I will remove it from here and how can we now set it dynamically? Angular gives us a specific
+
+10
+00:00:44,790 --> 00:00:46,470
+directive for this,
+
+11
+00:00:46,600 --> 00:00:55,470
+the routerLink active directive and the convenient thing about this directive is, you can add it to a
+
+12
+00:00:55,640 --> 00:01:03,060
+wrapping element, like we do here, to the list item or also of course to the link itself
+
+13
+00:01:03,380 --> 00:01:08,170
+and it will attach the class you specify in between here, for example active,
+
+14
+00:01:08,180 --> 00:01:11,350
+so this should be a string, to that element
+
+15
+00:01:11,360 --> 00:01:15,530
+it sits on. Now active on the link itself wouldn't do anything
+
+16
+00:01:15,530 --> 00:01:20,310
+when using Bootstrap, here for these tabs look we need to add it to the list item
+
+17
+00:01:20,330 --> 00:01:24,700
+but this of course depends on which package or which CSS code you are using
+
+18
+00:01:24,770 --> 00:01:27,320
+and here you could specify any class you want,
+
+19
+00:01:27,440 --> 00:01:31,310
+like my active class or whatever that is.
+
+20
+00:01:31,700 --> 00:01:37,910
+So here, it is active to make it look nice in Bootstrap's world and I will add it to all my links
+
+21
+00:01:37,910 --> 00:01:38,490
+here.
+
+22
+00:01:38,720 --> 00:01:46,700
+So now theoretically, all my links should receive this active CSS class once they are clicked or when
+
+23
+00:01:46,700 --> 00:01:48,360
+they are active.
+
+24
+00:01:48,380 --> 00:01:55,160
+So if we have a look at this, it seems to work because we still have homes set as our active page, even
+
+25
+00:01:55,160 --> 00:02:01,880
+though we remove this class, this active class we had there before. If I click servers, it gets marked as
+
+26
+00:02:01,880 --> 00:02:02,720
+active too
+
+27
+00:02:02,900 --> 00:02:09,940
+and the same for users, so this works but somehow, home is always marked as active.
+
+28
+00:02:10,070 --> 00:02:12,790
+So that does not seem to work correctly,
+
+29
+00:02:12,790 --> 00:02:14,050
+what's wrong here?
+
+30
+00:02:15,540 --> 00:02:19,880
+Well the routerLink active directive does one thing,
+
+31
+00:02:20,130 --> 00:02:27,150
+it analyzes your currently loaded path and then checks which links lead to a route which uses this path
+
+32
+00:02:27,540 --> 00:02:31,960
+and by default, it marks an element as active, it marks this
+
+33
+00:02:31,980 --> 00:02:40,710
+CSS class if it contains the path you are on or if this link is part of the path which is currently
+
+34
+00:02:40,710 --> 00:02:41,460
+loaded.
+
+35
+00:02:41,760 --> 00:02:46,270
+So for the /servers link or the /users link,
+
+36
+00:02:46,330 --> 00:02:52,380
+this is of course the case once we click servers or users. For the slash nothing link, which is the first
+
+37
+00:02:52,380 --> 00:02:53,690
+one, the home page,
+
+38
+00:02:53,700 --> 00:02:55,410
+this is always the case,
+
+39
+00:02:55,500 --> 00:02:59,610
+we always have slash nothing at the beginning of our path here,
+
+40
+00:02:59,670 --> 00:03:06,480
+so if we are on /users, well there is this empty path in-between you could say, the same for servers
+
+41
+00:03:06,660 --> 00:03:08,900
+and the same for just home of course.
+
+42
+00:03:09,270 --> 00:03:14,040
+So the empty path segment is part of all paths,
+
+43
+00:03:14,040 --> 00:03:19,170
+still we don't want to have the home being marked as active all the time.
+
+44
+00:03:19,170 --> 00:03:25,560
+So to fix this, we can add some configuration to this routerLink active directive and I will split this
+
+45
+00:03:25,560 --> 00:03:33,620
+up all over multiple lines to make this a bit easier to read. So we can add a special configuration to
+
+46
+00:03:33,620 --> 00:03:35,930
+our routerLink active directive,
+
+47
+00:03:35,960 --> 00:03:44,470
+so on the same element as routerLink active was added to, we can add routerLink active options
+
+48
+00:03:44,930 --> 00:03:50,220
+and this now needs some property binding because we don't just pass a string there,
+
+49
+00:03:50,360 --> 00:03:56,850
+instead we pass a Javascript object and that would not work without having our square brackets.
+
+50
+00:03:56,870 --> 00:04:01,850
+So with square brackets, we can pass anything which will be resolved dynamically, like this Javascript
+
+51
+00:04:01,850 --> 00:04:02,820
+object
+
+52
+00:04:02,930 --> 00:04:12,480
+and here, we can basically add one important configuration, say exact and set this to true. So exact is
+
+53
+00:04:12,480 --> 00:04:18,070
+a kind of a reserved property on this object you passed to routerLink active options
+
+54
+00:04:18,190 --> 00:04:23,760
+and this will now basically tell Angular only add this routerLink active class,
+
+55
+00:04:23,770 --> 00:04:26,390
+so this active CSS class in this case,
+
+56
+00:04:26,610 --> 00:04:32,830
+if the exact, the full path is well whatever does link leads to,
+
+57
+00:04:32,830 --> 00:04:39,000
+so only if everything is just slash and not if it is only part of the path. So with this in place,
+
+58
+00:04:39,190 --> 00:04:45,040
+now you see it still is marked as active on the empty path, at the starting page but if you go to
+
+59
+00:04:45,050 --> 00:04:51,820
+/servers, now only servers is marked as active because now we fixed this, we change the default behavior
+
+60
+00:04:52,060 --> 00:04:59,220
+to make sure we only mark this if the full path is whatever we have on our routerLink.
+

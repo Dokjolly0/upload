@@ -1,0 +1,80 @@
+1
+00:00:02,180 --> 00:00:07,850
+Getting started with angular universal is pretty simple if you're using the angular Seelie, which you
+
+2
+00:00:07,850 --> 00:00:13,850
+should and which we are doing in this course on the GitHub page of the angular Seelie, you can dive
+
+3
+00:00:13,850 --> 00:00:17,900
+into their official documentation and that documentation here.
+
+4
+00:00:17,910 --> 00:00:19,580
+That's basically a link to the wiki.
+
+5
+00:00:19,970 --> 00:00:27,710
+There you find some link to stories on the right here and then to universal rendering.
+
+6
+00:00:28,160 --> 00:00:30,890
+That's the article we're interested in here.
+
+7
+00:00:30,890 --> 00:00:35,570
+You can learn more about how to enable that universal rendering.
+
+8
+00:00:35,570 --> 00:00:41,580
+And it's just name Universal, because your angular app then runs on both the client and the server.
+
+9
+00:00:42,050 --> 00:00:46,250
+So here you learn how to integrate that into an angular Seelie project.
+
+10
+00:00:46,430 --> 00:00:48,230
+And thankfully, it's pretty simple.
+
+11
+00:00:48,830 --> 00:00:51,760
+It all starts by adding additional dependencies.
+
+12
+00:00:52,160 --> 00:00:56,800
+So we'll go through that and all the other steps step by step in this module.
+
+13
+00:00:57,170 --> 00:00:58,730
+And just one important note.
+
+14
+00:00:59,210 --> 00:01:04,880
+I will be using visual studio code in this module simply because I'm recording this at a later point
+
+15
+00:01:04,880 --> 00:01:10,610
+of time because it was recorded after the rest of the course was recorded and I switched the IT.
+
+16
+00:01:10,910 --> 00:01:12,560
+Now it's still the same code.
+
+17
+00:01:12,650 --> 00:01:14,300
+It's still the recipe book.
+
+18
+00:01:14,300 --> 00:01:20,930
+It's still the same project, just an angular six project that's important with a different ID.
+
+19
+00:01:21,440 --> 00:01:27,170
+And with that, let's continue and let's dive into all these steps and an able server side rendering
+
+20
+00:01:27,290 --> 00:01:28,820
+with angular universal.
+

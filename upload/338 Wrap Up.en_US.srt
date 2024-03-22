@@ -1,0 +1,40 @@
+1
+00:00:02,400 --> 00:00:04,440
+This is it for this module.
+
+2
+00:00:04,440 --> 00:00:10,980
+We had a thorough look at NgModules, what they do, which different types of modules we have and when
+
+3
+00:00:10,980 --> 00:00:12,200
+to use them.
+
+4
+00:00:12,510 --> 00:00:18,860
+We also had a look at routing in these modules and at lazy loading, to optimize our initial bundled
+
+5
+00:00:18,860 --> 00:00:20,120
+size.
+
+6
+00:00:20,160 --> 00:00:26,290
+You learned about services and modules and what's special about them and that you can also set up
+
+7
+00:00:26,290 --> 00:00:29,580
+preloading to optimize lazy loading even more.
+
+8
+00:00:29,580 --> 00:00:36,860
+And now last but not least, we had a look at ahead of time compilation which is another important optimization
+
+9
+00:00:36,860 --> 00:00:41,210
+technique you want to use before shipping your app to a server.
+
+10
+00:00:41,210 --> 00:00:47,450
+Now speaking of that, in the next module, we'll do just that. We'll deploy our Angular app onto a server.
+

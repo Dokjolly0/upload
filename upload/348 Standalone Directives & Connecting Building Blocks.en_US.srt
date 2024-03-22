@@ -1,0 +1,212 @@
+1
+00:00:02,020 --> 00:00:04,140
+So in order to migrate everything
+
+2
+00:00:04,140 --> 00:00:07,460
+to Standalone Components and directives and so on,
+
+3
+00:00:07,460 --> 00:00:11,140
+let's actually continue with the highlight.directive.
+
+4
+00:00:11,140 --> 00:00:14,170
+This directive is exported by the SharedModule
+
+5
+00:00:14,170 --> 00:00:16,980
+but in this demo app, we only use that module
+
+6
+00:00:16,980 --> 00:00:19,690
+and that directive in the details.component,
+
+7
+00:00:19,690 --> 00:00:22,600
+which already is a Standalone Component.
+
+8
+00:00:22,600 --> 00:00:24,060
+Since that is the case,
+
+9
+00:00:24,060 --> 00:00:26,400
+we could actually turn this highlight.directive
+
+10
+00:00:26,400 --> 00:00:28,260
+into a standalone.directive
+
+11
+00:00:28,260 --> 00:00:30,410
+by also adding the standalone flag
+
+12
+00:00:30,410 --> 00:00:33,450
+to the Directive decorator object like this.
+
+13
+00:00:33,450 --> 00:00:34,970
+So just as components,
+
+14
+00:00:34,970 --> 00:00:37,320
+directives and actually also pipes
+
+15
+00:00:37,320 --> 00:00:41,140
+can be turned into standalone building blocks.
+
+16
+00:00:41,140 --> 00:00:42,960
+In this case, I'm turning the directive
+
+17
+00:00:42,960 --> 00:00:44,980
+into a standalone directive.
+
+18
+00:00:44,980 --> 00:00:47,930
+Now, with it turned into a standalone directive,
+
+19
+00:00:47,930 --> 00:00:51,330
+it must no longer be added to any declarations
+
+20
+00:00:51,330 --> 00:00:55,200
+in any modules, and therefore here in this demo app,
+
+21
+00:00:55,200 --> 00:00:56,240
+we can actually get rid
+
+22
+00:00:56,240 --> 00:00:58,920
+of the shared.module all together therefore
+
+23
+00:00:58,920 --> 00:01:01,400
+because we don't need it anymore.
+
+24
+00:01:01,400 --> 00:01:02,780
+Now, in the details.component,
+
+25
+00:01:02,780 --> 00:01:06,000
+we are, of course, using that SharedModule
+
+26
+00:01:06,000 --> 00:01:08,090
+so we should get rid of the import.
+
+27
+00:01:08,090 --> 00:01:11,200
+And instead here in the imports array
+
+28
+00:01:11,200 --> 00:01:12,630
+of the details.omponent,
+
+29
+00:01:12,630 --> 00:01:16,410
+we should import the HighlightDirective itself
+
+30
+00:01:16,410 --> 00:01:18,030
+because that's important.
+
+31
+00:01:18,030 --> 00:01:21,310
+When you are working with Standalone Components,
+
+32
+00:01:21,310 --> 00:01:23,510
+standalone directives and so on,
+
+33
+00:01:23,510 --> 00:01:27,570
+then you always must import them into the other components
+
+34
+00:01:27,570 --> 00:01:28,960
+where you wanna use them
+
+35
+00:01:28,960 --> 00:01:32,550
+or with imports into the modules
+
+36
+00:01:32,550 --> 00:01:35,940
+where you wanna use them, as shown before.
+
+37
+00:01:35,940 --> 00:01:38,440
+It's not enough to just add this flag.
+
+38
+00:01:38,440 --> 00:01:41,210
+You also need to import the things,
+
+39
+00:01:41,210 --> 00:01:43,660
+the directives and components you wanna use
+
+40
+00:01:43,660 --> 00:01:47,280
+in other components into those other components.
+
+41
+00:01:47,280 --> 00:01:49,400
+So in this case, I wanna use the HighlightDirective
+
+42
+00:01:49,400 --> 00:01:50,940
+in the details.component
+
+43
+00:01:50,940 --> 00:01:53,220
+because I'm using it here in my template.
+
+44
+00:01:53,220 --> 00:01:56,770
+Hence, I have to add it to imports like this.
+
+45
+00:01:56,770 --> 00:02:00,180
+But with that flag added here to the directive,
+
+46
+00:02:00,180 --> 00:02:02,389
+and the directive added here
+
+47
+00:02:02,389 --> 00:02:03,940
+and the SharedModule gone
+
+48
+00:02:03,940 --> 00:02:05,800
+because we don't need it anymore,
+
+49
+00:02:05,800 --> 00:02:07,990
+everything works as before.
+
+50
+00:02:07,990 --> 00:02:09,970
+We also got no error here.
+
+51
+00:02:09,970 --> 00:02:13,410
+And we are now using this component successfully
+
+52
+00:02:13,410 --> 00:02:16,020
+and we now migrated another building block
+
+53
+00:02:16,020 --> 00:02:17,253
+to be standalone.
+

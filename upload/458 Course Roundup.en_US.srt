@@ -1,0 +1,80 @@
+1
+00:00:02,390 --> 00:00:07,250
+Welcome to this video, Annual Monster, you went through the whole course and you learned a lot about
+
+2
+00:00:07,250 --> 00:00:11,850
+Angular, you should feel confident using its features and building Web apps with it.
+
+3
+00:00:11,870 --> 00:00:17,450
+Now, you learned about all its core features, some advanced features, how these features work together
+
+4
+00:00:17,570 --> 00:00:21,060
+and how you use them in a real application, which you didn't even deployed.
+
+5
+00:00:21,650 --> 00:00:26,460
+So these are all the building blocks you need to build amazing web applications with it.
+
+6
+00:00:27,050 --> 00:00:32,050
+Now, of course, really learning and mastering a framework means using it.
+
+7
+00:00:32,360 --> 00:00:38,900
+So use it both example projects, pick some Web pages you like and try to rebuild them maybe in easier
+
+8
+00:00:38,900 --> 00:00:44,720
+versions of them with angular dive into the individual features of angular, maybe even dive in the
+
+9
+00:00:44,720 --> 00:00:45,990
+source code of angler.
+
+10
+00:00:46,010 --> 00:00:51,770
+It's open source in the end, or have a look at the official documentation to dive deeper into some
+
+11
+00:00:51,770 --> 00:00:53,060
+specific use cases.
+
+12
+00:00:53,720 --> 00:00:57,220
+Also, there are some advanced courses and tutorials available.
+
+13
+00:00:57,350 --> 00:01:03,230
+For example, I myself do have some courses on Udemy which allow you to dive deeper or use Angerer in
+
+14
+00:01:03,230 --> 00:01:09,470
+conjunction with other things like ionic cuttable mobile applications or together with notebooks as
+
+15
+00:01:09,470 --> 00:01:10,090
+a backend.
+
+16
+00:01:10,790 --> 00:01:16,790
+These are all great next steps and whether that's a course by me, some other tutorial or in your own
+
+17
+00:01:16,790 --> 00:01:21,120
+example project, I'd be very interested in seeing what you build, what you do.
+
+18
+00:01:21,290 --> 00:01:25,620
+So definitely send me a message if you build some amazing project or anything like that.
+
+19
+00:01:25,880 --> 00:01:26,940
+All the best to you.
+
+20
+00:01:27,110 --> 00:01:30,620
+See you maybe in other courses and simply have a great time.
+

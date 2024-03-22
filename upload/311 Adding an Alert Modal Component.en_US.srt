@@ -1,0 +1,335 @@
+1
+00:00:02,270 --> 00:00:09,560
+For that, I'm back in the course project and the part I want to handle with dynamic components is here
+
+2
+00:00:09,620 --> 00:00:15,020
+on the login when I enter incorrect credentials, at the moment we then have that spinner and then we see
+
+3
+00:00:15,020 --> 00:00:16,720
+that error message there.
+
+4
+00:00:16,820 --> 00:00:20,060
+Now nothing wrong with that way of displaying an error,
+
+5
+00:00:20,090 --> 00:00:21,380
+it's perfectly fine,
+
+6
+00:00:21,380 --> 00:00:27,040
+you don't have to change that but to demonstrate how you could load a component dynamically,
+
+7
+00:00:27,040 --> 00:00:28,590
+I will change it.
+
+8
+00:00:28,640 --> 00:00:36,650
+I will not use that box here but instead, we'll build a very simple alert box which is presented as an
+
+9
+00:00:36,710 --> 00:00:43,130
+overlay here on the screen with a nice backdrop that hides the background and in that alert box, we
+
+10
+00:00:43,130 --> 00:00:47,350
+can then simply click OK to get rid of it and have another try here.
+
+11
+00:00:47,390 --> 00:00:48,980
+So that's the idea.
+
+12
+00:00:48,980 --> 00:00:52,970
+Let me now go back to code and here,
+
+13
+00:00:53,050 --> 00:00:58,140
+the goal now is to first of all build such an alert and I'll do that in a shared folder.
+
+14
+00:00:58,180 --> 00:01:05,350
+I'll name that alert and in there, I'll create my alert.component.ts file where I
+
+15
+00:01:05,350 --> 00:01:07,390
+want to build that alert component.
+
+16
+00:01:07,390 --> 00:01:14,560
+Now my alert component here will be a simple box that is loaded as an overlay on the entire screen
+
+17
+00:01:15,120 --> 00:01:23,900
+and therefore, let's here export a class, alert component like this and give it that @component decorator.
+
+18
+00:01:23,920 --> 00:01:32,740
+Now in that decorator, I'll assign a selector, app alert and add the template URL where I want to
+
+19
+00:01:32,740 --> 00:01:40,090
+point at an external template, the alert.component.html file which we therefore also have
+
+20
+00:01:40,090 --> 00:01:46,590
+to create in that same folder and that is my basic component for now.
+
+21
+00:01:46,720 --> 00:01:52,750
+Now the alert component here then receives of course some markup
+
+22
+00:01:52,750 --> 00:01:59,000
+and here, I will include both the backdrop and that overlay box in one and the same component,
+
+23
+00:01:59,020 --> 00:02:02,480
+of course you could also split this into multiple components.
+
+24
+00:02:02,560 --> 00:02:11,050
+So here we'll write some custom CSS actually and I'll add a div with a class of backdrop, that will
+
+25
+00:02:11,050 --> 00:02:12,130
+be the backdrop,
+
+26
+00:02:12,130 --> 00:02:19,270
+so basically that thing in the background that blocks access to the rest of the page and ensures that
+
+27
+00:02:19,270 --> 00:02:24,970
+the focus is on the alert box and that box is the second div I'll add here.
+
+28
+00:02:24,970 --> 00:02:31,660
+I'll give that a class of alert box, something like this, to not interfere with the alert class provided
+
+29
+00:02:31,660 --> 00:02:37,750
+by bootstrap because I don't want to use that and in that alert box here, I'll keep this really simple,
+ 
+00:02:39,140 --> 00:02:45,580
+I'll just add a paragraph where we can output the message with string interpolation
+
+30
+00:02:45,760 --> 00:02:51,470
+and that is referring to a message property we haven't added yet to the component, we'll do that soon
+
+31
+00:02:51,470 --> 00:02:58,770
+and I also want to have a button to close that alert and therefore I'll add another div here, I'll
+
+32
+00:02:58,850 --> 00:03:02,480
+name this alert box actions,
+
+33
+00:03:02,480 --> 00:03:08,310
+so that's my class name here and in that div, I'll add a button with class btn-btn-primary.
+
+34
+00:03:08,430 --> 00:03:12,790
+Now I'm using Bootstrap classes here again to get that button styling
+
+35
+00:03:12,790 --> 00:03:20,590
+and here we can just say close. So this could be an alert box, it's missing some styling, so let me add
+
+36
+00:03:20,950 --> 00:03:28,300
+an alert.component.css file here as well and point at that file in our component declaration here,
+
+37
+00:03:28,360 --> 00:03:35,890
+so style URLs receives a pointer, an alert.component.css. So far, so good.
+
+38
+00:03:35,890 --> 00:03:41,820
+Now in the alert component, I do have that message property which I want to output and therefore in the
+
+39
+00:03:41,830 --> 00:03:47,560
+alert.component.ts file, we need that message property and that will be a string and it should
+
+40
+00:03:47,560 --> 00:03:49,590
+be settable from outside.
+
+41
+00:03:49,810 --> 00:03:55,420
+And therefore, you learned that we can add @input here and input needs to be important from
+
+42
+00:03:55,420 --> 00:03:58,930
+@angular/core to make this settable from outside.
+
+43
+00:03:58,930 --> 00:04:01,720
+With that, the alert component is almost finished,
+
+44
+00:04:01,720 --> 00:04:08,800
+let's now add it to the app module here, add it to the declarations there, the alert component
+
+45
+00:04:08,800 --> 00:04:10,560
+and now let's see how we could add it.
+
+46
+00:04:10,660 --> 00:04:12,580
+Well, we could go to our
+
+47
+00:04:15,340 --> 00:04:20,830
+auth component, to the template there of course and there,
+
+48
+00:04:20,860 --> 00:04:26,030
+right now I do have that alert box which is shown when we do have an error.
+
+49
+00:04:26,030 --> 00:04:33,670
+Now I'll comment that out and instead use app alert here and there, we have to set the message property
+
+50
+00:04:33,670 --> 00:04:40,030
+which we made bindable with @input and I'll set this to error and I'll show the entire alert box
+
+51
+00:04:40,030 --> 00:04:45,280
+here with the app alert element only if we have an error.
+
+52
+00:04:45,280 --> 00:04:48,370
+So now we're simply just showing our own alert component,
+
+53
+00:04:48,370 --> 00:04:51,280
+so far, nothing too fancy of course.
+
+54
+00:04:51,280 --> 00:04:56,490
+Now this custom alert component now will receive some styling and I'll start with the backdrop,
+
+55
+00:04:56,500 --> 00:05:09,340
+so the thing in the background. That will get a fixed position, top 0, left 0, a width of 100vw
+
+56
+00:05:09,340 --> 00:05:16,330
+actually which is the viewport width, so not the percentage, to not take the container width but the entire
+
+57
+00:05:16,330 --> 00:05:19,060
+viewport width, a height of 100vh
+
+58
+00:05:19,060 --> 00:05:31,780
+to take the entire viewport height as well, then a background of RGBA 0, 0, .75 which is slightly
+
+59
+00:05:31,780 --> 00:05:38,830
+transparent black background color. A z-index of let's say 50, to be above all the other elements that
+
+60
+00:05:38,830 --> 00:05:40,550
+could be there
+
+61
+00:05:40,540 --> 00:05:42,280
+and yes, that should be it.
+
+62
+00:05:42,340 --> 00:05:46,750
+Now the alert box, this is the other element we have, should also get some styling.
+
+63
+00:05:46,960 --> 00:05:52,280
+First of all, this will get a position of fixed too, top here
+
+64
+00:05:52,300 --> 00:05:59,830
+could be let's say 30vh to have it 30% inside of the viewport, to not have it sit right at
+
+65
+00:05:59,830 --> 00:06:02,240
+the top of the viewport.
+
+66
+00:06:02,470 --> 00:06:14,550
+The left will actually be let's say 20vw, the width of this thing here will then be 60vw because then
+
+67
+00:06:14,550 --> 00:06:18,750
+we have 20 to the left and 20 to the right to center this nicely.
+
+68
+00:06:19,230 --> 00:06:24,960
+I'll not set a height, the height should be determined by the content that's in there and I'll give it
+
+69
+00:06:24,960 --> 00:06:35,400
+a padding though of let's say 16px, a z-index of 100 to be above of the backdrop, a background color
+
+70
+00:06:35,400 --> 00:06:47,810
+of white and a slight box shadow with these settings here to hopefully make it look good. So that's
+
+71
+00:06:47,810 --> 00:06:48,830
+my alert box,
+
+72
+00:06:48,830 --> 00:06:54,710
+now we also have that alert box actions class which holds that button where we can close everything
+
+73
+00:06:54,950 --> 00:06:58,710
+and there, I just want to add the text align right to push this all the way to the right.
+
+74
+00:06:58,760 --> 00:07:00,820
+Now of course, you can adjust this however you want.
+
+75
+00:07:01,640 --> 00:07:02,640
+Let's see this,
+
+76
+00:07:02,690 --> 00:07:07,480
+let's wait for this to reload and then enter some incorrect credentials here
+
+77
+00:07:07,760 --> 00:07:11,260
+and here is our alert box. This is this nice modal now
+
+78
+00:07:11,330 --> 00:07:13,880
+and of course you could go way more advanced here,
+
+79
+00:07:14,000 --> 00:07:20,000
+you could use ng content to pass dynamic DOM into that box here, whatever you want
+
+80
+00:07:20,000 --> 00:07:23,400
+but this is our box, of course at the moment we can't close it though
+
+81
+00:07:23,540 --> 00:07:25,700
+but creating that is the first step.
+
+82
+00:07:25,700 --> 00:07:28,610
+Now how can we load this dynamically
+
+83
+00:07:28,610 --> 00:07:30,710
+and of course also, how can we then close it?
+

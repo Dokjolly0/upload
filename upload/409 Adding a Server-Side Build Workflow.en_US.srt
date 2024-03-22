@@ -1,0 +1,236 @@
+1
+00:00:02,370 --> 00:00:08,820
+Let's continue by adjusting the types of configuration we need to adjust it, because our default typescript
+
+2
+00:00:08,820 --> 00:00:15,270
+config, which is responsible for compiling our typescript code to JavaScript code, that won't work
+
+3
+00:00:15,270 --> 00:00:20,040
+for the server side there, we, of course, want to execute our angular code.
+
+4
+00:00:20,070 --> 00:00:26,880
+So we want to execute our angular app there, but we need to compile it into code that does not run
+
+5
+00:00:26,880 --> 00:00:28,950
+on the browser, but on the server.
+
+6
+00:00:29,280 --> 00:00:34,890
+And for example, node jazz, which is the server side language you have to use for that pre rendering,
+
+7
+00:00:35,280 --> 00:00:37,890
+uses a different import export syntax.
+
+8
+00:00:38,310 --> 00:00:40,950
+So we need to compile our typescript code differently.
+
+9
+00:00:41,400 --> 00:00:47,640
+And to add to this compilation, we can take its config, not apologize and file and duplicate it.
+
+10
+00:00:48,030 --> 00:00:53,250
+And let's rename it to TIAs config dot server dot json file.
+
+11
+00:00:54,240 --> 00:01:00,570
+Now in there you need to switch the module from S 2015 to Common JS.
+
+12
+00:01:00,850 --> 00:01:02,640
+You can also find this here.
+
+13
+00:01:03,700 --> 00:01:09,760
+Now, the other settings are OK, but we need to add one extra setting, we need to add some angular
+
+14
+00:01:09,760 --> 00:01:11,200
+compiler options.
+
+15
+00:01:11,350 --> 00:01:14,000
+You can, of course, all just copy the entire snippet here.
+
+16
+00:01:14,650 --> 00:01:20,710
+Now, I will just add these options and they will configure that angular compiler, which is not the
+
+17
+00:01:20,710 --> 00:01:26,200
+typescript compiler, but an additional compiler which compiles the angular templates.
+
+18
+00:01:26,350 --> 00:01:33,400
+So your HTML code with all your directives and so on to native JavaScript code dis compiler needs to
+
+19
+00:01:33,400 --> 00:01:35,400
+know what your starting module is.
+
+20
+00:01:35,650 --> 00:01:42,550
+And here I'm pointing at the observer module file without the extension hash tag and then the class
+
+21
+00:01:42,550 --> 00:01:43,990
+name we find in that file.
+
+22
+00:01:44,080 --> 00:01:49,360
+And if you didn't change anything about that observer module, then this default setting should work
+
+23
+00:01:49,360 --> 00:01:49,740
+for you.
+
+24
+00:01:50,560 --> 00:01:56,290
+Now we can compile our angular app, which is written in typescript, of course, into a version that
+
+25
+00:01:56,290 --> 00:01:58,150
+can be run on the server.
+
+26
+00:01:59,380 --> 00:02:06,820
+For that, we just need to tweak our angular JSON file a bit there, we need to add a new built.
+
+27
+00:02:08,450 --> 00:02:12,650
+Command the server command, and I'll just copy the entire command.
+
+28
+00:02:13,190 --> 00:02:18,000
+Let's go to the angular Jason Folden and that search for the architect node there.
+
+29
+00:02:18,020 --> 00:02:20,810
+We have to build command, which builds it for the client.
+
+30
+00:02:21,080 --> 00:02:24,480
+And below that, I will add my server command.
+
+31
+00:02:24,770 --> 00:02:28,100
+Now, you could add it anywhere in that architect node, by the way.
+
+32
+00:02:28,310 --> 00:02:29,450
+I will add it here.
+
+33
+00:02:30,170 --> 00:02:37,760
+And that server command will allow us to run the Seelie or run the build process through the Seelie
+
+34
+00:02:38,090 --> 00:02:44,230
+to take our typescript configuration automatically and then build our app for the server, optimize
+
+35
+00:02:44,300 --> 00:02:46,760
+it and do all the heavy lifting for us.
+
+36
+00:02:47,450 --> 00:02:53,210
+For that, it will take a specialized builder, a build tool which is shipping with the Seelie or as
+
+37
+00:02:53,210 --> 00:02:58,340
+a dependency of Seelie, to be precise, which is suited for server side packages.
+
+38
+00:02:59,530 --> 00:03:05,530
+And we said some options and now here is an important option, this is where we want to build our app,
+
+39
+00:03:05,530 --> 00:03:08,110
+too, and I will named as this.
+
+40
+00:03:10,400 --> 00:03:18,170
+Recipe dash book now just a side note for the normal build process, the output path is just set to
+
+41
+00:03:18,170 --> 00:03:18,650
+decide.
+
+42
+00:03:18,980 --> 00:03:20,920
+Let's change this to this slash.
+
+43
+00:03:22,230 --> 00:03:22,980
+Rouzer.
+
+44
+00:03:25,120 --> 00:03:31,060
+And now go back to our service site, build and maybe change this to this server so that this is really
+
+45
+00:03:31,060 --> 00:03:32,930
+clear that this is the server site built.
+
+46
+00:03:34,050 --> 00:03:39,550
+Now, we also defined the entry point, which is this newly added mainboard Servatius file and which
+
+47
+00:03:39,550 --> 00:03:41,180
+typescript configuration to use.
+
+48
+00:03:42,010 --> 00:03:48,820
+Now, with that, we set up the build workflow and we can already test it to run our new server command
+
+49
+00:03:48,820 --> 00:03:49,110
+here.
+
+50
+00:03:49,660 --> 00:03:54,310
+We simply run engy run, not npm run, engie run.
+
+51
+00:03:55,000 --> 00:04:00,130
+Then the name of your project which you find in the angular Jason file here under project.
+
+52
+00:04:00,130 --> 00:04:07,390
+In my case it's Nc5 Complete Guide, then a colon and then the command you want to run.
+
+53
+00:04:07,400 --> 00:04:15,400
+So anything from that architect node built for example or in our case server let's add it here and hit
+
+54
+00:04:15,430 --> 00:04:22,390
+enter and this will now run our build command here which we just added with our typescript configuration
+
+55
+00:04:22,630 --> 00:04:25,330
+and it should spit out a folder.
+
+56
+00:04:25,690 --> 00:04:33,640
+This server which holds a main dot jazz file, which is to built angular bundle for the server side
+
+57
+00:04:33,730 --> 00:04:39,340
+or at least some part of it, which is required to do that server side pre rendering.
+
+58
+00:04:40,680 --> 00:04:47,160
+Now, that is the build process, which we need to adjust as a next step, let's add a simple note,
+
+59
+00:04:47,160 --> 00:04:53,610
+just server, which is capable of running debt free rendering process and serving our angular app.
+

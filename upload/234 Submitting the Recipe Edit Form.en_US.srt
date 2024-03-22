@@ -1,0 +1,372 @@
+1
+00:00:02,360 --> 00:00:09,690
+With validation added, let's make sure we can update or save our recipe, so in the recipe-edit component.
+
+2
+00:00:10,050 --> 00:00:10,890
+In onSubmit,
+
+3
+00:00:10,890 --> 00:00:15,060
+I don't want to print the form, I want to do something with it,
+
+4
+00:00:15,090 --> 00:00:19,270
+I want to save it in my array of recipes or update an existing one,
+
+5
+00:00:19,770 --> 00:00:24,460
+so for this, I will need to change my recipe service.
+
+6
+00:00:24,660 --> 00:00:33,290
+Right now, it has no method which allows me to add or update recipes, so I'll add it, addRecipe is a method
+
+7
+00:00:33,300 --> 00:00:34,010
+I will need
+
+8
+00:00:34,220 --> 00:00:44,680
+and here I expect to get a recipe of type recipe or update recipe, here I expect to get the index of
+
+9
+00:00:44,680 --> 00:00:45,240
+the recipe I
+
+10
+00:00:45,250 --> 00:00:48,710
+should update and then add a new recipe,
+
+11
+00:00:48,830 --> 00:00:50,120
+also of type recipe.
+
+12
+00:00:51,710 --> 00:00:59,330
+In the addRecipe case, I will simply take my recipes array and push a new item on it,
+
+13
+00:00:59,330 --> 00:01:05,700
+this new recipe and in the updateRecipe case, I will take my recipes array,
+
+14
+00:01:06,560 --> 00:01:12,660
+take the element at the index I got here as an argument and set it equal to the new recipe.
+
+15
+00:01:13,970 --> 00:01:20,310
+That is the logic in the service for now. In the recipe component, recipe edit component
+
+16
+00:01:20,310 --> 00:01:24,110
+excuse me, we already inject this service,
+
+17
+00:01:24,110 --> 00:01:28,100
+so in onSubmit, I now check if we are in edit mode.
+
+18
+00:01:28,610 --> 00:01:36,200
+If we are, then on my service, I of course want to call the updateRecipe method because I am interested
+
+19
+00:01:36,230 --> 00:01:38,210
+in, guess what, updating it,
+
+20
+00:01:38,210 --> 00:01:43,790
+I don't want to create a new one because we're in edit mode. So here I will pass the ID of the recipe we're
+
+21
+00:01:43,790 --> 00:01:45,290
+working on
+
+22
+00:01:45,290 --> 00:01:46,910
+and then the new recipe.
+
+23
+00:01:47,150 --> 00:01:49,830
+Let's create this new recipe outside of this if
+
+24
+00:01:49,850 --> 00:01:59,150
+check, the new recipe simply is a new recipe, using our recipe model which you therefore have to import
+
+25
+00:01:59,180 --> 00:02:00,630
+at the top
+
+26
+00:02:00,980 --> 00:02:04,340
+and with that imported, let's configure it.
+
+27
+00:02:04,610 --> 00:02:07,940
+We actually have to pass all the data
+
+28
+00:02:07,970 --> 00:02:14,790
+this constructor expects, so we can access this on our recipe form, here on the value
+
+29
+00:02:14,840 --> 00:02:17,100
+we know we will have a name.
+
+30
+00:02:17,570 --> 00:02:25,370
+We also know that here on the recipe form on the value, we will have the description.
+
+31
+00:02:25,370 --> 00:02:29,510
+Now that's getting long, so I'll put this over multiple lines here.
+
+32
+00:02:29,780 --> 00:02:32,800
+The next argument we expect is the image path
+
+33
+00:02:32,810 --> 00:02:34,030
+and guess what,
+
+34
+00:02:34,040 --> 00:02:40,610
+we know that our value will have that image path because we configure this form and it's controlled, so
+
+35
+00:02:40,610 --> 00:02:44,220
+we know that all these values will be present once it is submitted,
+
+36
+00:02:44,240 --> 00:02:52,270
+also because we added validation to prevent the submission of values which are not valid and
+
+37
+00:02:52,280 --> 00:03:02,600
+here, the same for the array. We can simply use our recipe form, the value, which is stored in our
+
+38
+00:03:02,750 --> 00:03:03,950
+array, ingredients,
+
+39
+00:03:03,950 --> 00:03:08,880
+let's see if that is in the format we require it to be.
+
+40
+00:03:09,110 --> 00:03:17,860
+So with that, we get our new recipe, now we can simply pass this new recipe here as an argument to update
+
+41
+00:03:17,870 --> 00:03:18,620
+recipe
+
+42
+00:03:18,770 --> 00:03:25,820
+or if we are not in edit mode, we will call the recipeService, the addRecipe method and pass our new
+
+43
+00:03:25,820 --> 00:03:27,100
+recipe here.
+
+44
+00:03:27,470 --> 00:03:36,950
+As a side note, since our value of the form has exactly the format of our recipe model and the same names
+
+45
+00:03:36,950 --> 00:03:44,600
+like image path and so on and this is something we especially wanted to make sure and we focused on,
+
+46
+00:03:44,600 --> 00:03:53,990
+you can skip this step of saving it in a new constant and just pass this recipe form value because the
+
+47
+00:03:53,990 --> 00:03:59,810
+object stored here should have a valid format to fit one of our recipes.
+
+48
+00:03:59,810 --> 00:04:06,660
+So that is a fine way of then really taking advantage of the reactive approach we're using here.
+
+49
+00:04:07,570 --> 00:04:09,840
+With that, we're saving the data,
+
+50
+00:04:10,150 --> 00:04:15,080
+now let's see if that actually gets added to our list of recipes.
+
+51
+00:04:16,170 --> 00:04:21,910
+If we type two here, well I don't know, didn't change here,
+
+52
+00:04:22,300 --> 00:04:29,520
+if I type something here and I click save, I don't see it but we also don't get an error.
+
+53
+00:04:29,520 --> 00:04:31,130
+Now let's check, do we submit it?
+
+54
+00:04:31,140 --> 00:04:33,440
+Yes we do and this button is of type submit,
+
+55
+00:04:33,450 --> 00:04:34,650
+what's wrong,
+
+56
+00:04:34,650 --> 00:04:36,110
+do you figure it out?
+
+57
+00:04:36,120 --> 00:04:44,070
+We had this problem earlier in this course. It has something to do with our recipeService.
+
+58
+00:04:44,110 --> 00:04:52,600
+We add an updateRecipes but when we get a list of recipes, we return a copy here with the slice method.
+
+59
+00:04:53,080 --> 00:05:00,490
+Therefore this is not the same array we're using in our component as the one we're storing in this recipe
+
+60
+00:05:00,490 --> 00:05:01,530
+service,
+
+61
+00:05:01,540 --> 00:05:05,760
+so the one we're updating is not reflected in the components.
+
+62
+00:05:05,770 --> 00:05:09,700
+We can simply use the same approach as in the shopping list service.
+
+63
+00:05:09,760 --> 00:05:20,060
+I'll have my recipesChanged event here, which is a new subject and subject is imported from
+
+64
+00:05:20,100 --> 00:05:20,890
+rxjs/subject,
+
+65
+00:05:20,890 --> 00:05:23,890
+make sure to add this import.
+
+66
+00:05:23,940 --> 00:05:27,980
+This will then pass an array of recipes as a value
+
+67
+00:05:28,470 --> 00:05:31,810
+and now here where we call addRecipe,
+
+68
+00:05:32,070 --> 00:05:41,700
+I simply use this recipesChanged event here so to say and emit a new value, this new value is a new
+
+69
+00:05:41,700 --> 00:05:43,200
+copy of my recipes,
+
+70
+00:05:43,200 --> 00:05:49,680
+so that's the same approach as we used in the shopping lists service. The same of course here when we update
+
+71
+00:05:49,680 --> 00:05:50,570
+a recipe
+
+72
+00:05:50,700 --> 00:05:56,320
+and as I mentioned earlier, in the shopping list service, you could refactor this into its own method.
+
+73
+00:05:56,670 --> 00:06:01,920
+So with this added now, we can go to our recipe list component
+
+74
+00:06:02,000 --> 00:06:06,430
+which is in the end where we get our recipes and in ngOnInit,
+
+75
+00:06:06,570 --> 00:06:08,750
+I now want to listen to this event.
+
+76
+00:06:08,910 --> 00:06:16,500
+So on the recipeService, on recipesChanged, I will subscribe to that event and if it did change, I know that
+
+77
+00:06:16,560 --> 00:06:21,550
+I will receive a new array of recipes, that is the data we will get in this callback then
+
+78
+00:06:22,480 --> 00:06:24,240
+and then inside here,
+
+79
+00:06:24,550 --> 00:06:32,280
+now I want to get my updated recipes or simply set the recipes equal to the recipes I got passed here
+
+80
+00:06:32,290 --> 00:06:37,810
+I should say. That's an approach comparable or pretty similar to the one we used in the shopping list
+
+81
+00:06:37,810 --> 00:06:38,740
+service.
+
+82
+00:06:39,070 --> 00:06:40,260
+So let's save this
+
+83
+00:06:40,270 --> 00:06:46,080
+and now if we try to edit this recipe, put a two after the name,
+
+84
+00:06:46,210 --> 00:06:48,030
+now it get updated here
+
+85
+00:06:48,160 --> 00:06:55,810
+and now if I add a new recipe here, some image, that won't be displayed of course, just a test
+
+86
+00:06:55,980 --> 00:07:02,430
+and let's even add an ingredient, Bread 10, if I hit save, we see it here,
+
+87
+00:07:02,620 --> 00:07:07,820
+of course without an image but that seems to work and if I put this to the shopping list,
+
+88
+00:07:07,870 --> 00:07:09,150
+Bread was added.
+
+89
+00:07:09,370 --> 00:07:11,270
+So that is all working here
+
+90
+00:07:11,380 --> 00:07:13,360
+and the errors you see here on the right,
+
+91
+00:07:13,360 --> 00:07:16,800
+they simply occur because we can't fetch this image.
+
+92
+00:07:17,230 --> 00:07:25,120
+So this is our recipe for now working, both for updating and for new recipes,
+
+93
+00:07:25,120 --> 00:07:28,590
+now let's see if there is something else we should do.
+

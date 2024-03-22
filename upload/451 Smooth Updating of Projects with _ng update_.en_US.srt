@@ -1,0 +1,120 @@
+1
+00:00:02,330 --> 00:00:09,080
+Now, besides energy generate, we also have energy update and energy update is one of the coolest commands
+
+2
+00:00:09,080 --> 00:00:09,820
+you can find.
+
+3
+00:00:10,310 --> 00:00:12,950
+Of course, you want to keep your application up to date.
+
+4
+00:00:12,950 --> 00:00:17,420
+And thankfully, when Angella releases a new version, typically not everything changes.
+
+5
+00:00:17,720 --> 00:00:20,230
+So typically updating is fairly trivial.
+
+6
+00:00:20,380 --> 00:00:26,000
+Still, you might have to update a couple of dependencies and package Jason, and maybe there are one
+
+7
+00:00:26,000 --> 00:00:31,640
+or two smaller adjustments you need to make in code, maybe very simple ones, but still repetitive
+
+8
+00:00:31,640 --> 00:00:38,110
+ones like adjusting a certain import, adding a new setting on a decorator, something like this.
+
+9
+00:00:38,690 --> 00:00:44,000
+Now, energy update can be executed like this in a project and it will analyze it and tell you if there
+
+10
+00:00:44,000 --> 00:00:45,590
+is something that needs to be updated.
+
+11
+00:00:46,160 --> 00:00:50,860
+And for that, it basically checks every package which supports this schematic.
+
+12
+00:00:50,870 --> 00:00:56,090
+Of course, all angular packages supported Dangler, Seelie itself supports it.
+
+13
+00:00:56,330 --> 00:01:00,770
+And, for example, some third party packages like angular material, all the supported.
+
+14
+00:01:01,430 --> 00:01:06,920
+Now you see here, everything is up to date for me, but if something would not be up to date, it would
+
+15
+00:01:06,920 --> 00:01:10,660
+show you a table and tell you how you can update.
+
+16
+00:01:10,670 --> 00:01:14,480
+Now, for example, then you can run commands like energy update at.
+
+17
+00:01:15,750 --> 00:01:24,120
+At Angular Corps at Angular Seelie to update the angular framework packages, this will actually target
+
+18
+00:01:24,120 --> 00:01:30,330
+all packages, not just a core package and the angular Seelie package to bring it up to date and run
+
+19
+00:01:30,330 --> 00:01:31,470
+any migration's.
+
+20
+00:01:31,470 --> 00:01:34,140
+So any adjustments that might need to be made.
+
+21
+00:01:34,440 --> 00:01:37,860
+So DISCOM makes updating super, super simple.
+
+22
+00:01:37,870 --> 00:01:43,950
+And again, if you run just engy update, you will see a table of commands you should run in case your
+
+23
+00:01:43,950 --> 00:01:46,050
+project is not entirely up to date.
+
+24
+00:01:46,380 --> 00:01:52,290
+So Engie Update is a command, which is the word for running after every new angular version that was
+
+25
+00:01:52,290 --> 00:01:58,350
+released to quickly bring your project up to date and ensure that it works with this latest version.
+
+26
+00:01:58,620 --> 00:02:00,780
+Manually updating wouldn't be that hard.
+
+27
+00:02:00,780 --> 00:02:04,230
+But of course with Engy update, it gets even easier.
+
+28
+00:02:04,590 --> 00:02:08,310
+And these are the three important schematics we have here now.
+
+29
+00:02:08,330 --> 00:02:10,920
+We also have something which is called builders.
+
+30
+00:02:11,070 --> 00:02:11,880
+And what's that?
+

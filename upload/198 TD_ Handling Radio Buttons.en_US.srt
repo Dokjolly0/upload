@@ -1,0 +1,164 @@
+1
+00:00:02,650 --> 00:00:08,050
+We're nearing the end of the first part of this section, the template driven approach,
+
+2
+00:00:08,050 --> 00:00:13,030
+there are still some things I want to show you, for example how to work with radio buttons.
+
+3
+00:00:13,030 --> 00:00:19,620
+We don't have any radio buttons in our form as of now, so let's add some. Let's add a property in the app
+
+4
+00:00:19,630 --> 00:00:21,700
+component first with some genders.
+
+5
+00:00:21,760 --> 00:00:27,790
+So this is simply an array where I have male and female and I don't want to insult anyone, I know there
+
+6
+00:00:27,790 --> 00:00:33,810
+are more genders nowadays, I'm going to go with the classic approach here just to keep it simple.
+
+7
+00:00:33,910 --> 00:00:39,030
+We have this genders array and now with that array, I want to output genders here,
+
+8
+00:00:39,040 --> 00:00:41,170
+so let's say below our
+
+9
+00:00:41,200 --> 00:00:47,730
+your reply paragraph here, I'll add a new div with a class of radio
+
+10
+00:00:50,340 --> 00:00:55,230
+and this div should be replicated for all the genders.
+
+11
+00:00:55,290 --> 00:01:02,580
+So I'm going to loop through my genders, maybe bind it to a gender variable and this is just a setup
+
+12
+00:01:02,580 --> 00:01:05,880
+of Bootstrap uses to give this some nice styling, of course
+
+13
+00:01:05,880 --> 00:01:12,950
+use any other setup to style your radio buttons here. I'm looping through all the genders
+
+14
+00:01:13,140 --> 00:01:17,270
+and now again in the bootstrap world, to create a nice looking radio button,
+
+15
+00:01:17,310 --> 00:01:21,940
+I'm going to wrap it in a label, this input here which is of type radio
+
+16
+00:01:22,200 --> 00:01:28,460
+and I'm going to wrap this over multiple lines too, just to make it all super simple to read and to understand
+
+17
+00:01:28,840 --> 00:01:34,800
+and here I will give it a name of gender because in a radio button, I can only select one of them in a group, 
+
+18
+00:01:34,940 --> 00:01:35,430
+so
+
+19
+00:01:35,430 --> 00:01:42,360
+the name should be gender for whichever button is selected and I will place ngModel on it to make
+
+20
+00:01:42,360 --> 00:01:43,670
+it a control
+
+21
+00:01:44,010 --> 00:01:51,230
+and I will prepopulate or I set the value of this button equal to gender,
+
+22
+00:01:51,360 --> 00:01:54,430
+so this variable of my ngFor loop.
+
+23
+00:01:54,900 --> 00:02:01,960
+Now with that if we save this, we should see that we have some gender buttons, to output a text,
+
+24
+00:02:01,960 --> 00:02:04,600
+I need to add it here after my input.
+
+25
+00:02:04,690 --> 00:02:06,370
+So again, gender here
+
+26
+00:02:06,410 --> 00:02:08,200
+like that
+
+27
+00:02:08,370 --> 00:02:10,560
+and now we have male and female here
+
+28
+00:02:10,650 --> 00:02:16,830
+and if I just enter something so that I can submit the form and I pick male here, you will see that on
+
+29
+00:02:16,830 --> 00:02:18,720
+the value object here,
+
+30
+00:02:18,990 --> 00:02:27,450
+we got gender which is male and of course if I pick female, this will, you guessed it. be set to female.
+
+31
+00:02:27,450 --> 00:02:33,300
+So this is how you can easily incorporate radio buttons by binding or by placing ngModel on the
+
+32
+00:02:33,510 --> 00:02:40,320
+input as always, setting the value, of course you could also hardcode the value and that well makes
+
+33
+00:02:40,320 --> 00:02:42,630
+it usable just like any other input.
+
+34
+00:02:42,810 --> 00:02:48,480
+And if you want to set it to a default gender of course, you can use one-way binding again to make sure
+
+35
+00:02:48,480 --> 00:02:53,070
+that one of the two buttons is selected by default at the start
+
+36
+00:02:53,070 --> 00:03:02,360
+when you load the form. You can also of course add the required directive or attribute to that input
+
+37
+00:03:02,370 --> 00:03:09,310
+here to make sure that now the form will not be valid until one of the two has been selected,
+
+38
+00:03:09,360 --> 00:03:11,620
+so that works just like on any other input.
+
+39
+00:03:11,730 --> 00:03:17,490
+So I just want to highlight this because radio buttons can look like a very special case,
+
+40
+00:03:17,520 --> 00:03:24,870
+they aren't, they are used like any other input when using the template driven approach in your Angular
+
+41
+00:03:24,930 --> 00:03:25,410
+app.
+

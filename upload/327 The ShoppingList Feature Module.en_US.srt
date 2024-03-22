@@ -1,0 +1,236 @@
+1
+00:00:02,330 --> 00:00:07,040
+So that was our first feature module, the recipes module.
+
+2
+00:00:07,040 --> 00:00:13,850
+Now I want you to practice this a bit, take the shopping list here and create a feature module for that
+
+3
+00:00:13,970 --> 00:00:15,270
+as well.
+
+4
+00:00:15,290 --> 00:00:16,960
+You learned everything you need for that,
+
+5
+00:00:16,970 --> 00:00:18,920
+so definitely try on your own,
+
+6
+00:00:18,920 --> 00:00:21,800
+here's your chance to pause the video, after the pause,
+
+7
+00:00:21,800 --> 00:00:22,880
+we'll do it together.
+
+8
+00:00:26,120 --> 00:00:27,800
+Were you successful?
+
+9
+00:00:27,800 --> 00:00:28,830
+Let's do it together
+
+10
+00:00:28,880 --> 00:00:35,400
+and for that in the shopping list folder, I'll create a shopping-list.module.ts file.
+
+11
+00:00:35,420 --> 00:00:40,340
+Now in there, let's export this class, shopping list module
+
+12
+00:00:40,340 --> 00:00:41,780
+and as before,
+
+13
+00:00:41,810 --> 00:00:46,070
+let's add NgModule as a decorator there.
+
+14
+00:00:46,370 --> 00:00:54,020
+Now NgModule needs to be imported from @angular/core, like this
+
+15
+00:00:54,020 --> 00:01:01,070
+and in NgModule, you now again have to declare what you're using in there and you have to export
+
+16
+00:01:01,100 --> 00:01:03,050
+what you're using elsewhere.
+
+17
+00:01:03,050 --> 00:01:04,510
+Now let's have a look at our app module,
+
+18
+00:01:04,520 --> 00:01:08,060
+what are we using that is related to the shopping list?
+
+19
+00:01:08,060 --> 00:01:16,100
+Well obviously, the shopping list and shopping edit components are used in the shopping list area. Therefore,
+
+20
+00:01:16,190 --> 00:01:20,060
+let's grab these two components and remove them from the app module,
+
+21
+00:01:20,060 --> 00:01:28,310
+let's also remove their imports here and let's instead move them here into our shopping list module.
+
+22
+00:01:28,790 --> 00:01:33,540
+There, let's add declarations and add these to shopping list components.
+
+23
+00:01:33,650 --> 00:01:34,700
+Now just as before,
+
+24
+00:01:34,700 --> 00:01:38,300
+make sure you also add the imports, here
+
+25
+00:01:38,300 --> 00:01:45,170
+my IDE is unfortunately not helping me, so I'll do it manually. Import to the shopping list component
+
+26
+00:01:45,410 --> 00:01:56,160
+and also of course, an import to the shopping edit component here, like this. With that added, we could
+
+27
+00:01:56,160 --> 00:02:00,900
+export this and import the shopping list module into the app module.
+
+28
+00:02:01,080 --> 00:02:01,730
+Of course we would
+
+29
+00:02:01,740 --> 00:02:06,810
+also have to make sure we add all things the shopping list components need into the shopping list
+
+30
+00:02:06,810 --> 00:02:07,650
+module
+
+31
+00:02:07,650 --> 00:02:13,110
+but I don't even want to export my shopping list related things in the shopping list component,
+
+32
+00:02:13,110 --> 00:02:16,410
+I want to manage routing there as well.
+
+33
+00:02:16,410 --> 00:02:18,670
+Now if we have a look at the app routing module,
+
+34
+00:02:18,690 --> 00:02:22,990
+we've got one route related to the shopping list and that is this shopping list route.
+
+35
+00:02:23,070 --> 00:02:27,840
+Let's remove it from the app routing module and also get rid of that shopping list component import
+
+36
+00:02:27,840 --> 00:02:28,770
+there
+
+37
+00:02:28,770 --> 00:02:34,800
+and now we could create a shopping list routing module but since this is already a very small and tiny
+
+38
+00:02:34,800 --> 00:02:40,320
+module, I will do it all in one file, though this is totally up to you and you could create a separate
+
+39
+00:02:40,320 --> 00:02:42,840
+routing module if you wanted to. There,
+
+40
+00:02:42,870 --> 00:02:50,070
+I will import the routing or I will add the router module from
+
+41
+00:02:50,340 --> 00:02:59,470
+@angular/router and there, I'll add forChild, pass my routes array to it and in there, set up this single
+
+42
+00:02:59,650 --> 00:03:07,150
+route that is related to the shopping list right now. We don't need to export router module here because
+
+43
+00:03:07,150 --> 00:03:12,370
+we only did this when we had a separate routing module, since it's now all included in the feature module
+
+44
+00:03:12,460 --> 00:03:17,380
+we already got that in the place where it should be. The router module is not the only module we need
+
+45
+00:03:17,380 --> 00:03:24,040
+though, we also need the common module that should be imported from @angular/common. This unlocks
+
+46
+00:03:24,040 --> 00:03:25,480
+ngFor and ngIf
+
+47
+00:03:25,640 --> 00:03:32,050
+when we are using these features here and we also have to add the forms module because we are using
+
+48
+00:03:32,050 --> 00:03:35,140
+the template driven forms approach in the shopping list area.
+
+49
+00:03:35,140 --> 00:03:36,870
+So we need to import this as well
+
+50
+00:03:36,970 --> 00:03:37,390
+and then,
+
+51
+00:03:37,390 --> 00:03:39,890
+well of course the router module.
+
+52
+00:03:40,250 --> 00:03:43,670
+Now this should be a module that works,
+
+53
+00:03:43,670 --> 00:03:51,700
+let's now go to the app module and add the shopping list module to it
+
+54
+00:03:51,910 --> 00:03:54,520
+and of course, adding it in the imports array is not enough,
+
+55
+00:03:54,520 --> 00:04:03,900
+you also need to add an import to it up here from ./shopping-list shopping-list.module
+
+56
+00:04:03,900 --> 00:04:06,620
+from that file.
+
+57
+00:04:07,020 --> 00:04:13,470
+If you save everything, let's wait for the app to reload and if I try to visit shopping list and I reload
+
+58
+00:04:13,490 --> 00:04:23,240
+there, this all seems to work. So we now have a new feature module,
+
+59
+00:04:23,270 --> 00:04:25,370
+this time for the shopping list area.
+

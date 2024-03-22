@@ -1,0 +1,144 @@
+1
+00:00:02,060 --> 00:00:08,630
+So how does Angular connect to a database or how do you connect Angular to a database in your application?
+
+2
+00:00:08,630 --> 00:00:14,690
+Well of course, it is a use case that you will often have, in your Angular app, you generate data like
+
+3
+00:00:14,690 --> 00:00:20,600
+posts or recipes or whatever you have in your application and you want to store that data in a database
+
+4
+00:00:20,630 --> 00:00:26,990
+and also fetch it from there when your app restarts, when a user revisits your page and so on and it
+
+5
+00:00:26,990 --> 00:00:29,740
+doesn't matter which kind of database we're talking about,
+
+6
+00:00:29,810 --> 00:00:34,160
+if that's an SQL or noSQL database, doesn't really matter.
+
+7
+00:00:34,160 --> 00:00:38,690
+The thing is you don't connect Angular to a database directly,
+
+8
+00:00:38,750 --> 00:00:44,110
+that means you don't enter your database credentials into your Angular app or anything like that,
+
+9
+00:00:44,120 --> 00:00:50,830
+this would be highly insecure because everyone can read your Angular code since it's a front-end Javascript
+
+10
+00:00:50,840 --> 00:00:55,000
+application, everyone can inspect the code there and that is fine
+
+11
+00:00:55,010 --> 00:00:59,990
+but that also means you must not store credentials in there for example and you will learn how you can
+
+12
+00:00:59,990 --> 00:01:04,910
+still authenticate users and so on later in the authentication section but you definitely don't want to
+
+13
+00:01:04,910 --> 00:01:06,910
+store database credentials.
+
+14
+00:01:07,070 --> 00:01:12,680
+For more information on how secure your Javascript code is, you can have a look at an article in a video
+
+15
+00:01:12,680 --> 00:01:14,870
+I attached to this video here.
+
+16
+00:01:14,900 --> 00:01:18,620
+So if we don't connect directly to a database, what else can we do then
+
+17
+00:01:18,650 --> 00:01:24,790
+because we certainly don't want to have our standalone independent unconnected Angular app?
+
+18
+00:01:24,810 --> 00:01:32,370
+Well you send HTTP requests and you get HTTP responses to and from a server. A server in the end
+
+19
+00:01:32,400 --> 00:01:34,740
+is defined as an API here,
+
+20
+00:01:34,770 --> 00:01:39,530
+that means it is for example a REST API or a GraphQL API
+
+21
+00:01:39,530 --> 00:01:45,240
+you are communicating with and in this course, we'll use a REST API which is the most common form of API
+
+22
+00:01:45,240 --> 00:01:51,030
+you work with. Now such an API in the end is almost like a normal website
+
+23
+00:01:51,120 --> 00:01:56,970
+but when you visit its URLs, you're not getting back HTML but you're getting back data,
+
+24
+00:01:57,000 --> 00:02:02,430
+mostly the JSON format and if you want to learn more about the REST APIs in general, you'll also find
+
+25
+00:02:02,430 --> 00:02:04,350
+some helpful resources related to that
+
+26
+00:02:04,350 --> 00:02:09,750
+attached to this video and I have a whole course, my NodeJS course where I also teach you how to create
+
+27
+00:02:09,750 --> 00:02:16,140
+such API apps because you don't use Angular for the creation of these APIs, you use server-side languages
+
+28
+00:02:16,140 --> 00:02:23,370
+like NodeJS or PHP instead but you can communicate with these APIs with Angular and on that server,
+
+29
+00:02:23,430 --> 00:02:30,090
+you then can have code that does interact with a database to store and fetch data and of course there
+
+30
+00:02:30,090 --> 00:02:34,880
+are more reasons for communicating with a server than for storing or fetching data.
+
+31
+00:02:35,190 --> 00:02:40,920
+It's not just about database access, you could be uploading files or you could be sending some analytics
+
+32
+00:02:40,920 --> 00:02:47,880
+to a back-end or any other reason for why you might need to talk to some back-end server.
+
+33
+00:02:47,880 --> 00:02:53,490
+Now in this module, we will not write such a back-end from scratch since this is way beyond the scope
+
+34
+00:02:53,490 --> 00:03:00,570
+of the course and totally not Angular job but I will show you how to use a free dummy back-end which
+
+35
+00:03:00,780 --> 00:03:07,380
+could of course be replaced by any real back-end you have to send requests, to use responses and so
+
+36
+00:03:07,380 --> 00:03:07,680
+on.
+

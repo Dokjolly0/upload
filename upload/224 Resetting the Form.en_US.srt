@@ -1,0 +1,124 @@
+1
+00:00:02,560 --> 00:00:05,670
+So let's reset the form once we click update or add.
+
+2
+00:00:05,780 --> 00:00:11,000
+Definitely go ahead and try it on your own, time to pause the video now before I will show you how I
+
+3
+00:00:11,000 --> 00:00:11,920
+will do that.
+
+4
+00:00:15,040 --> 00:00:16,930
+So were you successful?
+
+5
+00:00:16,930 --> 00:00:21,670
+There is something tricky about that but let's start with the straightforward part.
+
+6
+00:00:21,940 --> 00:00:28,870
+After we saved our updated value or either saved the updated value or the new value I should say, we can of course
+
+7
+00:00:28,880 --> 00:00:32,600
+call form reset here.
+
+8
+00:00:33,150 --> 00:00:41,160
+Now if I do this, let's see if it works as expected. If I type bread here, 10 and I clicks add, it resets
+
+9
+00:00:41,170 --> 00:00:42,690
+so this works,
+
+10
+00:00:42,690 --> 00:00:49,100
+if I select tomatoes and change this to bread, it updates it to bread
+
+11
+00:00:49,440 --> 00:00:52,070
+but now we're stuck in the update mode.
+
+12
+00:00:52,470 --> 00:00:57,980
+If I add bread again, maybe 12, it still updates the old one right,
+
+13
+00:00:57,990 --> 00:01:01,860
+it doesn't add a new one because we never leave the editMode.
+
+14
+00:01:02,280 --> 00:01:07,910
+The reason for this of course is that initially, we are in editMode set to false,
+
+15
+00:01:08,070 --> 00:01:13,390
+then we switch it to true whenever we get the startedEditing observable to fire
+
+16
+00:01:13,650 --> 00:01:16,150
+but we never switch it back.
+
+17
+00:01:16,470 --> 00:01:24,450
+Well we should switch it back and actually we only need to switch it back here in onAddItem, here I
+
+18
+00:01:24,450 --> 00:01:28,150
+can simply called this editMode and set it to false
+
+19
+00:01:28,200 --> 00:01:30,210
+no matter what it was before,
+
+20
+00:01:30,420 --> 00:01:34,190
+this ensures that we definitely leave it because we are done.
+
+21
+00:01:34,380 --> 00:01:43,560
+Also we could rename this onAddItem to simply say onSubmit because onAddItem is not correct all the
+
+22
+00:01:43,630 --> 00:01:45,580
+time but that is not important, that is
+
+23
+00:01:45,600 --> 00:01:47,750
+just a little cosmetic change, also
+
+24
+00:01:47,800 --> 00:01:50,540
+rename it in the template then though.
+
+25
+00:01:51,090 --> 00:01:59,480
+So with this in place, if we now try this again, let's add a new item, that works, let's edit an existing
+
+26
+00:01:59,480 --> 00:02:10,450
+one, bananas 2 and now let's try adding Schnitzel 1.
+
+27
+00:02:10,520 --> 00:02:14,020
+Now you see, that seems to work again,
+
+28
+00:02:14,210 --> 00:02:20,260
+now we can correctly update tomatoes, our items here
+
+29
+00:02:20,300 --> 00:02:24,050
+and it switches between editMode and updateMode.
+
+30
+00:02:24,230 --> 00:02:30,440
+Of course I also need to make sure that the delete and clear button works,
+
+31
+00:02:30,440 --> 00:02:32,660
+so let's work on the clear button next.
+

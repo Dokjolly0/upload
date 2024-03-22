@@ -1,0 +1,868 @@
+1
+00:00:02,210 --> 00:00:05,900
+In this video, we'll do just that, we'll load an angular component.
+
+2
+00:00:06,440 --> 00:00:09,440
+Well, this would be pretty boring, so we'll do it an exciting way.
+
+3
+00:00:09,830 --> 00:00:18,620
+We'll load it dynamically as a custom element, as a native Web component, instead of a normal angular
+
+4
+00:00:18,620 --> 00:00:19,220
+component.
+
+5
+00:00:19,790 --> 00:00:21,590
+What's great about that and how does it work?
+
+6
+00:00:21,800 --> 00:00:23,960
+Let's take a closer look at this and this video.
+
+7
+00:00:27,810 --> 00:00:29,790
+So let's get started with angular elements.
+
+8
+00:00:30,000 --> 00:00:31,360
+What is angular elements?
+
+9
+00:00:31,800 --> 00:00:37,500
+It's a feature of the angular framework that allows you to turn your normal angular components which
+
+10
+00:00:37,500 --> 00:00:41,550
+you use in your angular app into native web components.
+
+11
+00:00:42,000 --> 00:00:44,800
+Web components are basically custom HTML elements.
+
+12
+00:00:44,820 --> 00:00:49,240
+You could say they are part of the of the Darmouth JavaScript API.
+
+13
+00:00:49,450 --> 00:00:55,020
+They're not related to ANGULAR and you can use them in vanilla JavaScript apps or ID apps built with
+
+14
+00:00:55,020 --> 00:00:55,800
+our frameworks.
+
+15
+00:00:55,890 --> 00:01:00,450
+So that's Web components and that is what you can create with angular elements.
+
+16
+00:01:01,020 --> 00:01:07,770
+Now before you get too excited right now at the point of time releasing this video when ANGULAR six
+
+17
+00:01:07,770 --> 00:01:14,030
+was released, the web components are building with angular can only be used and angular projects still.
+
+18
+00:01:14,040 --> 00:01:18,620
+And the obvious question then is why would you build web components at all?
+
+19
+00:01:18,630 --> 00:01:24,870
+What is the use of angular elements if you can only use these elements inside of an angular app?
+
+20
+00:01:25,470 --> 00:01:30,000
+And the answer is they are useful for loading dynamic content.
+
+21
+00:01:30,240 --> 00:01:36,720
+So let's say you got a content management system on your back and on a server and there your editors
+
+22
+00:01:36,720 --> 00:01:38,610
+can create HTML code.
+
+23
+00:01:38,910 --> 00:01:45,750
+They know how to write HTML code and therefore they create the content that gets loaded into your angular
+
+24
+00:01:45,750 --> 00:01:47,240
+app in HTML.
+
+25
+00:01:47,490 --> 00:01:53,910
+Now so far that is fine, but what if you actually want to enable them to also use some of your angular
+
+26
+00:01:53,910 --> 00:01:56,900
+components in the HTML code they prepared?
+
+27
+00:01:57,570 --> 00:02:04,050
+If they do that, if they use your angular components selectors and you then load does content dynamically
+
+28
+00:02:04,050 --> 00:02:10,560
+in your angular app, it will actually not work because your angular app is compiled ahead of time or
+
+29
+00:02:10,560 --> 00:02:14,990
+even with Just-In-Time computation, it's compiled before the content is loaded.
+
+30
+00:02:15,270 --> 00:02:21,900
+So if the content contains these elector of angular element of angular component, this will not work.
+
+31
+00:02:21,900 --> 00:02:23,140
+It will not recognize that.
+
+32
+00:02:23,370 --> 00:02:24,510
+Let me show you what I mean.
+
+33
+00:02:25,020 --> 00:02:31,960
+Here's a brand new angular project created with the angular Seelie important if we check the package.
+
+34
+00:02:32,040 --> 00:02:37,580
+Jason General, I'm using angular version six and I'm using our test version six.
+
+35
+00:02:37,590 --> 00:02:42,980
+And I installed Dietrich's task complete package to have no issues with our extras.
+
+36
+00:02:43,290 --> 00:02:46,260
+This might be needed at the point of time recording this.
+
+37
+00:02:46,260 --> 00:02:49,560
+I need it for the Angular Elements package which will use in the future.
+
+38
+00:02:49,560 --> 00:02:50,730
+You might not need this.
+
+39
+00:02:50,880 --> 00:02:55,440
+All angular packages should by default, support your Express Syntex.
+
+40
+00:02:55,630 --> 00:03:00,600
+If you want to learn more about what changed with Angular six and why does Agricultures six thing is
+
+41
+00:03:00,600 --> 00:03:01,310
+so important?
+
+42
+00:03:01,510 --> 00:03:04,530
+Check out these separate videos I created on that.
+
+43
+00:03:04,530 --> 00:03:08,100
+My Angular six update video NTR Extra six update video.
+
+44
+00:03:08,520 --> 00:03:10,380
+But back to the angular components.
+
+45
+00:03:10,650 --> 00:03:11,970
+Let's create a new component.
+
+46
+00:03:11,970 --> 00:03:15,300
+Let's name it a large component, maybe a normal angular component.
+
+47
+00:03:15,540 --> 00:03:18,030
+So in there I'll expert a class alert.
+
+48
+00:03:19,170 --> 00:03:24,810
+Component like this, and of course, we could create that with the Seelie to all imported component
+
+49
+00:03:24,810 --> 00:03:30,840
+decorator and then they're all defined My Selecter, which is app alert, let's say, and a template
+
+50
+00:03:31,140 --> 00:03:34,620
+which could be, of course, an external file, too.
+
+51
+00:03:34,860 --> 00:03:36,480
+But here I'll simply add a diff.
+
+52
+00:03:36,780 --> 00:03:43,940
+And inside of the diff I'll say this is an alert and then we even output a message here.
+
+53
+00:03:43,950 --> 00:03:45,370
+So some string interpolation.
+
+54
+00:03:45,930 --> 00:03:53,400
+Last but not least, I'll add my Stults array here with a string in there to define some styles for
+
+55
+00:03:53,400 --> 00:03:54,270
+this template.
+
+56
+00:03:54,360 --> 00:04:01,290
+And there I simply want to start Maldive, give it up border of one pixel solid and lieke background
+
+57
+00:04:01,290 --> 00:04:04,410
+of, let's say, Salmen.
+
+58
+00:04:04,740 --> 00:04:09,750
+So this is like red color and a padding of 10 pixels.
+
+59
+00:04:09,890 --> 00:04:17,040
+And last but not least, let me also define a font family and segment, by the way, should not be a
+
+60
+00:04:17,040 --> 00:04:17,370
+string.
+
+61
+00:04:17,790 --> 00:04:20,260
+Let me to find a font family of sans serif.
+
+62
+00:04:21,040 --> 00:04:24,410
+Now this is my my style for the for the alert.
+
+63
+00:04:24,570 --> 00:04:27,420
+Now the alert uses this message property.
+
+64
+00:04:27,600 --> 00:04:34,110
+So I have to add it here and I want to make this bendable from outside, so decorated with that input
+
+65
+00:04:34,110 --> 00:04:36,870
+which I have to import from angular court.
+
+66
+00:04:37,440 --> 00:04:41,160
+And now with that the component is finished and we can now use it to use it.
+
+67
+00:04:41,370 --> 00:04:44,310
+We have to add it to our declarations are right there.
+
+68
+00:04:44,310 --> 00:04:52,590
+I add my alert component and with it added here we can go to the app component to its HTML file to be
+
+69
+00:04:52,590 --> 00:04:53,220
+precise.
+
+70
+00:04:53,400 --> 00:04:57,690
+And then there we can use my newly created app alert component like this.
+
+71
+00:04:57,930 --> 00:05:04,020
+And of course also pass a message which since its string can be passed like this without the square
+
+72
+00:05:04,020 --> 00:05:04,580
+brackets.
+
+73
+00:05:04,680 --> 00:05:07,350
+This is just a shortcut in case you are passing some text.
+
+74
+00:05:07,860 --> 00:05:13,020
+And there I could say this is a normal angular component.
+
+75
+00:05:13,740 --> 00:05:18,690
+With that, if we save all these files and we go back, we see our component there.
+
+76
+00:05:18,690 --> 00:05:20,990
+Now, the styling didn't work.
+
+77
+00:05:21,940 --> 00:05:30,200
+Yeah, I should add more semicolons instead of commas with that, now we got this alert.
+
+78
+00:05:30,730 --> 00:05:32,500
+So this is a normal, angular component.
+
+79
+00:05:32,740 --> 00:05:36,700
+Now, let's say in the app component, we actually want to load this dynamically.
+
+80
+00:05:37,090 --> 00:05:38,970
+I got this content property there.
+
+81
+00:05:39,010 --> 00:05:40,150
+It's null initially.
+
+82
+00:05:40,420 --> 00:05:45,190
+And now let's say instead of outputting this component like this, we have a death.
+
+83
+00:05:45,520 --> 00:05:55,180
+And on this death, we use the inner HTML property binding to bind to the content in the app component
+
+84
+00:05:55,360 --> 00:05:56,410
+in the constructor.
+
+85
+00:05:56,410 --> 00:05:57,940
+For simplicity reasons.
+
+86
+00:05:58,090 --> 00:06:03,760
+I can then add my timeout just to simulate that this is an asynchronous task and we're getting this
+
+87
+00:06:03,760 --> 00:06:04,390
+from a server.
+
+88
+00:06:04,540 --> 00:06:06,190
+We don't have to put it into a timeout.
+
+89
+00:06:06,200 --> 00:06:09,340
+We can also run this code once does loads.
+
+90
+00:06:09,580 --> 00:06:14,200
+Just adding this to well, give us a little bit of time to prepare for the data to arrive, I guess.
+
+91
+00:06:14,710 --> 00:06:19,990
+And in that function that executes here in set timer, I now want to set this content to, let's say,
+
+92
+00:06:19,990 --> 00:06:24,420
+a string that holds HTML paragraph.
+
+93
+00:06:24,640 --> 00:06:27,170
+So this is all obviously not using our element.
+
+94
+00:06:27,400 --> 00:06:29,230
+I just want to show you that this works.
+
+95
+00:06:29,530 --> 00:06:31,270
+We're now rendering this paragraph.
+
+96
+00:06:31,270 --> 00:06:36,550
+If we inspect it, we see a paragraph surrender to the DOM because we're using in our HTML.
+
+97
+00:06:37,660 --> 00:06:40,530
+Now would be great if we could use our own element there.
+
+98
+00:06:40,570 --> 00:06:45,490
+So if we could use app alert here, like this app alert.
+
+99
+00:06:46,060 --> 00:06:49,060
+And now we also set a message of.
+
+100
+00:06:51,340 --> 00:06:58,720
+Rendered dynamically, dynamically, because we don't include it in our component template, we are
+
+101
+00:06:58,720 --> 00:07:04,110
+not including it in the app component HTML file, but here were hard coding it into our code.
+
+102
+00:07:04,120 --> 00:07:09,130
+But we could easily imagine that this is coming from an API call, that we're fetching this from a server.
+
+103
+00:07:09,700 --> 00:07:14,050
+So if we do it like this and then we reload our app, we can wait forever.
+
+104
+00:07:14,060 --> 00:07:15,330
+We won't see anything here.
+
+105
+00:07:15,640 --> 00:07:19,100
+And if we inspect our approved, we see that the def indeed is empty.
+
+106
+00:07:19,270 --> 00:07:20,970
+So nothing gets rendered here.
+
+107
+00:07:21,220 --> 00:07:28,030
+And the reason for this is that this is rendered as HTML code, but it's not recognized as an HTML element.
+
+108
+00:07:28,150 --> 00:07:30,150
+Appleford is not a built in element.
+
+109
+00:07:30,550 --> 00:07:31,620
+It's our own component.
+
+110
+00:07:31,630 --> 00:07:33,040
+But that exactly is what I meant.
+
+111
+00:07:33,460 --> 00:07:39,730
+Angular will not consider this after it has loaded our app because the compilation of the templates
+
+112
+00:07:40,000 --> 00:07:43,060
+and therefore the part where it understands your components.
+
+113
+00:07:43,060 --> 00:07:45,670
+Electra's is already done by that point of time.
+
+114
+00:07:45,880 --> 00:07:51,760
+And this doesn't change if we remove this from set time out and execute it right at the beginning of
+
+115
+00:07:51,760 --> 00:07:52,800
+this component.
+
+116
+00:07:53,020 --> 00:07:54,800
+So we don't see anything ever.
+
+117
+00:07:55,300 --> 00:07:56,680
+So this is not the reason.
+
+118
+00:07:56,830 --> 00:08:03,670
+The reason indeed is that ANGULAR doesn't compile this code and angular elements fixes this issue or
+
+119
+00:08:03,670 --> 00:08:04,780
+this problem.
+
+120
+00:08:04,780 --> 00:08:12,430
+You could say it allows us to basically take our angular component and put it into a totally encapsulated,
+
+121
+00:08:12,580 --> 00:08:20,200
+self bootstrapping HTML element, which you can dump into your angular app in this way, for example,
+
+122
+00:08:20,200 --> 00:08:21,490
+and which will still work.
+
+123
+00:08:22,180 --> 00:08:24,630
+Now, how do we create such a component?
+
+124
+00:08:25,240 --> 00:08:30,820
+We need to install angular elements and you can already see that I added an import up here, create
+
+125
+00:08:30,820 --> 00:08:31,660
+custom element.
+
+126
+00:08:31,870 --> 00:08:35,810
+This has been lurking around for a while and it seems to be what we need now.
+
+127
+00:08:35,830 --> 00:08:43,000
+Make sure that you install the angular elements package with NPM, install Daschner safe at Angular
+
+128
+00:08:43,210 --> 00:08:46,470
+Elements just in case this isn't installed already.
+
+129
+00:08:46,910 --> 00:08:49,420
+I'm recording this with a beta version, but of course.
+
+130
+00:08:49,420 --> 00:08:54,370
+But a point of time you're watching is it probably was released as part of the normal angular framework.
+
+131
+00:08:55,000 --> 00:09:00,640
+So once this is installed, you should also ensure that especially for the beta version might not be
+
+132
+00:09:00,640 --> 00:09:06,310
+a problem in later versions, that you got our task complete because this is required for this to run
+
+133
+00:09:06,310 --> 00:09:07,180
+at least right now.
+
+134
+00:09:07,600 --> 00:09:11,800
+And very important that you add this line to your packaged adjacent file.
+
+135
+00:09:12,130 --> 00:09:15,280
+This is a polyfoam which right now also is required for this to run.
+
+136
+00:09:15,580 --> 00:09:17,140
+This might also change in the future.
+
+137
+00:09:17,140 --> 00:09:18,580
+But right now you need to add this.
+
+138
+00:09:18,940 --> 00:09:24,760
+So at this line with this version and rerun NPM install thereafter to download it and add it to your
+
+139
+00:09:24,760 --> 00:09:25,390
+project.
+
+140
+00:09:25,870 --> 00:09:30,850
+And with that polie full installed, you can go to Deepali Fields to file.
+
+141
+00:09:31,210 --> 00:09:38,780
+And there you should add these two lines import at web components, custom elements, slash custom elements,
+
+142
+00:09:38,780 --> 00:09:40,540
+Stutman and import.
+
+143
+00:09:40,540 --> 00:09:44,830
+Add Web components, custom elements, slash source slash native chhim.
+
+144
+00:09:45,460 --> 00:09:51,370
+This might also change in the future, but we read now Nita's to enable custom elements to ensure that
+
+145
+00:09:51,370 --> 00:09:57,370
+this works, that the native element, this custom elements package or the angular elements package
+
+146
+00:09:57,370 --> 00:09:59,530
+spits out that this element works.
+
+147
+00:09:59,710 --> 00:10:00,770
+Therefore this is needed.
+
+148
+00:10:01,960 --> 00:10:07,750
+So with that all added with the polie fields added in with the packages added, we can now try creating
+
+149
+00:10:07,750 --> 00:10:08,530
+a custom element.
+
+150
+00:10:08,680 --> 00:10:11,200
+And for Disney constructor of app component.
+
+151
+00:10:11,470 --> 00:10:14,500
+You want to do this in a place that runs early in your project.
+
+152
+00:10:14,920 --> 00:10:19,330
+I'll create a new element and I'll name it Alert Element.
+
+153
+00:10:19,330 --> 00:10:25,060
+The name is up to you all stored in a constant which is named like this and I will use create custom
+
+154
+00:10:25,060 --> 00:10:28,270
+element and now I need to import my custom element.
+
+155
+00:10:28,600 --> 00:10:33,460
+I want to do this on the alert element, so you should make sure that you add an import to that.
+
+156
+00:10:33,880 --> 00:10:40,030
+So import alert component from and now it's.
+
+157
+00:10:41,200 --> 00:10:47,260
+Alert component and there, of course, it should also be alert component elements to the constant,
+
+158
+00:10:47,260 --> 00:10:50,340
+but we pass in the component to create custom element.
+
+159
+00:10:50,920 --> 00:10:53,690
+Now create custom element also needs a second argument.
+
+160
+00:10:54,190 --> 00:10:59,560
+This argument is used to configure this element and there we need to pass the injector.
+
+161
+00:10:59,560 --> 00:11:04,330
+We're using now angular uses, dependency injection, as you know, and the injector is basically the
+
+162
+00:11:04,330 --> 00:11:06,040
+tool which DAST is injection.
+
+163
+00:11:06,280 --> 00:11:12,130
+And we provided to this custom element so that the element behind the scenes is able to connect itself
+
+164
+00:11:12,130 --> 00:11:16,400
+to our EPSO to say therefore we simply inject the injector.
+
+165
+00:11:17,230 --> 00:11:23,520
+So import injector from adding Lacourt and with it injected in that object you're passing to create
+
+166
+00:11:23,530 --> 00:11:29,470
+custom element, you add the injector kit and as a value, the injector you're injecting.
+
+167
+00:11:29,710 --> 00:11:31,790
+That's a lot of injection going on, I guess.
+
+168
+00:11:32,560 --> 00:11:38,630
+So with that, we created a custom element and designed it already is a native web component.
+
+169
+00:11:39,310 --> 00:11:42,970
+Now we can use the custom elements API and important.
+
+170
+00:11:42,970 --> 00:11:45,230
+This is not an angular feature.
+
+171
+00:11:45,520 --> 00:11:49,330
+This is a feature provided by JavaScript and called The Finder.
+
+172
+00:11:49,660 --> 00:11:52,440
+This allows us to register a custom web component.
+
+173
+00:11:52,690 --> 00:11:55,870
+And again, Elad element is just such a component.
+
+174
+00:11:55,880 --> 00:11:57,770
+It's the same as we could have built on our own.
+
+175
+00:11:58,240 --> 00:12:04,510
+So therefore, here we first of all define the tag by which you want to select it and just doesn't have
+
+176
+00:12:04,510 --> 00:12:06,030
+to be the same one as down here.
+
+177
+00:12:06,190 --> 00:12:11,670
+So we could also use my dash alert, for example, and then you pass in the element.
+
+178
+00:12:11,680 --> 00:12:13,750
+So not the component, but a third element.
+
+179
+00:12:13,780 --> 00:12:17,740
+So our custom element now with this, we can use that.
+
+180
+00:12:17,890 --> 00:12:22,510
+So down there I use my alert instead of Appleford because I changed tack.
+
+181
+00:12:23,140 --> 00:12:24,640
+And now if we save this.
+
+182
+00:12:26,850 --> 00:12:29,340
+It compiles and if we go to our application.
+
+183
+00:12:30,590 --> 00:12:37,830
+Nothing happens, but if we inspect the console, we actually got an error that we.
+
+184
+00:12:37,880 --> 00:12:40,020
+Well, that doesn't find a component factory.
+
+185
+00:12:40,400 --> 00:12:44,350
+Now, as I said, angular elements are only available in angular apps right now.
+
+186
+00:12:45,050 --> 00:12:50,930
+So what we have to do at this point of time is we have to add the entry components array to our app
+
+187
+00:12:50,930 --> 00:12:58,340
+module into components essentially as an array of components which you don't use with its selector or
+
+188
+00:12:58,340 --> 00:13:03,320
+wire routing, but where you want to tell Angular that you're eventually going to use it.
+
+189
+00:13:03,680 --> 00:13:06,280
+And this is exactly what will happen for the alert component.
+
+190
+00:13:06,380 --> 00:13:09,290
+We declare it that's important so that the ANGULAR can find it.
+
+191
+00:13:09,620 --> 00:13:15,080
+But we also need to tell Angular, Hey, you won't see me use a selector for this, you won't see me
+
+192
+00:13:15,080 --> 00:13:18,760
+loaded with routing, but eventually I will need it.
+
+193
+00:13:19,010 --> 00:13:22,040
+So please be prepared to load it when I need it.
+
+194
+00:13:22,400 --> 00:13:27,950
+And that is why we also have to load the angular component excuse me, the alert component, not our
+
+195
+00:13:27,950 --> 00:13:32,600
+custom element, but the angular component here into our entry components array.
+
+196
+00:13:32,840 --> 00:13:39,800
+And if we do that and we save the app will reload and we get at least a warning, not an error.
+
+197
+00:13:40,220 --> 00:13:43,250
+Sanitizing HTML stripped some content.
+
+198
+00:13:43,970 --> 00:13:49,640
+Now the custom element is in the end a bunch of JavaScript code and this is sanitized.
+
+199
+00:13:49,640 --> 00:13:52,330
+So this can't be rendered with inner HTML.
+
+200
+00:13:52,610 --> 00:13:57,580
+That's a security mechanism to avoid a crosseyed scripting attacks.
+
+201
+00:13:58,070 --> 00:14:04,250
+We want this mechanism, but in this case we know our content is safe and therefore we want to be able
+
+202
+00:14:04,250 --> 00:14:04,850
+to output it.
+
+203
+00:14:05,420 --> 00:14:07,160
+We can do this with the help of the DOM.
+
+204
+00:14:08,320 --> 00:14:16,840
+Sanitiser, you can also check this, it's the Tom Sanitiser object or class, which you need to import
+
+205
+00:14:16,840 --> 00:14:24,820
+from that angular platform browser and with it injected, you can wrap this custom HTML code, which
+
+206
+00:14:24,820 --> 00:14:27,340
+again behind the scenes will use a lot of JavaScript.
+
+207
+00:14:28,000 --> 00:14:37,930
+You can wrap this with DOM sanitiser bypass security trust HTML so that this HTML code and whatever
+
+208
+00:14:37,930 --> 00:14:40,010
+is connected to it is trusted.
+
+209
+00:14:40,780 --> 00:14:45,850
+So now with that, if we reload this, we do see our alert after a second.
+
+210
+00:14:45,910 --> 00:14:48,970
+But this time it's loaded as a custom element.
+
+211
+00:14:49,630 --> 00:14:55,510
+If we inspect it, we see our template here and we see the styles we apply to it.
+
+212
+00:14:55,960 --> 00:15:03,470
+But this now actually is loaded as native web component, still only usable in angular projects.
+
+213
+00:15:03,550 --> 00:15:08,410
+This will probably change in the future, though, but already useful for dynamic content like this.
+
+214
+00:15:08,950 --> 00:15:13,360
+Since we sanitize it, you should, of course, make sure that you know that this content is safe.
+
+215
+00:15:13,690 --> 00:15:20,290
+But with that, you got a really great tool to load content into your app and control it as an angular
+
+216
+00:15:20,290 --> 00:15:27,010
+component and do all the fun stuff you can do with components whilst getting it from another source,
+
+217
+00:15:27,010 --> 00:15:31,810
+which is not hard coded into your angular project code when you're compiling it.
+

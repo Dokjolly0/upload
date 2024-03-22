@@ -1,0 +1,348 @@
+1
+00:00:02,350 --> 00:00:05,470
+Thus far our requests always succeeded
+
+2
+00:00:05,470 --> 00:00:09,780
+but of course when interacting with servers, things can go wrong.
+
+3
+00:00:09,790 --> 00:00:14,920
+You might not have an internet connection or you're sending a request with incorrect data
+
+4
+00:00:14,940 --> 00:00:20,500
+somehow because you have a bug in your program or whatever it is or your server fails.
+
+5
+00:00:20,500 --> 00:00:25,870
+Maybe it's offline or there's an error on the server or you're not authenticated,
+
+6
+00:00:25,870 --> 00:00:33,070
+there are dozens of things that can go wrong and we can simulate such a thing that can go wrong by going
+
+7
+00:00:33,070 --> 00:00:35,620
+to Firebase and there in the database,
+
+8
+00:00:35,620 --> 00:00:42,130
+let's go to rules and remember that when we created that database, we enabled the test mode which essentially
+
+9
+00:00:42,130 --> 00:00:42,830
+means that
+
+10
+00:00:42,850 --> 00:00:47,090
+read and write access to this database is granted to everyone,
+
+11
+00:00:47,110 --> 00:00:49,630
+you don't need to authenticate yourself.
+
+12
+00:00:50,050 --> 00:00:55,620
+Now we will add authentication in the authentication module later in the course and therefore
+
+13
+00:00:55,620 --> 00:00:58,330
+for now, we open this up to everyone.
+
+14
+00:00:58,330 --> 00:01:04,840
+Now if I lock this down though, so if I say you're not allowed to read for example, you can still write but
+
+15
+00:01:04,840 --> 00:01:06,560
+you're not allowed to read
+
+16
+00:01:06,820 --> 00:01:11,440
+and by setting this to false, there is no condition under which you would ever be allowed, not even if
+
+17
+00:01:11,440 --> 00:01:13,030
+you are authenticated,
+
+18
+00:01:13,030 --> 00:01:20,710
+so if I lock this down, what happens is that if I now try to fetch posts here, you see we get an error
+
+19
+00:01:21,310 --> 00:01:23,640
+and that of course happens,
+
+20
+00:01:23,650 --> 00:01:29,890
+errors occur but it is important how we react to that error. For now,
+
+21
+00:01:29,890 --> 00:01:36,250
+for example here, we stay in this loading state and that is not a great user experience because now we
+
+22
+00:01:36,250 --> 00:01:41,350
+as a user have no idea that there was an error and that something failed.
+
+23
+00:01:41,350 --> 00:01:44,200
+Therefore, proper error handling matters.
+
+24
+00:01:44,200 --> 00:01:46,660
+Now how can we handle errors?
+
+25
+00:01:46,750 --> 00:01:48,800
+There are different ways of doing that.
+
+26
+00:01:48,820 --> 00:01:55,750
+Let me demonstrate the first possible way, here onFetchPosts fails because we have an error.
+
+27
+00:01:55,990 --> 00:02:01,300
+Thus far, we only passed one function to subscribe and that is the function that fires when new data
+
+28
+00:02:01,300 --> 00:02:02,280
+is emitted.
+
+29
+00:02:02,290 --> 00:02:07,360
+Now as you learned in the observables section, you can pass more arguments to subscribe
+
+30
+00:02:07,360 --> 00:02:13,870
+and the second argument is a function that triggers whenever an error is thrown and there, we will get
+
+31
+00:02:13,870 --> 00:02:15,790
+the error object as an argument
+
+32
+00:02:15,790 --> 00:02:22,210
+and now here, we can do something to handle that error, to do something to provide a better user interface
+
+33
+00:02:22,750 --> 00:02:24,380
+or a better user experience
+
+34
+00:02:24,430 --> 00:02:27,420
+and that often starts with a better user interface.
+
+35
+00:02:27,430 --> 00:02:32,890
+So for example here, what we could do is we could display an error message instead of loading.
+
+36
+00:02:32,890 --> 00:02:39,920
+So down there where we display loading or the content we loaded, we could actually introduce a new property,
+
+37
+00:02:41,580 --> 00:02:43,980
+error and set this to null initially,
+
+38
+00:02:43,980 --> 00:02:45,630
+so we have no error
+
+39
+00:02:45,660 --> 00:02:48,500
+initially. If this is not null,
+
+40
+00:02:48,510 --> 00:02:54,430
+so if we do have an error and we'll add logic to change that soon, I want to add a div here with the
+
+41
+00:02:54,430 --> 00:03:02,650
+classes alert and alert-danger which are Bootstrap classes where I simply have let's say a h1 tag, an
+
+42
+00:03:02,710 --> 00:03:12,200
+error occurred and below that, I want to output error because error in my case in this application
+
+43
+00:03:12,200 --> 00:03:14,090
+here could just be an error message
+
+44
+00:03:14,090 --> 00:03:18,590
+and of course it's up to you how you exactly manage that and what you store in there.
+
+45
+00:03:18,590 --> 00:03:26,570
+Now the idea is that this here, this div is only shown if we have an error, so if error is true-ish which
+
+46
+00:03:26,570 --> 00:03:32,600
+it is not if it is null. Initially it's null and therefore, it's treated as a false value and therefore initially,
+
+47
+00:03:32,600 --> 00:03:37,960
+this will not show up but as soon as we set this to some string, it becomes true-ish
+
+48
+00:03:38,000 --> 00:03:40,020
+and then this will show up.
+
+49
+00:03:40,020 --> 00:03:46,550
+This also means that I only want to show loading if we are fetching and we're not having an error because
+
+50
+00:03:46,550 --> 00:03:49,010
+if we have an error, I never want to show loading,
+
+51
+00:03:49,010 --> 00:03:53,070
+I want to show my alert here. Now
+
+52
+00:03:53,150 --> 00:03:59,360
+the remaining step is to set that error and of course, I want to do this here in my error handling function
+
+53
+00:03:59,930 --> 00:04:06,860
+and I will simply set this error equal to error.message because by default, error objects have a
+
+54
+00:04:06,860 --> 00:04:07,600
+message.
+
+55
+00:04:07,610 --> 00:04:13,340
+The question is if that message is helpful but at least we can set this message for now.
+
+56
+00:04:13,340 --> 00:04:19,210
+Now important, of course we are fetching posts, not just here but also in ngOnInit,
+
+57
+00:04:19,310 --> 00:04:22,970
+so there we should add the second argument as well.
+
+58
+00:04:23,210 --> 00:04:24,720
+And with that, let's have a look,
+
+59
+00:04:24,740 --> 00:04:26,060
+let's wait for that to reload
+
+60
+00:04:26,060 --> 00:04:28,030
+and here it is already.
+
+61
+00:04:28,040 --> 00:04:32,780
+Now of course, you can see this is the error message we're getting, might not be too useful,
+
+62
+00:04:32,780 --> 00:04:37,110
+you can definitely tweak that, you can show your own error message,
+
+63
+00:04:37,190 --> 00:04:45,450
+you can dive into that in more details and if you for example need more information from the error response,
+
+64
+00:04:45,470 --> 00:04:49,940
+let's have a look at the error we got here.
+
+65
+00:04:50,030 --> 00:04:51,480
+Let me save that and
+
+66
+00:04:51,710 --> 00:04:58,340
+now if I fetch posts, this is getting logged and you see what I log here is indeed a full error response
+
+67
+00:04:58,430 --> 00:04:59,310
+object.
+
+68
+00:04:59,390 --> 00:05:00,890
+Now there, you see that message
+
+69
+00:05:00,890 --> 00:05:09,410
+we accessed but you also see you got for example another error key with yet another error key that has maybe
+
+70
+00:05:09,410 --> 00:05:11,650
+a more helpful error message.
+
+71
+00:05:11,660 --> 00:05:17,960
+This however is not guaranteed to exist, this only exist because our error here is an error response,
+
+72
+00:05:18,050 --> 00:05:22,300
+so the Firebase server is sending back a customized error response.
+
+73
+00:05:22,310 --> 00:05:28,610
+Now the important thing to memorize about that however is you will get that HTTP error response object
+
+74
+00:05:28,610 --> 00:05:37,520
+by Angular and it will have an error key but the detailed content of what's in there depends on the API
+
+75
+00:05:37,520 --> 00:05:43,520
+you're talking to, Firebase gives you an object with another error key and that permission denied message.
+
+76
+00:05:43,730 --> 00:05:49,370
+Your own API might not be sending this or might be sending different data, so it's always important to
+
+77
+00:05:49,370 --> 00:05:54,440
+understand which API you're working with and what this API sends back
+
+78
+00:05:54,440 --> 00:06:01,370
+in the case of a success message or in the case of an error. If you need more information about the
+
+79
+00:06:01,370 --> 00:06:06,980
+error though and not just a generic message, then you can dive into that error object you're getting,
+
+80
+00:06:07,040 --> 00:06:12,170
+which is that object we're logging here and there you see you can also get information about the headers,
+
+81
+00:06:12,410 --> 00:06:17,840
+you can get the exact status code that was thrown which can be very helpful in showing a more useful
+
+82
+00:06:18,290 --> 00:06:20,170
+message and so on.
+
+83
+00:06:20,300 --> 00:06:23,200
+So you have all of that at your disposal
+
+84
+00:06:23,270 --> 00:06:29,570
+and I strongly encourage you to simply play around with that, to properly handle errors in your application
+
+85
+00:06:29,570 --> 00:06:30,420
+too.
+
+86
+00:06:30,440 --> 00:06:32,500
+However, this is just one way of handling errors,
+
+87
+00:06:32,510 --> 00:06:35,990
+let me show you another way that might be more suitable in other cases.
+

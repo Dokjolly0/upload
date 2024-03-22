@@ -1,0 +1,172 @@
+1
+00:00:03,000 --> 00:00:05,460
+So we learned a lot throughout this section.
+
+2
+00:00:05,460 --> 00:00:10,340
+We learned how to pass data around, how to get access to elements in our DOM, how to use local references,
+
+3
+00:00:10,350 --> 00:00:17,130
+so our application now is much more dynamic, we got much more tools to interact between the different
+
+4
+00:00:17,130 --> 00:00:19,710
+pieces we have in our app.
+
+5
+00:00:19,720 --> 00:00:26,070
+Now there is another way we can pass data around, the last way for now. In our server-element component
+
+6
+00:00:26,310 --> 00:00:26,820
+here,
+
+7
+00:00:26,850 --> 00:00:32,510
+right now we check if we have a type server or a type blueprint server,
+
+8
+00:00:32,550 --> 00:00:33,600
+right.
+
+9
+00:00:33,750 --> 00:00:35,470
+Nothing wrong with that
+
+10
+00:00:35,730 --> 00:00:44,390
+but sometimes, you have complex HTML code like this which you want to pass into a component from outside.
+
+11
+00:00:44,700 --> 00:00:50,170
+So imagine you don't want to set this up inside the component here, I cut it, instead
+
+12
+00:00:50,190 --> 00:00:56,640
+in the app component, you somehow want to add this here between the opening and closing element of your
+
+13
+00:00:56,640 --> 00:00:58,060
+own component
+
+14
+00:00:58,560 --> 00:01:02,530
+and there, we simply would have to replace element with server-element
+
+15
+00:01:02,760 --> 00:01:05,390
+and we should expect this to work, right.
+
+16
+00:01:05,490 --> 00:01:12,210
+So if we save this and let it reload and we add a new server, we don't get an error but the content is
+
+17
+00:01:12,540 --> 00:01:16,130
+also not there and that is the default behavior.
+
+18
+00:01:16,140 --> 00:01:23,220
+Everything you place between the opening and closing tag of your own component is lost by default, is
+
+19
+00:01:23,220 --> 00:01:26,920
+simply removed from the DOM, Angular will not take care about it
+
+20
+00:01:27,270 --> 00:01:29,580
+but you can change this.
+
+21
+00:01:29,580 --> 00:01:34,440
+There is a special directive and it is a directive, even though it looks like a component but
+
+22
+00:01:34,440 --> 00:01:36,150
+it doesn't have its own template,
+
+23
+00:01:36,380 --> 00:01:42,270
+a special directive you can add in the server-element components template here, in the place where I
+
+24
+00:01:42,270 --> 00:01:47,950
+want to render the content, I can add ng-content, opening and closing again.
+
+25
+00:01:48,020 --> 00:01:54,840
+It still is a directive, just using this element like selector and this serves as a hook you can place
+
+26
+00:01:54,930 --> 00:02:03,290
+in your component to mark the place for Angular where it should add any content it finds between the
+
+27
+00:02:03,330 --> 00:02:05,600
+opening and closing tag here, 
+
+28
+00:02:05,760 --> 00:02:12,210
+so this content in this case. With this tiny addition, you should see that once you save this and let it
+
+29
+00:02:12,210 --> 00:02:13,240
+reload,
+
+30
+00:02:13,470 --> 00:02:19,320
+if we add this and we click add server,
+
+31
+00:02:19,430 --> 00:02:21,370
+you now see the content is back.
+
+32
+00:02:21,620 --> 00:02:24,250
+It looks exactly the way it looked before
+
+33
+00:02:24,260 --> 00:02:28,510
+but technically, something totally different works or happens here.
+
+34
+00:02:28,520 --> 00:02:35,480
+Now we add this via the ng-content hook, we add it between the opening and closing tags and therefore
+
+35
+00:02:35,480 --> 00:02:42,100
+it will be projected into your component, projected into your server element component.
+
+36
+00:02:42,380 --> 00:02:49,490
+A nice feature, especially if you think about building re-usable widgets, like a tab widget where each
+
+37
+00:02:49,550 --> 00:02:55,190
+tab will have a content which probably comes from some other source and which you don't want to pass
+
+38
+00:02:55,280 --> 00:02:58,850
+through property binding which always would be an alternative
+
+39
+00:02:58,940 --> 00:03:04,940
+but if it's more complex HTML code, property binding really is not the best solution because Angular
+
+40
+00:03:04,940 --> 00:03:10,310
+will escape HTML tags there to prevent cross-site scripting attacks from happening and you could
+
+41
+00:03:10,310 --> 00:03:12,010
+kind of work around that
+
+42
+00:03:12,020 --> 00:03:18,920
+but really, ng-content then is how you want to display this and that is a great tool to have at your
+
+43
+00:03:18,920 --> 00:03:19,900
+disposal.
+

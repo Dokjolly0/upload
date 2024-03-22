@@ -1,0 +1,104 @@
+1
+00:00:02,410 --> 00:00:07,190
+So let's take a closer look at how Angular works together with forms.
+
+2
+00:00:07,190 --> 00:00:14,290
+Consider this form, this is the HTML code of a form which you might use and there is nothing Angular specific
+
+3
+00:00:14,290 --> 00:00:15,120
+about this code,
+
+4
+00:00:15,130 --> 00:00:20,980
+it's normal HTML code which you would place your HTML documents to maybe display a form like this,
+
+5
+00:00:21,070 --> 00:00:26,380
+with an input for the username and an input for the e-mail address.
+
+6
+00:00:26,380 --> 00:00:33,220
+Now as mentioned in the last video, Angular's job now is to allow you to retrieve the values the user
+
+7
+00:00:33,220 --> 00:00:40,870
+entered here and also to check some other things, like is the form valid, did the user enter valid information?
+
+8
+00:00:41,680 --> 00:00:48,790
+And all that of course will happen in Javascript, in TypeScript, so on the Angular 2 side of your app
+
+9
+00:00:48,790 --> 00:00:50,050
+you could say.
+
+10
+00:00:50,050 --> 00:00:57,520
+So you somehow need to be able to parse the values the user enters and you somehow need some Javascript
+
+11
+00:00:57,610 --> 00:01:03,800
+object representation of your form in your TypeScript code to work with,
+
+12
+00:01:03,820 --> 00:01:06,840
+so this object could look something like this.
+
+13
+00:01:06,850 --> 00:01:08,810
+It is more complex in reality
+
+14
+00:01:08,980 --> 00:01:14,980
+but these would be the key features we need for example, we need to have the value of the form and there
+
+15
+00:01:15,040 --> 00:01:22,100
+it would be convenient if we would have key-value pairs where the key refers to the name of an input,
+
+16
+00:01:22,100 --> 00:01:30,100
+like for example name or e-mail as specified in the HTML code and then it holds the values the user
+
+17
+00:01:30,100 --> 00:01:30,970
+entered,
+
+18
+00:01:30,970 --> 00:01:36,790
+this would make it super simple for you to work with these values in your TypeScript code and to do something
+
+19
+00:01:36,790 --> 00:01:39,040
+with the values the user entered.
+
+20
+00:01:39,100 --> 00:01:45,820
+It might also be helpful if some metadata was stored, like for example if the form is valid and this
+
+21
+00:01:45,820 --> 00:01:47,430
+would be changed to false
+
+22
+00:01:47,440 --> 00:01:54,670
+for example if the e-mail address wouldn't be a valid e-mail address. This is what Angular does for you,
+
+23
+00:01:54,760 --> 00:02:02,200
+it allows you or it gives you actually such a Javascript object representation of your form, making
+
+24
+00:02:02,200 --> 00:02:08,300
+it simple for you to retrieve user values and to see the state of the form and to work with it.
+
+25
+00:02:08,320 --> 00:02:14,050
+Now in the next lectures, we're going to take a detailed look and we will understand how exactly that works,
+
+26
+00:02:14,290 --> 00:02:19,300
+how we can configure it, what we can do with it, how we can reset it and much more.
+

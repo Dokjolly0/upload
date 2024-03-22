@@ -1,0 +1,548 @@
+1
+00:00:02,480 --> 00:00:08,170
+Now how should that logic look like in the shopping list reducer? First of all, we got two new cases,
+
+2
+00:00:08,180 --> 00:00:10,220
+that's the simple part.
+
+3
+00:00:10,250 --> 00:00:16,940
+The first case is that in the shopping list actions, we encountered the
+
+4
+00:00:17,030 --> 00:00:21,110
+UPDATE_INGREDIENT uppercase though, the string identifier,
+
+5
+00:00:21,110 --> 00:00:29,110
+the second case which we need is the DELETE_INGREDIENT case. Now in both cases, we need to return a new
+
+6
+00:00:29,120 --> 00:00:32,100
+object which will reflect our new state,
+
+7
+00:00:32,210 --> 00:00:34,490
+so far so simple.
+
+8
+00:00:34,580 --> 00:00:36,910
+Now we need to update that state
+
+9
+00:00:36,920 --> 00:00:39,350
+and let's start with updating ingredients.
+
+10
+00:00:42,020 --> 00:00:42,650
+As always,
+
+11
+00:00:42,740 --> 00:00:49,310
+you should copy your existing state first and then overwrite ingredients because that is what we work
+
+12
+00:00:49,310 --> 00:00:57,140
+with here with a new array and that new array will basically be the old ingredients array where we edited
+
+13
+00:00:57,230 --> 00:00:58,340
+one ingredient.
+
+14
+00:00:59,150 --> 00:01:01,220
+So that requires a bit more logic,
+
+15
+00:01:01,280 --> 00:01:04,160
+let's write it here above the return statement,
+
+16
+00:01:04,160 --> 00:01:11,230
+first of all let's get that one ingredient that we want to edit. So I'll get it here,
+
+17
+00:01:11,250 --> 00:01:15,180
+my ingredient is equal to state,
+
+18
+00:01:15,180 --> 00:01:16,610
+that's my old state right,
+
+19
+00:01:16,620 --> 00:01:18,290
+that's the state I'm getting as an argument,
+
+20
+00:01:18,300 --> 00:01:21,330
+so it's the previous state before we updated it now.
+
+21
+00:01:21,390 --> 00:01:28,320
+So state, there ingredients and then we can simply access the index because we get the index as part
+
+22
+00:01:28,320 --> 00:01:29,530
+of our action.payload,
+
+23
+00:01:29,550 --> 00:01:29,940
+right,
+
+24
+00:01:29,940 --> 00:01:34,920
+so action.payload here will be indexed or will have an index.
+
+25
+00:01:35,520 --> 00:01:37,460
+So that's the ingredient I want to edit
+
+26
+00:01:37,590 --> 00:01:42,390
+but remember that we always have to add a data immutably here.
+
+27
+00:01:42,390 --> 00:01:50,930
+So simply setting ingredient amount equal to action.payload ingredient amount would be incorrect because
+
+28
+00:01:50,930 --> 00:01:58,610
+that would edit the old states object or data stored in that old state object and that is not allowed
+
+29
+00:01:58,640 --> 00:02:00,700
+and absolutely not the pattern
+
+30
+00:02:00,770 --> 00:02:08,000
+ngRx wants you to use. Instead we should create a copy and I'll name this updatedIngredient which
+
+31
+00:02:08,210 --> 00:02:14,840
+is an object because ingredient is an object where I copy the old ingredient, so I copy the name and
+
+32
+00:02:14,840 --> 00:02:22,550
+the amount. And then I know that my action.payload also has an ingredient,
+
+33
+00:02:22,550 --> 00:02:26,930
+right because I set it up here when I defined the types of data I get here.
+
+34
+00:02:26,960 --> 00:02:29,400
+So I have ingredients here as well
+
+35
+00:02:29,750 --> 00:02:37,850
+and therefore I can simply just copy action.payload ingredient because that is an ingredient and this
+
+36
+00:02:37,850 --> 00:02:42,680
+ingredient I get here has of course the same properties as the ingredient I'm copying.
+
+37
+00:02:42,680 --> 00:02:48,080
+So essentially, I'm copying the old ingredients properties to then overwrite them here,
+
+38
+00:02:48,080 --> 00:02:54,290
+obviously we could therefore not copy this and simply just spread our incoming ingredient data into
+
+39
+00:02:54,290 --> 00:02:55,520
+this new object
+
+40
+00:02:55,520 --> 00:03:01,220
+but for cases where for example you have an ID on that existing ingredient which you don't want to
+
+41
+00:03:01,220 --> 00:03:07,310
+overwrite, it would make sense to copy all the old data so that you keep things like an ID or anything
+
+42
+00:03:07,310 --> 00:03:12,850
+else that doesn't need to be overwritten and then you just overwrite what needs to be overwritten. Here,
+
+43
+00:03:12,950 --> 00:03:19,130
+we actually overwrite everything but for demo purposes and to understand the general pattern, I still
+
+44
+00:03:19,130 --> 00:03:24,810
+like copying it first and then changing what needs to be changed. Now
+
+45
+00:03:24,810 --> 00:03:26,490
+that's the updated ingredient
+
+46
+00:03:26,550 --> 00:03:34,310
+but we need an array of the old ingredients and then this updatedIngredient being replaced.
+
+47
+00:03:34,470 --> 00:03:38,730
+So for this, I'll add a new constant, updatedIngredients,
+
+48
+00:03:38,760 --> 00:03:46,650
+so plural, where I copy all my old state ingredients, so I copy the ingredient elements from my old state.
+
+49
+00:03:47,300 --> 00:03:51,180
+So the array, the updatedIngredients array is now a new array,
+
+50
+00:03:51,180 --> 00:03:58,290
+it's not the array in the old state, it's just a new array with the data of the old states array. So
+
+51
+00:03:58,380 --> 00:04:00,510
+updatedIngredients is therefore an array
+
+52
+00:04:00,510 --> 00:04:08,910
+I can safely edit, so updatedIngredients can be edited by selecting the index where we want to update
+
+53
+00:04:08,940 --> 00:04:15,780
+the ingredient with the help of action.payload.index and then assigning a new element or overwriting
+
+54
+00:04:15,780 --> 00:04:21,960
+the existing element at this index with a new element and that new element is of course the updated
+
+55
+00:04:21,960 --> 00:04:23,190
+ingredient.
+
+56
+00:04:23,190 --> 00:04:31,050
+So I'm replacing the old element with that index in the copied updatedIngredients array with the copied
+
+57
+00:04:31,290 --> 00:04:39,070
+updatedIngredient and now updatedIngredients is an array of ingredients where we overwrote one ingredient
+
+58
+00:04:39,070 --> 00:04:45,510
+that that was the ingredient that has to be edited and therefore now the ingredients I set here in the
+
+59
+00:04:45,510 --> 00:04:53,260
+state I returned is simply my updatedIngredients array. So that's the logic for updating an ingredient,
+
+60
+00:04:53,440 --> 00:04:59,530
+might look like a lot of work but in the end, this just enforces this immutable logic
+
+61
+00:04:59,560 --> 00:05:01,660
+and whilst this might look strange at first,
+
+62
+00:05:01,690 --> 00:05:08,470
+it really is a good pattern that will prevent unexpected bugs where you accidentally edit some old
+
+63
+00:05:08,470 --> 00:05:15,880
+state too early and therefore, your @ngrx/store state gets out of sync with your rest of the
+
+64
+00:05:15,880 --> 00:05:16,900
+application state
+
+65
+00:05:16,900 --> 00:05:20,020
+that doesn't expect such immutable mutations.
+
+66
+00:05:20,470 --> 00:05:25,640
+So therefore, always edit your data immutability like we do it here, return a new state
+
+67
+00:05:25,690 --> 00:05:31,990
+and if you need to edit something inside of that state, copy it first and then edit the copy.
+
+68
+00:05:31,990 --> 00:05:38,410
+Now of course, we also delete ingredients and there, we also return a copy of the old state and then
+
+69
+00:05:38,410 --> 00:05:45,340
+we set ingredients equal to a new array and just as before, this needs to be an array of ingredients
+
+70
+00:05:45,640 --> 00:05:52,570
+where we basically have all the old ingredients but we removed one and this is relatively easy to do,
+
+71
+00:05:54,300 --> 00:06:03,560
+you simply set ingredients equal to state ingredients filter. Now filter will always return a new
+
+72
+00:06:03,570 --> 00:06:10,200
+array, so it will automatically give us a copy and filter is a function built into Javascript that will
+
+73
+00:06:10,380 --> 00:06:17,700
+take an array, run a certain function which you pass in as an argument on every element in the array
+
+74
+00:06:17,850 --> 00:06:23,790
+and if your function which you pass into filter which we'll do in a second, if that function returns true,
+
+75
+00:06:24,090 --> 00:06:29,950
+then the element for which it's executing this will be part of the new array filter returns,
+
+76
+00:06:30,030 --> 00:06:35,790
+otherwise it will not. So the function we have to pass to filter is a function that runs on every element
+
+77
+00:06:36,000 --> 00:06:36,560
+in the array
+
+78
+00:06:36,560 --> 00:06:37,720
+you call filter on,
+
+79
+00:06:37,740 --> 00:06:41,970
+so on every ingredient and this function will automatically receive every element
+
+80
+00:06:42,000 --> 00:06:47,030
+therefore, hence we can name it ingredients here or just ig
+
+81
+00:06:47,100 --> 00:06:51,840
+and then I use an arrow function and this is now my function body here and in there, we have to return
+
+82
+00:06:51,840 --> 00:06:53,180
+true or false
+
+83
+00:06:53,400 --> 00:06:57,060
+deciding whether we want to keep that ingredient we're currently looking at
+
+84
+00:06:57,060 --> 00:07:00,930
+and again this will run for every ingredient in that array or not
+
+85
+00:07:01,050 --> 00:07:09,450
+and I want to keep my ingredient if its index is not equal to the index we're looking for here,
+
+86
+00:07:09,450 --> 00:07:11,700
+so which is part of our action.payload.
+
+87
+00:07:11,700 --> 00:07:17,640
+And the good thing is the filter function or the function we pass to filter does not just give us every
+
+88
+00:07:17,640 --> 00:07:21,750
+element for which it executes but also the index of every element.
+
+89
+00:07:21,750 --> 00:07:25,670
+So we also gets the ig index or whatever you want to call it,
+
+90
+00:07:25,680 --> 00:07:27,960
+so we get two arguments by default,
+
+91
+00:07:27,960 --> 00:07:31,230
+that is how filter works, how this built-in function works,
+
+92
+00:07:31,380 --> 00:07:32,180
+it's not Angular,
+
+93
+00:07:32,180 --> 00:07:33,670
+this is vanilla Javascript.
+
+94
+00:07:33,780 --> 00:07:36,100
+We get the element for which the function runs,
+
+95
+00:07:36,120 --> 00:07:40,860
+so every element in the ingredients array and then always the current index of the element we're looking
+
+96
+00:07:40,860 --> 00:07:41,610
+at
+
+97
+00:07:41,610 --> 00:07:48,360
+and I want to return true for every element where the index is not equal to the index we're looking
+
+98
+00:07:48,360 --> 00:07:55,290
+for because if I return true, then the element will be kept, if I return false, it will be filtered out
+
+99
+00:07:55,580 --> 00:08:00,570
+and I only want to filter out one element and that is the element with the index we're trying to delete.
+
+100
+00:08:00,960 --> 00:08:10,710
+So I return ig index not equal to action.payload and action.payload already is the index for this action
+
+101
+00:08:10,860 --> 00:08:11,730
+right here,
+
+102
+00:08:11,780 --> 00:08:13,110
+it's already a number,
+
+103
+00:08:13,260 --> 00:08:14,850
+so that is what I'm comparing.
+
+104
+00:08:14,850 --> 00:08:19,410
+So if my action.payload, if the index I'm getting is equal to the index I'm currently looking at, then
+
+105
+00:08:19,410 --> 00:08:23,940
+this is the element I want to remove and therefore I have to return false which is what happens here
+
+106
+00:08:24,030 --> 00:08:29,310
+so that this is not included in the new array filter returns.
+
+107
+00:08:29,310 --> 00:08:32,510
+So that was again a lot of talking,
+
+108
+00:08:32,580 --> 00:08:36,840
+let's now make sure that this also gets dispatched. For that,
+
+109
+00:08:36,840 --> 00:08:42,020
+let's first of all go to the shopping-edit component,
+
+110
+00:08:42,160 --> 00:08:45,580
+we already dispatched our own action for adding an ingredient,
+
+111
+00:08:45,580 --> 00:08:48,620
+let's now also do the same for updating it.
+
+112
+00:08:48,670 --> 00:08:58,830
+So now we can call this store dispatch new shopping list actions.update ingredient
+
+113
+00:08:59,060 --> 00:09:05,660
+and there we need to pass in an object which has an index property, which should be the index of the
+
+114
+00:09:05,660 --> 00:09:07,920
+element we want to remove and
+
+115
+00:09:07,980 --> 00:09:16,080
+we get this here with this editedItemIndex and we also have to pass in the new ingredient which
+
+116
+00:09:16,080 --> 00:09:17,370
+we want to use instead
+
+117
+00:09:17,520 --> 00:09:21,150
+and that is the new ingredient argument here.
+
+118
+00:09:21,210 --> 00:09:26,610
+So this dispatches the update ingredient action,
+
+119
+00:09:26,800 --> 00:09:33,530
+now we can also delete ingredients and there, we currently call this shopping list service delete ingredient.
+
+120
+00:09:33,530 --> 00:09:41,270
+Let's get rid of this as well and let's use the store instead and dispatch a new shopping list actions,
+
+121
+00:09:42,080 --> 00:09:48,260
+delete ingredient action where we now also need to include the index of the element we want to remove
+
+122
+00:09:48,640 --> 00:09:52,910
+and that is the this editedItemIndex here,
+
+123
+00:09:52,910 --> 00:09:57,910
+so let's dispatch this as well. Let's give this a try,
+
+124
+00:09:57,910 --> 00:10:02,530
+if we go back to the application and I select tomatoes and I delete this, they're gone
+
+125
+00:10:02,530 --> 00:10:03,760
+so this looks pretty good.
+
+126
+00:10:03,820 --> 00:10:04,990
+If I reload, they are of course back,
+
+127
+00:10:04,990 --> 00:10:10,450
+this is how this works. I mentioned that your current state stored in your application would be lost
+
+128
+00:10:10,450 --> 00:10:14,130
+if you refresh and therefore, our update of course also is lost,
+
+129
+00:10:14,140 --> 00:10:22,150
+we didn't save this change to a server but it works. Now does updating work? If I change the amount to
+
+130
+00:10:22,240 --> 00:10:28,300
+10 here, looks pretty good. If I remove an s, also looks pretty good though
+
+131
+00:10:28,360 --> 00:10:30,450
+I'm also back to 5 then,
+
+132
+00:10:30,680 --> 00:10:31,060
+right?
+
+133
+00:10:31,060 --> 00:10:34,360
+So let me show this again. I update this to 10,
+
+134
+00:10:34,360 --> 00:10:40,250
+now I lost the Apple s and if I update that again, I removed the s,
+
+135
+00:10:40,430 --> 00:10:47,600
+something is going wrong because you might see if I click on this, actually the old state is loaded, apples
+
+136
+00:10:47,860 --> 00:10:51,590
+and the amount, it's not loading the state we're seeing down there.
+
+137
+00:10:51,590 --> 00:10:57,280
+So updating only partly works and let's see what's wrong here.
+

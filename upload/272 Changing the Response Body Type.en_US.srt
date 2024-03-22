@@ -1,0 +1,156 @@
+1
+00:00:02,440 --> 00:00:11,490
+You can not only configure the observe mode here, you can also configure the response type. The default
+
+2
+00:00:11,500 --> 00:00:17,300
+here is JSON, which means the response data, so the data in the body of your response is JSON
+
+3
+00:00:17,520 --> 00:00:23,370
+and that tells Angular that it should automatically parse it and convert it to a Javascript object.
+
+4
+00:00:23,370 --> 00:00:29,370
+You could however also tell Angular the response side will be text and please keep it as text, don't try to
+
+5
+00:00:29,370 --> 00:00:31,530
+convert it to a Javascript object.
+
+6
+00:00:31,530 --> 00:00:33,690
+It could also be a blob if it is a file
+
+7
+00:00:33,690 --> 00:00:39,870
+for example, the official docs of course are the place where you can learn all about all available response
+
+8
+00:00:39,870 --> 00:00:40,810
+types.
+
+9
+00:00:40,920 --> 00:00:47,640
+So if you use text here and I add a new post here, send it first,
+
+10
+00:00:48,790 --> 00:00:54,190
+then you still see of course that I get null here because we had null before and even if this is interpreted
+
+11
+00:00:54,220 --> 00:00:56,510
+as text, it still prints null.
+
+12
+00:00:56,530 --> 00:01:03,160
+However we can clearly see it is treated as a text because it is now wrapped in quotation marks, before
+
+13
+00:01:03,280 --> 00:01:07,450
+it was treated as the null object that exists in Javascript.
+
+14
+00:01:07,450 --> 00:01:12,420
+It becomes even clearer if we try using that here when we get posts.
+
+15
+00:01:12,490 --> 00:01:18,460
+There if I switch the response type to text, we'll see that our application even breaks because it won't
+
+16
+00:01:18,460 --> 00:01:18,790
+work
+
+17
+00:01:18,820 --> 00:01:25,990
+if we tried to work with the text response and I even get an error here because I am using that generic
+
+18
+00:01:25,990 --> 00:01:32,260
+assignment here and I'm saying, "hey the data that is returned here is actually of type Javascript object
+
+19
+00:01:32,280 --> 00:01:34,630
+that in the end holds a nested post",
+
+20
+00:01:34,630 --> 00:01:41,470
+TypeScript is smart and detects, "well if you tell me that my response data will be of that format,
+
+21
+00:01:41,770 --> 00:01:44,780
+then it needs to be convertible to a Javascript object,
+
+22
+00:01:44,980 --> 00:01:50,410
+if you then also tell me that the response type down there is text, then you have to be lying somewhere"
+
+23
+00:01:50,440 --> 00:01:52,020
+because it can't be both,
+
+24
+00:01:52,030 --> 00:02:00,060
+it can't be a string which is simply not in that format and such a Javascript object at the same time.
+
+25
+00:02:00,250 --> 00:02:05,470
+So to make this work, we would have to get rid of that generic type assignment and now we are allowed
+
+26
+00:02:05,470 --> 00:02:06,730
+to save this
+
+27
+00:02:06,820 --> 00:02:14,500
+and now of course you see this breaks here if I try sending a post and I fetch my post, it breaks and I
+
+28
+00:02:14,500 --> 00:02:19,090
+just see these lines because my response here is in the end
+
+29
+00:02:19,090 --> 00:02:27,000
+now treated as a text and not as a Javascript object and actually here,
+
+30
+00:02:27,040 --> 00:02:31,060
+it even breaks because the way I try to handle this is not correct.
+
+31
+00:02:31,060 --> 00:02:37,240
+So I will revert this and I will revert this back to JSON, which is the correct data type and which
+
+32
+00:02:37,240 --> 00:02:44,950
+now works but it is important to also be aware of this option which you can use to tell Angular in case
+
+33
+00:02:44,950 --> 00:02:50,410
+you are really getting back some text and you don't want Angular to parse it to a Javascript object
+
+34
+00:02:50,680 --> 00:02:56,140
+or maybe you are getting back JSON but you still don't want to let Angular parse it because you want
+
+35
+00:02:56,140 --> 00:03:00,070
+to parse it on your own at a later point of time or anything like that,
+
+36
+00:03:00,130 --> 00:03:07,660
+for this you can set the response type. The default is JSON and most of the time, like in probably 99%
+
+37
+00:03:07,690 --> 00:03:09,010
+of all cases,
+
+38
+00:03:09,010 --> 00:03:11,290
+this is the type you want to keep.
+
+39
+00:03:11,410 --> 00:03:13,750
+So typically, you don't need to overwrite that.
+

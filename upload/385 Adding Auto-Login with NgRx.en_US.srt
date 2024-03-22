@@ -1,0 +1,376 @@
+1
+00:00:02,300 --> 00:00:09,060
+I want to manage my local storage and store the user data there and fetch it from there, from inside the
+
+2
+00:00:09,170 --> 00:00:12,890
+@ngrx/effects as well because I guess this would make sense,
+
+3
+00:00:12,890 --> 00:00:15,670
+we have the rest in the effects as well.
+
+4
+00:00:15,770 --> 00:00:19,840
+That means that we need a new action and that's our auto
+
+5
+00:00:19,880 --> 00:00:25,100
+login action. So let's create a new constant here, AUTO_LOGIN,
+
+6
+00:00:28,370 --> 00:00:37,010
+auth auto Login and that of course also the receives a new class now, so export a class, auto login
+
+7
+00:00:37,010 --> 00:00:39,790
+which implements action
+
+8
+00:00:39,830 --> 00:00:47,040
+and this needs no constructor, it has no payload but it gets that auto login type here
+
+9
+00:00:47,180 --> 00:00:54,070
+and of course I also want to add it here to my union type, auto login. OK
+
+10
+00:00:54,100 --> 00:00:55,740
+so this is the first step,
+
+11
+00:00:55,740 --> 00:00:57,390
+now we have this action,
+
+12
+00:00:57,550 --> 00:00:59,280
+now we can react to that
+
+13
+00:00:59,290 --> 00:01:04,300
+but before we do anything with automatically logging in, let's first of all make sure we store user data
+
+14
+00:01:04,480 --> 00:01:12,150
+in local storage with the help of our effects file. And for that, let's go back to the service and you'll
+
+15
+00:01:12,150 --> 00:01:17,220
+see that we did store data in local storage when we handled authentication,
+
+16
+00:01:17,220 --> 00:01:23,700
+we cleared it when we logged out and we read from it in auto login.
+
+17
+00:01:23,700 --> 00:01:34,840
+Hence here in the auth effects, we want to store data for logging in and for signing up.
+
+18
+00:01:34,840 --> 00:01:41,290
+Now we do have that handle authentication function here which we call as part of these effect chains
+
+19
+00:01:41,740 --> 00:01:50,930
+and therefore we could write data to local storage here as well. So here, we can now create a new user,
+
+20
+00:01:53,780 --> 00:01:54,350
+for that
+
+21
+00:01:54,350 --> 00:02:02,810
+you need to import your user model here in the auth effects file and that user takes of
+
+22
+00:02:02,810 --> 00:02:10,040
+course the e-mail, it takes the user ID, it takes the token and it takes this expiration date
+
+23
+00:02:10,040 --> 00:02:17,660
+we calculated and then we can just call local storage set item and now let's see, what did I name
+
+24
+00:02:17,660 --> 00:02:19,660
+it here in the auth service?
+
+25
+00:02:19,670 --> 00:02:21,890
+It was named user data,
+
+26
+00:02:22,220 --> 00:02:27,490
+so essentially we can just copy that line and move that into our effects.
+
+27
+00:02:27,490 --> 00:02:32,180
+Now it's called in a function but this function as part of our effects chain, for both signing up and
+
+28
+00:02:32,180 --> 00:02:33,080
+logging in,
+
+29
+00:02:33,080 --> 00:02:36,490
+so this is part of the @ngrx/effects world now.
+
+30
+00:02:36,490 --> 00:02:40,340
+I also want to clear that and remove that from local storage
+
+31
+00:02:40,340 --> 00:02:45,290
+if we do logout and for that, we can simply add a new effect here,
+
+32
+00:02:45,310 --> 00:02:48,030
+auth logout where we use this
+
+33
+00:02:48,130 --> 00:03:00,800
+actions pipe and watch out for the auth actions logout type and if that occurs,
+
+34
+00:03:03,620 --> 00:03:07,310
+then I just want to tap and execute some code.
+
+35
+00:03:07,310 --> 00:03:10,890
+So again this will be an effect that doesn't dispatch anything,
+
+36
+00:03:11,030 --> 00:03:18,140
+hence we add @effect with that object, dispatch false because I won't dispatch anything and inside
+
+37
+00:03:18,140 --> 00:03:19,820
+of the tap function here,
+
+38
+00:03:19,940 --> 00:03:26,730
+we can access local storage and basically run the same code as we're doing it in the auth service, there
+
+39
+00:03:28,350 --> 00:03:38,230
+I'm removing the user data.
+
+40
+00:03:38,330 --> 00:03:40,770
+Now what about auto login?
+
+41
+00:03:40,850 --> 00:03:43,280
+Well we can essentially copy
+
+42
+00:03:47,800 --> 00:03:52,030
+that entire code and then we'll need to adjust it a little bit,
+
+43
+00:03:56,230 --> 00:04:03,280
+move it into auth effects here and add a new effect, auto login
+
+44
+00:04:09,260 --> 00:04:14,810
+where we filter out actions of actions of type
+
+45
+00:04:14,870 --> 00:04:20,660
+auto login and then as a next step, if we have a look at the code I
+
+46
+00:04:20,680 --> 00:04:25,070
+just copied, in the end what we do is we pass data from local storage,
+
+47
+00:04:25,270 --> 00:04:27,530
+we create a user based on that,
+
+48
+00:04:27,700 --> 00:04:33,310
+then we check if that user token is valid and so on and if it is, we dispatch a new action to authenticate
+
+49
+00:04:33,310 --> 00:04:33,950
+the user,
+
+50
+00:04:34,780 --> 00:04:37,240
+otherwise we do nothing,
+
+51
+00:04:37,300 --> 00:04:40,300
+let's ignore the auto logout part for now.
+
+52
+00:04:40,360 --> 00:04:48,450
+So in auth effects, we can add another tap call here, copy in that code and let's go through it.
+
+53
+00:04:48,480 --> 00:04:51,370
+We first of all retrieved data from local storage,
+
+54
+00:04:51,500 --> 00:04:53,460
+we create a user, based on that data
+
+55
+00:04:53,460 --> 00:04:59,040
+we check the validity of that token and then here, we're dispatching an action and we have that auto
+
+56
+00:04:59,040 --> 00:05:00,360
+logout logic.
+
+57
+00:05:00,360 --> 00:05:05,790
+Let's comment out the auto logout logic for the moment and here,
+
+58
+00:05:05,840 --> 00:05:07,760
+of course I also don't want to dispatch,
+
+59
+00:05:07,760 --> 00:05:16,550
+instead I want to return this as a new action and then @ngrx/effects dispatches it for us.
+
+60
+00:05:16,550 --> 00:05:21,720
+Hence it's maybe better to not use tap which will not return anything but map instead,
+
+61
+00:05:22,130 --> 00:05:25,930
+map still allows us to parse all that data and then here,
+
+62
+00:05:26,090 --> 00:05:31,280
+I'm not calling this store dispatch but I simply return this prepared action here, so
+
+63
+00:05:31,360 --> 00:05:35,420
+that is all we need to do here. Now to give this a try,
+
+64
+00:05:35,420 --> 00:05:40,500
+of course we have to make sure that auto login is actually dispatched.
+
+65
+00:05:40,640 --> 00:05:48,950
+So let's go to our app component, here where I do call auto login on the auth service and now instead
+
+66
+00:05:48,950 --> 00:05:54,590
+of using the auth service, here I'm interested in using my store which needs to be imported from
+
+67
+00:05:54,650 --> 00:05:55,310
+@ngrx/store
+
+68
+00:05:58,640 --> 00:06:00,800
+and then I also need my AppState,
+
+69
+00:06:00,800 --> 00:06:10,550
+so from app, so from the root app reducer from the store folder, I get from app which I then use here
+
+70
+00:06:10,850 --> 00:06:17,660
+to assign this AppState as a type for the store we're injecting and here, instead of calling this auth
+
+71
+00:06:17,660 --> 00:06:30,030
+service, we call this store dispatch and then we need access to our auth actions, so import as
+
+72
+00:06:30,120 --> 00:06:31,460
+auth actions
+
+73
+00:06:32,380 --> 00:06:47,330
+from ./auth/store/auth.actions, let's use a new auth actions auto login action here and we should
+
+74
+00:06:47,330 --> 00:06:49,580
+be good. Let's save that and
+
+75
+00:06:49,590 --> 00:06:56,400
+let's wait for the app to reload and I'm getting an error that I dispatched an invalid action undefined,
+
+76
+00:06:56,400 --> 00:07:04,200
+that is stemming from auth effects, there in auto login, I am returning a new action but only if
+
+77
+00:07:04,200 --> 00:07:07,380
+we have a valid token, otherwise I don't.
+
+78
+00:07:07,410 --> 00:07:14,100
+So let's return something out of that if statement too, that can be an object which simply needs to have
+
+79
+00:07:14,100 --> 00:07:17,920
+a type property because that qualifies a valid action,
+
+80
+00:07:18,060 --> 00:07:22,260
+you don't need to create it based on a class, if you need a simple action, you can do it on the fly with
+
+81
+00:07:22,260 --> 00:07:29,010
+an object literal with the type property and give it any dummy identifier, like dummy here, anything
+
+82
+00:07:29,020 --> 00:07:34,830
+like that. Now this is is a valid action which simply has no effect and then we also need to do the
+
+83
+00:07:34,830 --> 00:07:42,030
+same up here where I return nothing thus far, also return dummy here and with that if we go back, now
+
+84
+00:07:42,060 --> 00:07:42,940
+this works.
+
+85
+00:07:42,990 --> 00:07:46,170
+Now let's try logging in here,
+
+86
+00:07:46,330 --> 00:07:51,850
+you can check the application tab and there, local storage to see if something was stored, that is looking
+
+87
+00:07:51,850 --> 00:07:52,180
+good.
+
+88
+00:07:53,370 --> 00:07:57,210
+Let's now reload the app and auto login also seems to work,
+
+89
+00:07:57,210 --> 00:07:59,320
+otherwise we wouldn't end up here.
+
+90
+00:07:59,350 --> 00:08:04,450
+If I logout and I then reload, I'm back here, so then we really cleared that.
+
+91
+00:08:04,470 --> 00:08:05,520
+So this is all working,
+
+92
+00:08:05,550 --> 00:08:07,890
+the missing piece is that auto logout
+
+93
+00:08:07,890 --> 00:08:13,680
+so that we clear the token from local storage automatically and that we logout the user once our token
+
+94
+00:08:13,680 --> 00:08:14,190
+expired.
+

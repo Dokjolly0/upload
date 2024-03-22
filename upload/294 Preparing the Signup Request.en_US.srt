@@ -1,0 +1,416 @@
+1
+00:00:02,260 --> 00:00:07,990
+You can simply google for far base of arrest API and you should find an article in the official docs
+
+2
+00:00:08,350 --> 00:00:14,920
+which gives you an overview over the arrest and points firebase offers to you for creating users and
+
+3
+00:00:14,920 --> 00:00:17,760
+logging users in here on the right.
+
+4
+00:00:17,760 --> 00:00:23,560
+You see the different things you can do with that back and with that REST API firebase offers you.
+
+5
+00:00:23,640 --> 00:00:29,550
+It's a different REST API than we used before it's not our database REST API we created automatically.
+
+6
+00:00:29,550 --> 00:00:35,470
+It's a dedicated authentication API offered by Firebase and we need only two methods.
+
+7
+00:00:35,520 --> 00:00:41,010
+Signing users up with email and password and signing users in with email and password.
+
+8
+00:00:41,010 --> 00:00:44,640
+So of course let's start with signing users up because we can't sign in.
+
+9
+00:00:44,640 --> 00:00:45,860
+If we have no users.
+
+10
+00:00:45,870 --> 00:00:46,820
+Right.
+
+11
+00:00:47,010 --> 00:00:51,090
+This is the you are L to which you need to send your request.
+
+12
+00:00:51,090 --> 00:00:57,060
+So this is the URL we'll have to send the request to you with this data with the email password and
+
+13
+00:00:57,060 --> 00:01:02,730
+then this return secure token thing which we also have to add to our request body which is a boolean
+
+14
+00:01:02,760 --> 00:01:04,570
+that essentially should always be true.
+
+15
+00:01:04,620 --> 00:01:06,190
+Firebase just needs that.
+
+16
+00:01:06,270 --> 00:01:09,810
+You can ignore that your API might not need that.
+
+17
+00:01:09,900 --> 00:01:14,820
+Now we'll get back a response with for example the email address.
+
+18
+00:01:14,940 --> 00:01:20,580
+The idea of the user because firebase automatically creates a new unique idea for each user.
+
+19
+00:01:21,030 --> 00:01:26,490
+And we all get back that I.D. token which is that token I mentioned on the slide earlier.
+
+20
+00:01:26,490 --> 00:01:30,260
+So firebase already gives us such a token once we sign a user up.
+
+21
+00:01:30,300 --> 00:01:35,170
+We don't even need to sign in there after we automatically get that token when users signed up.
+
+22
+00:01:35,220 --> 00:01:41,370
+We also get expires infield which tells us how long that token will be valid because for security reasons
+
+23
+00:01:41,550 --> 00:01:47,620
+these tokens will expire for firebase for example day at the moment expire after 1 hour.
+
+24
+00:01:47,610 --> 00:01:55,330
+Thereafter you even have to refresh them which will not cover a year or log in again back to this year
+
+25
+00:01:55,370 --> 00:02:02,050
+although we need to send this request and that screams for a new service here that actually deals with
+
+26
+00:02:02,050 --> 00:02:03,640
+that request sending.
+
+27
+00:02:03,640 --> 00:02:11,680
+So in the all folder I'll add my off service dog test file which is a service that will be responsible
+
+28
+00:02:11,770 --> 00:02:13,430
+for signing users up.
+
+29
+00:02:13,450 --> 00:02:19,420
+Signing users in and managing that token of my user in that of service file.
+
+30
+00:02:19,420 --> 00:02:28,540
+Let's def for export a class of service and debt service will receive D at in check the bowl decorator
+
+31
+00:02:28,540 --> 00:02:34,610
+which is imported from at Angola Corps where I will use that shortcut for providing it by setting provided
+
+32
+00:02:34,630 --> 00:02:40,150
+into route in that object we can pass to injectable alternative would be to add it to the provider's
+
+33
+00:02:40,150 --> 00:02:42,260
+array of the app module.
+
+34
+00:02:42,370 --> 00:02:48,580
+Now in debt off service we can of course start relatively simple by adding one method a sign up method
+
+35
+00:02:48,760 --> 00:02:53,740
+and this method should do just what the name suggests it should sign to user OP it should send the request
+
+36
+00:02:53,860 --> 00:03:01,650
+to debt sign up you are El therefore we will need the annular H to DP client of course and this needs
+
+37
+00:03:01,650 --> 00:03:02,500
+to be injected.
+
+38
+00:03:02,580 --> 00:03:06,960
+So let's add the constructor and now make sure you got at injectable here.
+
+39
+00:03:07,020 --> 00:03:12,270
+Even if you provide at the service in the provider's array of the app module as soon as you inject the
+
+40
+00:03:12,270 --> 00:03:17,520
+service into a service you need at injectable not necessarily with that object being passed to it but
+
+41
+00:03:17,520 --> 00:03:21,060
+you need the at injectable decorator itself.
+
+42
+00:03:21,060 --> 00:03:27,960
+And now we can inject the H2 declined which I'll store in a private property named H2 DP and to type
+
+43
+00:03:27,960 --> 00:03:33,600
+will be h to be client and it's imported from ET angular slash common slash H2.
+
+44
+00:03:34,170 --> 00:03:39,000
+In the sign up method we can now use the H to be client to send had levied.
+
+45
+00:03:39,030 --> 00:03:42,330
+Let's have a look at documentation post request here.
+
+46
+00:03:42,690 --> 00:03:48,780
+Send a post request to that you are out so copy that you are all here and here will use the post method
+
+47
+00:03:49,350 --> 00:03:51,390
+and then send the request to this.
+
+48
+00:03:51,390 --> 00:03:52,830
+You are out.
+
+49
+00:03:52,830 --> 00:03:58,170
+Now please note that in this you are L we got that API key thing which in the end is just something
+
+50
+00:03:58,170 --> 00:04:04,830
+you have to replace with your firebase API key and you can find that far based API key in your firebase
+
+51
+00:04:04,830 --> 00:04:10,710
+web console under authentication here if you click on a Web setup you don't need all that data about
+
+52
+00:04:10,710 --> 00:04:11,700
+this here.
+
+53
+00:04:11,700 --> 00:04:20,730
+This is your API key so grab that key without the quotes closed that and then replace API key here including
+
+54
+00:04:20,730 --> 00:04:23,370
+the square brackets with that copied key.
+
+55
+00:04:25,740 --> 00:04:30,050
+This is the U.R.L. we have to send a request to Nelson's supposed request.
+
+56
+00:04:30,060 --> 00:04:32,520
+We of course also need to attach some data.
+
+57
+00:04:32,520 --> 00:04:38,280
+So let me attach a javascript object here and that JavaScript object should hold free properties to
+
+58
+00:04:38,280 --> 00:04:39,360
+free properties.
+
+59
+00:04:39,360 --> 00:04:44,460
+This endpoint expects email password and return secure token.
+
+60
+00:04:44,460 --> 00:04:46,230
+These are the free data pieces.
+
+61
+00:04:46,230 --> 00:04:52,650
+This a back end end point requires and therefore I'll send my email here and I do expect to get dad
+
+62
+00:04:52,650 --> 00:04:53,880
+here as a string.
+
+63
+00:04:53,880 --> 00:04:58,230
+I always expect to get the password as a string so I will send the email here.
+
+64
+00:04:58,230 --> 00:05:04,620
+Email key gets that email value here and then the same for the Password Password key gets that password
+
+65
+00:05:04,710 --> 00:05:07,910
+value devalues here are the arguments I'm getting.
+
+66
+00:05:07,920 --> 00:05:13,950
+You could name these differently email and password have to be named like this because our API expects
+
+67
+00:05:13,980 --> 00:05:15,870
+exactly these keys.
+
+68
+00:05:15,870 --> 00:05:21,750
+It also expects a return secure token so you must set this as well and as you can learn in the official
+
+69
+00:05:21,750 --> 00:05:22,130
+docs.
+
+70
+00:05:22,140 --> 00:05:23,750
+This should always be true.
+
+71
+00:05:23,940 --> 00:05:26,750
+So they offer let simply set this to true here.
+
+72
+00:05:26,790 --> 00:05:28,080
+Perfect.
+
+73
+00:05:28,080 --> 00:05:37,340
+So this now will send an H to the B request to that back and here to this you are L as you learned the
+
+74
+00:05:37,450 --> 00:05:42,830
+HBP client does nothing without someone subscribing though and we're not even calling the sign up method
+
+75
+00:05:42,860 --> 00:05:49,970
+anyways so let's return this prepared observable now so that we can subscribe in you off component which
+
+76
+00:05:49,970 --> 00:05:55,370
+is where we might all be interested in getting the response of that because if we get an error we probably
+
+77
+00:05:55,370 --> 00:06:00,590
+want to display an error message and was we're waiting for the response we might want to show as I'm
+
+78
+00:06:00,590 --> 00:06:06,020
+loading indicator so therefore returning the observable such that we know the current state of the request
+
+79
+00:06:06,310 --> 00:06:08,650
+in the off component makes a lot of sense.
+
+80
+00:06:10,720 --> 00:06:17,110
+We also can find a format of the data we'll get back because we will get back these six fields here
+
+81
+00:06:17,860 --> 00:06:23,710
+and therefore I will create a new interface actually here and be of service because I only need it in
+
+82
+00:06:23,710 --> 00:06:31,490
+here and we don't even need to export it therefore it'll just be an interface which I'll name off response
+
+83
+00:06:31,550 --> 00:06:38,300
+data and this interface defines how such an object will look like how our off response data will look
+
+84
+00:06:38,300 --> 00:06:45,140
+like and it will have six properties as you learn kind I.D. token email refresh token expires in and
+
+85
+00:06:45,140 --> 00:06:45,870
+local ideas.
+
+86
+00:06:46,500 --> 00:06:55,600
+So let's I add all of them kind as a string as you will see here they are all strings I.D. token is
+
+87
+00:06:55,600 --> 00:07:04,210
+a string Email is a string then all we got the refresh token and expires in so refresh token is a string
+
+88
+00:07:04,600 --> 00:07:06,810
+expires in is a string.
+
+89
+00:07:07,030 --> 00:07:14,230
+And last but not least local I.D. which has degenerated user I.D. that also is a string.
+
+90
+00:07:14,230 --> 00:07:16,840
+Now why am I defining the interface here.
+
+91
+00:07:16,920 --> 00:07:17,990
+It is totally optional.
+
+92
+00:07:18,010 --> 00:07:23,260
+You don't need to do that but it is a good practice in angular and in types called apps to define the
+
+93
+00:07:23,260 --> 00:07:25,270
+types of data you're working with.
+
+94
+00:07:25,270 --> 00:07:31,290
+And as you learned in the age to be client module when we sent an HBP request with the angular H2 to
+
+95
+00:07:31,300 --> 00:07:39,220
+be client these methods your post get ends on these are generic methods where we can hint which type
+
+96
+00:07:39,220 --> 00:07:41,020
+of data we will get back.
+
+97
+00:07:41,080 --> 00:07:47,230
+And here we know for this post request we will get back data in this format which is now exactly the
+
+98
+00:07:47,230 --> 00:07:49,910
+format I stored in this off response data.
+
+99
+00:07:49,920 --> 00:07:54,960
+Therefore we can add the angled brackets here and simply pass off response data here.
+
+100
+00:07:54,960 --> 00:08:00,730
+This interface we just generated between these angled brackets so that we inform typescript that this
+
+101
+00:08:00,730 --> 00:08:06,180
+post request will yield as a response in which body we find data in this format.
+
+102
+00:08:06,220 --> 00:08:13,200
+This can be helpful for when we want to work with that response was that out of the way in the next
+
+103
+00:08:13,200 --> 00:08:20,160
+lecture we will actually fired his method from inside our off component and also make sure we handle
+
+104
+00:08:20,160 --> 00:08:23,550
+potential errors and we handled the loading state correctly.
+

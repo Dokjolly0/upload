@@ -1,0 +1,260 @@
+1
+00:00:02,890 --> 00:00:08,510
+We're nearing the end of the section, there is one thing you might have recognized before where you
+
+2
+00:00:08,510 --> 00:00:10,350
+weren't sure what it does.
+
+3
+00:00:10,370 --> 00:00:15,420
+What's up with this ngOnInit method we have in new components created through the CLI,
+
+4
+00:00:15,530 --> 00:00:18,060
+what's it doing? ngOnInit
+
+5
+00:00:18,060 --> 00:00:22,680
+is a lifecycle hook and Angular supports a couple of lifecycle hooks,
+
+6
+00:00:22,820 --> 00:00:24,160
+let's take a closer look.
+
+7
+00:00:24,590 --> 00:00:27,510
+If a new component is created in Angular
+
+8
+00:00:27,590 --> 00:00:32,860
+and of course Angular is responsible for creating these components when it finds one of our selectors
+
+9
+00:00:32,870 --> 00:00:37,920
+for example, it will instantiate a new version of that component and add it into the DOM.
+
+10
+00:00:38,000 --> 00:00:44,720
+So once a new component is instantiated, Angular goes through a couple of different phases in this creation
+
+11
+00:00:44,720 --> 00:00:51,800
+process and it will actually give us a chance to hook into these phases and execute some code.
+
+12
+00:00:52,190 --> 00:00:58,670
+We can hook into these phases by implementing some methods Angular will call if they are present.
+
+13
+00:00:59,030 --> 00:01:05,860
+The first phase, the first hook we can hook into is ngOnChanges and this may actually be executed
+
+14
+00:01:05,900 --> 00:01:11,810
+multiple times, it's executed right at the start when a new component is created but thereafter, it's
+
+15
+00:01:11,840 --> 00:01:17,290
+also always called whenever one of our bound input properties changes
+
+16
+00:01:17,300 --> 00:01:21,290
+and with that, I mean properties decorated with @input,
+
+17
+00:01:21,350 --> 00:01:24,970
+so whenever these properties received new values.
+
+18
+00:01:25,490 --> 00:01:28,540
+Now the second hook is ngOnInit,
+
+19
+00:01:28,580 --> 00:01:32,720
+this method gets executed once the component has been initialized.
+
+20
+00:01:32,720 --> 00:01:34,670
+This does not mean that we can see it,
+
+21
+00:01:34,670 --> 00:01:41,540
+it has not been added to the DOM yet so to say, it has not been displayed yet but Angular finished the basic
+
+22
+00:01:41,540 --> 00:01:42,770
+initialization,
+
+23
+00:01:42,800 --> 00:01:46,580
+our properties can now be accessed and initialized for example,
+
+24
+00:01:46,580 --> 00:01:49,510
+so the object was created you could say
+
+25
+00:01:49,990 --> 00:01:57,040
+and if you're interested, ngOnInit will run after the constructor. Then we have ngDoCheck, that
+
+26
+00:01:57,050 --> 00:01:58,730
+will also run multiple times,
+
+27
+00:01:58,730 --> 00:02:05,480
+actually this method will be executed a lot because this will run whenever change detection runs.
+
+28
+00:02:05,480 --> 00:02:11,390
+Now change detection simply is the system by which Angular determines whether something changed on the
+
+29
+00:02:11,390 --> 00:02:14,280
+template of a component or inside of a component I should say,
+
+30
+00:02:14,420 --> 00:02:20,180
+so whether it needs to change something in the template. So whether some property value changed from
+
+31
+00:02:20,270 --> 00:02:21,830
+1 to 2 let's say
+
+32
+00:02:22,100 --> 00:02:24,730
+and that property is output in the template,
+
+33
+00:02:24,860 --> 00:02:31,520
+well of course Angular needs to re-render that part of the template and ngDoCheck is a hook executed
+
+34
+00:02:31,610 --> 00:02:36,660
+on every check Angular makes. Now important, on every check,
+
+35
+00:02:36,680 --> 00:02:38,960
+so not just if something changed,
+
+36
+00:02:38,960 --> 00:02:45,670
+a lot of times ngDoCheck will run because you clicked some button which doesn't change anything
+
+37
+00:02:45,860 --> 00:02:51,170
+but still it's an event and on events, Angular has to check if something changed because how else would
+
+38
+00:02:51,170 --> 00:02:51,840
+it know?
+
+39
+00:02:51,890 --> 00:02:52,610
+You don't tell it,
+
+40
+00:02:52,610 --> 00:02:52,880
+right,
+
+41
+00:02:52,880 --> 00:02:59,120
+so it has to check on certain triggering events like you clicked somewhere or a timer fired or an
+
+42
+00:02:59,120 --> 00:03:00,900
+observable was resolved
+
+43
+00:03:00,980 --> 00:03:06,710
+and on these occasions, it will check your code and ngDoCheck will be executed.
+
+44
+00:03:06,710 --> 00:03:11,230
+Now whilst this might sound very inefficient, Angular does this in a very efficient way,
+
+45
+00:03:11,240 --> 00:03:16,820
+so change detection on Angular works pretty great and doesn't cost a lot of performance. ngDoCheck
+
+46
+00:03:16,820 --> 00:03:23,600
+is a great method to use if you want to do something on every change detection cycle, like maybe manually
+
+47
+00:03:23,610 --> 00:03:29,780
+inform Angular about some change it would not be able to detect otherwise, though that is a very advanced
+
+48
+00:03:29,780 --> 00:03:30,930
+use case.
+
+49
+00:03:31,430 --> 00:03:34,450
+Well then, we reach ngAfterContentInit,
+
+50
+00:03:34,450 --> 00:03:40,860
+this is called whenever the content which is projected via ng-content has been initialized.
+
+51
+00:03:40,940 --> 00:03:46,730
+So not the view of the component itself but instead you could say the view of the parent component,
+
+52
+00:03:46,910 --> 00:03:53,930
+especially the part which will get added to our component through ng-content. And ngAfterContentCheck
+
+53
+00:03:53,930 --> 00:04:01,520
+is executed whenever change detection checked this content we're projecting into our component.
+
+54
+00:04:02,450 --> 00:04:09,590
+ngAfterViewInit is then reached once the view of our own component has been finished initializing,
+
+55
+00:04:09,590 --> 00:04:15,700
+so once our view has been rendered you could say. And the same, ngAfterViewChecked, well that is called
+
+56
+00:04:15,710 --> 00:04:17,840
+whenever our view has been checked,
+
+57
+00:04:17,840 --> 00:04:24,200
+so once we are sure that either all changes which had to be done were displayed in the view or
+
+58
+00:04:24,200 --> 00:04:26,980
+no changes were detected by Angular.
+
+59
+00:04:27,020 --> 00:04:34,070
+And finally, if you destroy a component, for example if you placed ngIf on it and this gets then set to
+
+60
+00:04:34,160 --> 00:04:38,970
+false and therefore it removes it from the DOM, ngOnDestroy is called
+
+61
+00:04:38,990 --> 00:04:44,570
+and here's a great place to do some clean up work because this is called right before the object itself
+
+62
+00:04:44,600 --> 00:04:46,810
+will be destroyed by Angular.
+
+63
+00:04:46,850 --> 00:04:48,190
+These are the hooks,
+
+64
+00:04:48,230 --> 00:04:49,680
+nice to see them in theory,
+
+65
+00:04:49,730 --> 00:04:51,740
+let's see them in practice in the next lecture.
+

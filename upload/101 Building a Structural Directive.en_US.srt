@@ -1,0 +1,296 @@
+1
+00:00:02,730 --> 00:00:08,810
+Now that we understood what the role of the star is, we can write our own structural directive.
+
+2
+00:00:09,000 --> 00:00:13,980
+So let's create a new directive and I will use the CLI for this,
+
+3
+00:00:14,040 --> 00:00:15,980
+I'll name it unless,
+
+4
+00:00:16,020 --> 00:00:20,350
+so I will basically create the opposite of the ngIf directive.
+
+5
+00:00:20,550 --> 00:00:26,370
+This directive here will attach something only if the condition is false, ngIf does it if the condition
+
+6
+00:00:26,370 --> 00:00:27,970
+is true.
+
+7
+00:00:27,990 --> 00:00:34,350
+So here, I'll again delete the spec file here and in the unless directive, I get my selector which is
+
+8
+00:00:34,350 --> 00:00:35,590
+fine.
+
+9
+00:00:35,730 --> 00:00:40,200
+Now here, I need to get the condition as an input,
+
+10
+00:00:40,350 --> 00:00:47,460
+so I'll add @input and remember in the end, we will use property binding with the square brackets because Angular
+
+11
+00:00:47,460 --> 00:00:49,580
+transforms it for us,
+
+12
+00:00:49,810 --> 00:00:56,330
+we need to of course import input from @angular/core
+
+13
+00:00:56,550 --> 00:01:04,320
+and then here, I want to bind to a property named unless, which kind of simply is the condition we get
+
+14
+00:01:04,640 --> 00:01:07,050
+but whenever this condition changes,
+
+15
+00:01:07,200 --> 00:01:14,250
+so whenever some input parameter here changes, I want to execute a method and therefore, I can implement
+
+16
+00:01:14,280 --> 00:01:16,960
+a setter with the set keyword.
+
+17
+00:01:17,010 --> 00:01:24,210
+This now turns this into a method, though technically and that's important to understand, this still is
+
+18
+00:01:24,270 --> 00:01:25,370
+a property,
+
+19
+00:01:25,470 --> 00:01:31,560
+it's just a setter of the property which is a method which gets executed whenever the property changes
+
+20
+00:01:31,770 --> 00:01:36,180
+and it of course changes whenever it changes outside of this directive,
+
+21
+00:01:36,170 --> 00:01:43,740
+so whenever the condition we pass changes or some parameter of this condition. Unless therefore needs
+
+22
+00:01:43,740 --> 00:01:49,210
+to receive the value, the property we would normally get as an input
+
+23
+00:01:49,410 --> 00:01:53,070
+and we know that this will be a boolean because it will be our condition in the end,
+
+24
+00:01:53,070 --> 00:02:01,110
+so we could also name this condition. Then we can check if the condition is not true, which is the case
+
+25
+00:02:01,110 --> 00:02:09,450
+in which I want to display something because unless is the opposite of ngIf and if the condition is true,
+
+26
+00:02:09,480 --> 00:02:12,080
+well then I want to display nothing.
+
+27
+00:02:12,210 --> 00:02:18,060
+So that is how we get the condition, how we use it, how do we display something?
+
+28
+00:02:18,220 --> 00:02:28,570
+Keep in mind that our unless directive here in the end will sit on such an ng-template component because
+
+29
+00:02:28,570 --> 00:02:32,780
+that is what it gets transformed to by Angular if we use the star.
+
+30
+00:02:33,110 --> 00:02:39,020
+So we can get access to this template and we also need to get access to the place in the document where
+
+31
+00:02:39,020 --> 00:02:42,700
+we want to render it, both can be injected.
+
+32
+00:02:43,370 --> 00:02:51,110
+The template can be injected by adding template ref, any name you like but the type is of type template
+
+33
+00:02:51,110 --> 00:02:51,690
+ref,
+
+34
+00:02:51,830 --> 00:02:57,830
+so just like element ref gave us access to the element the directive was on, template ref does the same
+
+35
+00:02:57,830 --> 00:03:04,540
+for a template and this is a generic type, you can simply pass any here and we need to import template ref
+
+36
+00:03:04,550 --> 00:03:09,940
+from @angular/core. The second information piece we need is the view container,
+
+37
+00:03:09,940 --> 00:03:11,750
+so where should we render it?
+
+38
+00:03:11,950 --> 00:03:15,220
+The template is the what, now the question is where.
+
+39
+00:03:15,670 --> 00:03:23,410
+So I'll name it vcRef for view container reference and the type is view container reference or view
+
+40
+00:03:23,410 --> 00:03:24,460
+container ref 
+
+41
+00:03:24,520 --> 00:03:31,870
+which is also imported from @angular/core. That marks the place where we placed this directive in the
+
+42
+00:03:31,870 --> 00:03:32,770
+document,
+
+43
+00:03:32,770 --> 00:03:38,920
+Angular marks this place and you can see this if you inspect it in the developer tools actually.
+
+44
+00:03:38,980 --> 00:03:46,720
+So with these two tools available, we can use the vcRef whenever the condition changes, to call the
+
+45
+00:03:46,720 --> 00:03:54,820
+createEmbeddedView method which does just what the name implies, it creates a view in this view container
+
+46
+00:03:55,570 --> 00:03:58,070
+and the view simply is our template ref.
+
+47
+00:03:58,120 --> 00:04:04,030
+So this template we created there is exactly this reference to the template there, is exactly what we
+
+48
+00:04:04,030 --> 00:04:04,880
+need.
+
+49
+00:04:05,380 --> 00:04:11,920
+Well and if the condition is true in this case, so if its not what we were looking for, then we will
+
+50
+00:04:11,920 --> 00:04:17,350
+simply call the clear method to remove everything from this place in the DOM.
+
+51
+00:04:18,010 --> 00:04:22,880
+With that, our own directive is set up, of course we need to make sure that it is added here,
+
+52
+00:04:22,900 --> 00:04:33,670
+the CLI did this for us and now in the app component, we can use our own directive, maybe to replace ngIf
+
+53
+00:04:33,680 --> 00:04:38,030
+here, so I'll comment out all this stuff here
+
+54
+00:04:39,190 --> 00:04:47,170
+and only copy the original div down there, comment this in of course.
+
+55
+00:04:47,390 --> 00:04:54,410
+So here instead of using ngIf, I'll use appUnless and the star is important because it still is a structural
+
+56
+00:04:54,410 --> 00:04:55,140
+directive,
+
+57
+00:04:55,220 --> 00:05:00,810
+otherwise we would have to manually write it with this ng-template syntax you learned before.
+
+58
+00:05:01,490 --> 00:05:06,820
+So here of course, we don't want to check if onlyOdd is false because keep in mind, the unless directive
+
+59
+00:05:06,820 --> 00:05:09,300
+will check for the opposite already,
+
+60
+00:05:09,320 --> 00:05:12,070
+so here we have to pass just onlyOdd.
+
+61
+00:05:12,480 --> 00:05:19,010
+And with this in place, we get that we can't bind to appUnless because it's not a known property. Why do
+
+62
+00:05:19,010 --> 00:05:22,980
+we get this? Can be really hard to track,
+
+63
+00:05:22,980 --> 00:05:29,460
+we get this error because what we're trying to do is we have property binding here, custom property binding
+
+64
+00:05:29,520 --> 00:05:33,430
+with @input and we're binding a property named unless.
+
+65
+00:05:33,480 --> 00:05:35,720
+Now keep in mind, the star
+
+66
+00:05:35,730 --> 00:05:41,700
+automatically transforms this in this ng-template syntax where we then try to property bind to the
+
+67
+00:05:41,700 --> 00:05:49,350
+directive name which is appUnless. So we have to make sure that our property here shares the name of the
+
+68
+00:05:49,740 --> 00:05:50,930
+directive,
+
+69
+00:05:50,970 --> 00:05:51,750
+appUnless,
+
+70
+00:05:51,780 --> 00:05:55,200
+exactly the same, the same as the selector.
+
+71
+00:05:55,200 --> 00:05:57,160
+Now with this, it works fine
+
+72
+00:05:57,210 --> 00:06:02,160
+and as we can see if I toggle here, we get the same behavior as before
+
+73
+00:06:02,160 --> 00:06:08,040
+even though I commented out the ngIf block and use my own appUnless directive instead.
+
+74
+00:06:08,280 --> 00:06:11,610
+So this is our own custom structural directive built.
+

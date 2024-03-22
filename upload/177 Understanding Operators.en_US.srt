@@ -1,0 +1,448 @@
+1
+00:00:02,240 --> 00:00:03,770
+Now it's all nice
+
+2
+00:00:03,800 --> 00:00:04,970
+what we learned
+
+3
+00:00:05,270 --> 00:00:12,290
+but there is one super important thing about observables and the RxJS library that you absolutely have
+
+4
+00:00:12,290 --> 00:00:13,080
+to know
+
+5
+00:00:13,220 --> 00:00:15,770
+and that would be operators.
+
+6
+00:00:15,770 --> 00:00:22,820
+Operators are the magic feature of the RxJS library and they are the thing that really turn observable
+
+7
+00:00:22,910 --> 00:00:25,670
+into awesome constructs.
+
+8
+00:00:25,670 --> 00:00:32,380
+If we have an observable and an observer, we of course get data and we listen to that with a subscription,
+
+9
+00:00:32,390 --> 00:00:33,990
+that is what you learned.
+
+10
+00:00:34,160 --> 00:00:40,850
+Now however, sometimes you don't need the raw data, You might want to transform it or filter out certain
+
+11
+00:00:40,850 --> 00:00:41,570
+data points
+
+12
+00:00:41,750 --> 00:00:47,000
+and of course, you could do all of that inside of your subscription or in the function you pass to your
+
+13
+00:00:47,000 --> 00:00:48,200
+subscription
+
+14
+00:00:48,200 --> 00:00:54,620
+but there's a more elegant way. Instead of setting up that subscription like this, you can use built-in
+
+15
+00:00:54,800 --> 00:00:56,860
+operators in between.
+
+16
+00:00:56,900 --> 00:01:02,630
+That means that the data points first of all reach these operators that do something to the data and
+
+17
+00:01:02,630 --> 00:01:04,310
+that something can be anything,
+
+18
+00:01:04,310 --> 00:01:07,700
+there are tons of built-in operators
+
+19
+00:01:07,700 --> 00:01:10,880
+and then you subscribe to the result of these operators.
+
+20
+00:01:10,890 --> 00:01:19,090
+Now let me show you a concrete example that makes that clearer. Let's say here in our application, we
+
+21
+00:01:19,090 --> 00:01:23,250
+of course get our values - 0, 1, 2, 3
+
+22
+00:01:23,260 --> 00:01:29,290
+before we get an error and let's say I'm not interested in these values but I want to have some text
+
+23
+00:01:29,290 --> 00:01:34,150
+that says something like, round one, round two, round three and so on.
+
+24
+00:01:34,150 --> 00:01:39,810
+So in the end, I want to use that count add one and add the word round in front of it.
+
+25
+00:01:39,820 --> 00:01:50,230
+Now obviously what we can do is we can simply log round plus data plus one here, add extra parentheses
+
+26
+00:01:50,230 --> 00:01:53,900
+around that so that it is really used as a calculation
+
+27
+00:01:54,250 --> 00:01:58,350
+and if we do that, we see Round 1, 2, 3 and so on being logged here.
+
+28
+00:01:58,540 --> 00:02:00,430
+Now nothing wrong with that
+
+29
+00:02:00,580 --> 00:02:04,300
+and for simple transformations like this one of course, that makes sense
+
+30
+00:02:04,300 --> 00:02:12,190
+but the more complex your logic gets, the nicer it might be to not care about that here in the place
+
+31
+00:02:12,190 --> 00:02:13,480
+where you subscribe
+
+32
+00:02:13,480 --> 00:02:15,930
+but in an earlier place.
+
+33
+00:02:16,150 --> 00:02:21,400
+So here, I'll revert this to just logging the data and I want to change the format in which that data
+
+34
+00:02:21,670 --> 00:02:22,560
+arrives.
+
+35
+00:02:22,670 --> 00:02:28,590
+Now obviously, we could do that directly here where we create our observable but what if you don't own
+
+36
+00:02:28,590 --> 00:02:34,000
+the observable? What if you wanted to change the route params for example? You can't change the original
+
+37
+00:02:34,000 --> 00:02:35,680
+code
+
+38
+00:02:35,680 --> 00:02:40,200
+and that is where operators are important.
+
+39
+00:02:40,350 --> 00:02:48,420
+You can use them on any observable, like our custom interval observable, by calling a method called pipe.
+
+40
+00:02:48,420 --> 00:02:54,880
+Now every observable has a pipe method, the pipe method is built into RxJS.
+
+41
+00:02:54,930 --> 00:03:03,120
+Now you can import observables, not from the RxJS package but from rxjs/operators and there
+
+42
+00:03:03,120 --> 00:03:09,780
+are tons of built-in operators, like the map operator which is one of the operators you'll use more often.
+
+43
+00:03:10,500 --> 00:03:19,270
+As a side note, if you want to learn more about RxJS and operators and so on, you can visit my home
+
+44
+00:03:19,270 --> 00:03:22,810
+page, academind.com and there on the Learn Javascript,
+
+45
+00:03:22,810 --> 00:03:29,620
+you'll find a complete series on RxJS which introduces you to RxJS and to operators
+
+46
+00:03:29,620 --> 00:03:30,400
+as well.
+
+47
+00:03:30,430 --> 00:03:36,910
+It uses a slightly older syntax, RxJS was changed in the meantime, which I'll by the way also cover
+
+48
+00:03:36,910 --> 00:03:43,930
+on my page, here in RxJS 6, what changed but the core idea and the explanation about these operators
+
+49
+00:03:44,080 --> 00:03:45,040
+still applies and
+
+50
+00:03:45,040 --> 00:03:51,040
+that can be very useful for learning more about RxJS but that's just a side note, back to our
+
+51
+00:03:51,040 --> 00:03:52,040
+code here.
+
+52
+00:03:52,060 --> 00:03:55,710
+So we have that pipe method and we're importing map here and map
+
+53
+00:03:55,710 --> 00:03:59,200
+as I mentioned is one of the more important operators.
+
+54
+00:03:59,200 --> 00:04:06,840
+Now we simply call map as a function inside of pipe here and map in turn takes a function as an argument,
+
+55
+00:04:06,880 --> 00:04:14,620
+so an anonymous function here if you want. That however gets an argument, that anonymous function gets
+
+56
+00:04:14,620 --> 00:04:20,560
+an argument and that is the data you would otherwise get here in your first subscribed callback,
+
+57
+00:04:20,590 --> 00:04:23,000
+so in that first function you pass to subscribe.
+
+58
+00:04:23,080 --> 00:04:27,770
+It's the current data of your observable that's being emitted by that observable.
+
+59
+00:04:27,850 --> 00:04:34,570
+So we get that data here and in map, we now have to return new data, that can of course be the unchanged
+
+60
+00:04:34,630 --> 00:04:40,770
+old data in which case that map operator is totally useless but it can also be transformed data,
+
+61
+00:04:40,900 --> 00:04:47,090
+like for example round plus data plus one,
+
+62
+00:04:47,130 --> 00:04:49,790
+so what we previously did right in console log,
+
+63
+00:04:49,800 --> 00:04:51,340
+now we're doing it here.
+
+64
+00:04:51,390 --> 00:04:55,830
+We just have to be clear about the format of data here as it seems,
+
+65
+00:04:55,830 --> 00:05:02,010
+you can of course do that by wrapping data in parentheses here, in the argument list, adding a colon after
+
+66
+00:05:02,010 --> 00:05:04,650
+it and making it clear that this will be a number
+
+67
+00:05:04,690 --> 00:05:06,380
+and now if you save that, it will compile
+
+68
+00:05:06,750 --> 00:05:10,310
+but what you'll see your project now is still the old output.
+
+69
+00:05:10,440 --> 00:05:13,110
+The reason for that is, let's wait for this to complete,
+
+70
+00:05:13,350 --> 00:05:20,490
+the reason for that is that this is applied but we still subscribe to this observable and this does
+
+71
+00:05:20,490 --> 00:05:23,450
+not change the data inside of the observable,
+
+72
+00:05:23,490 --> 00:05:27,950
+instead it only changes the data we get after pipe.
+
+73
+00:05:27,990 --> 00:05:36,370
+So what we would have to do here is simply we have to take that and replace our observable here with
+
+74
+00:05:36,370 --> 00:05:36,700
+it,
+
+75
+00:05:36,700 --> 00:05:41,440
+so the concrete observable we're subscribing to. Now if we do that,
+
+76
+00:05:41,440 --> 00:05:48,190
+so if we have our observable, then we pipe the data, so we add a couple of operators, in this case the
+
+77
+00:05:48,190 --> 00:05:49,400
+map operator,
+
+78
+00:05:49,570 --> 00:05:52,570
+then when we subscribe thereafter, we'll get that mapped,
+
+79
+00:05:52,570 --> 00:05:54,450
+so that changed data.
+
+80
+00:05:54,730 --> 00:06:00,690
+And now when we save this, we'll see that we get round one, two, three and so on.
+
+81
+00:06:00,700 --> 00:06:07,180
+So this is the map operator and again just as before, this is kind of a constructed example here, it is
+
+82
+00:06:07,180 --> 00:06:12,940
+of course more useful for example if you're fetching complex data from a web server and you want to
+
+83
+00:06:12,940 --> 00:06:15,860
+transform that data before you use it in a component
+
+84
+00:06:15,970 --> 00:06:17,740
+and that is something we'll do later too
+
+85
+00:06:18,100 --> 00:06:20,950
+but the core idea is the same, with pipe,
+
+86
+00:06:20,950 --> 00:06:24,470
+we can add one or more operators, if you have more than one,
+
+87
+00:06:24,490 --> 00:06:28,420
+you simply add them as arguments here to the pipe method,
+
+88
+00:06:28,450 --> 00:06:34,540
+so the pipe method takes an unlimited amount of arguments and each argument would be an operator imported
+
+89
+00:06:34,540 --> 00:06:39,790
+from rxjs/operators and you can add as many as you want and they will execute after each other
+
+90
+00:06:40,000 --> 00:06:42,550
+and do different kinds of stuff on the data.
+
+91
+00:06:42,580 --> 00:06:47,950
+This is map, of course for example you could also filter. That's another operator indeed, so let's use
+
+92
+00:06:47,950 --> 00:06:49,960
+that just to demonstrate one more.
+
+93
+00:06:49,990 --> 00:06:55,170
+Now there are dozens by the way, besides using my page here,
+
+94
+00:06:55,390 --> 00:07:02,740
+you can also visit learnrxjs.io where you find a long list of the operators with examples,
+
+95
+00:07:02,740 --> 00:07:04,510
+so that's really useful
+
+96
+00:07:04,510 --> 00:07:10,060
+but back to our code. Now let's dive into filter and if we wanted to add that too, we would simply add
+
+97
+00:07:10,060 --> 00:07:16,930
+it here separated by a comma in front of map as an extra argument here and filter also gets the
+
+98
+00:07:16,930 --> 00:07:17,860
+data of course
+
+99
+00:07:21,660 --> 00:07:26,480
+and inside of that anonymous function which we pass to filter, where we do get that data, we now have
+
+100
+00:07:26,480 --> 00:07:32,970
+to return true or false which decides whether that data point will continue in that chain,
+
+101
+00:07:32,990 --> 00:07:38,720
+so whether it will reach map and thereafter, the subscription or whether it will be dropped, in which case
+
+102
+00:07:38,720 --> 00:07:42,810
+it will neither reach map nor the subscription.
+
+103
+00:07:42,830 --> 00:07:47,870
+Now of course we could hardcode true or false here but that's not too useful,
+
+104
+00:07:47,870 --> 00:07:52,550
+instead we could say yes return true if data is greater than zero
+
+105
+00:07:52,610 --> 00:07:58,610
+and that effectively means that we will return every value but the very first one and therefore
+
+106
+00:07:58,600 --> 00:08:05,490
+since we print round data plus one, we'll not start with Round 1, because we're dropping this zero value,
+
+107
+00:08:05,630 --> 00:08:12,580
+instead we'll actually start with round two because only then this condition is true. So if we now go
+
+108
+00:08:12,580 --> 00:08:16,040
+back to our application here, let this reload,
+
+109
+00:08:16,180 --> 00:08:23,410
+we see nothing but then round two, round three and so on, so round one indeed is skipped. And that shows you
+
+110
+00:08:23,410 --> 00:08:29,560
+hopefully the power of operators, that they allow you to build up a chain of steps you want to funnel
+
+111
+00:08:29,560 --> 00:08:35,530
+your observable data through, that can be really helpful when it comes to transforming data, filtering
+
+112
+00:08:35,530 --> 00:08:37,600
+out data and so on.
+

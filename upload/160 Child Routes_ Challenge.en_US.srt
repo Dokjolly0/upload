@@ -1,0 +1,100 @@
+1
+00:00:02,210 --> 00:00:08,230
+As mentioned at the end of the last lecture, the next goal is to implement child routing for our recipe
+
+2
+00:00:08,310 --> 00:00:15,040
+routes here, so that when we click a recipe here, we actually load it by adding let's say slash and then the
+
+3
+00:00:15,040 --> 00:00:22,150
+ID of that recipe in our recipes array here in the URL, so recipes 1 would load the first element
+
+4
+00:00:22,180 --> 00:00:26,800
+or recipes 0 actually, since we started 0 in the array and so on.
+
+5
+00:00:26,800 --> 00:00:31,550
+So that would be great if we could load our recipes like that and render them here then,
+
+6
+00:00:31,570 --> 00:00:36,980
+so with a child router again. And the same for new recipe and edit
+
+7
+00:00:37,090 --> 00:00:39,240
+but for that, we will need a new component,
+
+8
+00:00:39,430 --> 00:00:41,920
+let's implement this in a second step,
+
+9
+00:00:41,920 --> 00:00:48,400
+the first step should be to make these items clickable and load the detail component as a child route
+
+10
+00:00:48,410 --> 00:00:55,720
+here in a new router outlet probably. We will also need another new component then for the case that we
+
+11
+00:00:55,720 --> 00:00:57,230
+first visit our page,
+
+12
+00:00:57,250 --> 00:01:02,680
+in this case we should have a starting component which kind of says please select a recipe, something
+
+13
+00:01:02,680 --> 00:01:09,400
+we right now do by displaying this template here in our recipes component, here the ng-template
+
+14
+00:01:09,460 --> 00:01:15,550
+but that will then also be removed because all I want to have inside of this div with the col-md-7
+
+15
+00:01:15,550 --> 00:01:15,980
+class
+
+16
+00:01:15,980 --> 00:01:18,550
+here is our router outlet.
+
+17
+00:01:18,550 --> 00:01:20,430
+So again, this is a challenge for you,
+
+18
+00:01:20,440 --> 00:01:26,180
+try implementing this child routing or at least try to do this first steps of that.
+
+19
+00:01:26,200 --> 00:01:32,240
+Setting up the router, creating that component which basically says please select a recipe and then loading
+
+20
+00:01:32,260 --> 00:01:38,440
+either that component or the detail route, the detail component depending on whether we click the recipe
+
+21
+00:01:38,440 --> 00:01:39,530
+in the list or not.
+
+22
+00:01:39,550 --> 00:01:44,410
+Certainly a challenge but also something where you can practice a lot of the things we learned in the
+
+23
+00:01:44,410 --> 00:01:47,580
+last lectures. Starting in the next lecture,
+
+24
+00:01:47,650 --> 00:01:49,020
+we will do this together,
+
+25
+00:01:49,060 --> 00:01:51,990
+so then you can see my approach on implementing this.
+

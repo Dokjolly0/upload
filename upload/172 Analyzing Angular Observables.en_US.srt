@@ -1,0 +1,108 @@
+1
+00:00:02,250 --> 00:00:08,550
+Attached, you find a very simple Angular project where I essentially only have three links that take
+
+2
+00:00:08,550 --> 00:00:13,990
+me to different pages for two different user IDs here and to the home page.
+
+3
+00:00:14,040 --> 00:00:19,170
+Now of course, there is one thing we already learned about in the routing section and that can be found
+
+4
+00:00:19,560 --> 00:00:20,760
+in the user component
+
+5
+00:00:20,760 --> 00:00:25,710
+which you find here in the user folder and that attached project. In the user.component.ts file,
+
+6
+00:00:25,710 --> 00:00:32,550
+of course I have already set up a subscription to listen to changing route parameters so that if I am
+
+7
+00:00:33,000 --> 00:00:38,070
+on the user page as I am here because User 1 and User 2 share the same component,
+
+8
+00:00:38,070 --> 00:00:43,920
+if I'm here and I have the user ID 1 loaded and I click on user 2, this updates here in the DOM even
+
+9
+00:00:43,920 --> 00:00:48,560
+though it technically is the same component and that is something you learned about in a routing section.
+
+10
+00:00:48,750 --> 00:00:57,090
+Now this is using an observable, params here is an observable to which we subscribe and that's just
+
+11
+00:00:57,090 --> 00:01:04,590
+one thing you can already keep in memory, observables are constructs to which you subscribe to be
+
+12
+00:01:04,590 --> 00:01:11,610
+informed about the changes in data because remember, observables are that stream of data and whenever a new
+
+13
+00:01:11,610 --> 00:01:15,750
+data piece is emitted, our subscription will know about it.
+
+14
+00:01:15,750 --> 00:01:18,740
+So in this case here, params is the observable,
+
+15
+00:01:18,750 --> 00:01:25,260
+it's a stream of route parameters and that stream gives us a new route parameter whenever we go to
+
+16
+00:01:25,260 --> 00:01:28,600
+a new page, whenever that parameter in the URL changes
+
+17
+00:01:28,710 --> 00:01:31,770
+and then here in this function we pass
+
+18
+00:01:31,770 --> 00:01:36,760
+to subscribe, we get the new params and we can extract our relevant param,
+
+19
+00:01:36,760 --> 00:01:39,810
+in this case the ID param from that.
+
+20
+00:01:39,810 --> 00:01:44,400
+So that's how this built-in observable works and how you can think about it,
+
+21
+00:01:44,580 --> 00:01:50,160
+params is the observable, it's that stream of data that gives us new values.
+
+22
+00:01:50,220 --> 00:01:56,070
+Now that's all nice and Angular will heavily use such observables and there you will never need
+
+23
+00:01:56,070 --> 00:01:58,010
+to create them yourselves,
+
+24
+00:01:58,020 --> 00:02:04,320
+you only subscribe to them, you don't need to create them but to understand them, it certainly doesn't
+
+25
+00:02:04,320 --> 00:02:06,390
+hurt to also create them.
+
+26
+00:02:06,390 --> 00:02:08,670
+So let's do that as a next step,
+
+27
+00:02:08,670 --> 00:02:13,350
+let's build our own observable from the ground up and understand its internals.
+

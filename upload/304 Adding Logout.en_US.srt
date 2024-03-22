@@ -1,0 +1,168 @@
+1
+00:00:02,150 --> 00:00:09,530
+Before we move forward and make sure we also store the token in a persistent way on our computer,
+
+2
+00:00:09,710 --> 00:00:15,680
+so that it is also there if the app reloads because at the moment, reloading means we lose our state
+
+3
+00:00:15,860 --> 00:00:17,270
+and we're logged out again.
+
+4
+00:00:17,270 --> 00:00:23,390
+So before we take care about that and before we then also protect certain routes so that we can't even
+
+5
+00:00:23,390 --> 00:00:28,480
+visit /recipes if we're not logged in, before all of that happens,
+
+6
+00:00:28,490 --> 00:00:35,060
+let me make sure that logging out works, so that if I am logged in, clicking the logout button here does
+
+7
+00:00:35,090 --> 00:00:41,810
+log us out. And for that, let's go back to the auth service and in there where we have sign up and login,
+
+8
+00:00:41,810 --> 00:00:46,480
+let's add a logout method and logging out is super simple.
+
+9
+00:00:46,550 --> 00:00:54,780
+In the end, we just use our user subject and we call next and we pass null, to set our user to null.
+
+10
+00:00:54,800 --> 00:00:57,920
+That's our initial state and that's now the state again and
+
+11
+00:00:57,950 --> 00:01:03,650
+this will make sure that our entire application treats the user as unauthenticated because that's the
+
+12
+00:01:03,650 --> 00:01:07,020
+logic we used everywhere and therefore now,
+
+13
+00:01:07,100 --> 00:01:12,950
+we should update our UI and also our interceptors will not work correctly anymore for requests that
+
+14
+00:01:12,950 --> 00:01:18,170
+require authentication, which is exactly the behavior we want because we can't authenticate ourselves
+
+15
+00:01:18,170 --> 00:01:19,280
+anymore.
+
+16
+00:01:19,280 --> 00:01:24,150
+The missing piece of course now just is that we link this logout method to our header.
+
+17
+00:01:24,230 --> 00:01:27,450
+There we have that logout button,
+
+18
+00:01:27,620 --> 00:01:33,950
+let's now add a click listener there and call onLogout maybe and un the header.components.ts
+
+19
+00:01:33,950 --> 00:01:34,800
+file,
+
+20
+00:01:34,880 --> 00:01:44,980
+we can add on logout here and use the auth service which we're already injecting to call logout and
+
+21
+00:01:44,980 --> 00:01:53,790
+now let's give this a quick try, let's authenticate login and if I now click logout, this works.
+
+22
+00:01:53,790 --> 00:02:00,330
+One nice thing would be that we are redirected and now here, I'll not do it in the component but in my
+
+23
+00:02:00,330 --> 00:02:07,150
+service because whilst I only have one place for logging in in my application which is the auth component,
+
+24
+00:02:07,260 --> 00:02:10,960
+there are multiple possible sources which could lead to a logout,
+
+25
+00:02:11,010 --> 00:02:12,880
+it's not just the header component,
+
+26
+00:02:12,930 --> 00:02:18,330
+we will also add logic to automatically log us out once the token expired soon and therefore I want
+
+27
+00:02:18,330 --> 00:02:22,680
+to redirect here in the logout method in my service,
+
+28
+00:02:22,680 --> 00:02:31,150
+in this method here and not in a component. So therefore, let me now inject the router here into that
+
+29
+00:02:31,210 --> 00:02:32,510
+auth service,
+
+30
+00:02:32,590 --> 00:02:39,070
+router as always needs to be imported from @angular/router and with the router injected, we can
+
+31
+00:02:39,640 --> 00:02:45,640
+redirect here in the logout method, again to make sure that no matter how we are logged out, we always
+
+32
+00:02:45,640 --> 00:02:51,450
+redirect the user and we're not stuck on some component on some page where we can't do anything anymore.
+
+33
+00:02:51,580 --> 00:02:53,830
+So there, let's redirect to /auth,
+
+34
+00:02:53,890 --> 00:02:56,170
+I guess this makes sense once we're logged out.
+
+35
+00:02:59,440 --> 00:03:02,260
+Let's give this a final test,
+
+36
+00:03:02,260 --> 00:03:07,440
+if I do login here and I logout, I'm back unauthenticated.
+
+37
+00:03:07,810 --> 00:03:09,070
+So that is all working,
+
+38
+00:03:09,070 --> 00:03:10,200
+that is all nice,
+
+39
+00:03:10,210 --> 00:03:12,510
+the next mission will be to persist
+
+40
+00:03:12,520 --> 00:03:13,260
+the token
+
+41
+00:03:13,330 --> 00:03:14,850
+so that it is still there
+
+42
+00:03:14,860 --> 00:03:16,690
+once we do reload the app.
+

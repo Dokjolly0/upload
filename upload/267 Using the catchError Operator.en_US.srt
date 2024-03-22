@@ -1,0 +1,96 @@
+1
+00:00:02,680 --> 00:00:09,610
+No matter how you handle your error, what can be useful is a special operator that can assist you with
+
+2
+00:00:09,610 --> 00:00:15,760
+handling errors and that special operator needs to be imported from rxjs/operators and it's
+
+3
+00:00:15,760 --> 00:00:19,830
+named catch error and it does exactly what the names suggests.
+
+4
+00:00:20,090 --> 00:00:28,930
+Now let's say here when we fetch posts, where we already pipe some data, we got an error and
+
+5
+00:00:28,930 --> 00:00:30,700
+we want to handle that.
+
+6
+00:00:30,700 --> 00:00:39,510
+Now we can simply add the catch error operator here, we get our error response in here, so we get exactly
+
+7
+00:00:39,510 --> 00:00:45,470
+the same data we would get in that second argument of the subscribe method
+
+8
+00:00:45,720 --> 00:00:51,630
+and in here, you could now do stuff like send to analytics server or anything like that,
+
+9
+00:00:51,720 --> 00:00:57,870
+so some generic error handling task you might want to do. Maybe not related to the UI, though of course
+
+10
+00:00:57,870 --> 00:00:59,610
+you could use the subject
+
+11
+00:00:59,610 --> 00:01:02,130
+and next the error message here too
+
+12
+00:01:02,250 --> 00:01:06,230
+but maybe you have some behind the scenes stuff you want to do when an error occurs,
+
+13
+00:01:06,300 --> 00:01:11,990
+log it somewhere, send it to your own server, your analytics server, anything like that.
+
+14
+00:01:12,090 --> 00:01:17,010
+And once you're done handing that error, you should pass it on though, it definitely needs to be able
+
+15
+00:01:17,010 --> 00:01:21,360
+to reach subscribe, just as you need to pass something here in map as well.
+
+16
+00:01:22,080 --> 00:01:27,810
+So we also now need to create a new observable that wraps that error
+
+17
+00:01:28,230 --> 00:01:35,400
+and for that, you can import something from RxJS and that something is throw error and that is a function
+
+18
+00:01:35,400 --> 00:01:41,400
+that will yield a new observable and it yields a new observable by wrapping an error.
+
+19
+00:01:41,910 --> 00:01:47,090
+So here, we can now throw the error response,
+
+20
+00:01:47,090 --> 00:01:52,970
+you could also throw a new custom error which you generated, whatever you want.
+
+21
+00:01:52,970 --> 00:01:58,490
+Important, you need to return that observable which is created by throw error.
+
+22
+00:01:58,610 --> 00:02:04,790
+And now with that, this of course doesn't do anything useful here but it's just an idea that you could
+
+23
+00:02:04,790 --> 00:02:09,440
+consider using catch error if you have some generic error handling task
+
+24
+00:02:09,470 --> 00:02:10,970
+you also want to execute.
+

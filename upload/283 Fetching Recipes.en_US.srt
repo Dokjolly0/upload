@@ -1,0 +1,264 @@
+1
+00:00:02,290 --> 00:00:03,660
+So we can store data,
+
+2
+00:00:03,680 --> 00:00:05,060
+how about fetching?
+
+3
+00:00:05,060 --> 00:00:08,090
+Because obviously, we can delete recipes right,
+
+4
+00:00:08,090 --> 00:00:10,170
+we can get rid of all of them
+
+5
+00:00:10,430 --> 00:00:16,550
+and in that case, we got a problem here and we want to be able to fetch data in that case, so that we
+
+6
+00:00:16,550 --> 00:00:24,020
+can load all the recipes we have on the server. For loading data, we can again use the data storage service,
+
+7
+00:00:24,440 --> 00:00:29,090
+which makes sense because if we started using that for interacting with the back-end, we should definitely
+
+8
+00:00:29,090 --> 00:00:35,660
+stick to it and there, we can now simply add a fetch recipes method which should be triggered when we
+
+9
+00:00:35,660 --> 00:00:37,970
+click that other button in the header component,
+
+10
+00:00:37,970 --> 00:00:44,030
+so this button, the fetch data button here. Let's already add that click listener and call this
+
+11
+00:00:44,030 --> 00:00:49,160
+onFetchData or whatever you want to call this method which gets called and that method needs to be added to
+
+12
+00:00:49,160 --> 00:00:51,080
+the component body of course
+
+13
+00:00:51,140 --> 00:00:57,530
+and in there, the goal now is to use the data storage service and call fetch recipes.
+
+14
+00:00:57,530 --> 00:01:01,730
+Now of course, right now in fetch recipes, so we're not doing much,
+
+15
+00:01:01,730 --> 00:01:05,940
+so let's change this by again using the Angular HttpClient
+
+16
+00:01:06,080 --> 00:01:08,390
+and there we can now send a get request.
+
+17
+00:01:08,390 --> 00:01:13,520
+Now obviously, the URL to which you want to send that request is that same URL we are using
+
+18
+00:01:13,520 --> 00:01:14,420
+up there,
+
+19
+00:01:14,520 --> 00:01:20,860
+so let's add that URL here and let's send a request there to get our recipes.
+
+20
+00:01:20,870 --> 00:01:24,150
+Now just as before, the question is, where do we want to subscribe?
+
+21
+00:01:24,440 --> 00:01:27,940
+And the answer is, where are we interested in the response?
+
+22
+00:01:27,980 --> 00:01:30,430
+Are we interested in the header component?
+
+23
+00:01:30,440 --> 00:01:34,120
+Well not really in my opinion. What would we do with the recipes here,
+
+24
+00:01:34,130 --> 00:01:39,920
+we're not using the recipes in the header? So I'm not really caring about the recipes here and hence
+
+25
+00:01:39,920 --> 00:01:42,760
+there is no strong reason to subscribe here.
+
+26
+00:01:42,800 --> 00:01:48,560
+Instead, it would be fine to just subscribe in the data storage service where we already inject the
+
+27
+00:01:48,560 --> 00:01:55,940
+recipes service because maybe we can do something with the recipes service then to push or to move our
+
+28
+00:01:55,940 --> 00:02:01,460
+fetched recipes into that recipes service which in the end is the place where we do manage our recipes.
+
+29
+00:02:02,210 --> 00:02:09,650
+So let's subscribe here and we should be getting back our recipes here, though let's first of all console
+
+30
+00:02:09,710 --> 00:02:17,250
+log this to get an idea of the format of data we get. So we got everything in place, let's save that, go
+
+31
+00:02:17,250 --> 00:02:22,890
+back to our application and this reloaded in the meantime which is why the recipes are back here and
+
+32
+00:02:23,020 --> 00:02:29,500
+let's click fetch data and that's looking good. We're getting an array, note the square brackets, we're getting
+
+33
+00:02:29,500 --> 00:02:30,870
+an array of recipes.
+
+34
+00:02:31,120 --> 00:02:37,420
+So since these recipes already have the right format, we should be able to just set our currently loaded
+
+35
+00:02:37,420 --> 00:02:43,990
+recipes equal to these ones to overwrite them with the fetched recipes and for that, in the recipe service,
+
+36
+00:02:44,020 --> 00:02:49,660
+we now just need a method that allows us to overwrite the existing array of recipes because we have that
+
+37
+00:02:49,660 --> 00:02:56,150
+starting array of recipes and we have a function to get the recipes which means return
+
+38
+00:02:56,150 --> 00:03:00,700
+them from the recipe component, from the recipe service to another component and then we have the
+
+39
+00:03:00,700 --> 00:03:07,000
+same for a single recipe and so on but we have no method to overwrite that array of recipes here and
+
+40
+00:03:07,030 --> 00:03:08,860
+it's time to do so now.
+
+41
+00:03:08,890 --> 00:03:15,880
+So let's add a new method in the recipe service, which we can call set recipes and there, we should get
+
+42
+00:03:16,090 --> 00:03:21,640
+an array of recipes, so let's make it really clear by adding that type
+
+43
+00:03:21,640 --> 00:03:28,360
+and the idea here is simple, this recipes should be set equal to the recipes we're getting as an argument
+
+44
+00:03:28,360 --> 00:03:34,060
+here and this will overwrite our recipes here with these recipes.
+
+45
+00:03:34,060 --> 00:03:40,570
+The important thing here just is since we're changing the recipes, we should then also call this recipes
+
+46
+00:03:40,570 --> 00:03:49,680
+changed next and push a copy with the slice method of our recipes there, so that we inform all interested
+
+47
+00:03:49,680 --> 00:03:55,660
+places in our app that we got new recipes, just as we're doing it when we're updating a recipe or
+
+48
+00:03:55,660 --> 00:03:57,690
+deleting a recipe.
+
+49
+00:03:57,960 --> 00:04:04,650
+So with that, we're setting the recipes equal. Now in the data storage service, instead of logging the recipes,
+
+50
+00:04:05,010 --> 00:04:14,020
+we can use the injected recipes service and call set recipes to forward our recipes there. Now we're getting
+
+51
+00:04:14,020 --> 00:04:19,900
+an error here because TypeScript does not understand that the recipes we're getting here really are
+
+52
+00:04:19,990 --> 00:04:22,540
+an array of recipes and that makes sense,
+
+53
+00:04:22,570 --> 00:04:30,430
+it just understands that here, we have the body of an HTTP response and that could be anything and therefore
+
+54
+00:04:30,430 --> 00:04:37,870
+to inform TypeScript about the type, we should indeed add the generic annotation to the get method
+
+55
+00:04:37,870 --> 00:04:43,190
+here, where we can make clear which format our extracted response body will have.
+
+56
+00:04:43,470 --> 00:04:50,170
+And therefore here, I will add recipe array and that now requires me or requires us, if you're following
+
+57
+00:04:50,170 --> 00:04:58,460
+along, to import the recipe model here from the recipes area, so that we can use that type in the data
+
+58
+00:04:58,460 --> 00:04:59,700
+storage service
+
+59
+00:04:59,810 --> 00:05:05,270
+and now TypeScript does not complain anymore because now TypeScript understands that the response body
+
+60
+00:05:05,330 --> 00:05:12,200
+will indeed be an array of recipes and therefore, we can validly forward this here. With that out of the
+
+61
+00:05:12,200 --> 00:05:16,250
+way, let's give this a try,
+
+62
+00:05:16,280 --> 00:05:23,720
+let's first of all delete all these recipes here and let's now fetch them and that's looking good.
+
+63
+00:05:23,750 --> 00:05:24,790
+Here they are again
+
+64
+00:05:24,800 --> 00:05:31,820
+and if we send this to the shopping list for example, that all seems to work. So we can now manage our
+
+65
+00:05:31,820 --> 00:05:32,720
+recipes
+
+66
+00:05:32,720 --> 00:05:36,380
+and now, we are indeed storing them on a server.
+

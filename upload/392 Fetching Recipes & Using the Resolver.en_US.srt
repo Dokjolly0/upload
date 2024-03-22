@@ -1,0 +1,524 @@
+1
+00:00:02,380 --> 00:00:11,230
+When we fetch our recipes and I then load the details and we reload, you'll see that this doesn't work
+
+2
+00:00:11,330 --> 00:00:13,700
+and that is related to our recipes
+
+3
+00:00:13,700 --> 00:00:21,860
+resolver. This is responsible for actually triggering the fetch recipes call when we try to visit one
+
+4
+00:00:21,860 --> 00:00:23,720
+of these recipe detail pages.
+
+5
+00:00:23,720 --> 00:00:28,280
+We can check our routing file for that,
+
+6
+00:00:28,280 --> 00:00:34,430
+there you see that on the ID and the id/edit files, we normally use the resolver to resolve our data
+
+7
+00:00:35,270 --> 00:00:41,240
+but that simply fails here and hence we can't successfully load these pages because we're still using
+
+8
+00:00:41,240 --> 00:00:47,270
+the data storage service for fetching here. That is currently correct, we're also doing that from the header
+
+9
+00:00:47,270 --> 00:00:49,060
+component, there
+
+10
+00:00:49,070 --> 00:00:55,900
+if you take a look, we also use the data storage service and now the next goal will simply be that
+
+11
+00:00:55,900 --> 00:00:59,620
+we manage this through effects.
+
+12
+00:00:59,710 --> 00:01:07,380
+Now for that, let's go to our recipes effects file and let's export a class, RecipeEffects
+
+13
+00:01:07,390 --> 00:01:13,950
+and in that class, we need to inject something from @ngrx/effects
+
+14
+00:01:13,960 --> 00:01:18,050
+if you remember and that something is the actions observable.
+
+15
+00:01:18,070 --> 00:01:25,960
+So from @ngrx/effects, let's inject it here, again I will use actions with that dollar sign
+
+16
+00:01:25,980 --> 00:01:27,590
+but that is optional,
+
+17
+00:01:27,750 --> 00:01:30,560
+the type is actions.
+
+18
+00:01:30,560 --> 00:01:37,290
+Now with that added, we can add effects as properties in the recipes effects class here.
+
+19
+00:01:37,290 --> 00:01:41,650
+Let's start with the fetch recipes effect,
+
+20
+00:01:41,700 --> 00:01:48,780
+we need to add the @effect decorator which is also imported from @ngrx/effects and the value
+
+21
+00:01:48,780 --> 00:01:55,190
+we store here is this actions and then pipe
+
+22
+00:01:55,300 --> 00:02:01,570
+and now first of all we need to filter for a specific action that should trigger this effect.
+
+23
+00:02:01,570 --> 00:02:07,780
+For that, let's add such an action, that would be for example FETCH_RECIPES, you can name this however you
+
+24
+00:02:07,780 --> 00:02:13,390
+want and the identifier could be recipes, fetch recipes.
+
+25
+00:02:17,680 --> 00:02:26,820
+Let's export a class, FetchRecipes which implements action and on that class here, we only need the readonly
+
+26
+00:02:26,820 --> 00:02:33,850
+type because we need no extra payload for fetching recipes. So go back in the effects file,
+
+27
+00:02:33,870 --> 00:02:36,060
+now here I want to pipe ofType
+
+28
+00:02:36,060 --> 00:02:40,480
+which also needs to be imported from @ngrx/effects
+
+29
+00:02:40,500 --> 00:02:43,730
+and I'm looking for my actions,
+
+30
+00:02:43,740 --> 00:02:49,980
+so I import everything as recipes actions from recipes actions file and
+
+31
+00:02:50,280 --> 00:02:56,790
+I'm looking for my recipes actions fetch recipes action of course, when this action occurs, I want
+
+32
+00:02:56,790 --> 00:02:58,600
+to kick off this effect here.
+
+33
+00:02:58,800 --> 00:03:02,380
+So ofType is the first step in our pipe here,
+
+34
+00:03:02,460 --> 00:03:09,800
+the second step now is that we send our HTTP request to fetch the recipes. For that,
+
+35
+00:03:09,810 --> 00:03:15,490
+let's use a switchMap here imported from rxjs/operators.
+
+36
+00:03:15,560 --> 00:03:18,830
+We did the same in the auth section if you remember,
+
+37
+00:03:25,620 --> 00:03:33,390
+here for example and let's go to the data storage service where we have the logic for sending this request
+
+38
+00:03:34,140 --> 00:03:40,140
+and we can simply copy this code here for sending a GET request.
+
+39
+00:03:40,140 --> 00:03:50,980
+So let's first of all expect our fetch action data here, though we don't really need that so you could
+
+40
+00:03:50,980 --> 00:03:56,560
+also use an empty argument list here because we are not interested in any arguments, we're not getting
+
+41
+00:03:56,560 --> 00:03:58,630
+a payload from that action anyways
+
+42
+00:03:58,900 --> 00:04:01,020
+and now since I want to use the HttpClient here,
+
+43
+00:04:01,030 --> 00:04:02,900
+we need to inject this as well.
+
+44
+00:04:03,160 --> 00:04:11,170
+So HttpClient is injected from @angular/common/http and we also need the recipe
+
+45
+00:04:11,260 --> 00:04:12,160
+model here,
+
+46
+00:04:12,220 --> 00:04:16,810
+so import recipe from the recipe model file.
+
+47
+00:04:16,810 --> 00:04:24,930
+The URL here still should be correct and with that, we have logic to send that request but
+
+48
+00:04:24,930 --> 00:04:27,530
+let's see what else we're doing in the data storage service.
+
+49
+00:04:27,540 --> 00:04:34,200
+There, we're also mapping the response and that is of course something I want to do in the effect too. So
+
+50
+00:04:34,200 --> 00:04:40,440
+I'll just copy that map operator and of course therefore also import it here from rxjs/operators
+
+51
+00:04:41,010 --> 00:04:47,040
+and then in here, we still get our recipes, we map that, transform this as before and once we're done
+
+52
+00:04:47,040 --> 00:04:54,390
+with all of that, as before, the goal is to return a new action which will then be dispatched automatically.
+
+53
+00:04:55,870 --> 00:05:02,530
+We can use another map operator for this where we get our recipes and now what action should be returned
+
+54
+00:05:02,530 --> 00:05:03,030
+here?
+
+55
+00:05:03,040 --> 00:05:13,210
+Well that would of course be our set recipes action. So a new recipes action, set recipes object is required
+
+56
+00:05:13,540 --> 00:05:16,030
+and there we pass our recipes as a payload
+
+57
+00:05:16,030 --> 00:05:20,440
+and this again will then automatically be dispatched by @ngrx/effects.
+
+58
+00:05:20,530 --> 00:05:25,330
+Now for these effects to be considered, we need to register them in the app module, so there in the
+
+59
+00:05:25,330 --> 00:05:33,960
+effects module, we have to add the recipes effects and for that of course, an import has to be added here,
+
+60
+00:05:34,060 --> 00:05:46,540
+so import recipes effects from and now let's go to ./recipes/store/recipe.effects.
+
+61
+00:05:46,540 --> 00:05:52,940
+Am I not exporting it there? recipe effect, without an s,
+
+62
+00:05:53,020 --> 00:05:58,700
+so it's recipe effect which needs to be added here in the app module and with that, @ngrx/effects
+
+63
+00:05:58,720 --> 00:06:01,900
+will automatically load this effect
+
+64
+00:06:01,900 --> 00:06:06,070
+class here and set up all these observable listeners.
+
+65
+00:06:06,070 --> 00:06:10,030
+So with that, we have these listeners,
+
+66
+00:06:10,060 --> 00:06:14,100
+now we just have to dispatch fetch recipes to use them
+
+67
+00:06:14,320 --> 00:06:22,060
+and one additional note, I also need to add @injectable here to the recipe effects class which is imported
+
+68
+00:06:22,060 --> 00:06:27,160
+from @angular/core to make sure that things can be injected into this class.
+
+69
+00:06:27,160 --> 00:06:32,220
+So with that, let's dispatch fetch recipes and there are two places where this needs to be done,
+
+70
+00:06:32,230 --> 00:06:38,710
+the first place is the data storage service or to be precise, the place where we called the data storage
+
+71
+00:06:38,770 --> 00:06:42,040
+service in the past and that would be the header component. In there,
+
+72
+00:06:42,040 --> 00:06:44,330
+I already inject the store which is great,
+
+73
+00:06:44,380 --> 00:06:51,180
+so in onFetchData, we can go right ahead and use the store to dispatch our action.
+
+74
+00:06:51,250 --> 00:06:54,400
+All we need to do is import our recipe actions,
+
+75
+00:06:54,400 --> 00:07:04,230
+so import everything as recipe actions from recipes store recipes actions
+
+76
+00:07:04,360 --> 00:07:14,940
+and with that imported here, we dispatch new recipes, recipe action.fetch recipes, like this.
+
+77
+00:07:15,080 --> 00:07:16,210
+So let's give this a try
+
+78
+00:07:16,210 --> 00:07:22,670
+first before we work on the resolver. The app reloaded and if I click fetch data, that looks pretty good
+
+79
+00:07:22,670 --> 00:07:23,100
+to me.
+
+80
+00:07:23,120 --> 00:07:27,670
+Now this is handled through NgRx and not through our service anymore,
+
+81
+00:07:27,740 --> 00:07:34,010
+let's now work on the resolver and this is a bit more tricky. In the resolver, we also called fetch
+
+82
+00:07:34,010 --> 00:07:35,120
+recipes in the past.
+
+83
+00:07:35,150 --> 00:07:41,560
+The thing just is the resolver actually expects an observable as a return value here on the resolve
+
+84
+00:07:41,570 --> 00:07:47,770
+method and it waits for this observable to complete before it loads the route for which you added this resolver.
+
+85
+00:07:48,020 --> 00:07:53,900
+The problem is, when we dispatch an action, we don't get back an observable and therefore resolve would
+
+86
+00:07:53,960 --> 00:08:00,370
+instantly resolve and we would instantly load a route where the data is actually not there yet.
+
+87
+00:08:00,410 --> 00:08:08,080
+Now there are workarounds and I want to explore one workaround with you here.
+
+88
+00:08:08,080 --> 00:08:14,080
+First, we need to inject our store and we won't need the data storage service anymore, so let's inject
+
+89
+00:08:14,140 --> 00:08:15,460
+the store here instead,
+
+90
+00:08:15,520 --> 00:08:18,910
+import it from @ngrx/store of course
+
+91
+00:08:21,570 --> 00:08:32,360
+and let's also import everything as from app from our root app.reducer here so that we can inject this
+
+92
+00:08:33,580 --> 00:08:35,530
+and assign this generic type
+
+93
+00:08:38,780 --> 00:08:45,260
+and of course we also need actions, so let's import everything as recipes actions or recipe actions I think
+
+94
+00:08:45,260 --> 00:08:46,630
+I named them in a different file,
+
+95
+00:08:46,670 --> 00:08:52,970
+you can of course name them whatever you want from the recipes area, the store there and there, the recipe
+
+96
+00:08:52,970 --> 00:08:54,800
+actions file.
+
+97
+00:08:54,890 --> 00:09:03,630
+Now here instead of returning this fetch recipes call, I will call this store dispatch and now create
+
+98
+00:09:03,630 --> 00:09:07,410
+a new action based on my recipes actions for fetch recipes.
+
+99
+00:09:07,410 --> 00:09:11,400
+Now again, the thing is I can't return this because this does not yield an observable,
+
+100
+00:09:11,640 --> 00:09:20,420
+instead we want to wait for the effect that is triggered by that action to complete and there is a neat
+
+101
+00:09:20,420 --> 00:09:22,390
+little way of doing that.
+
+102
+00:09:22,400 --> 00:09:29,060
+Keep in mind that in recipe effects, in the end we filter for specific actions and then we run logic.
+
+103
+00:09:29,060 --> 00:09:34,990
+Now it turns out that you can use this filtering logic and this actions observable provided by NgRx
+
+104
+00:09:35,030 --> 00:09:41,310
+effects in any class, not just in such an effect class and also without the effect decorator. That just is
+
+105
+00:09:41,330 --> 00:09:48,740
+also required for @ngrx/effects to do other useful things for you, like automatic unsubscribing
+
+106
+00:09:48,740 --> 00:09:54,510
+and so on but we can also use these features in a different class
+
+107
+00:09:54,830 --> 00:10:05,620
+and here indeed in my resolver, I want to import actions and ofType from @ngrx/effects.
+
+108
+00:10:05,870 --> 00:10:07,930
+Now what does this allow me to do?
+
+109
+00:10:07,970 --> 00:10:16,860
+We can inject our actions here, just as we do it in the effects class and now here, we can return this
+
+110
+00:10:17,330 --> 00:10:25,180
+actions pipe ofType and now listen to a specific action to occur
+
+111
+00:10:25,180 --> 00:10:30,300
+to complete this observable basically or to trigger this observable and that specific action
+
+112
+00:10:30,310 --> 00:10:38,620
+I'm interested in is simply my set recipes action. When that is called, I know that recipes are there and
+
+113
+00:10:38,620 --> 00:10:40,080
+therefore this is the action
+
+114
+00:10:40,100 --> 00:10:41,420
+I want to listen for.
+
+115
+00:10:41,470 --> 00:10:49,430
+So here, I will use my recipes actions, set recipe action as a trigger.
+
+116
+00:10:49,430 --> 00:10:59,110
+Now we also need to add the take operator from rxjs/operators here to take only one value so
+
+117
+00:10:59,110 --> 00:11:04,060
+that we can complete and unsubscribe from the subscription, we have no ongoing subscription,
+
+118
+00:11:04,060 --> 00:11:09,630
+we're only interested in this event once and we're good
+
+119
+00:11:09,630 --> 00:11:16,410
+and now the resolver dispatches this but then also waits for recipes to be set. Now let's give this
+
+120
+00:11:16,410 --> 00:11:17,210
+a try,
+
+121
+00:11:17,250 --> 00:11:25,120
+if we now fetch our data, we go here to the ingredient page, that works and if I reload this page, I
+
+122
+00:11:25,120 --> 00:11:27,910
+still end up on /recipes.
+
+123
+00:11:27,910 --> 00:11:29,140
+Well let's fix this in a second,
+
+124
+00:11:29,140 --> 00:11:34,930
+first of all let me show you that our logic works though. If we use the Redux dev tools here, if I fetch
+
+125
+00:11:34,930 --> 00:11:35,470
+my data,
+
+126
+00:11:35,500 --> 00:11:40,420
+we see fetch recipes set recipes here. If I now click on the ingredients,
+
+127
+00:11:40,420 --> 00:11:42,930
+we see that trigger again.
+
+128
+00:11:42,940 --> 00:11:48,790
+So here's the first set when I manually loaded that and here is when I visit a detail page. So our
+
+129
+00:11:48,790 --> 00:11:51,400
+resolver kicks in and does its job, which is great,
+
+130
+00:11:51,410 --> 00:11:53,430
+we fetch the latest information,
+
+131
+00:11:53,650 --> 00:11:58,360
+however when I reload, we are redirected and that's actually not directly related to the resolver.
+

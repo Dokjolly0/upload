@@ -1,0 +1,344 @@
+1
+00:00:02,200 --> 00:00:08,950
+We're able to get our state from the store with the help of the async pipe but more importantly, with
+
+2
+00:00:08,950 --> 00:00:12,260
+the help of the injected store and the select method
+
+3
+00:00:12,370 --> 00:00:15,630
+and just to make this really clear, this is just an observable.
+
+4
+00:00:15,640 --> 00:00:20,770
+So if you need it that state anywhere else but in the template, so in a place where you can't use the async
+
+5
+00:00:20,770 --> 00:00:24,840
+pipe, you of course don't have to. The async pipe is just an option,
+
+6
+00:00:24,880 --> 00:00:29,480
+you can also manually subscribe to your selected state,
+
+7
+00:00:29,500 --> 00:00:33,350
+it's an observable and therefore of course, you can call subscribe.
+
+8
+00:00:33,580 --> 00:00:38,110
+Now here, NgRx and Angular should also clear the subscription for you
+
+9
+00:00:38,260 --> 00:00:44,170
+but to be super safe, I would recommend storing this in a subscription property and try clearing it manually
+
+10
+00:00:44,170 --> 00:00:47,840
+as well just to avoid memory leaks and bugs. Here
+
+11
+00:00:47,850 --> 00:00:53,740
+however, I don't need such a subscription and therefore, let's move on and let's dive into how we dispatch
+
+12
+00:00:53,740 --> 00:00:55,180
+actions.
+
+13
+00:00:55,180 --> 00:00:57,730
+Where do I want to dispatch actions?
+
+14
+00:00:57,730 --> 00:01:02,980
+Well if we're talking about the shopping list part of the app, that would be in a shopping-edit component,
+
+15
+00:01:03,330 --> 00:01:11,140
+in the shopping-edit component, in the end we got our code to dispatch actions whenever we're done,
+
+16
+00:01:11,140 --> 00:01:15,010
+so whenever we're submitting our form to either update or add an ingredient,
+
+17
+00:01:15,070 --> 00:01:19,960
+these are the two places where we change our ingredients that are displayed and therefore the two
+
+18
+00:01:19,960 --> 00:01:25,020
+places where we change our shopping list state and therefore should change the store.
+
+19
+00:01:25,030 --> 00:01:27,160
+Now how do we dispatch actions?
+
+20
+00:01:27,370 --> 00:01:29,610
+Again with the help of the store service.
+
+21
+00:01:29,920 --> 00:01:37,060
+So now in the shopping edit component, let's again inject a store of type store which you need to import
+
+22
+00:01:37,090 --> 00:01:39,110
+from @ngrx/store,
+
+23
+00:01:39,120 --> 00:01:42,660
+so that hasn't changed, that import needs to be added.
+
+24
+00:01:42,900 --> 00:01:49,810
+And with it injected, again this is a generic type where you need to tell NgRx which type of data
+
+25
+00:01:49,840 --> 00:01:56,650
+is stored in that store and for the moment, we can simply copy that type from our shopping list component,
+
+26
+00:01:56,800 --> 00:01:59,960
+though later we'll have a more elegant approach for that
+
+27
+00:02:00,070 --> 00:02:02,320
+but for the moment, let's just copy that over here,
+
+28
+00:02:02,320 --> 00:02:08,140
+so this object with shopping list and then ingredients which is of type ingredient array and with the store
+
+29
+00:02:08,140 --> 00:02:12,100
+injected, we use it in the places where we want to dispatch an action.
+
+30
+00:02:12,100 --> 00:02:15,790
+We haven't set up an action for adding and updating ingredients yet,
+
+31
+00:02:15,880 --> 00:02:21,040
+so for the moment, let's simply take care about adding ingredients and let's dispatch an action there.
+
+32
+00:02:22,040 --> 00:02:27,320
+For this, instead of calling an ingredient on the shopping list service which we won't use anymore because
+
+33
+00:02:27,320 --> 00:02:29,840
+we're also not getting our data from there anymore,
+
+34
+00:02:29,840 --> 00:02:35,090
+keep in mind that in the shopping list component, we are now fetching our ingredients from the store,
+
+35
+00:02:35,090 --> 00:02:36,360
+from the @ngrx/store,
+
+36
+00:02:36,380 --> 00:02:41,210
+so we have to change our data there as well, changing it in the service won't do anything because that's
+
+37
+00:02:41,210 --> 00:02:43,550
+not our data source anymore.
+
+38
+00:02:43,550 --> 00:02:49,340
+So now here in the shopping-edit component, we can access the injected store and besides the select
+
+39
+00:02:49,340 --> 00:02:50,720
+method which we already used,
+
+40
+00:02:50,780 --> 00:02:57,970
+there also is a dispatch method and we use that to, you guessed it, dispatch actions.
+
+41
+00:02:57,980 --> 00:03:03,710
+Now keep in mind that our actions for the shopping list area are defined here in the shopping list actions
+
+42
+00:03:03,710 --> 00:03:07,400
+file and thus far, we only got one which is the add ingredient
+
+43
+00:03:07,550 --> 00:03:08,890
+action, it has a type
+
+44
+00:03:08,900 --> 00:03:10,970
+and it has a payload.
+
+45
+00:03:11,100 --> 00:03:20,570
+So now we can create a new type, a new object based on that action class here and dispatch it. For that,
+
+46
+00:03:20,580 --> 00:03:22,110
+let me import
+
+47
+00:03:24,730 --> 00:03:34,950
+everything as shopping list actions again because later, we will have multiple actions, from the store
+
+48
+00:03:34,960 --> 00:03:40,780
+folder and there, from the shopping list actions file and on that shopping list actions object which
+
+49
+00:03:40,780 --> 00:03:43,400
+now bundles together all exports,
+
+50
+00:03:43,600 --> 00:03:50,280
+there we can create a new object based on the add ingredient class that's based in that shopping list
+
+51
+00:03:50,290 --> 00:03:52,830
+actions object, so which is based in that shopping list
+
+52
+00:03:52,840 --> 00:03:57,220
+actions file. Add ingredient is just a class we have in here,
+
+53
+00:03:57,230 --> 00:04:00,520
+now this class has a type and a payload.
+
+54
+00:04:00,850 --> 00:04:07,150
+Now it would be nice if we could pass the payload as an argument to the constructor, right
+
+55
+00:04:07,150 --> 00:04:13,030
+because then we would have all in one place and that of course is possible by simply editing the action
+
+56
+00:04:13,030 --> 00:04:14,020
+class a little bit,
+
+57
+00:04:14,350 --> 00:04:22,760
+instead of adding payload just as a property like this, we can add a constructor function where we accept
+
+58
+00:04:22,760 --> 00:04:28,630
+a payload argument. I add public in front of that to use that TypeScript trick where payload is then
+
+59
+00:04:28,660 --> 00:04:36,580
+automatically converted into a public property with the same name as well and the payload argument here
+
+60
+00:04:36,580 --> 00:04:41,440
+and you could name this differently gets a value of type ingredient and
+
+61
+00:04:41,440 --> 00:04:47,710
+that's my constructor. Now this has to be public because of course I want to be able to access the payload
+
+62
+00:04:47,950 --> 00:04:54,920
+from inside my reducer where I'm extracting it to store that ingredient in the ingredients array. In
+
+63
+00:04:54,980 --> 00:04:57,320
+the shopping-edit component,
+
+64
+00:04:57,330 --> 00:05:03,060
+now we can pass the ingredient which we want to create here or which we want to add here to the add
+
+65
+00:05:03,060 --> 00:05:06,780
+ingredient class constructor which we're calling with the new keyword.
+
+66
+00:05:07,320 --> 00:05:15,040
+So we simply pass new ingredient here and we're now taking advantage of our action class and this will
+
+67
+00:05:15,100 --> 00:05:25,070
+dispatch this action to our store then. So what the flow will be then is that as soon as we add an ingredient,
+
+68
+00:05:25,310 --> 00:05:31,550
+again updating won't have an effect right now but if we add an ingredient, we dispatch this action which
+
+69
+00:05:31,550 --> 00:05:36,430
+is clearly defined in the actions file to that store, to the @ngrx/store,
+
+70
+00:05:36,440 --> 00:05:42,320
+keep in mind that we only have one such store in the entire application, setup here in the app module
+
+71
+00:05:42,890 --> 00:05:47,690
+and that store is aware of the shopping list reducer because we have to create such a store with
+
+72
+00:05:47,750 --> 00:05:52,720
+all the reducers that matter and you will soon learn how to add multiple reducers.
+
+73
+00:05:52,730 --> 00:05:58,310
+So then the action automatically reaches all the reducers that our store knows,
+
+74
+00:05:58,340 --> 00:06:05,600
+so in this case this one reducer here and in that reducer, the action is therefore passed in as a second
+
+75
+00:06:05,600 --> 00:06:06,680
+argument
+
+76
+00:06:06,680 --> 00:06:12,600
+and now we can check the different types of actions and react appropriately,
+
+77
+00:06:12,630 --> 00:06:21,230
+that is what's happening here. And therefore with all of that, we should be able to add sell it or anything
+
+78
+00:06:21,230 --> 00:06:24,980
+else to our list here and automatically see an update
+
+79
+00:06:24,980 --> 00:06:32,030
+and whilst this looks exactly like the behavior we had before already, this is now entirely powered by
+
+80
+00:06:32,050 --> 00:06:40,250
+NgRx because we're dispatching the action when we add something through NgRx and we're also displaying
+
+81
+00:06:40,250 --> 00:06:48,620
+the data based on our selection from NgRx, so we're using NgRx end-to-end for displaying and adding
+
+82
+00:06:48,620 --> 00:06:49,820
+ingredients.
+
+83
+00:06:49,820 --> 00:06:55,520
+Now it's of course time to make sure that we can also update and delete our ingredients because these
+
+84
+00:06:55,520 --> 00:06:58,860
+are the things our shopping list service also supported
+
+85
+00:06:58,940 --> 00:07:04,370
+and since we're basically replacing it with the store, we should of course make sure that we handle these
+
+86
+00:07:04,370 --> 00:07:07,730
+cases with our reducer in our store as well.
+

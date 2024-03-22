@@ -1,0 +1,184 @@
+1
+00:00:02,180 --> 00:00:08,810
+We're almost finished, our application is taking shape and services really improved it.
+
+2
+00:00:08,850 --> 00:00:16,320
+Now I want to do something here on the recipe section, I want each recipe to have some ingredients, so
+
+3
+00:00:16,320 --> 00:00:22,680
+we need to implement this and thereafter, I want to make these two shopping list buttons work, so that
+
+4
+00:00:22,680 --> 00:00:31,870
+we can send our ingredients to the shopping list. So to do this, what I will do is first of all, I will
+
+5
+00:00:31,870 --> 00:00:35,560
+work on the recipe model,
+
+6
+00:00:35,610 --> 00:00:38,590
+it should now also have ingredients.
+
+7
+00:00:38,890 --> 00:00:40,440
+So this will be of type
+
+8
+00:00:40,430 --> 00:00:46,440
+ingredient array, ingredient of course needs to be imported from the respective model file in the
+
+9
+00:00:46,440 --> 00:00:47,620
+shared folder
+
+10
+00:00:48,440 --> 00:00:54,680
+and when we create a new instance of this model, I expect to get some ingredients here.
+
+11
+00:00:54,710 --> 00:01:00,800
+Again, this will be of type ingredient array, so that here we can assign ingredients equal to the ingredients
+
+12
+00:01:00,830 --> 00:01:02,670
+we get as an argument here.
+
+13
+00:01:03,140 --> 00:01:09,520
+So with that, we are prepared to have some ingredients, now in the recipe service, I also need to add some
+
+14
+00:01:09,520 --> 00:01:10,340
+here.
+
+15
+00:01:10,580 --> 00:01:15,890
+So when we create a new recipe and I simply structure this over multiple lines to make it easier to
+
+16
+00:01:15,890 --> 00:01:23,220
+read, I also now will pass an array of ingredients, the same for the second recipe here
+
+17
+00:01:24,520 --> 00:01:28,540
+and now I guess it's time to also turn this into some real recipe,
+
+18
+00:01:28,540 --> 00:01:30,670
+so let me quickly do this.
+
+19
+00:01:30,670 --> 00:01:36,130
+So I quickly changed the pictures in the text to have a schnitzel and a burger here and now let's add
+
+20
+00:01:36,130 --> 00:01:41,580
+some ingredients here in this array of ingredients. We can use the ingredient constructor for this
+
+21
+00:01:41,620 --> 00:01:47,440
+and of course we need to import the ingredient type here from the model file located in the shared folder
+
+22
+00:01:47,440 --> 00:01:48,200
+for that
+
+23
+00:01:48,550 --> 00:01:54,000
+and now for the Schnitzel, let's say we need the meat, with an amount of one maybe
+
+24
+00:01:54,220 --> 00:02:03,520
+and then we also want to have some french fries here, now let's say exactly 20, with one extra it would probably
+
+25
+00:02:03,520 --> 00:02:04,060
+not taste
+
+26
+00:02:04,060 --> 00:02:05,640
+well I guess. So
+
+27
+00:02:05,650 --> 00:02:12,600
+now with the array for the burger, here we need a new ingredient, we need the buns,
+
+28
+00:02:12,710 --> 00:02:16,470
+so the bread basically, let's say 2
+
+29
+00:02:16,810 --> 00:02:20,230
+and we also want to have the meat here, of course
+
+30
+00:02:20,230 --> 00:02:22,550
+feel free to add more ingredients.
+
+31
+00:02:22,600 --> 00:02:31,240
+So now that we added that in the recipe detail component, here where we have this ingredients placeholder,
+
+32
+00:02:31,560 --> 00:02:34,370
+we can actually now output them here.
+
+33
+00:02:34,450 --> 00:02:41,330
+So let's add something here, let's add an unordered list with a class of list-group
+
+34
+00:02:41,420 --> 00:02:50,600
+and now here I want to add a list-group-item. This item here will actually be replicated because again,
+
+35
+00:02:50,630 --> 00:02:53,230
+this will of course be my ingredient.
+
+36
+00:02:53,340 --> 00:02:59,730
+So here, ngFor and now I will loop through all the ingredients, so ingredient of
+
+37
+00:03:00,020 --> 00:03:06,420
+and now of recipe ingredients of course because remember in the recipe detail component, we have a recipe
+
+38
+00:03:06,660 --> 00:03:10,480
+and that has some ingredients since a couple of seconds at least.
+
+39
+00:03:10,830 --> 00:03:18,690
+So now, we can simply use string interpolation here to output the ingredient name and then maybe separated
+
+40
+00:03:18,840 --> 00:03:21,840
+by a dash, the amount,
+
+41
+00:03:21,840 --> 00:03:24,890
+of course any format you like.
+
+42
+00:03:25,020 --> 00:03:26,640
+So that's the first step,
+
+43
+00:03:26,640 --> 00:03:31,850
+now if we select a recipe, we see a list of ingredients at the bottom.
+
+44
+00:03:31,860 --> 00:03:34,560
+Now I want to send these to the shopping list
+
+45
+00:03:34,590 --> 00:03:37,100
+if I click this to shopping list button.
+
+46
+00:03:37,350 --> 00:03:39,950
+So that is what we'll work on in the next lecture.
+

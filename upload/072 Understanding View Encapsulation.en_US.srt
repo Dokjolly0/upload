@@ -1,0 +1,244 @@
+1
+00:00:02,510 --> 00:00:07,580
+I'm not sure if you noticed it in the last lectures, with our working application,
+
+2
+00:00:07,580 --> 00:00:15,050
+if I add servers and blueprints, something changed. Our new server down here in the blueprint as well
+
+3
+00:00:15,050 --> 00:00:19,650
+as the paragraph right at the top no longer has a blue color.
+
+4
+00:00:19,670 --> 00:00:28,310
+Now it was colored blue before because in the app.components.css file, we define that paragraphs should have
+
+5
+00:00:28,310 --> 00:00:33,320
+a blue text color but both paragraphs were removed,
+
+6
+00:00:33,350 --> 00:00:36,180
+they are no longer part of our app component here.
+
+7
+00:00:36,440 --> 00:00:42,390
+The first paragraph is part of the cockpit and the second paragraph, that is inside of our server
+
+8
+00:00:42,410 --> 00:00:43,310
+element
+
+9
+00:00:43,760 --> 00:00:51,020
+but isn't that strange? Here on this CSS definition, we just say paragraph,
+
+10
+00:00:51,080 --> 00:00:54,680
+so it should affect all paragraphs in our whole app.
+
+11
+00:00:54,680 --> 00:00:57,520
+Now you might say, well no it's in the app.components.css
+
+12
+00:00:57,530 --> 00:00:57,810
+file
+
+13
+00:00:57,810 --> 00:01:02,200
+so clearly it only belongs to this template
+
+14
+00:01:02,570 --> 00:01:04,740
+but is that so clear?
+
+15
+00:01:04,740 --> 00:01:09,950
+Because the way CSS works, it doesn't really care in which CSS file
+
+16
+00:01:09,950 --> 00:01:11,910
+you define a rule,
+
+17
+00:01:11,920 --> 00:01:15,890
+it simply is applied to the whole document normally.
+
+18
+00:01:16,280 --> 00:01:23,690
+So this actually is a behavior enforced by Angular which is not the default behavior of the browser.
+
+19
+00:01:23,990 --> 00:01:26,960
+So whilst of course this CSS files
+
+20
+00:01:26,960 --> 00:01:33,740
+have the goal of encapsulating styles for the component they belong to,
+
+21
+00:01:33,740 --> 00:01:36,370
+this again is not a default behavior,
+
+22
+00:01:36,440 --> 00:01:42,100
+Angular gives us this behavior and it's a great behavior because with that, we can make sure that whichever
+
+23
+00:01:42,110 --> 00:01:48,330
+styles we define in a CSS file will only get applied to the component they belong to.
+
+24
+00:01:48,350 --> 00:01:58,850
+However here of course, this means that now we would have to copy this blue color here to all our other
+
+25
+00:01:59,030 --> 00:02:01,370
+components where we want to use it.
+
+26
+00:02:01,730 --> 00:02:03,630
+Well I never wanted to use it on the cockpit
+
+27
+00:02:03,640 --> 00:02:07,480
+anyways but I will copy it to the server element
+
+28
+00:02:07,610 --> 00:02:13,520
+and if we now change this and let it reload and enter something here and add a new blueprint, now you
+
+29
+00:02:13,520 --> 00:02:15,130
+see this is blue again.
+
+30
+00:02:16,070 --> 00:02:23,750
+Now it's interesting if we inspect this text here in the developer tools, you see that if you have a
+
+31
+00:02:23,750 --> 00:02:24,520
+look at the styles,
+
+32
+00:02:24,530 --> 00:02:26,720
+clearly here we assign a blue color
+
+33
+00:02:27,020 --> 00:02:32,450
+but do you see that? The selector changed, before
+
+34
+00:02:32,480 --> 00:02:35,630
+we had just p here, just paragraph,
+
+35
+00:02:35,630 --> 00:02:43,970
+now it's paragraph and then this very strange attribute, _ng-content-ejo-2
+
+36
+00:02:44,060 --> 00:02:44,950
+.
+
+37
+00:02:45,230 --> 00:02:48,410
+Well I don't know about you but I didn't add it.
+
+38
+00:02:48,980 --> 00:02:52,310
+You can see this attribute here on the paragraph,
+
+39
+00:02:52,370 --> 00:02:59,120
+that is why this style gets applied here because this style definition says make every text blue which
+
+40
+00:02:59,120 --> 00:03:04,940
+is in a paragraph where the paragraph has this attribute, something which is true for the paragraph holding
+
+41
+00:03:04,940 --> 00:03:07,160
+this specific text.
+
+42
+00:03:07,160 --> 00:03:12,180
+Now the other paragraph we have in app cockpit here in the div,
+
+43
+00:03:12,410 --> 00:03:17,480
+this paragraph does have a different attribute, _ng-content-ejo-1,
+
+44
+00:03:17,590 --> 00:03:21,570
+down here we have ejo-2.
+
+45
+00:03:21,590 --> 00:03:27,650
+That is why the styling gets not applied to this paragraph and all these strange attributes which
+
+46
+00:03:27,650 --> 00:03:30,280
+you can see all over the place here,
+
+47
+00:03:30,610 --> 00:03:40,110
+all these strange attributes are applied to their specific elements by Angular. Angular
+
+48
+00:03:40,130 --> 00:03:46,700
+as I told you enforces this style encapsulation and it can't do that magically,
+
+49
+00:03:47,000 --> 00:03:54,280
+so the way it does it is it simply gives the same attribute to all elements in a component.
+
+50
+00:03:54,530 --> 00:03:57,510
+So all elements in this cockpit component have ng-content-ejo-1
+
+51
+00:03:57,520 --> 00:04:04,850
+attached to it as you can see and it does this for each component with different unique attribute
+
+52
+00:04:04,850 --> 00:04:09,950
+names, ejo-1 and ejo-0 and ejo-2
+
+53
+00:04:10,370 --> 00:04:16,390
+and with that, it can make sure that once it changed your style selector, it automatically adds this
+
+54
+00:04:16,400 --> 00:04:24,140
+attribute selector to all your styles defined for a component, that these styles get only applied to elements
+
+55
+00:04:24,290 --> 00:04:25,690
+of that component.
+
+56
+00:04:25,820 --> 00:04:28,580
+This is how it enforces this behavior.
+
+57
+00:04:28,730 --> 00:04:36,170
+It kind of emulates the shadow DOM, the shadow DOM is a technology not supported by all browsers where
+
+58
+00:04:36,200 --> 00:04:39,100
+each element has its kind of own
+
+59
+00:04:39,130 --> 00:04:45,720
+shadow DOM behind it, where you then could assign styles to each element
+
+60
+00:04:45,860 --> 00:04:52,380
+but as this technology is not supported by all browsers, this is how Angular emulates it
+
+61
+00:04:52,520 --> 00:04:57,470
+and that is the default behavior of view encapsulation in Angular.
+

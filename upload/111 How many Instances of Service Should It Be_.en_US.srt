@@ -1,0 +1,128 @@
+1
+00:00:03,100 --> 00:00:06,480
+In the last lecture, we learned about that hierarchical injector
+
+2
+00:00:06,600 --> 00:00:11,560
+and actually, this injection behavior leads to the behavior we see here.
+
+3
+00:00:11,580 --> 00:00:13,760
+Now that's not a bug, it's intended,
+
+4
+00:00:13,890 --> 00:00:19,860
+you might have an application where you want to have many different instances of the same service, where
+
+5
+00:00:19,860 --> 00:00:25,950
+you absolutely don't want to have the same instance but sometimes, you want to have the same instance
+
+6
+00:00:25,950 --> 00:00:32,630
+and we definitely do because right now for our account service, we have three instances.
+
+7
+00:00:32,670 --> 00:00:35,750
+The first one gets created here in app component,
+
+8
+00:00:35,880 --> 00:00:41,190
+we provide it here, app component receives its own service or it's own instance of the service I should
+
+9
+00:00:41,190 --> 00:00:44,270
+say as do all the child components.
+
+10
+00:00:44,280 --> 00:00:50,460
+Now you might say fine because new account and account are child components, right but there we provide it
+
+11
+00:00:50,460 --> 00:00:55,070
+again and hence we overwrite the instance we would get from the app component.
+
+12
+00:00:55,350 --> 00:01:00,060
+Now new account and accounts component have their own instances,
+
+13
+00:01:00,060 --> 00:01:03,370
+so these are the other two instances of this service class.
+
+14
+00:01:03,780 --> 00:01:10,680
+And therefore if we add a new service, we call add account, there we push it on this array of accounts
+
+15
+00:01:10,740 --> 00:01:15,930
+and this actually works but it's a totally different instance of the service than the one
+
+16
+00:01:15,930 --> 00:01:17,430
+we use here in app component,
+
+17
+00:01:17,430 --> 00:01:24,060
+the one through which we loop. How can we fix it then here for our app? Simple, we just remove it from
+
+18
+00:01:24,060 --> 00:01:25,470
+the providers array.
+
+19
+00:01:25,710 --> 00:01:27,570
+Don't remove it from the constructor,
+
+20
+00:01:27,570 --> 00:01:33,840
+we of course do need it here because that tells Angular that we want an instance, the providers array
+
+21
+00:01:33,840 --> 00:01:37,120
+basically tells which instance so there we need it to remove it
+
+22
+00:01:37,320 --> 00:01:39,010
+and the same for account component.
+
+23
+00:01:39,120 --> 00:01:45,060
+Leave it in the constructor, leave the import at the top but remove it from the providers array. With
+
+24
+00:01:45,060 --> 00:01:46,260
+that little change,
+
+25
+00:01:46,260 --> 00:01:51,970
+if we go back to the application after saving it, let's add another account.
+
+26
+00:01:52,020 --> 00:01:53,910
+Now you'll see it at the bottom,
+
+27
+00:01:53,910 --> 00:01:56,650
+now you can change the status again.
+
+28
+00:01:56,730 --> 00:01:58,410
+So this is the difference,
+
+29
+00:01:58,590 --> 00:02:01,680
+different instances of the service.
+
+30
+00:02:01,680 --> 00:02:05,520
+Now we're using one and the same, before we weren't. Both
+
+31
+00:02:05,530 --> 00:02:07,390
+may be the behavior you want in your app
+
+32
+00:02:07,500 --> 00:02:09,970
+but make sure that you get the correct one.
+

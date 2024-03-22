@@ -1,0 +1,44 @@
+1
+00:00:02,600 --> 00:00:05,330
+So that's the first basic set up,
+
+2
+00:00:05,330 --> 00:00:07,450
+of course we can improve this app,
+
+3
+00:00:07,490 --> 00:00:13,840
+for example I don't want to have recipes and shopping lists component on the same page.
+
+4
+00:00:13,970 --> 00:00:20,870
+We will fix this soon, first temporarily and then with a real good solution later in the course
+
+5
+00:00:20,990 --> 00:00:27,110
+and I also want to have my components communicate with each other, so that we can actually store the
+
+6
+00:00:27,110 --> 00:00:32,750
+content of the items in our recipe-list in their own component, that we can select a recipe here and
+
+7
+00:00:32,750 --> 00:00:35,920
+load it in the detail section and so on.
+
+8
+00:00:35,930 --> 00:00:42,230
+For now though, that is how far we can go with the knowledge we gathered, the blocking thing right now
+
+9
+00:00:42,230 --> 00:00:44,180
+is the component communication
+
+10
+00:00:44,270 --> 00:00:48,180
+and that's why we're going to dive into this in the next course section.
+
+11
+00:00:48,200 --> 00:00:52,190
+See you there and then see you back in this project later in the course.
+

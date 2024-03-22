@@ -1,0 +1,316 @@
+1
+00:00:02,480 --> 00:00:07,310
+Let's start with the loading spinner and for this, you can enter CSS loading spinners to find loading.io
+
+2
+00:00:07,310 --> 00:00:12,590
+which is a page where you find a lot of beautiful loading spinners and I will simply grab this
+
+3
+00:00:12,590 --> 00:00:12,940
+one
+
+4
+00:00:12,980 --> 00:00:19,280
+but of course you can grab whatever loading spinner you want and I will just copy all that code here
+
+5
+00:00:19,490 --> 00:00:28,700
+which is the CSS code and create a new file in the shared folder here, a new folder first of all which
+
+6
+00:00:28,700 --> 00:00:32,480
+I'll name loading spinner and in there,
+
+7
+00:00:32,480 --> 00:00:44,040
+let's add the loading-spinner.component.ts file and important, also loading-spinner.component.css
+
+8
+00:00:44,340 --> 00:00:47,010
+file and into that CSS file,
+
+9
+00:00:47,010 --> 00:00:53,430
+copy that CSS code you just wrapped and change that white color to a color of your choice because
+
+10
+00:00:53,430 --> 00:00:56,890
+this is the color of the spinner and white is something you won't see it.
+
+11
+00:00:56,940 --> 00:01:03,900
+So here, I will simply change that let's say to a nice dark blue color but of course, you can take any
+
+12
+00:01:03,900 --> 00:01:08,970
+color you want and replace white in all places where it occurs with that color, which should only be
+
+13
+00:01:08,970 --> 00:01:11,400
+two here, for this spinner at least.
+
+14
+00:01:11,670 --> 00:01:16,470
+Now in the loading-spinner.ts file, in the loading-spinner.component.ts file, let's
+
+15
+00:01:16,500 --> 00:01:24,510
+export a class, loading spinner component and let's give that the @component decorator which is imported
+
+16
+00:01:24,510 --> 00:01:25,410
+from @angular/core,
+
+17
+00:01:25,410 --> 00:01:33,840
+give it a selector of app-loading-spinner and then a template which could be a URL
+
+18
+00:01:33,840 --> 00:01:40,470
+pointing at an external file but here we'll have a very short template and I'll just grab that HTML code
+
+19
+00:01:40,470 --> 00:01:46,560
+from the loading spinner page, which is the HTML code you need for the spinner to work and I'll add this
+
+20
+00:01:46,710 --> 00:01:52,560
+as my template here, looks quite unstructured but this is all this spinner needs to work and thereafter
+
+21
+00:01:52,620 --> 00:01:59,130
+more importantly, I'll add style URLs and there, add one URL to my array of URLs which
+
+22
+00:01:59,130 --> 00:02:06,680
+points at my loading-spinner.component.css file I just added. With that, we prepared
+
+23
+00:02:06,710 --> 00:02:12,080
+that loading spinner component, of course as always with all components we need to declare that.
+
+24
+00:02:12,350 --> 00:02:18,650
+So in the app module, let's add the loading spinner component to the declarations array and make sure
+
+25
+00:02:18,830 --> 00:02:25,370
+you also add an import path at the top of this file pointing at that loading spinner file in the shared
+
+26
+00:02:25,490 --> 00:02:29,600
+folder. So that's the loading spinner component,
+
+27
+00:02:29,680 --> 00:02:35,710
+we can now use this in the auth component here because here, I essentially want to hide the entire form
+
+28
+00:02:35,980 --> 00:02:38,080
+if we are currently loading.
+
+29
+00:02:38,140 --> 00:02:43,450
+Now to find out whether we are loading, here in the auth.component.ts file, we can add a new property,
+
+30
+00:02:43,690 --> 00:02:49,960
+isLoading and we'll follow a similar logic as we did for isLogin mode, we'll change this isLoading
+
+31
+00:02:49,960 --> 00:02:53,440
+property dynamically and update the UI based on it.
+
+32
+00:02:53,530 --> 00:02:57,280
+Initially we are of course not loading but in onSubmit,
+
+33
+00:02:57,280 --> 00:03:03,880
+as soon as we made it past this if check and the data extraction, so right before the requests get sent,
+
+34
+00:03:04,330 --> 00:03:10,450
+we can set this isLoading to true because now we clearly are sending a request and we are loading and
+
+35
+00:03:10,450 --> 00:03:12,960
+I'll set this back to false as soon as we're done,
+
+36
+00:03:12,970 --> 00:03:16,290
+so both here for the success case as well as the error case,
+
+37
+00:03:16,480 --> 00:03:21,270
+in both cases, we should set isLoading back to false because we're not loading anymore,
+
+38
+00:03:21,280 --> 00:03:22,420
+we got a response
+
+39
+00:03:22,420 --> 00:03:28,940
+even if it should be an error. Now the isLoading property can be used in the template to hide the form
+
+40
+00:03:29,180 --> 00:03:36,200
+simply with ngIf. There we add ngIf to the form element and by checking for isLoading or for
+
+41
+00:03:36,200 --> 00:03:38,690
+the form here actually, for not isLoading,
+
+42
+00:03:38,690 --> 00:03:44,270
+we ensure that the form only shows up if we're currently not loading. If we are loading, I want to show
+
+43
+00:03:44,270 --> 00:03:50,350
+that spinner and for that, I'll simply add a div here and in that div, I'll add my app-loading-spinner
+
+44
+00:03:50,360 --> 00:03:56,540
+component and that entire div will only be shown if we are loading.
+
+45
+00:03:56,650 --> 00:03:59,030
+Now let's give this a try and let's save that,
+
+46
+00:03:59,230 --> 00:04:05,470
+go back to our application, enter our data, switch to sign up and here's our spinner,
+
+47
+00:04:05,470 --> 00:04:08,990
+of course I still get my error thereafter but the spinner works.
+
+48
+00:04:09,010 --> 00:04:11,290
+Now obviously, it would be nice to center that spinner
+
+49
+00:04:11,350 --> 00:04:17,530
+and here we can do this quick and dirty on that div by adding an inline style and setting text align
+
+50
+00:04:17,680 --> 00:04:18,880
+to center,
+
+51
+00:04:18,880 --> 00:04:22,470
+of course you could also manage this through a CSS file if you want to.
+
+52
+00:04:22,480 --> 00:04:24,600
+This however should do the trick here,
+
+53
+00:04:24,850 --> 00:04:26,530
+if we now try to sign up again,
+
+54
+00:04:26,620 --> 00:04:29,720
+this was centered as you saw. Now that's the loading spinner
+
+55
+00:04:29,800 --> 00:04:37,360
+but I also want to show an error message, an alert in case we got an error, in case we had a problem
+
+56
+00:04:37,360 --> 00:04:41,640
+with logging in and therefore the error should be handled as well.
+
+57
+00:04:41,770 --> 00:04:47,920
+Hence let's go back to the auth component and we already manage whether we are logging in or whether
+
+58
+00:04:47,970 --> 00:04:49,080
+we are loading,
+
+59
+00:04:49,180 --> 00:04:56,230
+now I also want to store an error here and initially, that is null because initially we have no error
+
+60
+00:04:56,680 --> 00:05:01,810
+but in theory, that will be of type string because it should hold an error message let's say. Now you
+
+61
+00:05:01,810 --> 00:05:05,820
+can get as sophisticated as you want and store more information in here,
+
+62
+00:05:05,890 --> 00:05:12,250
+have a more complex error object but for the UI, I only care about the message and I either have no message
+
+63
+00:05:12,670 --> 00:05:14,890
+or I do have a message.
+
+64
+00:05:14,890 --> 00:05:21,070
+So therefore, let's now go to onSubmit here, to the error case and instead of logging my error message,
+
+65
+00:05:21,490 --> 00:05:28,480
+I will simply set or I will still log it but I will in addition also set this error equal to an
+
+66
+00:05:28,540 --> 00:05:33,640
+error occurred and we'll add a more specific error message in a second.
+
+67
+00:05:33,670 --> 00:05:41,710
+So here, an error occurred is set and in my auth component therefore, I'll now add another div using the
+
+68
+00:05:41,710 --> 00:05:49,770
+bootstrap alert and alert-danger classes to give us a nice alert view and in there, a paragraph
+
+69
+00:05:50,070 --> 00:05:56,580
+where we output that error text because keep in mind that the error property of this component is just
+
+70
+00:05:56,580 --> 00:05:58,110
+a string.
+
+71
+00:05:58,110 --> 00:06:00,700
+Now when should this div be shown?
+
+72
+00:06:00,750 --> 00:06:02,660
+Of course only if we have an error.
+
+73
+00:06:02,790 --> 00:06:08,760
+So let's add ngIf and check for the existence of error here to make sure this only shows up if
+
+74
+00:06:08,760 --> 00:06:12,890
+we do have an error and therefore now if you go back, you see nothing here
+
+75
+00:06:13,110 --> 00:06:20,960
+but if you try signing up for a user that already exists, you now see an error occurred here.
+
+76
+00:06:20,970 --> 00:06:25,860
+This of course is better because we now give the user a hint about which error occurred or that an error
+
+77
+00:06:25,950 --> 00:06:26,390
+occurred
+
+78
+00:06:26,400 --> 00:06:30,310
+to be precise but we don't tell the user which error occurred.
+
+79
+00:06:30,420 --> 00:06:32,220
+So that's the thing we'll do in the next lecture.
+

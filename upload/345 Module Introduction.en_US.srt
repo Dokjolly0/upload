@@ -1,0 +1,124 @@
+1
+00:00:02,584 --> 00:00:04,330
+[Maximilian Schwarzmuller] Angular 14 introduced
+
+2
+00:00:04,330 --> 00:00:08,730
+an amazing new feature: Standalone Components.
+
+3
+00:00:08,730 --> 00:00:10,060
+And over the next minutes,
+
+4
+00:00:10,060 --> 00:00:13,640
+I will explain what exactly Standalone Components are,
+
+5
+00:00:13,640 --> 00:00:16,830
+why this feature was added, how it works,
+
+6
+00:00:16,830 --> 00:00:18,950
+and which problem is solved by it,
+
+7
+00:00:18,950 --> 00:00:21,940
+and we'll explore basic Standalone Components,
+
+8
+00:00:21,940 --> 00:00:24,520
+along with more advanced use cases,
+
+9
+00:00:24,520 --> 00:00:27,650
+like using Standalone Components with services,
+
+10
+00:00:27,650 --> 00:00:29,203
+routing, or lazy loading.
+
+11
+00:00:30,120 --> 00:00:32,290
+I wanna highlight right away, though,
+
+12
+00:00:32,290 --> 00:00:34,610
+that this feature was introduced
+
+13
+00:00:34,610 --> 00:00:38,870
+with Angular Version 14 in preview mode,
+
+14
+00:00:38,870 --> 00:00:41,080
+so as a feature preview.
+
+15
+00:00:41,080 --> 00:00:45,630
+This means it's not fully stable yet. Details might change.
+
+16
+00:00:45,630 --> 00:00:47,440
+It's not the recommended way
+
+17
+00:00:47,440 --> 00:00:50,220
+for building production Angular applications,
+
+18
+00:00:50,220 --> 00:00:52,830
+and that's why my Complete Guide Course
+
+19
+00:00:52,830 --> 00:00:56,250
+does not use Standalone Components as a default,
+
+20
+00:00:56,250 --> 00:00:57,560
+but it's very possible
+
+21
+00:00:57,560 --> 00:01:01,230
+that Standalone Components will shape the future of Angular
+
+22
+00:01:01,230 --> 00:01:03,160
+and might become the default way
+
+23
+00:01:03,160 --> 00:01:05,720
+of building Angular Components and Apps
+
+24
+00:01:05,720 --> 00:01:08,450
+once all the details have been finalized,
+
+25
+00:01:08,450 --> 00:01:10,570
+once everything has been polished,
+
+26
+00:01:10,570 --> 00:01:13,480
+and once this feature has been battle-tested
+
+27
+00:01:13,480 --> 00:01:16,060
+and is the recommended default.
+
+28
+00:01:16,060 --> 00:01:17,640
+It's not the case right now,
+
+29
+00:01:17,640 --> 00:01:21,230
+but it's still really interesting to dive into this feature
+
+30
+00:01:21,230 --> 00:01:22,510
+and play around with it,
+
+31
+00:01:22,510 --> 00:01:25,693
+and that's therefore what we'll do over the next minutes.
+

@@ -1,0 +1,244 @@
+1
+00:00:02,410 --> 00:00:07,630
+In the last lectures, we edited our form using the template driven approach,
+
+2
+00:00:07,630 --> 00:00:14,640
+now let's move onto the reactive approach for the new recipe or editing an existing one.
+
+3
+00:00:14,740 --> 00:00:21,850
+We got our recipe edit component here and it doesn't have a form inside of it, so we should definitely
+
+4
+00:00:21,850 --> 00:00:24,840
+change this. In here,
+
+5
+00:00:24,840 --> 00:00:30,810
+I will start by adding a row and then a column which should span the full width for all device sizes
+
+6
+00:00:31,290 --> 00:00:35,080
+and then the form, without an action because we don't want to send a request,
+
+7
+00:00:35,100 --> 00:00:37,120
+we want to handle it in Angular.
+
+8
+00:00:37,140 --> 00:00:40,230
+Now we will need a couple of inputs here,
+
+9
+00:00:40,320 --> 00:00:44,480
+I will actually begin with the save and cancel buttons though.
+
+10
+00:00:44,790 --> 00:00:52,190
+So right at the start of this form, I'll add another bootstrap row, col-xs-12 will be width
+
+11
+00:00:52,530 --> 00:01:01,390
+and here I want to have a button of type submit with a class of button and then btn-success, so that
+
+12
+00:01:01,390 --> 00:01:07,450
+it's a green button which should simply save the form, should save the recipe.
+
+13
+00:01:07,840 --> 00:01:13,870
+I'll have a second button of type button so that it doesn't submit the form which will be of or which
+
+14
+00:01:13,870 --> 00:01:19,390
+would get the class btn-danger, which should simply cancel the editing here.
+
+15
+00:01:20,450 --> 00:01:24,710
+So these are the two buttons which allow me to control the form in the end.
+
+16
+00:01:24,710 --> 00:01:34,250
+Now for the inputs, I definitely want a row with my default column width here, where I will add a div with
+
+17
+00:01:34,250 --> 00:01:35,230
+the form-group
+
+18
+00:01:35,240 --> 00:01:35,470
+CSS
+
+19
+00:01:35,480 --> 00:01:36,440
+class
+
+20
+00:01:36,460 --> 00:01:43,460
+to simply use that bootstrap CSS class to give it some nice styling, then I'll add a label for the
+
+21
+00:01:43,460 --> 00:01:52,320
+name of that recipe and I'll say name here and I will add the input, the input will be of type text with
+
+22
+00:01:52,320 --> 00:01:59,580
+the ID name maybe and let's already structure this over multiple lines and with a class of form-control,
+
+23
+00:01:59,580 --> 00:02:01,820
+to make it look nice.
+
+24
+00:02:01,920 --> 00:02:08,780
+Now I will actually copy that row and paste it in below this name, here
+
+25
+00:02:08,790 --> 00:02:12,910
+I want to have my imagePath, so I'll name it
+
+26
+00:02:12,990 --> 00:02:19,500
+ImageUrl here, this input and here I simply want the user to paste in the imagePath.
+
+27
+00:02:19,720 --> 00:02:24,810
+So that will be this row, below it I'll add another row, here
+
+28
+00:02:24,850 --> 00:02:27,260
+I won't have my FormGroup though,
+
+29
+00:02:27,310 --> 00:02:30,600
+instead I want to preview the image the user pasted in.
+
+30
+00:02:30,820 --> 00:02:35,070
+So I will simply add my image element here,
+
+31
+00:02:35,380 --> 00:02:42,110
+I will later bind the source and assign the image responsive class to it,
+
+32
+00:02:42,540 --> 00:02:45,040
+we will fine tune this later if needed.
+
+33
+00:02:45,510 --> 00:02:52,060
+So that allows the user to enter a title and an image and see that image as a preview.
+
+34
+00:02:52,080 --> 00:02:58,190
+Now I'll add another row with another label which should now say description,
+
+35
+00:02:58,230 --> 00:03:04,800
+so the description of our recipe or the content of the recipe, so I'll assign this for the ID description
+
+36
+00:03:04,800 --> 00:03:10,520
+which of course will be this but this will not be an input, I'll change it to a text area,
+
+37
+00:03:10,560 --> 00:03:15,480
+therefore I also need a closing tag for this. On this text area,
+
+38
+00:03:15,570 --> 00:03:18,890
+I want to provide let's say six rows for typing,
+
+39
+00:03:18,900 --> 00:03:21,380
+so that is not too big, not too small,
+
+40
+00:03:21,380 --> 00:03:22,470
+should be ok.
+
+41
+00:03:23,010 --> 00:03:28,390
+Well and then below this, I'll add yet another div,
+
+42
+00:03:28,460 --> 00:03:33,680
+this will later be required for the ingredients of that recipe here.
+
+43
+00:03:33,870 --> 00:03:38,670
+So here, we will actually need to create an array of controls and we will need to manage this,
+
+44
+00:03:38,670 --> 00:03:43,580
+we did learn how to do this but here, we will see it in practice in a real project.
+
+45
+00:03:44,890 --> 00:03:51,160
+Now here as this will be for my array of items, I will get rid of the label and get rid of the ID, also
+
+46
+00:03:51,190 --> 00:03:54,220
+get rid of that div here, instead
+
+47
+00:03:54,280 --> 00:03:57,120
+I will add a new row inside of there,
+
+48
+00:03:57,130 --> 00:04:00,220
+we're going to have multiple ingredients probably
+
+49
+00:04:00,220 --> 00:04:03,220
+and each row should then have a couple of columns.
+
+50
+00:04:03,250 --> 00:04:06,020
+The first one spanning almost the entire width,
+
+51
+00:04:06,160 --> 00:04:10,960
+it will hold the input for the name of the ingredient.
+
+52
+00:04:10,960 --> 00:04:19,390
+The second one being very narrow next to it which should hold the amount and the third one,
+
+53
+00:04:19,420 --> 00:04:26,630
+also a very small column, should hold a button which allows me to delete an ingredient,
+
+54
+00:04:26,750 --> 00:04:30,440
+therefore btn-danger and put an X on it.
+
+55
+00:04:30,820 --> 00:04:34,420
+So if you have a look at this, that is how a single ingredient will look like.
+
+56
+00:04:34,420 --> 00:04:36,850
+Now we don't have descriptions for these inputs,
+
+57
+00:04:36,850 --> 00:04:42,280
+you could of course restructure this form and try placing labels next to them or use a different layout,
+
+58
+00:04:42,310 --> 00:04:47,680
+I like that layout here though. With that, we got the HTML code
+
+59
+00:04:47,890 --> 00:04:49,400
+almost finished.
+
+60
+00:04:49,420 --> 00:04:56,830
+There is something missing but before we work on this, let's make this base form work without ingredients
+
+61
+00:04:56,830 --> 00:04:58,020
+for a start.
+

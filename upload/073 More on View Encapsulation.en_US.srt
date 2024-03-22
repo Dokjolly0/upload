@@ -1,0 +1,132 @@
+1
+00:00:02,970 --> 00:00:07,160
+In the last lecture, you learned how Angular encapsulates your styles,
+
+2
+00:00:07,200 --> 00:00:13,860
+now you can override this encapsulation though. If you go back to your code, to the server element
+
+3
+00:00:13,860 --> 00:00:17,980
+component, you can add something to the @component decorator,
+
+4
+00:00:18,300 --> 00:00:27,330
+it's called encapsulation, this property and there as a value, you can access ViewEncapsulation which
+
+5
+00:00:27,330 --> 00:00:32,670
+needs to be imported from @angular/core, so make sure to add this import and then you can choose between
+
+6
+00:00:32,670 --> 00:00:34,010
+three modes.
+
+7
+00:00:34,250 --> 00:00:35,390
+Emulated is the default,
+
+8
+00:00:35,390 --> 00:00:41,820
+so you don't need to add this, none if you add this would make sure that if we have a look at our component
+
+9
+00:00:41,820 --> 00:00:52,390
+again and we inspect our server element, that now in here, we don't see these strange attributes being
+
+10
+00:00:52,390 --> 00:00:54,520
+added to our elements.
+
+11
+00:00:54,590 --> 00:00:59,050
+Therefore, this component now does not use view encapsulation.
+
+12
+00:00:59,050 --> 00:01:01,660
+The other components still will use it,
+
+13
+00:01:01,660 --> 00:01:03,650
+there you still see these attributes
+
+14
+00:01:03,820 --> 00:01:10,030
+but if you now define any styles for this component in the CSS file of this component, they will actually
+
+15
+00:01:10,030 --> 00:01:17,620
+get applied globally and I can demonstrate this by going into this CSS file and if I change the label
+
+16
+00:01:17,650 --> 00:01:25,620
+color and the label is in the cockpit, not in this component, to red, now you will see the label there
+
+17
+00:01:25,630 --> 00:01:26,470
+is overwritten
+
+18
+00:01:26,530 --> 00:01:32,350
+whilst this label of course still has its custom unique attribute, it still is a label in the end
+
+19
+00:01:32,560 --> 00:01:37,370
+and in this server element component, we disable encapsulation.
+
+20
+00:01:37,390 --> 00:01:40,530
+So there our selectors aren't changed by Angular,
+
+21
+00:01:40,570 --> 00:01:44,790
+they don't receive their unique selector, therefore they are enforced,
+
+22
+00:01:44,800 --> 00:01:51,790
+they are used application-wide, also affecting other components. Might be the behavior you want,
+
+23
+00:01:51,790 --> 00:01:58,700
+chances are that this is not the case but it's important to know that you can change this behavior.
+
+24
+00:01:58,840 --> 00:02:03,950
+Now besides none, you also could choose native and native uses
+
+25
+00:02:03,970 --> 00:02:06,080
+the shadow DOM technology.
+
+26
+00:02:06,190 --> 00:02:12,610
+This should give you the same result as before with emulated but only in browsers which support it which
+
+27
+00:02:12,610 --> 00:02:19,690
+is why for most cases, you want to choose emulated but be aware that you could switch to none or native
+
+28
+00:02:19,710 --> 00:02:20,520
+here too.
+
+29
+00:02:20,710 --> 00:02:26,130
+So I will go back to emulated which again you wouldn't have to add, it's the default anyways, with that
+
+30
+00:02:26,260 --> 00:02:28,590
+our labels should no longer be red now.
+
+31
+00:02:28,870 --> 00:02:32,210
+So that is how you can change it and how view encapsulation works,
+
+32
+00:02:32,290 --> 00:02:38,960
+a nice tool ensuring that by default, only your component receives the styles you defined for it
+
+33
+00:02:39,070 --> 00:02:41,170
+but as you learned, it can be overwritten
+

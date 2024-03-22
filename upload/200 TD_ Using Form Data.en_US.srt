@@ -1,0 +1,248 @@
+1
+00:00:03,200 --> 00:00:04,470
+Now we're almost done,
+
+2
+00:00:04,520 --> 00:00:06,570
+let's finish up our form here.
+
+3
+00:00:06,830 --> 00:00:10,000
+We get a submit button and right now, we only log it,
+
+4
+00:00:10,010 --> 00:00:18,650
+now let's add something to our little form here, let's add a horizontal line below it and let's summarize
+
+5
+00:00:18,710 --> 00:00:20,900
+our data
+
+6
+00:00:20,960 --> 00:00:24,340
+maybe in a new Bootstrap row here,
+
+7
+00:00:24,350 --> 00:00:28,640
+so let's add a row class and then a column class
+
+8
+00:00:28,640 --> 00:00:30,330
+here, a very simple one.
+
+9
+00:00:30,880 --> 00:00:33,650
+Let's summarize our data there, I'll
+
+10
+00:00:33,680 --> 00:00:40,780
+place the horizontal line between the Bootstrap rows and I want to say or output my username here, I
+
+11
+00:00:40,780 --> 00:00:44,840
+want to output my mail address,
+
+12
+00:00:45,040 --> 00:00:56,100
+maybe my secret question and my answer to that question as well as my gender, so just a nice summary.
+
+13
+00:00:56,380 --> 00:01:03,160
+I only want to output this once the form has been submitted and then populate it with the data of my
+
+14
+00:01:03,160 --> 00:01:04,650
+submitted form.
+
+15
+00:01:04,660 --> 00:01:12,550
+So in the app component here, I could add a new property named user maybe, which is a Javascript object,
+
+16
+00:01:12,790 --> 00:01:15,350
+which holds a username property,
+
+17
+00:01:15,610 --> 00:01:21,550
+let's set it to an empty string by default, an e-mail property and these names here of course don't have
+
+18
+00:01:21,550 --> 00:01:27,550
+to match the control names in your form, that's a brand new Javascript object not related to your form
+
+19
+00:01:28,180 --> 00:01:29,710
+directly at least.
+
+20
+00:01:29,890 --> 00:01:37,300
+Then here, we might also have a secret question which is a string and then we have the answer which is
+
+21
+00:01:37,300 --> 00:01:40,360
+a string and finally, the gender which is a string.
+
+22
+00:01:40,420 --> 00:01:42,950
+So that's my user object as created by default
+
+23
+00:01:43,120 --> 00:01:46,150
+and when submitting the form, I want to update it.
+
+24
+00:01:46,330 --> 00:01:54,710
+So here I then want to say this user and there I want to access the username let's say and set this equal
+
+25
+00:01:54,710 --> 00:02:00,980
+to my sign-up form, access the value of this form and there we know we have a username input field,
+
+26
+00:02:01,070 --> 00:02:03,660
+like this and replicate this.
+
+27
+00:02:03,680 --> 00:02:11,540
+Now also for the e-mail and of course value of course was available on the user data grouping though,
+
+28
+00:02:11,570 --> 00:02:17,290
+so username and e-mail was in the user data module group, keep this in mind, so we have to access this model
+
+29
+00:02:17,300 --> 00:02:22,190
+group property first before we can access the final username and e-mail.
+
+30
+00:02:22,190 --> 00:02:27,190
+However, the secret question here was available like this,
+
+31
+00:02:27,230 --> 00:02:29,480
+we did name the control
+
+32
+00:02:31,950 --> 00:02:38,850
+secret though, so make sure to use secret here when accessing it in the form value
+
+33
+00:02:38,930 --> 00:02:40,610
+and the answer,
+
+34
+00:02:40,890 --> 00:02:45,910
+well let's see which name we gave this, we gave it the name questionAnswer,
+
+35
+00:02:45,930 --> 00:02:48,730
+so let's use this when accessing the form
+
+36
+00:02:48,780 --> 00:02:55,100
+and finally we want to set the user gender equal to what we stored in the sign up form, here
+
+37
+00:02:55,110 --> 00:02:57,340
+we did name this control gender too,
+
+38
+00:02:57,390 --> 00:03:00,040
+you can check it down there, gender.
+
+39
+00:03:00,420 --> 00:03:05,080
+So with that, we now update all that information in our user,
+
+40
+00:03:05,190 --> 00:03:08,710
+maybe we also want to track whether we did submit the form, so
+
+41
+00:03:08,710 --> 00:03:16,320
+we do have submitted property set to false initially and we set this to true here because well guess
+
+42
+00:03:16,320 --> 00:03:18,300
+what, we submitted the form
+
+43
+00:03:18,450 --> 00:03:26,280
+and with that, we could place ngIf on our row here to check whether the form was submitted and only if
+
+44
+00:03:26,280 --> 00:03:27,120
+it was submitted
+
+45
+00:03:27,120 --> 00:03:30,610
+I want to display this block and here,
+
+46
+00:03:30,840 --> 00:03:34,080
+I then want to output user, username
+
+47
+00:03:34,320 --> 00:03:39,820
+and of course all the other information we gathered like user.email here,
+
+48
+00:03:39,870 --> 00:03:46,380
+so let's quickly add all of this. Here the question would be your first
+
+49
+00:03:46,410 --> 00:03:55,650
+and then we store user secret question, here we have the answer and so on.
+
+50
+00:03:55,650 --> 00:03:58,770
+Of course structure this in whatever way you want to structure it,
+
+51
+00:03:58,770 --> 00:04:03,240
+I just want to show you how you can access your values and use them.
+
+52
+00:04:03,240 --> 00:04:04,840
+And with this all in place,
+
+53
+00:04:04,890 --> 00:04:07,300
+now you don't see that section by default
+
+54
+00:04:07,530 --> 00:04:13,800
+but if I enter something here like Anna or let's adjust the username actually, my e-mail address, my
+
+55
+00:04:13,800 --> 00:04:20,050
+first pet which is Nelly and then the gender, I think that surprises you,
+
+56
+00:04:20,080 --> 00:04:21,540
+that's not correct though.
+
+57
+00:04:21,600 --> 00:04:22,860
+So let's hit submit
+
+58
+00:04:22,920 --> 00:04:25,420
+and now we see the data here at the bottom.
+
+59
+00:04:25,530 --> 00:04:31,530
+This is how you can extract the data, how you can use it, how you can add a property like submitted to
+
+60
+00:04:31,530 --> 00:04:37,020
+make sure you only display certain sections of the form was submitted and how you in the end use that
+
+61
+00:04:37,020 --> 00:04:37,830
+data.
+
+62
+00:04:37,830 --> 00:04:42,010
+One more thing before we move on to reactive forms though.
+

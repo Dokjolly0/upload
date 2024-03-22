@@ -1,0 +1,200 @@
+1
+00:00:02,100 --> 00:00:03,660
+Now to really conclude
+
+2
+00:00:03,660 --> 00:00:06,530
+this TypeScript introduction section now,
+
+3
+00:00:06,530 --> 00:00:10,650
+let's talk about configuring the TypeScript compiler.
+
+4
+00:00:10,650 --> 00:00:13,440
+You might recall that before when I executed
+
+5
+00:00:13,440 --> 00:00:16,870
+just npx typescript, I got this error here
+
+6
+00:00:16,870 --> 00:00:20,670
+that basically a TypeScript configuration file is missing
+
+7
+00:00:20,670 --> 00:00:24,090
+and that's why I had to target a specific TypeScript file
+
+8
+00:00:24,090 --> 00:00:27,970
+like this to then compile just this file.
+
+9
+00:00:27,970 --> 00:00:31,080
+Now, sometimes you want to compile all the TypeScript files
+
+10
+00:00:31,080 --> 00:00:34,500
+in your project in one go, and you also might want
+
+11
+00:00:34,500 --> 00:00:38,580
+to configure how the TypeScript compiler behaves.
+
+12
+00:00:38,580 --> 00:00:40,330
+And for this, you can add a TypeScript
+
+13
+00:00:40,330 --> 00:00:42,200
+compiler config file.
+
+14
+00:00:42,200 --> 00:00:47,200
+You can do this with npx tsc -- init.
+
+15
+00:00:48,220 --> 00:00:51,880
+What this does is it adds a tsconfig.json file,
+
+16
+00:00:51,880 --> 00:00:54,960
+though I will say, once we work with Angular,
+
+17
+00:00:54,960 --> 00:00:58,510
+we don't need to do that because the Angular project
+
+18
+00:00:58,510 --> 00:01:01,617
+get TypeScript configuration files out of the box,
+
+19
+00:01:01,617 --> 00:01:04,190
+and you should really only change them
+
+20
+00:01:04,190 --> 00:01:06,230
+if you know what you're doing.
+
+21
+00:01:06,230 --> 00:01:09,100
+But here we now got such a TypeScript compiler
+
+22
+00:01:09,100 --> 00:01:11,140
+configuration file.
+
+23
+00:01:11,140 --> 00:01:14,300
+And in there, we got lots of options, which we can set.
+
+24
+00:01:14,300 --> 00:01:16,340
+Now, one of the most important options
+
+25
+00:01:16,340 --> 00:01:18,940
+is the strict mode option here,
+
+26
+00:01:18,940 --> 00:01:21,033
+which by default is set to true.
+
+27
+00:01:21,930 --> 00:01:24,550
+When using strict mode, TypeScript,
+
+28
+00:01:24,550 --> 00:01:28,160
+as the name implies does very strict type checking.
+
+29
+00:01:28,160 --> 00:01:30,660
+And there are many things which it doesn't allow it,
+
+30
+00:01:30,660 --> 00:01:33,790
+like for example, values where it's not able
+
+31
+00:01:33,790 --> 00:01:35,300
+to infer the type.
+
+32
+00:01:35,300 --> 00:01:39,470
+You then have to explicitly set a type for those.
+
+33
+00:01:39,470 --> 00:01:41,373
+But that's just one example.
+
+34
+00:01:42,410 --> 00:01:45,330
+Now, in general, you can read through this config file
+
+35
+00:01:45,330 --> 00:01:47,330
+to understand these different settings.
+
+36
+00:01:47,330 --> 00:01:49,340
+And of course, I do talk about them
+
+37
+00:01:49,340 --> 00:01:53,220
+in way greater detail in my full TypeScript course.
+
+38
+00:01:53,220 --> 00:01:55,670
+As I said, with Angular projects,
+
+39
+00:01:55,670 --> 00:01:58,700
+we get a TypeScript file out of the box
+
+40
+00:01:58,700 --> 00:02:01,570
+and therefore, this is not really the focus here
+
+41
+00:02:01,570 --> 00:02:05,500
+because this default Angular TypeScript compiler file
+
+42
+00:02:05,500 --> 00:02:07,210
+will do the trick for us
+
+43
+00:02:07,210 --> 00:02:09,870
+and we don't really need to change them.
+
+44
+00:02:09,870 --> 00:02:11,710
+Nonetheless, this is how you can configure
+
+45
+00:02:11,710 --> 00:02:14,370
+the TypeScript compiler and feel free to dive
+
+46
+00:02:14,370 --> 00:02:18,240
+into these different options to play around with them.
+
+47
+00:02:18,240 --> 00:02:20,470
+But with that, we now got all those important
+
+48
+00:02:20,470 --> 00:02:21,870
+basics out of the way.
+
+49
+00:02:21,870 --> 00:02:24,750
+And now with that, you're definitely ready to dive
+
+50
+00:02:24,750 --> 00:02:27,163
+into Angular and TypeScript.
+

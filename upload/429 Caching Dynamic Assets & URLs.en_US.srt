@@ -1,0 +1,400 @@
+1
+00:00:03,220 --> 00:00:05,890
+Regarding the API, we can all do pre fetch this.
+
+2
+00:00:07,090 --> 00:00:11,690
+For that, we add a new configuration item, and that would be data groups.
+
+3
+00:00:11,860 --> 00:00:17,330
+Remember, we got ESSES groups here for the static files, essentially data groups for dynamic data.
+
+4
+00:00:17,350 --> 00:00:22,210
+So typically data you request from an API data that might change frequently.
+
+5
+00:00:22,750 --> 00:00:24,310
+How is a data group configured?
+
+6
+00:00:25,090 --> 00:00:30,730
+It is an array because it's data groups here, but one data group is then again an object.
+
+7
+00:00:30,730 --> 00:00:32,200
+Just as an asset group.
+
+8
+00:00:33,130 --> 00:00:41,640
+You then define a name of your choice like posts, but that name is totally up to you and then you define
+
+9
+00:00:41,650 --> 00:00:44,110
+the you or else you want to handle with this group.
+
+10
+00:00:44,260 --> 00:00:46,290
+And in my case, that is the U or L.
+
+11
+00:00:46,510 --> 00:00:53,640
+I can see in my app component, which is where I make this HTP request this you are L T.J. some placeholder.
+
+12
+00:00:53,680 --> 00:00:58,030
+This is what I'll take and this is what I'll put into the URL array as a string.
+
+13
+00:00:58,420 --> 00:01:00,610
+You could now also add a version here.
+
+14
+00:01:01,030 --> 00:01:06,010
+If you got an API, which might have different versions and the version changed, then you could lock
+
+15
+00:01:06,010 --> 00:01:14,410
+the version in here to, for example, cache different data pieces side by side for different API versions
+
+16
+00:01:14,680 --> 00:01:14,920
+here.
+
+17
+00:01:14,920 --> 00:01:16,300
+I will not use the version.
+
+18
+00:01:16,900 --> 00:01:21,000
+And instead, what you can add here is a cache config.
+
+19
+00:01:21,370 --> 00:01:26,290
+This is another object where you can now in detail configure how this data should be cached.
+
+20
+00:01:26,860 --> 00:01:29,670
+And for that you can, for example, set a max size.
+
+21
+00:01:30,250 --> 00:01:34,000
+This is a number and this defines how many entries do you want to cash?
+
+22
+00:01:34,060 --> 00:01:35,010
+And so that's important.
+
+23
+00:01:35,170 --> 00:01:38,020
+This does not mean how many posts, for example.
+
+24
+00:01:38,350 --> 00:01:40,770
+This means how many responses.
+
+25
+00:01:40,900 --> 00:01:45,850
+Now for this single you are l we will only cache one response at a time.
+
+26
+00:01:46,210 --> 00:01:51,910
+But if you had a more generic URL with a star, let's say four different endpoints, then you might
+
+27
+00:01:51,910 --> 00:01:57,970
+want to make sure that only for ten outgoing requests the answer was cached to not pollute your cash
+
+28
+00:01:57,970 --> 00:02:03,550
+and grow it infinitely because your space is actually limited and managed by the browser.
+
+29
+00:02:03,550 --> 00:02:05,310
+So you don't want to cache everything.
+
+30
+00:02:05,740 --> 00:02:09,550
+So here we could say cache five responses again, for example.
+
+31
+00:02:09,550 --> 00:02:10,320
+It doesn't matter.
+
+32
+00:02:10,990 --> 00:02:18,130
+We can then also add max age to define how old should the data in the cache be before we get rid of
+
+33
+00:02:18,130 --> 00:02:25,120
+it and definitely fetch new data because you might want to fetch from cache first to deliver something
+
+34
+00:02:25,120 --> 00:02:30,520
+onto the screen as quick as possible and then maybe reach out to more up to date data behind the scenes.
+
+35
+00:02:30,760 --> 00:02:36,160
+But for dead, you, of course, need to know, is the data and the cache still valid or should I always
+
+36
+00:02:36,160 --> 00:02:37,380
+fetch new data?
+
+37
+00:02:37,900 --> 00:02:41,380
+This is defined as a string, which you write like this.
+
+38
+00:02:41,380 --> 00:02:45,370
+You could say one day or twelve hours or fifty minutes.
+
+39
+00:02:45,520 --> 00:02:47,320
+This is essentially the format you have.
+
+40
+00:02:47,440 --> 00:02:52,240
+Details can be found in the official box and you find a link to that attached to this video too.
+
+41
+00:02:52,540 --> 00:02:57,100
+So you're I'll go with, let's say, six hours and then you can also add a timeout.
+
+42
+00:02:57,880 --> 00:02:59,710
+The timeout is defined in the same way.
+
+43
+00:02:59,920 --> 00:03:06,760
+And there you could say, if I'm waiting for a response for, let's say, ten seconds already, then
+
+44
+00:03:06,760 --> 00:03:09,640
+I want to fall back to the cache and not wait longer.
+
+45
+00:03:09,760 --> 00:03:12,070
+But I don't want to use the cache immediately.
+
+46
+00:03:12,070 --> 00:03:14,350
+I want to wait for these ten seconds at least.
+
+47
+00:03:14,560 --> 00:03:16,240
+So could say ten seconds here.
+
+48
+00:03:17,170 --> 00:03:18,160
+Last but not least.
+
+49
+00:03:18,160 --> 00:03:23,590
+And that's important because it works together with the above values, the strategy there you kind of
+
+50
+00:03:23,590 --> 00:03:29,800
+two types of strategy, freshness, which means always try to reach out to the back end first and only
+
+51
+00:03:29,800 --> 00:03:36,820
+use the cash if you're offline or performance performance tries to get something onto the screen as
+
+52
+00:03:36,820 --> 00:03:39,720
+quick as possible and it will take Max age into account.
+
+53
+00:03:39,720 --> 00:03:44,830
+You know, whether it should absolutely reach out to the back end or just use the cash value on the
+
+54
+00:03:44,830 --> 00:03:50,680
+apparent freshness will take time out into account to know how long to wait for a response before it
+
+55
+00:03:50,680 --> 00:03:51,520
+uses to cash.
+
+56
+00:03:52,210 --> 00:03:55,360
+So I will go with freshness here and I will save this.
+
+57
+00:03:55,720 --> 00:03:57,130
+And now you know the game.
+
+58
+00:03:57,130 --> 00:04:01,150
+Let's go back and let's build this again with Dash Dash brought.
+
+59
+00:04:02,140 --> 00:04:08,620
+And what we should see is that now that we built this, that if we then go back to the built project
+
+60
+00:04:08,620 --> 00:04:13,570
+and serve it, that is actually ten works in offline mode.
+
+61
+00:04:15,940 --> 00:04:22,750
+So let's bring up that HP server, reload this page and as I mentioned before, feel free to close it
+
+62
+00:04:22,750 --> 00:04:28,960
+because a news service worker to be registered should also be able to be loaded without you closing
+
+63
+00:04:28,990 --> 00:04:30,670
+that tab and opening a new one.
+
+64
+00:04:31,030 --> 00:04:32,590
+Angler can handle that.
+
+65
+00:04:33,070 --> 00:04:39,010
+But by default, does this require a default for a new service worker to go active or to turn active
+
+66
+00:04:39,010 --> 00:04:40,310
+and do its job?
+
+67
+00:04:40,360 --> 00:04:46,870
+You need to reload the page also because Angular does not use the new updated code.
+
+68
+00:04:46,870 --> 00:04:52,000
+You might ship onto the server and loaded into your already running app because that might break.
+
+69
+00:04:52,000 --> 00:04:58,780
+You're already running app so close to tab open a new one now in a new tab reload at least once so that
+
+70
+00:04:58,780 --> 00:05:01,540
+the API responses can be cached.
+
+71
+00:05:01,960 --> 00:05:07,330
+The first reload loads the service worker, the second one loads the API responses, then turn off the
+
+72
+00:05:07,330 --> 00:05:09,060
+Wi-Fi and load again.
+
+73
+00:05:09,070 --> 00:05:13,750
+And what you should see is that you still got your posts here.
+
+74
+00:05:14,050 --> 00:05:20,650
+Now one thing you can notice is that the fonts are missing because and that's just something you have
+
+75
+00:05:20,650 --> 00:05:21,820
+to know about Google fonts.
+
+76
+00:05:21,910 --> 00:05:29,020
+The way it's loaded, it takes to you or else this is the URL where it goes to and tries to fetch different
+
+77
+00:05:29,020 --> 00:05:35,950
+than the average URL we put in there is to one which just holds the rules for the font and then that
+
+78
+00:05:35,950 --> 00:05:36,820
+extra URL.
+
+79
+00:05:37,120 --> 00:05:40,680
+So let's add that muli gathered information here.
+
+80
+00:05:41,020 --> 00:05:47,740
+Now replace this at the end here with Star Star to load any funds from the URL close to HSP server and
+
+81
+00:05:47,740 --> 00:05:51,730
+built this one more time as you saw it before with Energy Bill Dash Dash.
+
+82
+00:05:52,570 --> 00:05:56,910
+And we could already see that the API data was loaded, at least so that this was present.
+
+83
+00:05:57,340 --> 00:06:02,980
+Now with this build one more time, let's again go back to our disk folder and let's serve this one
+
+84
+00:06:02,980 --> 00:06:03,520
+more time.
+
+85
+00:06:04,510 --> 00:06:12,700
+But then open a new tab for it to become active, reload this one more time to store to make sure that
+
+86
+00:06:12,700 --> 00:06:14,320
+the responses are really stored.
+
+87
+00:06:14,350 --> 00:06:17,410
+I should say, and now let's go offline again.
+
+88
+00:06:18,300 --> 00:06:19,410
+And reload the zap.
+
+89
+00:06:20,190 --> 00:06:25,230
+And you see the fonts are there, too, and in the network tab, we see everything is fetched, the
+
+90
+00:06:25,230 --> 00:06:26,040
+posts fail.
+
+91
+00:06:26,040 --> 00:06:29,550
+But that's the problem because we take that from the cache, which works.
+
+92
+00:06:29,550 --> 00:06:30,300
+You can see it here.
+
+93
+00:06:30,520 --> 00:06:31,040
+Response.
+
+94
+00:06:31,050 --> 00:06:31,590
+There it is.
+
+95
+00:06:32,160 --> 00:06:37,920
+And this is how we can use the service worker, the angular service worker package, which you can easily
+
+96
+00:06:37,920 --> 00:06:43,980
+add with the energy add at ANGULAR, a package which includes that service worker package, which also
+
+97
+00:06:43,980 --> 00:06:49,980
+gives you that manifesto JSON file and which overall is something you have to learn, but then gives
+
+98
+00:06:49,980 --> 00:06:54,450
+you the powerful tool of making your Web app offline available.
+
+99
+00:06:54,780 --> 00:06:59,490
+Now check the official docs, which you find attached to the video, of course, and I hope that this
+
+100
+00:06:59,490 --> 00:07:00,120
+was helpful.
+

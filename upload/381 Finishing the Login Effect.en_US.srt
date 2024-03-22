@@ -1,0 +1,324 @@
+1
+00:00:02,240 --> 00:00:07,760
+No worries, we're coming closer to having a working set up with @ngrx/effects for authentication. As
+
+2
+00:00:07,760 --> 00:00:08,890
+always with NgRx,
+
+3
+00:00:08,900 --> 00:00:13,880
+it's a bit more initial setup but once it is set up, other pieces can easily be added.
+
+4
+00:00:13,970 --> 00:00:19,730
+So now I want to redirect once we're done authenticating, once were successfully done authenticating
+
+5
+00:00:20,180 --> 00:00:27,510
+from inside auth effects because as I just explained, you could see such navigation as a side effect. For
+
+6
+00:00:27,510 --> 00:00:29,320
+this in the auth effects,
+
+7
+00:00:29,400 --> 00:00:44,370
+let's add a new property of success which has a value of this actions pipe, there
+
+8
+00:00:44,450 --> 00:00:52,060
+add ofType and I want to react only to my login action here
+
+9
+00:00:52,150 --> 00:01:01,970
+when I successfully did login. Now this needs the @effects decorator and as an additional step, after
+
+10
+00:01:01,970 --> 00:01:09,440
+filtering for the type, I will add the tap operator which therefore needs to be imported from 
+
+11
+00:01:09,440 --> 00:01:17,550
+rxjs/operators and in there, I simply want to execute a function where I use the Angular router to redirect.
+
+12
+00:01:18,820 --> 00:01:28,850
+For that, we should inject the Angular router here, so inject router from @angular/router and with that
+
+13
+00:01:28,850 --> 00:01:32,500
+injected, let's use it in here
+
+14
+00:01:32,690 --> 00:01:41,670
+by calling this router navigate and then here, I'll go to the route route.
+
+15
+00:01:41,670 --> 00:01:46,740
+Now of course you could argue that the route you want to go to differs and you don't always want to
+
+16
+00:01:46,740 --> 00:01:48,690
+go back to just slash,
+
+17
+00:01:48,720 --> 00:01:55,070
+then you could of course accept that information as a payload on the action you're reacting to for example.
+
+18
+00:01:55,140 --> 00:02:00,180
+What's really important here though is that this is an effect which does not dispatch a new action
+
+19
+00:02:00,180 --> 00:02:01,040
+at the end.
+
+20
+00:02:01,140 --> 00:02:07,320
+I mentioned that typically, your effects do that, they typically return an observable which holds a new
+
+21
+00:02:07,320 --> 00:02:09,240
+effect which should be dispatched,
+
+22
+00:02:09,240 --> 00:02:17,610
+this effect doesn't and to let NgRx effect know about that and avoid errors, you have to pass an object
+
+23
+00:02:17,730 --> 00:02:22,360
+to your @effect decorator where you set dispatch to false
+
+24
+00:02:22,380 --> 00:02:24,030
+and this lets @ngrx/effects
+
+25
+00:02:24,030 --> 00:02:29,940
+know that this is an effect which will actually not yield a dispatchable action at the end and then
+
+26
+00:02:29,940 --> 00:02:32,140
+you can do that just like this.
+
+27
+00:02:32,140 --> 00:02:37,290
+Also note that I used the login action which only fires on a successful login, not as soon as we
+
+28
+00:02:37,290 --> 00:02:41,360
+start the login process. With all of that,
+
+29
+00:02:41,370 --> 00:02:43,430
+let's try logging in again,
+
+30
+00:02:43,650 --> 00:02:49,850
+we see the spinner and we get an error, auth effect auth login dispatched invalid
+
+31
+00:02:49,860 --> 00:02:54,050
+action and that's indeed an error from my side.
+
+32
+00:02:54,170 --> 00:03:01,580
+Whilst we need to create an observable with auth and catch error inside of map, map automatically wraps
+
+33
+00:03:01,580 --> 00:03:04,120
+what you return into an observable,
+
+34
+00:03:04,130 --> 00:03:10,550
+so here it actually returns an all new observable with our auth created observable and that's wrong.
+
+35
+00:03:10,550 --> 00:03:16,460
+So here, we just need to return our new action, not wrapped into auth because otherwise we're creating
+
+36
+00:03:16,460 --> 00:03:17,470
+a double observable
+
+37
+00:03:17,480 --> 00:03:19,780
+so to say. Tiny mistake on my side,
+
+38
+00:03:19,910 --> 00:03:23,240
+don't use auth here, with that out of the way though,
+
+39
+00:03:23,240 --> 00:03:24,920
+now if we try logging in again, we
+
+40
+00:03:29,280 --> 00:03:36,260
+see the spinner and we're there. Now let's logout and let's try logging in with an incorrect password
+
+41
+00:03:37,430 --> 00:03:41,830
+and we're getting the error but we're not really getting an error message here,
+
+42
+00:03:41,840 --> 00:03:45,930
+so this is still not working correctly, we still have to implement that.
+
+43
+00:03:46,280 --> 00:03:52,220
+The error case here can't work because if we're catching an error for logging in which we're doing, we're
+
+44
+00:03:52,220 --> 00:03:59,330
+returning an empty observable and hence, this does never dispatch anything that would store our
+
+45
+00:03:59,330 --> 00:04:00,220
+error.
+
+46
+00:04:00,230 --> 00:04:02,890
+Now actually we prepared everything we need,
+
+47
+00:04:02,930 --> 00:04:09,400
+we got our login fail action and in the reducer, we're reacting to it and we're storing the payload of
+
+48
+00:04:09,410 --> 00:04:10,030
+that action
+
+49
+00:04:10,070 --> 00:04:15,380
+in the auth error which we then in turn try to use in the auth component to hopefully show the error
+
+50
+00:04:15,380 --> 00:04:16,490
+message.
+
+51
+00:04:16,490 --> 00:04:18,350
+Now there are two missing pieces,
+
+52
+00:04:18,350 --> 00:04:21,740
+one is in the auth component, actually for showing an error,
+
+53
+00:04:21,740 --> 00:04:27,610
+we have to call show error alert to use our dynamic component and not just set this error
+
+54
+00:04:27,980 --> 00:04:30,250
+but that's a tiny thing, in here,
+
+55
+00:04:30,260 --> 00:04:35,990
+I simply check if this error is true-ish
+
+56
+00:04:35,990 --> 00:04:41,400
+and then if it is, I call this show error alert and forward this error.
+
+57
+00:04:41,570 --> 00:04:42,560
+So that's one thing, 
+
+58
+00:04:42,560 --> 00:04:47,410
+the more important thing is that in the auth effects, we of course need to return our action here.
+
+59
+00:04:47,450 --> 00:04:54,440
+Now here inside of auth because catch error, unlike map, does not automatically wrap what you return into
+
+60
+00:04:54,440 --> 00:04:55,280
+an observable,
+
+61
+00:04:55,280 --> 00:04:58,190
+so here you need to create your own one. Still here,
+
+62
+00:04:58,190 --> 00:05:03,280
+the goal is to create a new auth action, the login fail action
+
+63
+00:05:03,320 --> 00:05:07,130
+and this requires a payload which is the error message as a string
+
+64
+00:05:07,130 --> 00:05:15,300
+and that's not just error like this but instead if we have a look at auth service, here you see in the
+
+65
+00:05:15,300 --> 00:05:22,980
+past, we called this handle error when catching an error and in handle error, we got the full error response
+
+66
+00:05:23,760 --> 00:05:30,250
+and from the error response, we then extracted some data and generated our own error message.
+
+67
+00:05:30,270 --> 00:05:38,890
+So essentially, I want to copy that logic here from the auth service into auth effect, like this, error here
+
+68
+00:05:39,310 --> 00:05:48,880
+is nothing else but our error response, so we can access error and so on there. Now what we must not
+
+69
+00:05:48,880 --> 00:05:55,620
+do however is call throw error here because as I explained earlier, your effects here should never return
+
+70
+00:05:55,690 --> 00:06:02,950
+errors that breaks the observable, instead here I also call auth and I create a new auth action login
+
+71
+00:06:02,950 --> 00:06:07,630
+fail with the dummy error message we have up there,
+
+72
+00:06:07,750 --> 00:06:14,440
+otherwise we get a more specific error message and we pass that to login fail down here.
+
+73
+00:06:14,440 --> 00:06:17,640
+Now we have better error handling code in place
+
+74
+00:06:17,660 --> 00:06:27,170
+and now let's try logging in with incorrect credentials and I'm getting my modal here and we can try again,
+
+75
+00:06:27,170 --> 00:06:35,830
+so our main observable is not that and therefore now if I try the different combinations, this all fails
+
+76
+00:06:35,990 --> 00:06:41,630
+but once I try the right credentials, I can login. And now this was a lot of work but now we're using
+
+77
+00:06:41,720 --> 00:06:48,440
+NgRx for logging in and again as before, as I mentioned it before, it is a lot of initial setup
+
+78
+00:06:48,440 --> 00:06:53,540
+work and it's definitely something to wrap your head around but thereafter, you have a clean flow
+
+79
+00:06:53,540 --> 00:07:00,620
+here where you will be able to soon get a lot of the logic out of our auth service and then again, we're
+
+80
+00:07:00,680 --> 00:07:07,430
+entirely in the NgRx world and as you will see, adding new effects will be now much faster than this
+
+81
+00:07:07,430 --> 00:07:08,750
+first initial setup.
+

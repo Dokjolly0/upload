@@ -1,0 +1,212 @@
+1
+00:00:03,500 --> 00:00:08,010
+So a lot was covered, let's dive even deeper.
+
+2
+00:00:08,060 --> 00:00:11,200
+If we have a look at our application, our app module,
+
+3
+00:00:11,210 --> 00:00:17,480
+you already see that the routing takes up some significant space in our app module.
+
+4
+00:00:17,510 --> 00:00:24,590
+So typically, if you have more than let's say two or three routes, you don't add it directly in the app
+
+5
+00:00:24,590 --> 00:00:25,850
+module,
+
+6
+00:00:25,850 --> 00:00:35,230
+instead you add a new file which is for the application as a whole, typically is called AppRoutingModule.
+
+7
+00:00:35,510 --> 00:00:43,820
+So the apps-routing.module.ts file now will hold a second module and I will have a whole module
+
+8
+00:00:43,850 --> 00:00:51,110
+course section about Angular modules later in the course. There, we will dive much deeper and learn how
+
+9
+00:00:51,110 --> 00:00:55,420
+you can define and use multiple modules, use them together,
+
+10
+00:00:55,430 --> 00:00:57,620
+this is a super easy use case here
+
+11
+00:00:57,650 --> 00:01:05,120
+so let's add it now. Here I will give this a name of AppRoutingModule because that is what it is and it
+
+12
+00:01:05,120 --> 00:01:08,780
+receives this @NgModule decorator.
+
+13
+00:01:08,780 --> 00:01:12,920
+So this is configured with a Javascript object being passed to it
+
+14
+00:01:13,040 --> 00:01:15,380
+and this will be a super simple module.
+
+15
+00:01:15,390 --> 00:01:18,310
+Now as mentioned, I will dive deeper into this later,
+
+16
+00:01:18,350 --> 00:01:22,880
+you can basically build your Angular app from multiple modules,
+
+17
+00:01:22,880 --> 00:01:27,980
+this simple module here will handle all our routing related tasks.
+
+18
+00:01:28,100 --> 00:01:34,550
+So I will cut all my routes, this appRoutes constant and add it in there, of course
+
+19
+00:01:34,550 --> 00:01:40,820
+now I need to make sure that all these imports here are added.
+
+20
+00:01:40,820 --> 00:01:48,530
+So make sure to add all the imports to all these components and also of course, here to
+
+21
+00:01:48,650 --> 00:01:57,650
+routes from the @angular/router package and you don't need to add declarations here because these components
+
+22
+00:01:57,650 --> 00:02:04,740
+already are declared in your app module and we will soon add the AppRoutingModule to this root module.
+
+23
+00:02:04,760 --> 00:02:06,610
+So no need to redeclare them,
+
+24
+00:02:06,620 --> 00:02:09,280
+this would actually even give you an error.
+
+25
+00:02:09,830 --> 00:02:17,360
+We also have to remove the router module from here, from our root module, therefore we can remove the imports
+
+26
+00:02:17,360 --> 00:02:25,570
+from the router package, make sure to import router module in your AppRoutingModule now, so to add
+
+27
+00:02:25,610 --> 00:02:31,130
+this import here and now we need to configure something in @NgModule.
+
+28
+00:02:31,130 --> 00:02:34,360
+We basically want to add imports again,
+
+29
+00:02:34,370 --> 00:02:42,110
+we had this in the app module too and in imports, we want to use this router module, use forRoot as before
+
+30
+00:02:42,140 --> 00:02:44,960
+and pass our routes array to it,
+
+31
+00:02:45,020 --> 00:02:51,800
+so just like we did before but that alone is not enough now because as I mentioned, we simply want to
+
+32
+00:02:51,800 --> 00:02:55,710
+use this app routing module to outsource our routes.
+
+33
+00:02:55,850 --> 00:03:02,120
+Therefore, we need to add our AppRoutingModule back to our main module
+
+34
+00:03:02,330 --> 00:03:05,960
+and for this, we need to add the exports array here
+
+35
+00:03:06,020 --> 00:03:12,770
+and I just can mention it again, we will dive deeper into modules later in the course. Exports simply tells
+
+36
+00:03:12,830 --> 00:03:15,970
+Angular, hey from this module,
+
+37
+00:03:16,010 --> 00:03:25,070
+if I were to add this module to the imports of another module, what should be accessible to this module
+
+38
+00:03:25,070 --> 00:03:27,780
+which imports this module?
+
+39
+00:03:28,020 --> 00:03:32,830
+And the one thing we want to make accessible is our router module.
+
+40
+00:03:32,850 --> 00:03:36,460
+Now here, you don't call forRoot because you did this here,
+
+41
+00:03:36,570 --> 00:03:41,640
+so in the first step you configure this router module, added your own routes to it,
+
+42
+00:03:41,640 --> 00:03:49,590
+now we simply export this configured router module and therefore in app module, we can now import our
+
+43
+00:03:49,650 --> 00:03:51,980
+own AppRoutingModule.
+
+44
+00:03:52,020 --> 00:03:54,240
+So here on the imports array,
+
+45
+00:03:54,270 --> 00:03:59,410
+we can simply add AppRoutingModule, make sure to add to import path here
+
+46
+00:03:59,910 --> 00:04:07,290
+and with that, we have the same setup as before but with a bit of a leaner app module and our routing
+
+47
+00:04:07,290 --> 00:04:14,130
+functionality outsourced in this separate module which is kind of a good practice to do to keep your
+
+48
+00:04:14,130 --> 00:04:16,830
+files organized and easy to read.
+
+49
+00:04:17,280 --> 00:04:24,450
+So same behavior as before, if we save this with ng serve still running, we should therefore see that
+
+50
+00:04:24,450 --> 00:04:28,400
+everything still works and this looks good to me
+
+51
+00:04:28,710 --> 00:04:34,590
+but again important to understand, now with a different set up, a bit more readable and a good practice
+
+52
+00:04:34,590 --> 00:04:35,370
+to implement
+
+53
+00:04:35,490 --> 00:04:38,030
+if your application grows more complex.
+

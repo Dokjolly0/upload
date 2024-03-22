@@ -1,0 +1,232 @@
+1
+00:00:02,450 --> 00:00:05,500
+We finished our form in its basic form
+
+2
+00:00:05,540 --> 00:00:08,400
+but time to add some validation to it.
+
+3
+00:00:08,660 --> 00:00:11,870
+We do add validation of course in our TypeScript code.
+
+4
+00:00:12,020 --> 00:00:17,520
+Right now, there is no validation attached to any of the controls and that is not really the behavior 
+
+5
+00:00:17,640 --> 00:00:27,500
+I want. When we initialize the form here, at the end of init form, for the name for example, I want to add a
+
+6
+00:00:27,530 --> 00:00:28,370
+built-in validator,
+
+7
+00:00:28,370 --> 00:00:34,370
+so from the validators package which we need to import from @angular/forms,
+
+8
+00:00:34,490 --> 00:00:41,150
+so from this package, I want to add the required validator. Don't execute it, don't add parentheses,
+
+9
+00:00:41,150 --> 00:00:47,610
+you only want to pass a reference to this validator so that Angular is able to execute this method at
+
+10
+00:00:47,610 --> 00:00:50,550
+the time it validates the input.
+
+11
+00:00:50,570 --> 00:00:54,820
+Now the image path, that should also be required,
+
+12
+00:00:54,950 --> 00:00:57,640
+so I'll repeat the procedure here, add required,
+
+13
+00:00:57,680 --> 00:01:05,840
+don't execute it and I'll copy it because I also want to require the description. For the ingredients,
+
+14
+00:01:05,870 --> 00:01:14,270
+when we create a new ingredient here, the name should also be required and the amount, here I'm going
+
+15
+00:01:14,270 --> 00:01:18,980
+to add two checks. The first one is that it's required,
+
+16
+00:01:18,980 --> 00:01:24,560
+the second element here actually is the pattern validator
+
+17
+00:01:24,560 --> 00:01:29,180
+and here we can copy the pattern we use in the shopping edit component,
+
+18
+00:01:29,430 --> 00:01:35,510
+this regular expression here is the same expression I want to validate here, that we only have positive
+
+19
+00:01:35,510 --> 00:01:44,570
+numbers, here in pattern, you'll simply pass a regular expression by putting two forward slashes and
+
+20
+00:01:44,600 --> 00:01:49,480
+in-between, your expression, without any quotation marks here.
+
+21
+00:01:49,550 --> 00:01:55,200
+So that is the pattern and we do execute this method because this acts like the factory,
+
+22
+00:01:55,220 --> 00:02:01,970
+it gives us back the configured validator then which will be used by Angular but to configure it, we need
+
+23
+00:02:01,970 --> 00:02:03,170
+to pass an argument, right,
+
+24
+00:02:03,170 --> 00:02:11,210
+we need to tell that what should be our pattern. So those are the validators for a new FormControl in the
+
+25
+00:02:11,210 --> 00:02:15,220
+array, for the new amount control I should say,
+
+26
+00:02:15,500 --> 00:02:23,290
+let's also copy that to the onAddIngredient method or we also create a new formArray, FormGroup.
+
+27
+00:02:23,360 --> 00:02:29,060
+So here, I will set the default values to null and then also add my validators
+
+28
+00:02:29,360 --> 00:02:33,920
+and the same for the name, should have an empty default value
+
+29
+00:02:34,100 --> 00:02:37,250
+and then here, just the required validator.
+
+30
+00:02:37,730 --> 00:02:46,240
+So now validation should be added to the form successful and to use it, I will disable the save button
+
+31
+00:02:46,520 --> 00:02:48,460
+if the form is not valid.
+
+32
+00:02:48,740 --> 00:02:55,180
+So I will bind to disabled and check if recipe form is not valid.
+
+33
+00:02:56,320 --> 00:03:00,090
+Well let's see. If this reloads, we should see
+
+34
+00:03:03,550 --> 00:03:08,860
+that the save button gets disabled I would say but we've got a valid form here,
+
+35
+00:03:08,870 --> 00:03:11,280
+so let's empty the name and it's disabled,
+
+36
+00:03:11,280 --> 00:03:12,490
+that looks good.
+
+37
+00:03:12,740 --> 00:03:20,660
+Let's now empty the description, disabled the URL, disabled or any control here,
+
+38
+00:03:20,660 --> 00:03:29,300
+so the name of this ingredient or maybe a number or a negative number, so that all seems to work, the
+
+39
+00:03:29,300 --> 00:03:33,800
+validation state is successfully taken into account.
+
+40
+00:03:33,860 --> 00:03:41,390
+Now to finish the validation, I'll go to my CSS sheet and I want to mark invalid inputs.
+
+41
+00:03:41,780 --> 00:03:47,550
+Now we get this handy ng-invalid class which is added to anything which is invalid
+
+42
+00:03:47,840 --> 00:03:49,260
+and that's the problem,
+
+43
+00:03:49,400 --> 00:03:53,540
+if I add a border of let's say one pixel solid and red,
+
+44
+00:03:53,720 --> 00:03:55,510
+well watch for yourself.
+
+45
+00:03:55,780 --> 00:04:01,400
+If I remove that, not only is the name input field invalid, the whole form is,
+
+46
+00:04:01,430 --> 00:04:04,250
+so the whole form has this ugly border.
+
+47
+00:04:04,700 --> 00:04:13,460
+Well we can simply change this to assign ng or assign this class, this style I should say only to
+
+48
+00:04:13,460 --> 00:04:22,840
+elements without the ng-invalid class but which also are an input or optionally, to be very explicit
+
+49
+00:04:22,840 --> 00:04:28,460
+here, a text area in our case here with ng-invalid. So with this,
+
+50
+00:04:28,470 --> 00:04:34,620
+now we should make sure that if I remove this, only the box itself receives the red border. To prevent
+
+51
+00:04:34,800 --> 00:04:38,250
+this from having the red border right from the start,
+
+52
+00:04:38,460 --> 00:04:44,730
+I'll also add ng-touched here as a check or as a class which has to be present so that we at least
+
+53
+00:04:44,730 --> 00:04:49,090
+had to click into that control to mark it as invalid.
+
+54
+00:04:49,770 --> 00:04:52,240
+You will see what I mean if I add a new recipe,
+
+55
+00:04:52,290 --> 00:04:54,110
+everything is clean,
+
+56
+00:04:54,120 --> 00:04:57,970
+if I click in here and out of there, now it has the red border.
+
+57
+00:04:58,530 --> 00:05:01,920
+So that is validation working as it looks to me,
+
+58
+00:05:01,920 --> 00:05:08,440
+now let's make sure that we can actually submit a form and save it or successfully update it.
+

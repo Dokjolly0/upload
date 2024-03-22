@@ -1,0 +1,152 @@
+1
+00:00:02,310 --> 00:00:06,350
+We now kind of enter the second part of this module
+
+2
+00:00:06,390 --> 00:00:12,930
+you could say. Thus far, we had a thorough look at how we can send HTTP requests, how we can handle errors,
+
+3
+00:00:13,200 --> 00:00:17,940
+how we can work with the data we get back if we don't have errors and so on.
+
+4
+00:00:17,940 --> 00:00:24,360
+Now let me dive in the a little bit more advanced parts of the Angular HttpClient and how you can
+
+5
+00:00:24,360 --> 00:00:29,220
+configure your requests and which kind of different responses you get back and so on.
+
+6
+00:00:29,970 --> 00:00:34,080
+Let's start with headers - when sending an HTTP request
+
+7
+00:00:34,170 --> 00:00:37,460
+and of course we are configuring our requests in the post service,
+
+8
+00:00:37,470 --> 00:00:39,460
+so this is the place to look at now.
+
+9
+00:00:39,540 --> 00:00:45,180
+So when configuring these HTTP requests, you set things like the URL you send the request
+
+10
+00:00:45,180 --> 00:00:47,810
+to or in the case of a post request,
+
+11
+00:00:47,810 --> 00:00:52,750
+you also set the data you want to attach to your request.
+
+12
+00:00:52,800 --> 00:01:00,120
+Now of course, sometimes you also need to set some special headers, for example when you have a back-end
+
+13
+00:01:00,120 --> 00:01:06,720
+that requires authorization and looks for an authorization header or if you want to set your own content
+
+14
+00:01:06,720 --> 00:01:12,360
+type or you need to attach a custom header because your API you are sending the request to needs it.
+
+15
+00:01:13,140 --> 00:01:16,620
+Now setting your own headers is extremely simple,
+
+16
+00:01:16,770 --> 00:01:25,230
+any HTTP request method, no matter if it's post or get or delete or patch or whatever, any of these methods
+
+17
+00:01:25,650 --> 00:01:28,520
+has an extra last argument,
+
+18
+00:01:28,530 --> 00:01:33,540
+so in the case of get it's the second argument, in the case of post it would be the third argument, which
+
+19
+00:01:33,540 --> 00:01:38,850
+is an object where you can configure that request and there, you can configure a bunch of stuff as you
+
+20
+00:01:38,850 --> 00:01:45,720
+can see and we'll start with the headers here and headers now takes a headers object which allows you
+
+21
+00:01:45,720 --> 00:01:51,870
+to set the headers you want to send. To be precise, it's a HTTP headers object which you
+
+22
+00:01:51,870 --> 00:01:56,190
+need to import from @angular/common/http,
+
+23
+00:01:56,190 --> 00:01:58,840
+so you need to add this import at the top
+
+24
+00:01:58,950 --> 00:02:06,360
+and this allows you to create a new instance of this object with the new keyword and to this object,
+
+25
+00:02:06,390 --> 00:02:12,180
+you can pass a Javascript object here with the object literal notation where you can have key-value
+
+26
+00:02:12,180 --> 00:02:17,380
+pairs of your headers and headers are of course key-value pairs.
+
+27
+00:02:17,490 --> 00:02:25,320
+So for example here you could set your custom header, in case your API would need that, to hello or whatever
+
+28
+00:02:25,320 --> 00:02:25,760
+you need,
+
+29
+00:02:25,770 --> 00:02:29,980
+you can set any header, any HTTP header pair here.
+
+30
+00:02:30,300 --> 00:02:37,710
+If I do this and I save that and I now do try to fetch some posts, I fetch posts as before
+
+31
+00:02:38,010 --> 00:02:43,490
+but if we have a look at the network tab, let's actually do that again with the cleared network tab and
+
+32
+00:02:43,530 --> 00:02:46,110
+we have a look at our request here,
+
+33
+00:02:46,110 --> 00:02:54,690
+if we inspect the headers, you see here on the request headers, there is this custom header hello and that's
+
+34
+00:02:54,690 --> 00:02:56,410
+the custom header I attached
+
+35
+00:02:56,580 --> 00:02:58,170
+and it's as simple as that.
+
+36
+00:02:58,260 --> 00:03:05,460
+You can add as many headers as you want with this simple approach by simply setting the headers config
+
+37
+00:03:05,700 --> 00:03:14,280
+option here to a new HTTP headers object to which you pass your headers in an object literal with
+
+38
+00:03:14,280 --> 00:03:15,750
+a key-value notation.
+

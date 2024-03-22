@@ -1,0 +1,216 @@
+1
+00:00:02,920 --> 00:00:04,930
+We improved our app quite a bit
+
+2
+00:00:05,230 --> 00:00:10,590
+but the issue we have is that if we click on a server or a user, we load a brand new page.
+
+3
+00:00:10,690 --> 00:00:13,780
+It would be nicer if we would load it next to this menu,
+
+4
+00:00:13,810 --> 00:00:16,570
+so we need some nested routing.
+
+5
+00:00:16,570 --> 00:00:23,300
+We can also see that in the app module, we kind of have some duplication here,
+
+6
+00:00:23,320 --> 00:00:28,040
+all these routes here start with servers and all these routes with users,
+
+7
+00:00:28,150 --> 00:00:34,800
+so it would be nice to nest them and to have some child routes which all start with servers
+
+8
+00:00:34,810 --> 00:00:40,160
+then here in this case for example, let's add such child routes. To do this,
+
+9
+00:00:40,240 --> 00:00:46,600
+I'll go to my servers component route, to the /servers route and I'll add another property,
+
+10
+00:00:46,750 --> 00:00:47,620
+children.
+
+11
+00:00:47,890 --> 00:00:55,060
+Children takes another array of routes, so now I can simply take my two other servers routes here and add them
+
+12
+00:00:55,060 --> 00:00:58,340
+inside of this array as children.
+
+13
+00:00:58,670 --> 00:01:04,370
+Now servers should now be removed because that is now always prepended at the beginning anyways,
+
+14
+00:01:04,480 --> 00:01:10,890
+so we have to make sure to get rid of it here and now we have just ID and id/edit.
+
+15
+00:01:10,930 --> 00:01:20,020
+So this is now already better because now, we group that together, it gives us more than this visual
+
+16
+00:01:20,020 --> 00:01:21,830
+grouping here though.
+
+17
+00:01:22,090 --> 00:01:27,490
+You notice that on the servers here, we have the servers component
+
+18
+00:01:27,970 --> 00:01:30,080
+as the component to be loaded still,
+
+19
+00:01:30,160 --> 00:01:34,070
+the question now is where will the server component be loaded then
+
+20
+00:01:34,150 --> 00:01:38,350
+because that is yet another child route of our servers component?
+
+21
+00:01:38,350 --> 00:01:41,650
+And you can see that this is an issue, if we reload our app here,
+
+22
+00:01:41,800 --> 00:01:44,470
+everything's working, if I click on test server,
+
+23
+00:01:44,470 --> 00:01:51,550
+now we get an error because now the error tells us that it cannot find an outlet to load our server
+
+24
+00:01:51,550 --> 00:01:57,670
+component in and indeed it can't because the only router outlet, the only hook in our code where it
+
+25
+00:01:57,670 --> 00:02:01,670
+should load components is in our app component here.
+
+26
+00:02:01,780 --> 00:02:06,880
+Now that is reserved for all our routes on the top level,
+
+27
+00:02:06,940 --> 00:02:11,840
+so slash nothing, /users, users ID name and servers
+
+28
+00:02:12,160 --> 00:02:18,950
+but the child routes of servers need a separate outlet because they can't overwrite the servers component,
+
+29
+00:02:18,950 --> 00:02:25,540
+instead they should be loaded nested into this servers component and that actually is the behavior we
+
+30
+00:02:25,540 --> 00:02:26,560
+want.
+
+31
+00:02:26,920 --> 00:02:33,730
+So we can quickly get there by going to the servers.component.html file and here where we load the edit
+
+32
+00:02:33,730 --> 00:02:37,670
+page or the app server page, well here
+
+33
+00:02:38,050 --> 00:02:45,440
+I will simply comment out all that code and instead add a router outlet here.
+
+34
+00:02:45,530 --> 00:02:53,140
+This now adds a new hook which will be used on all child routes of the route being loaded on the servers
+
+35
+00:02:53,140 --> 00:02:57,340
+component which of course is our /servers route here,
+
+36
+00:02:57,340 --> 00:03:02,730
+so all these child routes will be loaded in this router at the place now.
+
+37
+00:03:02,920 --> 00:03:06,190
+So if we save this and now we let this reload,
+
+38
+00:03:06,190 --> 00:03:12,010
+you don't see anything here but if I click a server, it's now loaded next to the menu because this is
+
+39
+00:03:12,070 --> 00:03:17,480
+where we added our second router outlet and this is how you can easily add child routes,
+
+40
+00:03:17,530 --> 00:03:19,410
+let's do the same for the user routes
+
+41
+00:03:19,420 --> 00:03:23,680
+now. In the app module, I'll add children here,
+
+42
+00:03:23,710 --> 00:03:27,160
+so this property which takes an array of routes
+
+43
+00:03:27,550 --> 00:03:30,430
+and I only have one nested route here but that's fine,
+
+44
+00:03:30,430 --> 00:03:32,220
+so I'll add it here.
+
+45
+00:03:32,320 --> 00:03:36,030
+Get rid of the users at the beginning, just have slash,
+
+46
+00:03:36,190 --> 00:03:41,630
+well then the ID and name, the two dynamic parameters and load the user component
+
+47
+00:03:41,950 --> 00:03:50,080
+and now in my users.component.html file, I'll replace my app user here with another router outlet
+
+48
+00:03:50,200 --> 00:03:56,310
+where all the user related child routes or the one user related child route we have will be loaded.
+
+49
+00:03:56,710 --> 00:04:03,190
+So if we save this, you now see we load the user next to it and it is why it is super important to
+
+50
+00:04:03,190 --> 00:04:08,860
+dynamically update the ID and so on because the component wasn't exchanged,
+
+51
+00:04:08,920 --> 00:04:15,790
+we were able to switch the loaded user while this old component, the user component, the single user component was
+
+52
+00:04:15,820 --> 00:04:17,170
+already loaded.
+
+53
+00:04:17,260 --> 00:04:24,550
+And this is how you can implement child routing nested routes with these children property which then holds
+
+54
+00:04:24,640 --> 00:04:25,980
+all the nested routes.
+

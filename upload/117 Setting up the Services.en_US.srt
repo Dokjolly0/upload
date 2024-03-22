@@ -1,0 +1,72 @@
+1
+00:00:02,580 --> 00:00:06,060
+So let's add some services manually.
+
+2
+00:00:06,060 --> 00:00:12,690
+Now we should place the services next to the feature or in the folder holding the feature they belong
+
+3
+00:00:12,690 --> 00:00:13,690
+to.
+
+4
+00:00:13,710 --> 00:00:19,480
+So if we create a recipe service, the recipes folder looks like a good place for it.
+
+5
+00:00:19,500 --> 00:00:22,550
+So here, I'll add a recipe service
+
+6
+00:00:22,980 --> 00:00:29,550
+and of course the file is named recipe.service.ts due to that and here I'll simply export
+
+7
+00:00:29,550 --> 00:00:32,540
+a class which is named recipe service.
+
+8
+00:00:32,610 --> 00:00:36,000
+Remember, a service simply is a TypeScript class,
+
+9
+00:00:36,030 --> 00:00:41,790
+you don't need to add any special decorator to it, at least not if you don't plan on injecting a service
+
+10
+00:00:41,820 --> 00:00:43,200
+into the service.
+
+11
+00:00:43,770 --> 00:00:46,580
+Well and the same for the shopping list service.
+
+12
+00:00:46,800 --> 00:00:50,280
+I'll place it in the shopping list folder, here
+
+13
+00:00:50,310 --> 00:00:54,050
+I'll name it shopping-list.service.ts, 
+
+14
+00:00:54,060 --> 00:00:56,080
+that's the file name
+
+15
+00:00:56,100 --> 00:01:02,060
+and then inside the file of course, I'll export a class named shopping list service.
+
+16
+00:01:02,160 --> 00:01:05,720
+So these are the two service files.
+
+17
+00:01:05,790 --> 00:01:09,710
+Now let's start working on the recipe service first,
+
+18
+00:01:09,720 --> 00:01:12,890
+let's start working on it in the next lecture.
+

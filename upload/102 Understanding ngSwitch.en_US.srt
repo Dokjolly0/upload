@@ -1,0 +1,136 @@
+1
+00:00:02,500 --> 00:00:08,600
+I want to conclude the section with one other built-in structural directive which might be handy from time
+
+2
+00:00:08,600 --> 00:00:18,210
+to time, ngSwitch. Imagine the case that we have a value like this which is simply 10,
+
+3
+00:00:18,620 --> 00:00:20,330
+anything you want.
+
+4
+00:00:20,330 --> 00:00:26,530
+Now we got a place in our app where this value changes and we get a couple of different messages
+
+5
+00:00:26,540 --> 00:00:34,930
+we want to display for each of these values. For this, we can use ngSwitch,
+
+6
+00:00:34,970 --> 00:00:36,310
+so let's add a new div
+
+7
+00:00:36,320 --> 00:00:42,970
+below our paragraphs with our own attribute directives and ngSwitch is used like this.
+
+8
+00:00:43,070 --> 00:00:46,280
+We are bind to ngSwitch with property binding,
+
+9
+00:00:46,310 --> 00:00:49,670
+so no star at this point and we bind to value.
+
+10
+00:00:49,790 --> 00:00:50,810
+So this is our condition
+
+11
+00:00:50,810 --> 00:00:56,110
+basically, what we want to check and then you might be aware that switch has a couple of cases we can now
+
+12
+00:00:56,240 --> 00:00:57,330
+cover.
+
+13
+00:00:57,470 --> 00:01:00,810
+So let's say we have a paragraph where we say value is five,
+
+14
+00:01:00,920 --> 00:01:02,490
+then we have the same for 10,
+
+15
+00:01:02,660 --> 00:01:07,320
+then we have the same for 100 and maybe for default.
+
+16
+00:01:07,400 --> 00:01:13,190
+Now we need to add something to these paragraphs to control which paragraph gets shown because it should
+
+17
+00:01:13,220 --> 00:01:22,920
+only be one of these at a time, that something is ngSwitchCase and we simply pass the value for
+
+18
+00:01:22,920 --> 00:01:28,310
+this case here as an argument, for example 5 and we need the star at the beginning,
+
+19
+00:01:28,310 --> 00:01:29,690
+that's super important.
+
+20
+00:01:29,690 --> 00:01:35,360
+So here, the star comes into play again because behind the scenes, this is done also transformed by
+
+21
+00:01:35,360 --> 00:01:36,420
+Angular.
+
+22
+00:01:36,830 --> 00:01:44,080
+So now we can use this here for the other use cases too, with 10 and with 100
+
+23
+00:01:44,540 --> 00:01:51,660
+and finally for the default case, we have ngSwitchDefault, like this.
+
+24
+00:01:51,740 --> 00:01:58,670
+Now here, we also need to add the star of course. With this in place, if we save this, we only see 10 here
+
+25
+00:01:58,850 --> 00:02:06,240
+and if I go to my component and I change this to 5, like this, then of course we see five.
+
+26
+00:02:06,280 --> 00:02:11,920
+So this is ngSwitch, super easy to use, might be useful in some cases where you find yourself creating
+
+27
+00:02:11,920 --> 00:02:18,100
+a lot of ngIf conditions, ngSwitch might be the better solution in such cases.
+
+28
+00:02:18,100 --> 00:02:23,940
+So that is structural directives finished and that is directives overall finished.
+
+29
+00:02:23,980 --> 00:02:29,200
+You learned a lot about them and I hope this knowledge allows you to create awesome directives for
+
+30
+00:02:29,200 --> 00:02:34,120
+your applications in cases where the built-in ones aren't everything you need
+
+31
+00:02:34,150 --> 00:02:38,750
+even though these already cover a lot of the default use cases to be honest.
+
+32
+00:02:38,890 --> 00:02:45,130
+So let's move on, let's add a directive to our recipe book in the next section and then let's move on
+
+33
+00:02:45,250 --> 00:02:46,090
+in the course.
+
+34
+00:02:46,090 --> 00:02:46,870
+See you there.
+

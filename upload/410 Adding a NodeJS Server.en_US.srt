@@ -1,0 +1,440 @@
+1
+00:00:02,370 --> 00:00:04,620
+So let's see what our next steps are.
+
+2
+00:00:05,650 --> 00:00:12,120
+The next step is to actually add a simple note express server, which allows us to run our application.
+
+3
+00:00:12,790 --> 00:00:15,780
+So for that will we can scroll down a bit.
+
+4
+00:00:16,210 --> 00:00:21,350
+We will create a new server dot t file directly in our route project folder.
+
+5
+00:00:21,580 --> 00:00:24,450
+You can just copy that entire file here.
+
+6
+00:00:24,700 --> 00:00:27,410
+But again, I will explain what we're doing here.
+
+7
+00:00:27,460 --> 00:00:28,120
+No worries.
+
+8
+00:00:28,600 --> 00:00:29,610
+So let's copy it.
+
+9
+00:00:29,890 --> 00:00:34,560
+Let's create it next to the angular Jason file the server dot t file.
+
+10
+00:00:34,810 --> 00:00:37,950
+Yes, we'll write this in typescript and paste into content.
+
+11
+00:00:38,470 --> 00:00:41,530
+Now, for this to run, we need to install some additional dependencies.
+
+12
+00:00:41,710 --> 00:00:44,500
+So let's run, npm, install, dash, dash, save.
+
+13
+00:00:45,160 --> 00:00:51,130
+And one dependency is to express chaske package which you install of just express not express chars,
+
+14
+00:00:51,130 --> 00:00:51,970
+just express.
+
+15
+00:00:52,540 --> 00:00:58,630
+This is a framework for node jazz, which we use in Deadfall to conveniently handle incoming requests
+
+16
+00:00:58,630 --> 00:01:01,930
+and sent back responses because we have no choice.
+
+17
+00:01:01,960 --> 00:01:07,780
+We are writing our own server, which is doing all the request, response, handling, and we need no
+
+18
+00:01:07,780 --> 00:01:12,670
+trace because it uses JavaScript and it's therefore capable of running our angular app.
+
+19
+00:01:12,940 --> 00:01:18,080
+So that angular, universal thing for now can really only be used with no choice.
+
+20
+00:01:19,270 --> 00:01:23,830
+We then also have a couple of our imports here, which are default nosiest packages.
+
+21
+00:01:23,950 --> 00:01:26,770
+So that will work since you have no choice installed.
+
+22
+00:01:27,100 --> 00:01:33,610
+Just as a side note, check notorious dot org and feel free to download the latest notorious version
+
+23
+00:01:33,610 --> 00:01:33,940
+there.
+
+24
+00:01:34,120 --> 00:01:40,480
+If you encounter any issues from this module, because you will need a fairly recent version of no chance
+
+25
+00:01:40,570 --> 00:01:41,770
+for it all to work.
+
+26
+00:01:42,220 --> 00:01:45,970
+But back to our dependencies will install the ExpressJet framework.
+
+27
+00:01:46,060 --> 00:01:48,750
+And that is actually all which we need to add for now.
+
+28
+00:01:48,910 --> 00:01:53,500
+So let's hit enter to download this and also store storage entry and package Dodgson.
+
+29
+00:01:53,950 --> 00:01:55,950
+And let me then walk you through this file.
+
+30
+00:01:56,350 --> 00:01:59,260
+Now, in this file, we first of all import some things.
+
+31
+00:01:59,560 --> 00:02:05,440
+The first two imports are needed by ANGULAR to be correctly set up on the server.
+
+32
+00:02:05,470 --> 00:02:10,780
+We also do import them into client side bundle and we need to load them early on the server side for
+
+33
+00:02:10,780 --> 00:02:11,590
+everything to work.
+
+34
+00:02:12,340 --> 00:02:18,730
+Then we're importing something from platform server which will allow us to bootstrap our angular app
+
+35
+00:02:18,730 --> 00:02:19,510
+on the server.
+
+36
+00:02:20,290 --> 00:02:26,620
+We import enabled mode, which we then call here to basically turn our app or set our app to production
+
+37
+00:02:26,620 --> 00:02:29,530
+mode to put some optimizations into place.
+
+38
+00:02:30,220 --> 00:02:33,940
+Then we import the express package, that notorious framework.
+
+39
+00:02:34,540 --> 00:02:41,650
+We import the joint effort from a default notice package which allows us to join multiple POV segments
+
+40
+00:02:41,650 --> 00:02:46,030
+and file names into a long, absolute POV on the operating system.
+
+41
+00:02:46,600 --> 00:02:53,110
+And we import Rietveld Sync from the file package No Choice offers, which will allow us to work with
+
+42
+00:02:53,110 --> 00:02:59,860
+files and we will need that to load our indexed HTML file, which we want to parse and pre render so
+
+43
+00:02:59,860 --> 00:03:03,700
+populate with real content in this server side code.
+
+44
+00:03:04,480 --> 00:03:11,350
+We're then creating our express app that is must have to be able to use the express features.
+
+45
+00:03:11,830 --> 00:03:18,010
+We then set up the port number where we want to serve this during development four thousand and we stored
+
+46
+00:03:18,010 --> 00:03:23,470
+the path to our dist folder in a well constant here.
+
+47
+00:03:23,560 --> 00:03:28,780
+And this is just constructed with the help of this choice method where we take the current working directory
+
+48
+00:03:28,960 --> 00:03:31,020
+and then add the dist folder.
+
+49
+00:03:31,030 --> 00:03:34,270
+So this constructs an absolute path to the disk folder.
+
+50
+00:03:35,020 --> 00:03:36,370
+Now it becomes interesting.
+
+51
+00:03:36,850 --> 00:03:45,220
+We read in that index HTML file from the browser subfolder in that folder and that doesn't exist yet.
+
+52
+00:03:45,610 --> 00:03:51,520
+Let's create it by running the normal client site, build with engy, build Dasht as brought.
+
+53
+00:03:52,060 --> 00:03:57,100
+This will now build the package for the client side as you're used to now.
+
+54
+00:03:57,100 --> 00:04:00,910
+This will do lazy loading ahead of time compilation.
+
+55
+00:04:00,910 --> 00:04:02,260
+It'll include all these things.
+
+56
+00:04:02,260 --> 00:04:08,650
+It's a normal build and it will build it into that browser subfolder in the disk folder because that
+
+57
+00:04:08,650 --> 00:04:12,070
+is what we changed in the angular JSON file there.
+
+58
+00:04:12,070 --> 00:04:14,590
+I changed the output folder to disk browser.
+
+59
+00:04:18,040 --> 00:04:21,020
+They are for once, this is done in this folder.
+
+60
+00:04:21,280 --> 00:04:24,620
+We will have the second it's not done yet.
+
+61
+00:04:24,790 --> 00:04:27,670
+We'll have a second folder, the browser folder.
+
+62
+00:04:29,990 --> 00:04:31,700
+Now it is done, here it is.
+
+63
+00:04:32,710 --> 00:04:38,950
+From that browser folder we're pulling in that index HTML file, we're importing that into our Servatius
+
+64
+00:04:38,950 --> 00:04:43,600
+file with this line and important, we're converting it to a string.
+
+65
+00:04:43,750 --> 00:04:46,180
+So to text, that is our template.
+
+66
+00:04:47,400 --> 00:04:53,820
+We then import our features from our compiled main file and here there actually is an error.
+
+67
+00:04:54,180 --> 00:04:59,510
+Our file is stored in this server and it's just named main, not main bundle.
+
+68
+00:04:59,640 --> 00:05:01,380
+So remove the bundle here.
+
+69
+00:05:02,760 --> 00:05:08,190
+These are features which were created when we built our app for the server side, and they are required
+
+70
+00:05:08,190 --> 00:05:13,120
+to make that connection between server side and client side and pre-built the app on the server.
+
+71
+00:05:14,190 --> 00:05:18,840
+We then import provide module map from this package to make lazy loading work.
+
+72
+00:05:19,140 --> 00:05:21,330
+And then here we're putting it all together.
+
+73
+00:05:22,140 --> 00:05:25,530
+Express G.S. knows so-called template engines.
+
+74
+00:05:26,010 --> 00:05:33,270
+These are basically tools which enable Express to pre render HTML files on the server, not just with
+
+75
+00:05:33,270 --> 00:05:39,300
+ANGULAR, but typically with other server side rendering engines like Puck Ejaz or handlebars.
+
+76
+00:05:40,020 --> 00:05:42,480
+It can run JavaScript code there too.
+
+77
+00:05:42,540 --> 00:05:45,630
+And now we use it with the angular server engine.
+
+78
+00:05:46,410 --> 00:05:53,700
+We create that engine by telling Express that we want to use it on HTML files and that we then want
+
+79
+00:05:53,700 --> 00:06:01,170
+to basically set up a renderer which should use our template as a preset the templates based on the
+
+80
+00:06:01,170 --> 00:06:06,090
+file we pulled in with some default options which we won't overwrite.
+
+81
+00:06:06,090 --> 00:06:12,780
+The defaults are fine where we provide that module map, which is a required to internally and able
+
+82
+00:06:12,780 --> 00:06:19,830
+lazy loading because it will basically give you a pass on the information about which extra chunks we
+
+83
+00:06:19,830 --> 00:06:20,160
+have.
+
+84
+00:06:20,970 --> 00:06:22,020
+And then that's it.
+
+85
+00:06:22,260 --> 00:06:27,440
+It'll then called this callback here where it passes on the pre rendered HTML.
+
+86
+00:06:27,870 --> 00:06:33,390
+So Dad will be our pre rendered HTML page for whichever route we requested.
+
+87
+00:06:34,440 --> 00:06:40,170
+This registers this view engine or this configures that, I should say with this line.
+
+88
+00:06:40,170 --> 00:06:44,040
+We're then registering it as our HTML engine.
+
+89
+00:06:44,040 --> 00:06:51,240
+We're basically saying, hey, please add the engine to the Express app for HTML and we defined the
+
+90
+00:06:51,480 --> 00:06:52,890
+HTML view engine here.
+
+91
+00:06:54,380 --> 00:07:00,290
+We then also have to inform, express where to find our views, and there were saying, you find them
+
+92
+00:07:00,290 --> 00:07:02,450
+in the dust folder, in the browser folder.
+
+93
+00:07:02,780 --> 00:07:04,520
+Now Views is a big word.
+
+94
+00:07:04,520 --> 00:07:09,390
+We only have one index HTML file, but that's still an important piece of information.
+
+95
+00:07:09,560 --> 00:07:11,180
+Where is this located?
+
+96
+00:07:12,810 --> 00:07:19,350
+We're then setting up Express to always return all files from within the browser folder aesthetically
+
+97
+00:07:19,590 --> 00:07:25,910
+so that when our app does run in the client and we want to get the JavaScript file or some Sears's file,
+
+98
+00:07:25,950 --> 00:07:27,900
+that this can be downloaded.
+
+99
+00:07:28,830 --> 00:07:32,230
+And then we're saying all routes, which we don't know.
+
+100
+00:07:32,280 --> 00:07:38,940
+So basically all routes, because we have a wild card, will be handled by rendering back a new page.
+
+101
+00:07:39,480 --> 00:07:45,870
+And we're pointing at the specific template we want to use here, the indexed HTML file in our browser
+
+102
+00:07:45,870 --> 00:07:47,240
+folder into this folder.
+
+103
+00:07:48,000 --> 00:07:52,890
+Since this is registered as a views folder, the view engine will kick in.
+
+104
+00:07:53,340 --> 00:07:59,190
+And since it's an e-mail, follow this HTML view engine will do its job and that will therefore pre
+
+105
+00:07:59,190 --> 00:08:00,450
+render that file.
+
+106
+00:08:00,510 --> 00:08:03,780
+It will take the index HTML file and fill it with life.
+
+107
+00:08:05,010 --> 00:08:06,490
+This is our server side code.
+
+108
+00:08:06,840 --> 00:08:12,780
+Now, we can't execute it just yet because it's written in typescript for no to work.
+
+109
+00:08:12,930 --> 00:08:17,970
+We need to compile it to JavaScript because Node doesn't natively work with TypeScript.
+
+110
+00:08:18,630 --> 00:08:24,240
+So let's write some compilation logic in the next lecture before we can finally see this in action.
+

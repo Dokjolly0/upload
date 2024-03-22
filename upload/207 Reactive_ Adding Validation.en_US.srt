@@ -1,0 +1,144 @@
+1
+00:00:04,090 --> 00:00:06,570
+Now that we're able to submit a form,
+
+2
+00:00:06,760 --> 00:00:11,680
+let's actually add some validation to it. In the template driven approach,
+
+3
+00:00:11,680 --> 00:00:17,020
+we would simply add required here for example to make this field required.
+
+4
+00:00:17,230 --> 00:00:18,540
+It doesn't work like this
+
+5
+00:00:18,550 --> 00:00:25,120
+in the reactive approach because keep in mind and that's key, you're not configuring the form in the
+
+6
+00:00:25,120 --> 00:00:31,090
+template, you're only synchronizing it with the directives, formControlName and formGroup but you're
+
+7
+00:00:31,090 --> 00:00:36,130
+not configuring it here, the TypeScript code, that's where you configure it.
+
+8
+00:00:36,130 --> 00:00:39,230
+That is why FormControl takes more than one argument,
+
+9
+00:00:39,340 --> 00:00:40,960
+this constructor here.
+
+10
+00:00:41,020 --> 00:00:43,630
+You cannot only set the default value,
+
+11
+00:00:43,630 --> 00:00:50,680
+the second argument allows you to specify some validators. So you can either only pass one validator
+
+12
+00:00:50,680 --> 00:00:57,160
+here, like for username where I only want to make sure that it is required and you do this by adding
+
+13
+00:00:57,430 --> 00:00:59,980
+the validators object,
+
+14
+00:00:59,980 --> 00:01:05,560
+make sure to import it from @angular/forms and there, you get a couple of built-in validators you
+
+15
+00:01:05,560 --> 00:01:08,220
+can use, for example required.
+
+16
+00:01:08,440 --> 00:01:15,070
+Now make sure to not call it, to not execute it, so don't have parentheses after it because you don't
+
+17
+00:01:15,070 --> 00:01:17,000
+want to execute this method,
+
+18
+00:01:17,020 --> 00:01:20,460
+it is a static method made available by validators here,
+
+19
+00:01:20,530 --> 00:01:24,240
+instead you only want to pass the reference to this method.
+
+20
+00:01:25,260 --> 00:01:31,850
+Angular will execute the method whenever it detects that the input of this FormControl changed,
+
+21
+00:01:32,010 --> 00:01:38,390
+so it just needs to have a reference on what it should execute at this point of time.
+
+22
+00:01:38,430 --> 00:01:41,620
+So this is the required validator
+
+23
+00:01:41,790 --> 00:01:44,040
+but as I said, this is only one option,
+
+24
+00:01:44,040 --> 00:01:49,200
+you can also add multiple validators by simply passing an array of validators.
+
+25
+00:01:49,200 --> 00:01:56,300
+So here to e-mail, I'm going to pass an array of validators because I want to have the required validator,
+
+26
+00:01:56,310 --> 00:02:06,150
+just like on the username but I'll add another validator too here, I'll add the e-mail validator and this
+
+27
+00:02:06,170 --> 00:02:08,640
+again also doesn't need to get executed,
+
+28
+00:02:08,690 --> 00:02:10,990
+we just need the reference.
+
+29
+00:02:11,090 --> 00:02:19,070
+So here, I now also pass my validator and now we do have validation in place.
+
+30
+00:02:19,370 --> 00:02:26,960
+If we now go back to our form and we inspect and let it reload and we inspect the e-mail field here for example,
+
+31
+00:02:27,120 --> 00:02:28,340
+it's invalid,
+
+32
+00:02:28,940 --> 00:02:31,800
+if I enter something here, it's still invalid,
+
+33
+00:02:32,030 --> 00:02:37,850
+if I enter an e-mail address though, it becomes valid and the same of course for username, it's invalid
+
+34
+00:02:37,850 --> 00:02:38,580
+right now,
+
+35
+00:02:38,690 --> 00:02:43,030
+as soon as I enter something it becomes valid because it's now not empty anymore.
+
+36
+00:02:43,350 --> 00:02:48,610
+So this is how you can add validation to this approach.
+

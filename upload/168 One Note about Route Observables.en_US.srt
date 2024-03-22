@@ -1,0 +1,44 @@
+1
+00:00:02,300 --> 00:00:06,620
+In last lectures, we added a lot of routing functionality to our app,
+
+2
+00:00:06,660 --> 00:00:08,560
+it's looking pretty good.
+
+3
+00:00:08,580 --> 00:00:11,410
+We get all the main pieces tied together,
+
+4
+00:00:11,640 --> 00:00:17,880
+one thing I want to bring to your attention again is we are subscribing to params here in the detail
+
+5
+00:00:17,880 --> 00:00:20,850
+component and in the edit component.
+
+6
+00:00:20,850 --> 00:00:27,300
+Now as I explained, you don't need to clean up the subscription here, I just want to bring it to your
+
+7
+00:00:27,300 --> 00:00:28,670
+attention again.
+
+8
+00:00:28,710 --> 00:00:35,930
+In other cases where you use your own observables, observables you created and not managed by Angular
+
+9
+00:00:35,940 --> 00:00:39,740
+therefore, you will need to clean up the subscription.
+
+10
+00:00:39,870 --> 00:00:45,020
+So definitely keep that in mind if you work with your own observables, here for now
+
+11
+00:00:45,090 --> 00:00:49,600
+we can simply proceed with the set up and let Angular do the cleanup work.
+

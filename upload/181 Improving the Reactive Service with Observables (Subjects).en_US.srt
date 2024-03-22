@@ -1,0 +1,256 @@
+1
+00:00:02,450 --> 00:00:09,800
+Let's now use our newly gained knowledge about observables in our recipe book in our course project.
+
+2
+00:00:10,640 --> 00:00:16,550
+Thus far in there, we are already using a pattern which you just learned in the last section that you
+
+3
+00:00:16,550 --> 00:00:24,230
+shouldn't use or that can be replaced with a better pattern and that better pattern is of course to
+
+4
+00:00:24,230 --> 00:00:29,450
+replace all our event emitters which we have with subjects.
+
+5
+00:00:29,450 --> 00:00:34,340
+So for example here, in the shopping list service, we have that event emitter which we already use to
+
+6
+00:00:34,340 --> 00:00:40,310
+push new information about changed ingredients from component A to B,
+
+7
+00:00:40,310 --> 00:00:45,930
+well we'll now change this to a subject instead. One tiny thing
+
+8
+00:00:45,930 --> 00:00:55,190
+I also noticed is that here in the app component, we of course no longer need the onNavigate function
+
+9
+00:00:55,380 --> 00:00:57,040
+and therefore also not here,
+
+10
+00:00:57,060 --> 00:00:58,990
+this function handler.
+
+11
+00:00:59,220 --> 00:01:00,720
+But that's a minor thing,
+
+12
+00:01:00,720 --> 00:01:07,240
+let's instead focus on the shopping list now and there in the shopping list service,
+
+13
+00:01:07,350 --> 00:01:18,270
+I want to set up my subject, so for that I will first of all add a new import up there and I will import
+
+14
+00:01:18,360 --> 00:01:26,520
+subject from RxJS, just as you learned it in the observables section. You can now simply replace event
+
+15
+00:01:26,550 --> 00:01:33,240
+emitter with subject here because it works almost the same way, that of course means that we can get
+
+16
+00:01:33,240 --> 00:01:35,760
+rid of that event emitter import up there
+
+17
+00:01:35,880 --> 00:01:40,290
+and now there's one thing we need to fix though, whenever we call emit,
+
+18
+00:01:40,290 --> 00:01:50,370
+we now have to call next instead because subjects use next to emit or send a new value.
+
+19
+00:01:50,370 --> 00:01:54,030
+Now the parts where we consume ingredients changed
+
+20
+00:01:54,030 --> 00:01:57,240
+however, these parts don't need to change
+
+21
+00:02:00,100 --> 00:02:08,020
+so here in the shopping list component, where we subscribe to the ingredients changed event emitter previously,
+
+22
+00:02:08,200 --> 00:02:14,680
+we now subscribe to the subject and that is absolutely fine, it has the same syntax regarding that.
+
+23
+00:02:14,860 --> 00:02:20,050
+However there is one thing we do need to change, we don't need to change that syntax but as you learned,
+
+24
+00:02:20,140 --> 00:02:27,790
+it is a good and recommended practice to store that subscription in some property and clean it up when
+
+25
+00:02:27,790 --> 00:02:29,000
+we leave the component.
+
+26
+00:02:29,330 --> 00:02:36,550
+So I'll add a private property, igChangeSub or whatever you want to name it, which is of type subscription
+
+27
+00:02:37,000 --> 00:02:43,630
+and you therefore need to import subscription from RxJS at the top of your file.
+
+28
+00:02:43,630 --> 00:02:50,830
+Now with that changed, of course it's not enough to create that property, I really want to store my subscription
+
+29
+00:02:50,830 --> 00:02:51,910
+in that property,
+
+30
+00:02:52,060 --> 00:02:58,810
+so I'll set this igChangeSub equal to this slService ingredients changed subscribe because subscribe
+
+31
+00:02:58,820 --> 00:03:04,270
+returns a subscription which we store in there and now to clear it whenever we leave that component,
+
+32
+00:03:04,600 --> 00:03:13,660
+let's add onDestroy as an interface which you also import from @angular/core, that forces us to add
+
+33
+00:03:13,960 --> 00:03:17,140
+ngOnDestroy here and in ngOnDestroy,
+
+34
+00:03:17,140 --> 00:03:26,080
+we can now use our igChangeSub property to unsubscribe and this now is the recommended pattern
+
+35
+00:03:26,320 --> 00:03:33,010
+which will replace event emitter with a more optimal solution. Now we're using a similar pattern in
+
+36
+00:03:33,010 --> 00:03:38,710
+the recipes area, if we have a look at the recipes service, there we have the recipe selected property
+
+37
+00:03:38,770 --> 00:03:45,580
+which is also an event emitter and therefore, since this is also not decorated with @output and not part
+
+38
+00:03:45,580 --> 00:03:48,550
+of a component which would be a totally different use case,
+
+39
+00:03:48,580 --> 00:03:54,160
+so since we instead use that for cross component communication through a service, we should replace
+
+40
+00:03:54,160 --> 00:03:56,350
+this with a subject as well.
+
+41
+00:03:56,350 --> 00:04:02,410
+So let's replace event emitter with subject here and therefore, we can get rid of event emitter up there
+
+42
+00:04:03,430 --> 00:04:08,380
+and of course now, however we have to import that subject here,
+
+43
+00:04:08,380 --> 00:04:17,500
+so let's import subject from RxJS and now make sure that wherever you are emitting a new value,
+
+44
+00:04:17,680 --> 00:04:20,060
+you now use next
+
+45
+00:04:20,060 --> 00:04:25,450
+instead. We're still setting up a subscription to it in the recipes component
+
+46
+00:04:25,450 --> 00:04:33,030
+but that was done to have a solution for loading different recipes before we added routing.
+
+47
+00:04:33,040 --> 00:04:39,070
+Now with routing added, we actually don't need this anymore because now when we want to select a recipe,
+
+48
+00:04:39,400 --> 00:04:44,800
+well then we do this by clicking on it and we use the router link directive, here in our recipe item
+
+49
+00:04:44,800 --> 00:04:47,830
+component, to load different recipes.
+
+50
+00:04:47,830 --> 00:04:52,160
+So instead here, we can actually get rid of recipe selected in total
+
+51
+00:04:52,240 --> 00:04:54,490
+but if we would use it as we did before,
+
+52
+00:04:54,550 --> 00:05:02,920
+so where we would use that to select different recipes, you would use it as a subject. In our case as
+
+53
+00:05:02,920 --> 00:05:03,940
+I just mentioned,
+
+54
+00:05:03,940 --> 00:05:10,330
+we can simply get rid of the usage of it and therefore also of the injection of recipes service here
+
+55
+00:05:10,660 --> 00:05:17,300
+in our recipes component and we can also get rid of the recipe module here.
+
+56
+00:05:17,550 --> 00:05:23,620
+And with that all cleaned up, we're now using the subject in one place, in the shopping list area, not in a
+
+57
+00:05:23,620 --> 00:05:27,230
+recipes area because there we have no use case for it right now.
+
+58
+00:05:27,490 --> 00:05:35,670
+With that, our application looks good and works just like it did before, at least as far as we can go
+
+59
+00:05:35,830 --> 00:05:39,000
+and now we're using a subject instead of an event emitter.
+
+60
+00:05:39,070 --> 00:05:44,320
+The other parts you learned about observables - what they do, how they work behind the scenes, that they
+
+61
+00:05:44,320 --> 00:05:46,450
+can throw errors and that you can use
+
+62
+00:05:46,450 --> 00:05:52,090
+operators will become a bit more important later in the course but now already, it should be a bit clearer
+
+63
+00:05:52,330 --> 00:05:59,680
+what this routing params thing is and how we can conveniently pass data from A to B in the best
+
+64
+00:05:59,680 --> 00:06:01,840
+possible way by using subjects.
+

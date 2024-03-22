@@ -1,0 +1,112 @@
+1
+00:00:02,770 --> 00:00:09,520
+Welcome to a new course section. This course section is about pipes and let's start with the most important
+
+2
+00:00:09,520 --> 00:00:18,450
+question first, what are pipes? Pipes are a feature built into Angular 2 which basically allows you to
+
+3
+00:00:18,450 --> 00:00:21,230
+transform output in your template.
+
+4
+00:00:21,230 --> 00:00:23,480
+This is the main purpose of a pipe,
+
+5
+00:00:23,490 --> 00:00:25,660
+it transforms some output.
+
+6
+00:00:25,950 --> 00:00:32,700
+Now there are pipes for different types of output and also for synchronous and asynchronous data,
+
+7
+00:00:32,730 --> 00:00:34,960
+we will have a look at this throughout the course,
+
+8
+00:00:34,980 --> 00:00:37,460
+the general theme is always the same though.
+
+9
+00:00:37,530 --> 00:00:39,880
+A basic example would be the following,
+
+10
+00:00:39,960 --> 00:00:43,380
+you have a username, that's a property in your component,
+
+11
+00:00:43,440 --> 00:00:47,210
+for example here it holds a string, Max.
+
+12
+00:00:47,280 --> 00:00:53,100
+Now you want to output that username in your template and for this you probably use string interpolation
+
+13
+00:00:53,460 --> 00:00:55,510
+as you learned it throughout the course.
+
+14
+00:00:55,530 --> 00:01:02,050
+Now that's all right but then you decide it would be nice if the output which is Max
+
+15
+00:01:02,070 --> 00:01:08,350
+if you do it like this, would be all uppercase but only when you output it.
+
+16
+00:01:08,520 --> 00:01:14,880
+So you don't want to change the property itself to uppercase because imagine you use that throughout your code
+
+17
+00:01:15,270 --> 00:01:18,970
+and it should still be as you assigned it up there
+
+18
+00:01:19,290 --> 00:01:21,930
+but you want to transform the way it is displayed
+
+19
+00:01:21,930 --> 00:01:24,130
+once you render it to the screen.
+
+20
+00:01:24,540 --> 00:01:29,130
+Now for this, you could use a pipe, namely the uppercase pipe,
+
+21
+00:01:29,160 --> 00:01:35,160
+this actually would be a built-in pipe and we will have a look at the built-in pipes in a second.
+
+22
+00:01:35,160 --> 00:01:43,470
+Now with that built-in pipe in use, you would now see Max, all uppercase being printed to the screen
+
+23
+00:01:43,770 --> 00:01:45,840
+because this is what this pipe does,
+
+24
+00:01:45,840 --> 00:01:48,070
+it transforms the value.
+
+25
+00:01:48,110 --> 00:01:52,110
+Now that is the main purpose of pipes, transforming values,
+
+26
+00:01:52,170 --> 00:01:54,370
+let's dive into them a bit more,
+
+27
+00:01:54,480 --> 00:01:58,800
+let's view some of the built-in pipes and then let's also build our own pipes.
+
+28
+00:01:58,860 --> 00:01:59,370
+Let's go.
+

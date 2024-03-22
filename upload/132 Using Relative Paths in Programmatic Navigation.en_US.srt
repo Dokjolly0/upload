@@ -1,0 +1,256 @@
+1
+00:00:02,730 --> 00:00:06,660
+In the last lecture, we learned how to navigate programmatically,
+
+2
+00:00:06,670 --> 00:00:11,140
+now I want to also have a look at how we can use relative paths there.
+
+3
+00:00:11,350 --> 00:00:16,600
+So back in our servers component, let's say we have again our reload page link
+
+4
+00:00:16,600 --> 00:00:20,050
+but this time it's a button here with button button primary
+
+5
+00:00:20,050 --> 00:00:24,300
+and still we might use this approach because we want to do some different things.
+
+6
+00:00:24,310 --> 00:00:31,700
+So reload page and here, I will have my click listener, onReload maybe.
+
+7
+00:00:31,730 --> 00:00:39,890
+So if we now go to our TypeScript code, here onReload will simply or will be the method which gets
+
+8
+00:00:39,890 --> 00:00:42,530
+triggered and we already inject this
+
+9
+00:00:42,530 --> 00:00:44,040
+serversService here,
+
+10
+00:00:44,150 --> 00:00:49,650
+I also want to inject the router, so let's add router here, 
+
+11
+00:00:49,790 --> 00:00:54,910
+make sure to add the import from @angular/router.
+
+12
+00:00:55,490 --> 00:01:03,730
+So we learned that now we could say this router navigate and now let's add /servers here.
+
+13
+00:01:03,920 --> 00:01:10,670
+If we do this and we save this page and we go to the servers page and click reload, nothing happens, we
+
+14
+00:01:10,670 --> 00:01:13,710
+don't get an error because we are already on that page.
+
+15
+00:01:13,790 --> 00:01:15,950
+Technically it still reloads the page
+
+16
+00:01:15,970 --> 00:01:20,520
+but keep in mind, it never sends a request so this reload icon will never spin
+
+17
+00:01:20,630 --> 00:01:26,120
+but Angular simply determined that we are on this page, so no further action is needed.
+
+18
+00:01:26,150 --> 00:01:28,790
+Now let's say we remove the slash at the beginning,
+
+19
+00:01:28,820 --> 00:01:33,250
+so we turn this into a relative path and we still are on the servers component,
+
+20
+00:01:33,250 --> 00:01:34,270
+keep this in mind.
+
+21
+00:01:34,550 --> 00:01:39,570
+So now if this reloaded and we click this page, we still don't get an error
+
+22
+00:01:39,670 --> 00:01:46,220
+and now this might be strange because before when we use the routerLink, you saw that we did get an
+
+23
+00:01:46,220 --> 00:01:50,940
+error because it would try to add servers to the end of this path
+
+24
+00:01:50,960 --> 00:01:53,570
+and of course this route now doesn't exist.
+
+25
+00:01:53,720 --> 00:02:02,690
+So why does it work fine if we use the navigate method? Because unlike the routerLink, the navigate method
+
+26
+00:02:02,780 --> 00:02:10,640
+doesn't know on which route you are currently on, so to say. The routerLink always knows in which component
+
+27
+00:02:10,640 --> 00:02:16,130
+it sits, in which components template and therefore it knows what the currently loaded route is.
+
+28
+00:02:16,130 --> 00:02:21,890
+Now you could argue that here we also call this inside the component TypeScript code, so it could determine
+
+29
+00:02:21,890 --> 00:02:25,550
+where it is in but it's just not how it works.
+
+30
+00:02:25,550 --> 00:02:32,990
+So to tell this where we currently are in, we have to pass a second argument to the navigate method
+
+31
+00:02:33,380 --> 00:02:35,060
+which is a Javascript object
+
+32
+00:02:35,210 --> 00:02:39,380
+and here we can configure this navigation action.
+
+33
+00:02:39,500 --> 00:02:45,480
+Now I will come back to this later because there are more things we can add but one configuration is the
+
+34
+00:02:45,770 --> 00:02:49,470
+relativeTo property here.
+
+35
+00:02:49,520 --> 00:02:55,760
+Here we define relative to which route this link should be loaded and by default, this is always the
+
+36
+00:02:55,760 --> 00:02:58,680
+root domain, which is why we didn't get an error for
+
+37
+00:02:58,770 --> 00:03:00,630
+this servers path.
+
+38
+00:03:01,130 --> 00:03:06,060
+Here we have to give a route though, so we don't pass a string here,
+
+39
+00:03:06,110 --> 00:03:09,810
+instead the route is something we can inject here too.
+
+40
+00:03:10,100 --> 00:03:17,360
+We can get the currently active route by injecting route which is of type ActivatedRoute and make
+
+41
+00:03:17,360 --> 00:03:24,860
+sure to import ActivatedRoute from the @angular/router package too. Now ActivatedRoute like the
+
+42
+00:03:24,860 --> 00:03:30,730
+name implies simply injects the currently active routes, so for the component you loaded,
+
+43
+00:03:30,740 --> 00:03:36,320
+this will be the route which loaded this component and the route simply is kind of a complex Javascript
+
+44
+00:03:36,320 --> 00:03:40,790
+object which keeps a lot of meta information about the currently active route.
+
+45
+00:03:41,180 --> 00:03:46,370
+Now we can set this as a value, so this route, this injected route
+
+46
+00:03:46,370 --> 00:03:48,330
+for the relativeTo property
+
+47
+00:03:48,740 --> 00:03:55,960
+and now with that extra piece of information, Angular knows what our currently active route is
+
+48
+00:03:56,060 --> 00:04:02,030
+and theoretically you could also set this to some other route which you would have to get by some way.
+
+49
+00:04:02,030 --> 00:04:07,220
+So here, we are telling it now our currently active routes is this ActivatedRoute, so relative to this
+
+50
+00:04:07,220 --> 00:04:07,480
+route
+
+51
+00:04:07,490 --> 00:04:16,040
+you should navigate and then it will simply resolve all the relative paths you might have here relative
+
+52
+00:04:16,040 --> 00:04:17,240
+to this route.
+
+53
+00:04:17,270 --> 00:04:22,340
+So with this change in place, if we now click this button again,
+
+54
+00:04:22,340 --> 00:04:29,210
+now we broke the app because now it again tries to find servers/servers which doesn't exist.
+
+55
+00:04:29,270 --> 00:04:29,750
+So great
+
+56
+00:04:29,750 --> 00:04:36,230
+we broke the app but with that, you should understand how you can work with relative paths in the navigate
+
+57
+00:04:36,250 --> 00:04:40,510
+method you defined relative to what this paths should be loaded,
+
+58
+00:04:40,550 --> 00:04:46,010
+the default is the route URL, that might be the behavior you're looking for, it might not be the behavior
+
+59
+00:04:46,010 --> 00:04:47,080
+you're looking for,
+
+60
+00:04:47,150 --> 00:04:50,590
+you can change it with this extra Javascript object,
+
+61
+00:04:50,600 --> 00:04:54,900
+second argument to the navigate method where you have the relativeTo property
+
+62
+00:04:54,920 --> 00:04:58,400
+you can set to the route you want to navigate relativeTo.
+
+63
+00:04:58,400 --> 00:05:05,570
+For now, I will simply comment this out to disable this not working button and still keep the code in
+
+64
+00:05:05,570 --> 00:05:07,310
+this example project.
+

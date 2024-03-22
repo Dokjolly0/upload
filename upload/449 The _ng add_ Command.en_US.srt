@@ -1,0 +1,248 @@
+1
+00:00:02,270 --> 00:00:08,420
+You might know angular material, it's a third party package actually also maintained by parts of the
+
+2
+00:00:08,420 --> 00:00:10,420
+angular team, but totally optional.
+
+3
+00:00:10,790 --> 00:00:12,530
+It adds components.
+
+4
+00:00:12,530 --> 00:00:19,190
+So pre-built components to your angular app, which follow the material design, spec and material design
+
+5
+00:00:19,190 --> 00:00:21,620
+as a design language invented by Google.
+
+6
+00:00:22,040 --> 00:00:24,590
+It looks the way this page looks like now.
+
+7
+00:00:24,620 --> 00:00:27,820
+You can check out components here and see which components this offers.
+
+8
+00:00:27,830 --> 00:00:33,200
+And this is, of course, not the focus of of this module here, but there you can get nice pre-built
+
+9
+00:00:33,200 --> 00:00:37,820
+components, which you can then easily drop into your application to use them there.
+
+10
+00:00:38,570 --> 00:00:45,290
+Now, if you click on Get Started, we see that we can run one simple command to add angular material
+
+11
+00:00:45,290 --> 00:00:46,550
+to our project.
+
+12
+00:00:48,270 --> 00:00:50,480
+Now, let's copy this command and give it a try.
+
+13
+00:00:51,760 --> 00:00:58,240
+Let's head over to our project, and there I will run energy at at angler's material and angular material
+
+14
+00:00:58,240 --> 00:01:02,050
+is not the only package which supports the energy at command.
+
+15
+00:01:02,320 --> 00:01:07,470
+Every third party package can support it, no matter if it's built by the angler team or not.
+
+16
+00:01:07,570 --> 00:01:10,810
+And there are a lot of third party packages out there.
+
+17
+00:01:10,810 --> 00:01:17,740
+For example, Ionic, which do support it now to support these packages, need to include certain configuration
+
+18
+00:01:17,740 --> 00:01:20,130
+files in their package source code.
+
+19
+00:01:20,140 --> 00:01:24,690
+In the end, an energy add will look for these files and if it finds them, it is able to run.
+
+20
+00:01:25,300 --> 00:01:30,370
+Now, these files, which these packages have to include dental energy, add what to do and let's see
+
+21
+00:01:30,370 --> 00:01:32,800
+what energy it does with angular material.
+
+22
+00:01:33,400 --> 00:01:34,420
+Lets it enter.
+
+23
+00:01:34,720 --> 00:01:39,340
+And now you see as a first step, it installs packages through NPM.
+
+24
+00:01:39,730 --> 00:01:43,870
+Now, this is not all it will do though, but it's one part of what it does.
+
+25
+00:01:44,020 --> 00:01:48,700
+It will install all packages you need to install to use angular material.
+
+26
+00:01:48,850 --> 00:01:52,810
+That's the angular material package itself, but also some third party dependencies.
+
+27
+00:01:52,840 --> 00:02:00,730
+This package needs then some packages or some tools might prompt you for certain choices you have to
+
+28
+00:02:00,730 --> 00:02:01,420
+make, not all.
+
+29
+00:02:01,420 --> 00:02:03,910
+Some have some definite steps which to always execute.
+
+30
+00:02:04,210 --> 00:02:08,040
+Here, for example, we can choose a default theme with which we want to start.
+
+31
+00:02:08,200 --> 00:02:10,720
+And here I'll go for Deep Purple and Amber.
+
+32
+00:02:11,500 --> 00:02:16,000
+We can also choose if you want to use hammocks for gesture recognition.
+
+33
+00:02:16,000 --> 00:02:16,690
+And it will choose.
+
+34
+00:02:16,690 --> 00:02:17,110
+Yes.
+
+35
+00:02:18,750 --> 00:02:25,350
+Also at Browsr animations with yes, so did we have all these nice animations and hit Enter and now
+
+36
+00:02:25,350 --> 00:02:31,500
+you see it again updates the package that Jason followed because it now installs more dependencies end.
+
+37
+00:02:31,860 --> 00:02:33,110
+And that's the interesting part.
+
+38
+00:02:33,120 --> 00:02:38,550
+It did not just installs on packages, so it's not just a replacement for NPM install.
+
+39
+00:02:38,940 --> 00:02:41,100
+It also updated some other files.
+
+40
+00:02:41,340 --> 00:02:49,020
+It updated the main TIAs file, the app module angler Jason, the index age HTML file and style cyesis.
+
+41
+00:02:49,360 --> 00:02:53,070
+So why don't we have a look at all these files to understand what Engy ad did?
+
+42
+00:02:53,520 --> 00:02:56,430
+And let's start with Maintenace in May.
+
+43
+00:02:56,430 --> 00:03:01,410
+And yes, you see it added to import for Hammer, which is a third party package that helps us with
+
+44
+00:03:01,410 --> 00:03:02,490
+gesture detection.
+
+45
+00:03:03,150 --> 00:03:04,710
+And that is it actually.
+
+46
+00:03:05,720 --> 00:03:11,990
+In the index HTML file, you see it included some Google fonts, the material icons in the end, and
+
+47
+00:03:11,990 --> 00:03:13,870
+the Raboteau font which it uses.
+
+48
+00:03:13,940 --> 00:03:15,110
+So that is an adjustment.
+
+49
+00:03:15,110 --> 00:03:15,800
+It made their.
+
+50
+00:03:17,220 --> 00:03:25,320
+In the app module, if we have a look there, it actually ad at the browser animations module from angular
+
+51
+00:03:25,320 --> 00:03:30,600
+animations because some angular material components use animations and of course, those animations
+
+52
+00:03:30,600 --> 00:03:33,420
+should work in these style us as file.
+
+53
+00:03:33,450 --> 00:03:39,060
+You see it set some default styles for your website, like a default fund, for example.
+
+54
+00:03:40,210 --> 00:03:44,400
+And in angler Jason there, let's see what a changed there.
+
+55
+00:03:44,760 --> 00:03:53,320
+There you see that, for example, under the built command, it now also includes our theme stalls so
+
+56
+00:03:53,320 --> 00:03:56,820
+that our theme is picked up when we build for production.
+
+57
+00:03:57,700 --> 00:04:04,540
+So that's the end ad schematic, pretty useful for third party packages that support it because it does
+
+58
+00:04:04,540 --> 00:04:10,710
+not just install the penances and package Jason it all the fastest, but not just instead.
+
+59
+00:04:10,870 --> 00:04:17,650
+Besides doing that, it also makes a couple of adjustments specified by the third party package that
+
+60
+00:04:17,650 --> 00:04:22,210
+need to be made so that you can immediately start using this installed third party package.
+
+61
+00:04:22,840 --> 00:04:26,790
+Now, I did mention and generate and engy update as well.
+
+62
+00:04:26,800 --> 00:04:28,780
+What do these schematics do?
+

@@ -1,0 +1,304 @@
+1
+00:00:02,490 --> 00:00:05,520
+So what happens as part of our sign-up process?
+
+2
+00:00:06,000 --> 00:00:09,890
+Well it's not too different from the login process.
+
+3
+00:00:10,020 --> 00:00:14,640
+We had a switchMap so that we can return a new observable
+
+4
+00:00:14,700 --> 00:00:22,570
+and we know that we'll get a sign-up action here in the end, which is of type auth actions
+
+5
+00:00:22,810 --> 00:00:27,200
+sign-up start, which holds that e-mail and password we need.
+
+6
+00:00:27,200 --> 00:00:32,740
+Then let's go to the auth service and there in the sign-up method,
+
+7
+00:00:33,020 --> 00:00:39,740
+let's grab this code where we use the Angular HttpClient and use it here in auth effects. 
+
+8
+00:00:42,810 --> 00:00:47,310
+Let's extract e-mail from the sign-up
+
+9
+00:00:47,370 --> 00:00:51,870
+action.payload and the same of course for the password,
+
+10
+00:00:51,870 --> 00:00:53,550
+it's also coming from sign-up
+
+11
+00:00:53,550 --> 00:00:58,450
+action.payload password and with that, we're sending this request
+
+12
+00:00:58,450 --> 00:00:59,710
+to create a new user.
+
+13
+00:00:59,800 --> 00:01:01,660
+Now just as for logging in,
+
+14
+00:01:01,660 --> 00:01:04,140
+we now have to handle both the success and the error
+
+15
+00:01:04,140 --> 00:01:07,210
+case. Now for that,
+
+16
+00:01:07,210 --> 00:01:16,420
+I'll copy that pipe method here and add it to that inner observable for the same reason as before, to
+
+17
+00:01:16,420 --> 00:01:20,060
+not break the overall effects observable.
+
+18
+00:01:20,320 --> 00:01:26,790
+So I copy that and added it to the sign-up chain because when we do login, I want to do the same
+
+19
+00:01:26,840 --> 00:01:29,270
+and when we have an error, I want to do the same.
+
+20
+00:01:29,270 --> 00:01:34,800
+Now obviously if we do the same, then duplicating that code is really not that smart.
+
+21
+00:01:35,750 --> 00:01:45,630
+So instead, let's rather create our own helper functions again, store it in constants maybe, handle authentication
+
+22
+00:01:47,410 --> 00:01:53,410
+which is an arrow function that does something and handle error which is an arrow function that does
+
+23
+00:01:53,410 --> 00:01:55,660
+something. Now this might look familiar to you,
+
+24
+00:01:55,660 --> 00:01:59,250
+we did the same in the service because it is the same logic,
+
+25
+00:01:59,290 --> 00:02:04,120
+now just a bit of a different logic but in the end, still the same for logging in and for signing up.
+
+26
+00:02:05,050 --> 00:02:10,150
+So handle authentication should hold the code we have in here, in map.
+
+27
+00:02:13,280 --> 00:02:17,270
+Let's cut it and add it in there
+
+28
+00:02:17,270 --> 00:02:26,070
+and for this to work, we just need to get the expires in value, which should already be a number,
+
+29
+00:02:26,290 --> 00:02:34,990
+the e-mail, the user ID and the token and these should all be strings, so e-mail is a string, user ID
+
+30
+00:02:34,990 --> 00:02:36,620
+a string, token is a string.
+
+31
+00:02:36,700 --> 00:02:41,390
+So we're getting these inputs so that we can use them here, like this,
+
+32
+00:02:41,560 --> 00:02:46,360
+remove res data, it's now user ID instead of local ID
+
+33
+00:02:46,910 --> 00:02:53,580
+and it's token instead of ID token. We're returning our new action here,
+
+34
+00:02:53,620 --> 00:03:01,420
+we're getting all these inputs, that means now here for map, we can just call handle authentication and
+
+35
+00:03:01,420 --> 00:03:03,010
+forward all that data,
+
+36
+00:03:03,040 --> 00:03:09,210
+so that would be res data, expires in with a plus in front of it to convert to a number, res data
+
+37
+00:03:09,220 --> 00:03:11,930
+e-mail, res data
+
+38
+00:03:14,510 --> 00:03:18,980
+local ID for the user ID and res data ID token.
+
+39
+00:03:22,900 --> 00:03:25,900
+This is handle authentication, for the error,
+
+40
+00:03:25,900 --> 00:03:27,310
+it's kind of similar,
+
+41
+00:03:27,310 --> 00:03:35,720
+let's wrap this entire code here and move that into handle error here.
+
+42
+00:03:35,730 --> 00:03:41,900
+All I need here is my error response which I'll set to type any for now,
+
+43
+00:03:41,940 --> 00:03:45,810
+then we have the same logic as before in here and in catch error,
+
+44
+00:03:45,810 --> 00:03:53,800
+all we have to do is we have to call handle error and forward that error response.
+
+45
+00:03:53,800 --> 00:03:59,230
+One important note though, we need to return observables or here, a value in map and here in catch
+
+46
+00:03:59,260 --> 00:04:00,470
+error, an observable.
+
+47
+00:04:00,490 --> 00:04:06,130
+So we need to return the results of these function calls because inside of the functions, we are returning
+
+48
+00:04:06,340 --> 00:04:16,170
+an observable and an action, so let's return handle authentication and let's return handle error
+
+49
+00:04:16,170 --> 00:04:20,850
+and now we can copy that and use the exact same for logging in,
+
+50
+00:04:21,030 --> 00:04:23,220
+saving a lot of duplicate code.
+
+51
+00:04:23,250 --> 00:04:27,150
+So here I return handle authentication and for the error,
+
+52
+00:04:27,180 --> 00:04:29,190
+I do the same,
+
+53
+00:04:29,190 --> 00:04:35,550
+remove all that code and just return handle error. That is the sign-up process added
+
+54
+00:04:35,640 --> 00:04:40,640
+and now again, we can see the advantage of NgRx kicking in,
+
+55
+00:04:40,710 --> 00:04:46,090
+the rest should now work correct the automatically. In auth component,
+
+56
+00:04:46,110 --> 00:04:48,050
+there is nothing we need to change,
+
+57
+00:04:48,160 --> 00:04:56,520
+we can actually remove the auth observable now, also not set isLoading to true here and instead of
+
+58
+00:04:56,520 --> 00:05:03,360
+assigning anything to auth observable, here we now instead call this store dispatch and dispatch a new
+
+59
+00:05:04,720 --> 00:05:11,180
+sign-up start action where we need to pass in an object with our e-mail and with our password,
+
+60
+00:05:11,810 --> 00:05:18,020
+so just like we're doing it for logging in and that is it. We can remove this commented out part,
+
+61
+00:05:18,020 --> 00:05:24,090
+obviously we still want to reset the forms, we leave that here. onHandleError,
+
+62
+00:05:24,250 --> 00:05:28,930
+that is something we should improve because right now, I'm only resetting it here in the interface, not
+
+63
+00:05:28,930 --> 00:05:29,710
+in the state,
+
+64
+00:05:29,740 --> 00:05:32,690
+so in the NgRx state I mean, would be better to do it
+
+65
+00:05:32,740 --> 00:05:34,810
+in the NgRx state only
+
+66
+00:05:34,810 --> 00:05:36,060
+but that's a minor thing,
+
+67
+00:05:38,330 --> 00:05:40,470
+other than that, it's looking good.
+
+68
+00:05:40,470 --> 00:05:42,830
+So some tweaks we still should do
+
+69
+00:05:42,840 --> 00:05:47,100
+but now let's save that and let's give that a try.
+
+70
+00:05:48,100 --> 00:05:53,230
+Let's reload and let's try creating a new user which already exists,
+
+71
+00:05:53,300 --> 00:05:54,560
+we get an error, that's good.
+
+72
+00:05:57,870 --> 00:05:59,970
+Let's create a new user,
+
+73
+00:06:03,790 --> 00:06:04,780
+that worked.
+
+74
+00:06:04,810 --> 00:06:11,920
+Now what you might have seen is that we're missing the loading spinner and there also are a couple of
+
+75
+00:06:11,950 --> 00:06:13,980
+other smaller things I want to tweak,
+
+76
+00:06:13,990 --> 00:06:15,270
+so let's do that next.
+

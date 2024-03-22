@@ -1,0 +1,80 @@
+1
+00:00:02,260 --> 00:00:09,720
+This was a super large module and we had a thorough look at NgRx.
+
+2
+00:00:09,760 --> 00:00:15,320
+Now as you can tell, NgRx can be complex, setting it up can be quite a lot of work
+
+3
+00:00:15,490 --> 00:00:22,810
+but as you hopefully also saw, as soon as it's set up, adding more actions, handling them with effects and
+
+4
+00:00:22,810 --> 00:00:30,550
+so on is really streamlined and you have a clear plan on how you handle things. Asynchronous code and
+
+5
+00:00:30,550 --> 00:00:38,110
+any side effects in the effects file, state changes in the reducer file and you hopefully also see how
+
+6
+00:00:38,110 --> 00:00:44,560
+all these pieces come together and give you one global store in your application that you can use anywhere
+
+7
+00:00:44,590 --> 00:00:47,880
+to access any data and dispatch any event.
+
+8
+00:00:47,980 --> 00:00:56,440
+Now again, if you prefer services and subjects, that is absolutely fine, you don't have to use NgRx if
+
+9
+00:00:56,440 --> 00:01:03,400
+you don't want to but it can be a decent alternative to services and subjects in bigger applications,
+
+10
+00:01:03,880 --> 00:01:09,190
+the bigger your app grows and the more people are working on it, a streamlined approach like this can
+
+11
+00:01:09,190 --> 00:01:11,420
+be really helpful.
+
+12
+00:01:11,440 --> 00:01:18,190
+Now I also want to point you at ngrx.io which is the official webpage of the NgRx project
+
+13
+00:01:18,730 --> 00:01:24,550
+and there in the documentation, you can learn way more about NgRx and also about advanced features
+
+14
+00:01:24,550 --> 00:01:29,140
+of NgRx because we actually only scratched the surface here.
+
+15
+00:01:29,190 --> 00:01:38,840
+Also search for Github NgRx and check out that ngrx/platform repository and in there, you'll
+
+16
+00:01:38,840 --> 00:01:45,650
+find a projects folder with example apps and this example app here combines a lot of the advanced and
+
+17
+00:01:45,650 --> 00:01:51,930
+best practice features and patterns you can for NgRx, so checking out this application also
+
+18
+00:01:51,930 --> 00:01:58,340
+is a right next step if you want to learn more about NgRx. And with that, you've got all the tools
+
+19
+00:01:58,610 --> 00:02:07,550
+to build powerful Angular applications, either with services and subjects or with NgRx for a streamlined,
+
+20
+00:02:07,730 --> 00:02:10,120
+highly structured state management solution.
+

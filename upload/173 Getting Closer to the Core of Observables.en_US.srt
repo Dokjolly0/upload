@@ -1,0 +1,332 @@
+1
+00:00:02,540 --> 00:00:07,960
+To build our own observable, I'll go into that home component and there in ngOnInit,
+
+2
+00:00:08,090 --> 00:00:11,300
+I want to build a new observable. Now
+
+3
+00:00:11,350 --> 00:00:17,010
+observables are a feature that's not baked into Javascript or TypeScript,
+
+4
+00:00:17,030 --> 00:00:23,570
+instead they're added by a package named RxJS and that's why in Angular projects, if you have a look
+
+5
+00:00:23,570 --> 00:00:33,660
+at package.json which lists all your dependencies, you find RxJS here. Now in the home component,
+
+6
+00:00:33,710 --> 00:00:39,500
+I want to build my own observable here in ngOnInit and for that, we can import something from that
+
+7
+00:00:39,560 --> 00:00:40,950
+RxJS package.
+
+8
+00:00:41,270 --> 00:00:47,660
+So let's import from RxJS and we don't need to do that when using observables because thanks to
+
+9
+00:00:47,660 --> 00:00:52,460
+TypeScript, it understands that params is an observable and therefore, it knows we can subscribe there
+
+10
+00:00:52,640 --> 00:00:55,780
+and we never need to explicitly inform it about the type
+
+11
+00:00:55,940 --> 00:01:01,310
+but if we want to create a new observable, we need certain features from that RxJS package, to
+
+12
+00:01:01,310 --> 00:01:06,370
+be precise that RxJS package gives us different ways of creating a new observable
+
+13
+00:01:06,560 --> 00:01:12,830
+and one of the easiest ways is the interval method, the interval function.
+
+14
+00:01:12,830 --> 00:01:20,720
+You can just import interval like this and then here, you can call interval and pass in a number and
+
+15
+00:01:20,720 --> 00:01:25,250
+that is a bit like the set interval where you pass a number in milliseconds
+
+16
+00:01:25,370 --> 00:01:34,340
+that will fire an event every x milliseconds. So if I pass 1000 here, then every second, a new event will
+
+17
+00:01:34,340 --> 00:01:35,720
+be emitted.
+
+18
+00:01:35,760 --> 00:01:41,540
+Now this gives us an observable and therefore, we can subscribe to the observable here and there,
+
+19
+00:01:41,600 --> 00:01:44,600
+I can now get my count,
+
+20
+00:01:44,630 --> 00:01:49,130
+you can name this whatever you want and handle this or use this inside of this function,
+
+21
+00:01:49,130 --> 00:01:52,430
+so I'm passing an anonymous function here to subscribe,
+
+22
+00:01:52,430 --> 00:01:55,370
+that's the first argument we can pass to subscribe,
+
+23
+00:01:55,400 --> 00:01:59,720
+it's the handler for all the data values that are emitted.
+
+24
+00:01:59,720 --> 00:02:06,080
+So I pass this in, it gets the value that is emitted as an argument and I just name this argument count
+
+25
+00:02:06,110 --> 00:02:12,080
+because it turns out it will be an incrementing number, for interval, we'll later also later build an observable
+
+26
+00:02:12,140 --> 00:02:15,590
+entirely from scratch where we fully control the emitted values,
+
+27
+00:02:15,590 --> 00:02:21,530
+here we'll take this half measure which is a built-in function that gives us an observable but still,
+
+28
+00:02:21,590 --> 00:02:25,550
+it's more from the ground up than the ones Angular ships with.
+
+29
+00:02:25,550 --> 00:02:30,450
+So here, we have interval which will fire a new value every second and in this function here,
+
+30
+00:02:30,470 --> 00:02:33,260
+I will simply console log count.
+
+31
+00:02:33,470 --> 00:02:40,140
+So the idea now is that we get a new value emitted every second and we log that to the console.
+
+32
+00:02:40,160 --> 00:02:48,660
+Now let's save all files and open the developer tools here in our browser and there, let's go to the Javascript
+
+33
+00:02:48,660 --> 00:02:55,020
+console and navigate to the home page and there, you should now see incrementing value is being logged
+
+34
+00:02:55,020 --> 00:02:57,350
+to the console, one value every second
+
+35
+00:02:57,480 --> 00:03:02,680
+and that of course comes from that interval function that gives us an observable
+
+36
+00:03:02,730 --> 00:03:08,550
+and again, this is not an observable we built entirely from the ground up but it's pretty close.
+
+37
+00:03:09,710 --> 00:03:17,060
+Now when I navigate away now to user one, you see that this keeps on counting and that is something you
+
+38
+00:03:17,060 --> 00:03:18,620
+have to be aware of,
+
+39
+00:03:18,820 --> 00:03:25,390
+observables don't necessarily stop emitting values just because you're not interested in them anymore.
+
+40
+00:03:25,400 --> 00:03:31,280
+There are certain observable that emit a value once and they're done, like for example an HTTP
+
+41
+00:03:31,280 --> 00:03:36,560
+request where you get back a response, something you'll see later in the HTTP module of this course
+
+42
+00:03:36,560 --> 00:03:38,460
+but there are other observables that
+
+43
+00:03:38,480 --> 00:03:44,720
+keep on emitting values and to stop that and therefore to prevent memory leaks, which you would otherwise
+
+44
+00:03:44,720 --> 00:03:45,260
+introduce
+
+45
+00:03:45,260 --> 00:03:50,840
+if that keeps on emitting whilst you're not interested in it anymore, you should unsubscribe from any
+
+46
+00:03:50,840 --> 00:03:54,810
+observable in which values you are no longer interested
+
+47
+00:03:54,900 --> 00:04:00,240
+and that's really important because before we do that, watch what happens if I go back to the home page.
+
+48
+00:04:00,290 --> 00:04:02,680
+I'm on user 1, I was on home before,
+
+49
+00:04:02,720 --> 00:04:04,760
+now I go back to home and
+
+50
+00:04:04,830 --> 00:04:10,160
+what you now see is a new observable started. So we have the old one going on and a new one
+
+51
+00:04:10,250 --> 00:04:16,580
+and of course we can repeat that. We get more and more of observables counting and that of course is very
+
+52
+00:04:16,580 --> 00:04:17,100
+bad.
+
+53
+00:04:17,150 --> 00:04:23,840
+If that happens behind the scenes, you quickly run out of resources and you slow down your app, you introduce
+
+54
+00:04:23,930 --> 00:04:29,570
+a memory leak here because your memory gets occupied a lot by data you don't need.
+
+55
+00:04:29,570 --> 00:04:36,680
+So you definitely need to clear that and to do that, we should store our subscriptions and here, I'll
+
+56
+00:04:37,400 --> 00:04:43,730
+then name this firstObsSubscription, you can name it whatever you want and the type of this private
+
+57
+00:04:43,730 --> 00:04:50,780
+property of the home component will be subscription and subscription also needs to be imported from
+
+58
+00:04:50,840 --> 00:04:53,820
+RxJS, so make sure to add this import
+
+59
+00:04:54,050 --> 00:04:58,610
+and now here, subscribe actually returns such a subscription.
+
+60
+00:04:58,610 --> 00:05:07,440
+So when we subscribe, we can store that subscription in our firstObsSubscription property.
+
+61
+00:05:07,440 --> 00:05:09,230
+So we're not storing the observable here,
+
+62
+00:05:09,240 --> 00:05:14,820
+that's the observable but we instantly subscribe here and therefore, we store whatever subscribe returns
+
+63
+00:05:15,060 --> 00:05:17,790
+and subscribe returns a subscription.
+
+64
+00:05:17,790 --> 00:05:23,640
+Now the idea behind storing the subscription simply is that we now can also implement onDestroy here,
+
+65
+00:05:23,760 --> 00:05:26,820
+which you need to import from @angular/core
+
+66
+00:05:26,910 --> 00:05:33,360
+and that forces us to add the ngOnDestroy lifecycle hook and inside of ngOnDestroy,
+
+67
+00:05:33,390 --> 00:05:40,320
+we can now use our subscription and call unsubscribe and that means that whenever we leave that component,
+
+68
+00:05:40,530 --> 00:05:47,160
+we clear that subscription and therefore we prevent memory leaks because we're not keeping old subscriptions
+
+69
+00:05:47,160 --> 00:05:48,410
+around.
+
+70
+00:05:48,420 --> 00:05:55,190
+Now if you save that and reload the app, you see our observable starts again
+
+71
+00:05:55,250 --> 00:05:58,670
+but if I navigate away, we get no new values.
+
+72
+00:05:58,700 --> 00:06:00,910
+If I go back, it starts at zero again
+
+73
+00:06:00,920 --> 00:06:05,780
+but the old observable is dead because we unsubscribed and that's an important step.
+
+74
+00:06:06,440 --> 00:06:11,570
+So this is an important step towards understanding observables.
+
+75
+00:06:11,690 --> 00:06:14,540
+One common question I get is OK,
+
+76
+00:06:14,540 --> 00:06:16,070
+we unsubscribe here,
+
+77
+00:06:16,250 --> 00:06:21,860
+why don't we unsubscribe in the user component, here where we also set up a subscription? And that is a
+
+78
+00:06:21,860 --> 00:06:23,140
+valid question.
+
+79
+00:06:23,150 --> 00:06:30,800
+The answer simply is Angular does that for you. For the observables provided by Angular, like params
+
+80
+00:06:30,830 --> 00:06:36,260
+but also any other observable you'll encounter throughout this course that is provided by an Angular
+
+81
+00:06:36,260 --> 00:06:43,190
+package or by a feature provided by Angular, all these Angular observables are managed by Angular
+
+82
+00:06:43,430 --> 00:06:46,280
+and therefore, you don't need to unsubscribe manually here,
+
+83
+00:06:46,280 --> 00:06:48,260
+Angular will take care about this.
+

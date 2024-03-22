@@ -1,0 +1,348 @@
+1
+00:00:02,640 --> 00:00:07,350
+In the last lecture, we saw how we can retrieve our route parameters and this is working fine
+
+2
+00:00:07,530 --> 00:00:10,160
+but there are ways to break this,
+
+3
+00:00:10,170 --> 00:00:16,980
+there are cases where this approach will not work and I will show you a typical example. On our users
+
+4
+00:00:16,980 --> 00:00:17,870
+component,
+
+5
+00:00:18,060 --> 00:00:26,490
+we right now always saw that we have the user ID and name we passed on our URL. Now in here,
+
+6
+00:00:26,850 --> 00:00:35,990
+let me quickly add a routerLink, so I'll add a horizontal line and then add an anchor tag where I remove
+
+7
+00:00:35,990 --> 00:00:44,300
+the ref and instead say routerLink and now I will actually use this syntax with the square brackets
+
+8
+00:00:44,300 --> 00:00:54,190
+where I pass an array and I want to load /users, an absolute path to load the correct route.
+
+9
+00:00:54,190 --> 00:00:56,210
+The second element will be the ID,
+
+10
+00:00:56,290 --> 00:01:03,200
+so this might be let's say 10, could be a number, could be a string and then the name, let's say Anna.
+
+11
+00:01:03,220 --> 00:01:09,620
+So this will now construct a route which is /users/10/Anna
+
+12
+00:01:09,850 --> 00:01:15,070
+and this is where this array approach might be better because you can really structure this really well
+
+13
+00:01:15,070 --> 00:01:20,020
+and we will soon see how you can even make this more dynamic.
+
+14
+00:01:20,020 --> 00:01:26,420
+So here, I will say load Anna, ID 10 something like that, any text you like
+
+15
+00:01:27,250 --> 00:01:33,120
+and now let's see this here. We get a link on our currently loaded page with users 3 Max
+
+16
+00:01:33,170 --> 00:01:36,570
+and if I click this, you'll see that the URL was updated.
+
+17
+00:01:36,580 --> 00:01:42,610
+Now it's users 10 Anna but the text here wasn't and this is not a bug,
+
+18
+00:01:42,610 --> 00:01:45,600
+this is the default behavior and what is happening here,
+
+19
+00:01:45,600 --> 00:01:52,200
+do you have an idea? The behavior here as I just mentioned is not a bug.
+
+20
+00:01:52,360 --> 00:01:57,850
+We load our data by using this snapshot object on the route.
+
+21
+00:01:57,880 --> 00:02:05,830
+Now if we load a new route, what happens? Angular has a look at our app module, finds the fitting route
+
+22
+00:02:05,830 --> 00:02:06,290
+here
+
+23
+00:02:06,310 --> 00:02:13,180
+hopefully, loads the component, initializes the component and gives us the data by accessing the snapshot
+
+24
+00:02:13,180 --> 00:02:14,480
+here.
+
+25
+00:02:14,490 --> 00:02:19,030
+Now that only happens if we haven't been on this component before
+
+26
+00:02:19,450 --> 00:02:26,530
+but if we click this link, which is on the user component, well then the URL still changes but we
+
+27
+00:02:26,530 --> 00:02:29,370
+already are on the component which should get loaded.
+
+28
+00:02:29,710 --> 00:02:34,750
+So Angular cleverly doesn't really instantiate this component,
+
+29
+00:02:34,750 --> 00:02:37,090
+that would only cost us performance,
+
+30
+00:02:37,090 --> 00:02:39,380
+why would it re-render a component
+
+31
+00:02:39,430 --> 00:02:46,550
+we already are on? Now you might say because the data we want to load changed but Angular doesn't know
+
+32
+00:02:46,750 --> 00:02:53,500
+and it's good that by default, it won't recreate the whole component and destroy the old one if we already
+
+33
+00:02:53,500 --> 00:02:55,330
+are on that component.
+
+34
+00:02:55,330 --> 00:03:03,130
+Still of course you want to get access to the updated data and you can. It's fine to use this snapshot for
+
+35
+00:03:03,130 --> 00:03:10,230
+the first initialization but to be able to react to subsequent changes, we need a different approach.
+
+36
+00:03:11,070 --> 00:03:17,070
+In our TypeScript code, in ngOnInit here, let's say after we assign this initial set up, we can use
+
+37
+00:03:17,070 --> 00:03:24,360
+our route object and instead of using the snapshot here, there is some params property on this route object
+
+38
+00:03:24,360 --> 00:03:25,340
+itself.
+
+39
+00:03:25,410 --> 00:03:29,060
+Now we didn't use that before, we had the snapshot in between,
+
+40
+00:03:29,280 --> 00:03:30,610
+what's the difference?
+
+41
+00:03:31,590 --> 00:03:38,760
+Params here is an observable and now observables is something I will come to right after this section
+
+42
+00:03:38,840 --> 00:03:40,910
+where we will take a closer look.
+
+43
+00:03:41,130 --> 00:03:48,690
+Basically, observables are a feature added by some other third-party package, not by Angular but heavily
+
+44
+00:03:48,690 --> 00:03:54,360
+used by Angular which allow you to easily work with asynchronous tasks
+
+45
+00:03:54,360 --> 00:04:00,930
+and this is an asynchronous task because the parameters of your currently loaded route might change
+
+46
+00:04:00,930 --> 00:04:04,190
+at some point in the future if the user clicks this link
+
+47
+00:04:04,230 --> 00:04:08,490
+but you don't know when, you didn't know if and you don't know how long it will take.
+
+48
+00:04:08,880 --> 00:04:15,370
+So therefore, you can't block your code and wait for this to happen here because it might never happen.
+
+49
+00:04:15,720 --> 00:04:23,940
+So an observable is an easy way to subscribe to some event which might happen in the future, to then execute
+
+50
+00:04:23,940 --> 00:04:27,800
+some code when it happens without having to wait for it now
+
+51
+00:04:28,100 --> 00:04:33,420
+and that is what params is. It is such an observable and as the name implies, we can observe it and we
+
+52
+00:04:33,420 --> 00:04:35,930
+do so by subscribing to it.
+
+53
+00:04:36,090 --> 00:04:41,100
+So you can call the subscribe method on it and this is still called on params,
+
+54
+00:04:41,130 --> 00:04:48,270
+I'm just bringing it in a new line to make it easier to read and now subscribe can take three
+
+55
+00:04:48,480 --> 00:04:51,460
+functions you pass here as arguments.
+
+56
+00:04:51,510 --> 00:05:00,350
+Now the first one is the most important one here, it'll be fired whenever new data is sent through that
+
+57
+00:05:00,360 --> 00:05:05,760
+observable, so to put in easier words, whenever the parameters change in this use case.
+
+58
+00:05:05,760 --> 00:05:10,070
+So then this first argument which should be a function here is executed,
+
+59
+00:05:10,140 --> 00:05:12,740
+I will use an ES6 arrow function
+
+60
+00:05:12,930 --> 00:05:20,070
+and here, we will get the updated params as an argument and you can set this up type params, doesn't
+
+61
+00:05:20,070 --> 00:05:24,510
+really make a difference, it has to be imported from @angular/router then though
+
+62
+00:05:24,630 --> 00:05:30,770
+but anyways, params will always be an object just like here on the snapshot which holds the parameters
+
+63
+00:05:30,770 --> 00:05:33,990
+you defined in the route as properties.
+
+64
+00:05:33,990 --> 00:05:39,780
+So in the function body of this arrow function, so of the function which gets executed whenever the parameter
+
+65
+00:05:39,780 --> 00:05:49,050
+changes, here we can now update our user object and we can say this user ID should now be params ID,
+
+66
+00:05:49,110 --> 00:05:56,790
+referring to the params we passed here and the same of course for the name, with a semi-colon
+
+67
+00:05:56,790 --> 00:05:57,880
+at the end of course.
+
+68
+00:05:58,200 --> 00:06:02,910
+So this will now update our user object whenever the parameter change.
+
+69
+00:06:03,060 --> 00:06:08,420
+That's why its inside of this callback and of this anonymous function passed to the subscribe method here.
+
+70
+00:06:08,760 --> 00:06:13,740
+This code will not be executed when ngOnInit runs through, this code here will,
+
+71
+00:06:13,740 --> 00:06:18,030
+so the subscription will be set up but only if the parameters then change,
+
+72
+00:06:18,030 --> 00:06:22,110
+only in this case we will exchange them in our user object.
+
+73
+00:06:22,110 --> 00:06:24,100
+That is why with this change in place,
+
+74
+00:06:24,360 --> 00:06:33,120
+if we now go back to 3 and Max, we see 3 and Max is displayed here but if I now click this link, it correctly
+
+75
+00:06:33,120 --> 00:06:33,900
+updates here
+
+76
+00:06:33,910 --> 00:06:40,830
+too because our observable fires and we then retrieve the updated parameters and assign them to our
+
+77
+00:06:40,830 --> 00:06:42,150
+user object
+
+78
+00:06:42,150 --> 00:06:49,470
+and this therefore actually is the approach you should take to be really safe against changes not being
+
+79
+00:06:49,470 --> 00:06:51,310
+reflected in your template.
+
+80
+00:06:51,420 --> 00:06:58,050
+Now if you know that the component you're on may never be reloaded from within that component as we're doing
+
+81
+00:06:58,050 --> 00:06:58,780
+it here,
+
+82
+00:06:58,980 --> 00:07:01,200
+then you might not need this addition,
+
+83
+00:07:01,290 --> 00:07:07,230
+you might simply use the snapshot because if you know your component will 100% of the time be recreated
+
+84
+00:07:07,230 --> 00:07:11,580
+when it is reached, because there's no other way of reaching it, there is no way of reaching it whilst
+
+85
+00:07:11,580 --> 00:07:13,240
+being on that component,
+
+86
+00:07:13,470 --> 00:07:19,710
+if you know that, you don't need to subscribe. In all other cases, make sure to use this approach to get
+
+87
+00:07:19,710 --> 00:07:23,240
+informed about any changes in your route parameters.
+

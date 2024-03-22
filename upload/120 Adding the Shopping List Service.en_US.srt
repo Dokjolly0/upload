@@ -1,0 +1,228 @@
+1
+00:00:02,580 --> 00:00:08,850
+So in the last lectures, we improved our recipe section a lot with the service,
+
+2
+00:00:08,880 --> 00:00:12,870
+now let's work on the shopping list side, on the shopping list service.
+
+3
+00:00:12,990 --> 00:00:15,270
+This service is empty right now,
+
+4
+00:00:15,570 --> 00:00:17,250
+now here's your challenge,
+
+5
+00:00:17,300 --> 00:00:25,560
+fill it some life. It would be nice if this service could manage our shopping list, so our list of ingredients,
+
+6
+00:00:25,560 --> 00:00:31,680
+maybe you even add the addIngredient method here so that you can add ingredients using this service
+
+7
+00:00:31,680 --> 00:00:32,280
+too,
+
+8
+00:00:32,280 --> 00:00:36,340
+we already got this add functionality here in the shopping list component.
+
+9
+00:00:36,600 --> 00:00:42,520
+It shouldn't live here anymore though and with that, we would take a huge step forward.
+
+10
+00:00:42,540 --> 00:00:48,150
+So your chance to pause the video and try this on your own, thereafter we'll solve it together.
+
+11
+00:00:50,570 --> 00:00:52,590
+So were you successful?
+
+12
+00:00:52,730 --> 00:00:56,510
+Let's fill this shopping service with some life.
+
+13
+00:00:56,720 --> 00:01:02,690
+For this, I'll first of all copy my ingredients here and add it here as a property to the service
+
+14
+00:01:02,750 --> 00:01:09,100
+and of course I need to import ingredient from the shared folder, from the ingredient model there.
+
+15
+00:01:09,140 --> 00:01:15,600
+Now with that, we got the data in here and I will make this private. Now just like in the shopping,
+
+16
+00:01:15,680 --> 00:01:17,800
+excuse me, in the recipe service,
+
+17
+00:01:18,050 --> 00:01:27,440
+I will add a getIngredients method here where I will return my ingredients but only a copy of it with
+
+18
+00:01:27,440 --> 00:01:34,420
+the slice method, so that I can't access the original array stored in this service.
+
+19
+00:01:34,480 --> 00:01:41,140
+With that, I can go back to my shopping list component and I will set this to an uninitialized property
+
+20
+00:01:42,240 --> 00:01:45,830
+but I can inject my shopping list service.
+
+21
+00:01:45,840 --> 00:01:51,210
+Now again the question is, where should we provide it? Now for now,
+
+22
+00:01:51,360 --> 00:01:57,150
+we can provide it here in the shopping list component and therefore it would also be available in the
+
+23
+00:01:57,150 --> 00:02:04,970
+shopping edit component but actually later I also want to access it from my recipe section.
+
+24
+00:02:04,970 --> 00:02:15,480
+That is why I will actually provide it in app module and here, I will add it to this providers array therefore, shopping
+
+25
+00:02:15,540 --> 00:02:17,290
+list service.
+
+26
+00:02:17,310 --> 00:02:21,570
+Make sure to also add the import at the top here.
+
+27
+00:02:21,770 --> 00:02:28,910
+So now we will be able to use a service application-wide including in other services and I exactly need
+
+28
+00:02:28,910 --> 00:02:33,420
+this behavior because we will soon use it in another service.
+
+29
+00:02:33,470 --> 00:02:39,910
+So back to the shopping list component then, we can now inject a shopping list service and I will bind it
+
+30
+00:02:39,920 --> 00:02:42,290
+to a property named slService,
+
+31
+00:02:42,290 --> 00:02:47,840
+of course you can choose a different name which will be of type shopping list service and you need to
+
+32
+00:02:47,840 --> 00:02:50,230
+add the import pointing to the shopping list.service
+
+33
+00:02:50,260 --> 00:02:58,280
+file. With that in ngOnInit because you should do all tasks which required a bit more
+
+34
+00:02:58,340 --> 00:03:01,310
+heavy lifting or in general as a good practice,
+
+35
+00:03:01,340 --> 00:03:04,830
+all initializations in ngOnInit.
+
+36
+00:03:04,880 --> 00:03:12,040
+Therefore here, I will simply assign my ingredients to whatever the shopping list service returns me
+
+37
+00:03:12,080 --> 00:03:14,870
+if I call getIngredients here.
+
+38
+00:03:15,320 --> 00:03:20,720
+With this in place, if we save this and we go to a shopping list area, this is still working so that's
+
+39
+00:03:20,720 --> 00:03:21,770
+great,
+
+40
+00:03:21,770 --> 00:03:27,950
+now let's make sure that we can also add items. So I'll add the addIngredient
+
+41
+00:03:30,640 --> 00:03:38,320
+method here and I know that I will receive an ingredient here of type ingredient and all I want to
+
+42
+00:03:38,320 --> 00:03:44,440
+do then is I want to access my ingredients and push this new ingredient on it,
+
+43
+00:03:44,440 --> 00:03:51,000
+so here, ingredient. Now if we go to the shopping edit component,
+
+44
+00:03:51,260 --> 00:03:57,560
+right now we're emitting an event with our own ingredient. We no longer need to do this so we can get
+
+45
+00:03:57,560 --> 00:04:02,640
+rid of the event, of output and of the imports here related to this,
+
+46
+00:04:02,840 --> 00:04:09,200
+we can also go to the shopping-list.component.html file and remove our listener where we listen to this
+
+47
+00:04:09,200 --> 00:04:14,810
+event and in the shopping-list.component.ts file, we can get rid of the onIngredientAdded method
+
+48
+00:04:14,840 --> 00:04:17,570
+because we'll now do this in the service.
+
+49
+00:04:17,570 --> 00:04:23,180
+So back to shopping edit component where we create a new ingredient, here I want to use the service and
+
+50
+00:04:23,180 --> 00:04:29,350
+for this, I will access my service so I will inject slService here,
+
+51
+00:04:30,330 --> 00:04:31,410
+like this,
+
+52
+00:04:31,560 --> 00:04:36,810
+make sure to add the import of course and in onAddItem,
+
+53
+00:04:36,810 --> 00:04:41,380
+I'll add slService and add an ingredient to it,
+
+54
+00:04:41,400 --> 00:04:44,340
+this new ingredient here.
+
+55
+00:04:44,340 --> 00:04:53,680
+Now if we save this and now try adding a new item here, bread one, we don't see it but we also don't get
+
+56
+00:04:53,740 --> 00:04:55,430
+an error.
+
+57
+00:04:55,560 --> 00:05:01,990
+Now there is something wrong here and we will find out what and fix it in the next lecture.
+

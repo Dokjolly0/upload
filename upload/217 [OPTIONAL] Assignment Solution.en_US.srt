@@ -1,0 +1,688 @@
+1
+00:00:02,650 --> 00:00:08,420
+Were you successful with that form, let's build it together, as in the template driven assignment?
+
+2
+00:00:08,470 --> 00:00:14,110
+I will do it right below the instructions here and I will start by adding the form element here.
+
+3
+00:00:14,950 --> 00:00:21,010
+And generally I will start by creating it in my HTML code here, though, that will not create the form
+
+4
+00:00:21,010 --> 00:00:26,130
+for ANGULAR because we will later set it up in TypeScript and then connect it to our template code here.
+
+5
+00:00:26,860 --> 00:00:32,110
+So as before I'll add a form group div with a label for the name.
+
+6
+00:00:32,110 --> 00:00:38,380
+So project name would be a fitting description and I'll add an input type text.
+
+7
+00:00:38,380 --> 00:00:39,300
+Sounds all right.
+
+8
+00:00:39,340 --> 00:00:41,080
+I'd name sounds all right.
+
+9
+00:00:41,080 --> 00:00:47,170
+I'll split it up over multiple lines already since we're going to add some things and add a class of
+
+10
+00:00:47,170 --> 00:00:48,430
+foreign control.
+
+11
+00:00:49,090 --> 00:00:50,290
+This is the first input.
+
+12
+00:00:50,830 --> 00:00:55,480
+I'm going to duplicate this because now I want to add the email.
+
+13
+00:00:56,620 --> 00:01:03,550
+Email of the person who created this project, you could say so let's simply set up the male input here,
+
+14
+00:01:04,090 --> 00:01:05,650
+make it of type email maybe.
+
+15
+00:01:06,720 --> 00:01:14,760
+And I want to add that dropdown, so let's add another form group and in there select dropdown.
+
+16
+00:01:15,610 --> 00:01:21,960
+We don't need the name actually we need a label though, where we set the status.
+
+17
+00:01:22,320 --> 00:01:28,650
+So project status would be a fitting description, I guess, set the idea to status, therefore.
+
+18
+00:01:28,770 --> 00:01:31,650
+And in the select, we need our options now.
+
+19
+00:01:31,650 --> 00:01:36,060
+You could use an array to dynamically populate them or hardcoded them in there.
+
+20
+00:01:36,420 --> 00:01:39,360
+I will go with the hardcoded approach here, though.
+
+21
+00:01:39,360 --> 00:01:41,640
+You will typically probably have the dynamic one.
+
+22
+00:01:42,180 --> 00:01:46,080
+The first value would be, as you see up here.
+
+23
+00:01:47,060 --> 00:01:47,870
+Stable.
+
+24
+00:01:49,020 --> 00:01:59,070
+So say stable here and there after we also have critical with a display value of critical and finished
+
+25
+00:01:59,070 --> 00:02:01,000
+where we display finished.
+
+26
+00:02:01,860 --> 00:02:03,600
+So this would be our dropdown.
+
+27
+00:02:04,440 --> 00:02:10,070
+I also want to add the foreign control clause to that and split it over multiple lines.
+
+28
+00:02:10,620 --> 00:02:16,680
+Then I'll add the button at the end of the forum with to Puttnam Button primary, make it of type,
+
+29
+00:02:16,680 --> 00:02:21,360
+submit and simply say create project maybe to mix it up.
+
+30
+00:02:22,260 --> 00:02:25,710
+So does the general set up engy service already running.
+
+31
+00:02:26,370 --> 00:02:27,720
+Looks all right to me.
+
+32
+00:02:27,990 --> 00:02:31,590
+Stablest selected by default because it's the first element we added here.
+
+33
+00:02:32,310 --> 00:02:35,150
+Now let's create this form in TypeScript.
+
+34
+00:02:35,820 --> 00:02:42,600
+So in my app component here I'll name it project for and it will be of type form group.
+
+35
+00:02:43,050 --> 00:02:46,460
+Make sure to import this from angular forms.
+
+36
+00:02:46,920 --> 00:02:48,130
+What else did we learn.
+
+37
+00:02:48,810 --> 00:02:57,090
+We need to unlock all the react the form directives by going to app module and we don't need forms module,
+
+38
+00:02:57,480 --> 00:03:00,450
+we need reactive forms module.
+
+39
+00:03:00,450 --> 00:03:06,030
+So make sure to import that from add angular forms and add it to the imports array here.
+
+40
+00:03:07,050 --> 00:03:11,160
+With that added, we will later be able to synchronize it for now.
+
+41
+00:03:11,160 --> 00:03:15,300
+Let's create this form and I'll again do this in energy on in it.
+
+42
+00:03:15,390 --> 00:03:22,590
+So I'll add the on init lifecycle hook and imported from add angular core and geon in it gets added
+
+43
+00:03:22,590 --> 00:03:29,690
+here and then I will set my project form equal to a new form group because again the outer form is just
+
+44
+00:03:29,690 --> 00:03:30,570
+the form group.
+
+45
+00:03:31,500 --> 00:03:37,260
+Where I will pass a JavaScript object, you configure it now here I want to have, let's say, a project
+
+46
+00:03:37,260 --> 00:03:43,350
+name control, so a new form control, therefore with a default value of null.
+
+47
+00:03:43,350 --> 00:03:48,930
+I don't want to pre populated and for now I will only add the validator.
+
+48
+00:03:50,900 --> 00:03:52,980
+Which requires it to be not empty.
+
+49
+00:03:53,060 --> 00:03:59,030
+Make sure to import validators from at angular forums, because that's the first requirement.
+
+50
+00:03:59,270 --> 00:04:02,640
+It should not be empty now for mail.
+
+51
+00:04:03,230 --> 00:04:06,310
+I'm going to duplicate this and set up my email control.
+
+52
+00:04:06,590 --> 00:04:09,730
+It's also null, but it has more than one validator.
+
+53
+00:04:10,070 --> 00:04:15,230
+It does have the required validator, but then it has the email validator.
+
+54
+00:04:15,230 --> 00:04:17,250
+Again, don't execute these methods.
+
+55
+00:04:17,270 --> 00:04:19,940
+You only want to pass the reference to the methods.
+
+56
+00:04:20,960 --> 00:04:26,030
+Well, the final control is this dropdown here with stable, acritical and finished.
+
+57
+00:04:26,630 --> 00:04:28,960
+So I'll add yet another control.
+
+58
+00:04:29,510 --> 00:04:35,220
+Now, here, I will name this project status for control.
+
+59
+00:04:35,250 --> 00:04:38,230
+Here I will set a different default value.
+
+60
+00:04:38,690 --> 00:04:43,100
+It would make sense to have stablest default value, but that's selected automatically.
+
+61
+00:04:43,100 --> 00:04:49,820
+I want to change this so I will set a two critical desisted value we need to sign with a lowercase C
+
+62
+00:04:49,820 --> 00:04:54,400
+at the beginning because that's the behind the scenes value HTML knows.
+
+63
+00:04:55,130 --> 00:05:02,420
+So let's pass a string with critical here and well we don't need any validators because we can't unselected
+
+64
+00:05:02,420 --> 00:05:02,960
+anyways.
+
+65
+00:05:03,530 --> 00:05:04,430
+This is our form.
+
+66
+00:05:04,640 --> 00:05:05,240
+Of course.
+
+67
+00:05:05,240 --> 00:05:09,430
+Feel free to also Nestor's to add a form group if you want.
+
+68
+00:05:09,740 --> 00:05:11,700
+This would be an extra challenge.
+
+69
+00:05:11,960 --> 00:05:17,930
+Now this is the basic setup where all this on the same level in this forum with this form created,
+
+70
+00:05:17,930 --> 00:05:23,270
+we need to synchronize it with our HTML code again, just because it's important for this, you will
+
+71
+00:05:23,270 --> 00:05:32,300
+need react the forms module and then I can go to my form here and with property binding bind form group.
+
+72
+00:05:33,260 --> 00:05:36,930
+To my project forum, to this forum we just created.
+
+73
+00:05:37,700 --> 00:05:44,570
+Now let's also connect the inputs like here with foreign control name, of course, to tell Aneela which
+
+74
+00:05:44,570 --> 00:05:51,170
+name does our control have in a forum and our forum here, it's project name for this first input.
+
+75
+00:05:51,350 --> 00:05:54,950
+So I'll past this year for the email.
+
+76
+00:05:55,100 --> 00:05:56,630
+It will just be email.
+
+77
+00:05:57,810 --> 00:06:05,340
+And for to drop down, if we have a look at our tax code, it was project status, so I will pass project
+
+78
+00:06:05,340 --> 00:06:06,180
+status here.
+
+79
+00:06:06,810 --> 00:06:08,980
+Now our forum is connected.
+
+80
+00:06:09,870 --> 00:06:13,260
+I will now also add energy, submit to submit it.
+
+81
+00:06:14,160 --> 00:06:22,380
+And called on Save Project maybe and create this method now in my typescript file here and the app component
+
+82
+00:06:22,380 --> 00:06:29,730
+types could file and here I simply want to log this project for and value because I'm only interested
+
+83
+00:06:29,730 --> 00:06:30,390
+in disvalue.
+
+84
+00:06:31,290 --> 00:06:35,700
+So energy service still running as mentioned before, it's recompiling.
+
+85
+00:06:35,730 --> 00:06:36,420
+Just looks good.
+
+86
+00:06:36,420 --> 00:06:37,250
+No errors.
+
+87
+00:06:37,710 --> 00:06:45,330
+Let's enter something here and lets it create a project and we see the value looks good.
+
+88
+00:06:45,360 --> 00:06:47,700
+Looks like we successfully connected it.
+
+89
+00:06:48,630 --> 00:06:54,750
+Now if we have a look at our instructions here in the HTML code, we finished this part, we created
+
+90
+00:06:54,750 --> 00:06:59,320
+the form, we added the controls and we set up this basic validation.
+
+91
+00:06:59,760 --> 00:07:06,120
+Now we are required to create our own validator, which doesn't allow test as a project name.
+
+92
+00:07:06,960 --> 00:07:13,230
+Well, we saw how to do this and we could do this here in the same file as we did before.
+
+93
+00:07:13,770 --> 00:07:20,850
+But to mix it up and show you that you can also create your own validators bundle kind of I will create
+
+94
+00:07:20,850 --> 00:07:28,170
+a new file here in my app folder and I will name it Custom Validators Dotts.
+
+95
+00:07:29,250 --> 00:07:34,710
+And in there, I will export a class which will name custom validators.
+
+96
+00:07:34,770 --> 00:07:38,460
+Now you probably don't have that solution, which is absolutely fine.
+
+97
+00:07:38,670 --> 00:07:41,630
+It's just that I want to all just show you an alternative.
+
+98
+00:07:41,640 --> 00:07:47,220
+I want you to learn something when looking at my solution to even if you did have a perfect solution
+
+99
+00:07:47,220 --> 00:07:47,650
+before it.
+
+100
+00:07:48,240 --> 00:07:52,080
+So this is just an alternative, not strictly better, just an alternative.
+
+101
+00:07:52,620 --> 00:08:02,940
+In my custom validators class here, I want to have a static function which I'll name in valid project
+
+102
+00:08:03,030 --> 00:08:03,510
+name.
+
+103
+00:08:03,900 --> 00:08:10,470
+Now, for such a specific validator, having a global bundle of validators might not make very much
+
+104
+00:08:10,470 --> 00:08:18,100
+sense, but I guess you can imagine projects, apps where you do have such a global repository of Valderas.
+
+105
+00:08:18,250 --> 00:08:22,530
+In the end, we're using the built in repository of validators here too.
+
+106
+00:08:22,920 --> 00:08:24,630
+Now we're creating our own ones.
+
+107
+00:08:24,990 --> 00:08:32,460
+So Invalid Project Name will receive a form control here as input, make sure to import it.
+
+108
+00:08:32,460 --> 00:08:35,630
+And this type file too, because we're using to type here.
+
+109
+00:08:35,640 --> 00:08:40,330
+So we need to tell typescript where this is coming from and we will return an object.
+
+110
+00:08:40,330 --> 00:08:43,770
+But we again have a key value pair.
+
+111
+00:08:45,170 --> 00:08:45,980
+Where we have.
+
+112
+00:08:47,810 --> 00:08:55,520
+Key, which represents our error code, and then a boolean, and now I simply want to check if control
+
+113
+00:08:55,520 --> 00:09:06,500
+value equals test, and if this is the case, I will return an object where I say invalid project name
+
+114
+00:09:06,500 --> 00:09:07,460
+is true.
+
+115
+00:09:09,480 --> 00:09:12,630
+Like this, otherwise I will return null.
+
+116
+00:09:13,710 --> 00:09:20,190
+So with this, I created my own static method, static is important so that we can access it without
+
+117
+00:09:20,190 --> 00:09:22,410
+having to instantiate our own class here.
+
+118
+00:09:23,190 --> 00:09:29,850
+Now, back in our app component, we can assign this by going to the project name wrapping.
+
+119
+00:09:29,850 --> 00:09:34,500
+It is required validator in an array because we're now going to add multiple validators.
+
+120
+00:09:35,220 --> 00:09:41,700
+And in here I now want to reference my custom validators class, which would therefore need to import
+
+121
+00:09:41,700 --> 00:09:44,850
+at the top from dot slash custom validators.
+
+122
+00:09:45,770 --> 00:09:53,210
+And in there, the invalid project name function, which we don't execute as before.
+
+123
+00:09:53,540 --> 00:09:58,790
+And as a side note, if you use this in there, make sure to bind it again.
+
+124
+00:09:58,940 --> 00:10:05,060
+Even if that were placed in the app, component types could fall because it will be executed by ANGULAR
+
+125
+00:10:05,120 --> 00:10:06,010
+at runtime.
+
+126
+00:10:06,020 --> 00:10:12,630
+And then this will not refer to what the refers to during development in this case here.
+
+127
+00:10:13,160 --> 00:10:15,870
+So this allows me to save it.
+
+128
+00:10:16,160 --> 00:10:17,840
+Let's now check the validity.
+
+129
+00:10:18,140 --> 00:10:21,950
+If we inspect this input here, it's invalid because it's empty.
+
+130
+00:10:22,490 --> 00:10:23,300
+I enter something.
+
+131
+00:10:23,300 --> 00:10:27,190
+It's a valid I test it becomes invalid again.
+
+132
+00:10:27,200 --> 00:10:29,750
+So our own validator works again.
+
+133
+00:10:29,750 --> 00:10:33,060
+It would have been perfectly fine if you would have added this to your app component.
+
+134
+00:10:33,890 --> 00:10:36,150
+Let's now add an asynchronous validator.
+
+135
+00:10:36,770 --> 00:10:44,480
+So here I will implement the same with async in front of it to make clear what the difference is.
+
+136
+00:10:44,720 --> 00:10:47,720
+And I'll then also name it invalid project name.
+
+137
+00:10:47,720 --> 00:10:51,050
+Of course, you could also create design the app component file.
+
+138
+00:10:51,350 --> 00:11:00,410
+We will receive the form control here and we will return ever a promise of type any or an observable
+
+139
+00:11:00,530 --> 00:11:07,430
+off type any and observable needs to be imported from our actual observable.
+
+140
+00:11:08,660 --> 00:11:12,620
+With this in here I again will create a promise.
+
+141
+00:11:12,620 --> 00:11:13,510
+I will return.
+
+142
+00:11:13,730 --> 00:11:23,300
+So a new promise which will receive a function as an argument to the constructor dysfunction will receive,
+
+143
+00:11:23,300 --> 00:11:24,770
+resolve and reject.
+
+144
+00:11:25,670 --> 00:11:30,470
+And then I will execute a timeout in there, let's say, after two seconds.
+
+145
+00:11:30,800 --> 00:11:38,810
+I want to execute this function here, this anonymous function, where I will again check if the control
+
+146
+00:11:38,810 --> 00:11:41,500
+value equals test.
+
+147
+00:11:41,540 --> 00:11:41,870
+So I.
+
+148
+00:11:41,870 --> 00:11:43,700
+Assante, Synchronoss validator.
+
+149
+00:11:43,700 --> 00:11:51,120
+But now, asynchronously, if this is the case, I will resolve this exact same error code here, actually.
+
+150
+00:11:51,410 --> 00:11:52,460
+So like this.
+
+151
+00:11:53,510 --> 00:11:56,420
+Otherwise, I will resolve.
+
+152
+00:11:57,620 --> 00:12:00,980
+So we should resolve them all if it is valid.
+
+153
+00:12:01,910 --> 00:12:08,740
+Well, and then I can return the promise here now with Dad we can attach this validator.
+
+154
+00:12:09,350 --> 00:12:17,690
+So besides our custom invalid project name here, let's actually change just to test project so that
+
+155
+00:12:17,690 --> 00:12:23,960
+we do have two different values to check for, so I can leave the old validator on there and attach
+
+156
+00:12:23,960 --> 00:12:28,720
+my asynchronous validator as a third argument to form control here.
+
+157
+00:12:28,730 --> 00:12:34,760
+I will also reach out to my custom validators and then the async invalid project name again, don't
+
+158
+00:12:34,760 --> 00:12:38,240
+executed only pass the reference on.
+
+159
+00:12:38,240 --> 00:12:44,990
+I will simply split this over multiple lines to be in line with the requirements of TEUs linta.
+
+160
+00:12:45,500 --> 00:12:46,580
+So like that.
+
+161
+00:12:47,480 --> 00:12:54,080
+So with that we configured this form control null devilled value to validators, one of them our own
+
+162
+00:12:54,080 --> 00:12:56,540
+validator and the asynchronous validator.
+
+163
+00:12:56,630 --> 00:13:01,580
+Checking for D test project name with Dad.
+
+164
+00:13:01,580 --> 00:13:08,780
+Let's save this and therefore reload this project and now inspect our project name.
+
+165
+00:13:08,780 --> 00:13:09,620
+It's invalid.
+
+166
+00:13:10,010 --> 00:13:19,460
+If I enter test there, it's also invalid if I enter test for it's pending and valid if I enter test
+
+167
+00:13:19,460 --> 00:13:22,570
+project it's pending and invalid.
+
+168
+00:13:22,790 --> 00:13:26,240
+So our own asynchronous evaluator is working to.
+
+169
+00:13:26,780 --> 00:13:31,930
+And with that we practice some of the things you learned in the last lecture's of this course.
+
+170
+00:13:32,240 --> 00:13:39,380
+Again, feel free to play around with that, build much more complex forms and in the next course module,
+
+171
+00:13:39,470 --> 00:13:45,700
+we're actually going to apply some of the knowledge you gained in our course project in the recipe book.
+
+172
+00:13:45,740 --> 00:13:46,430
+See you there.
+

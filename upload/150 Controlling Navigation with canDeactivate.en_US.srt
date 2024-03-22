@@ -1,0 +1,580 @@
+1
+00:00:02,720 --> 00:00:07,780
+In the last lectures, you learned how to use canActivate to control access to a route,
+
+2
+00:00:08,000 --> 00:00:13,600
+now I want to focus on the control of whether you are allowed to leave a route or not.
+
+3
+00:00:13,700 --> 00:00:18,930
+We can control this too and we might want to control this if we are logged in
+
+4
+00:00:18,950 --> 00:00:25,270
+once we do edit a server. Now we for example are allowed to edit the dev server
+
+5
+00:00:25,610 --> 00:00:33,440
+and here, if we actually changed something, I want to ask the user if he accidentally clicks back or somewhere
+
+6
+00:00:33,440 --> 00:00:33,870
+else,
+
+7
+00:00:33,890 --> 00:00:39,310
+if you really want to leave or if you maybe forgot to click update server first,
+
+8
+00:00:39,620 --> 00:00:45,490
+so this convenience method of keeping the user from accidentally navigating away.
+
+9
+00:00:45,590 --> 00:00:47,480
+How can we implement this?
+
+10
+00:00:47,480 --> 00:00:54,120
+Let's go to the edit-server.component for this, here and let's add a new property.
+
+11
+00:00:54,170 --> 00:00:56,000
+Below allowEdit,
+
+12
+00:00:56,300 --> 00:01:04,010
+I'll add a changesSaved property which is false by default and which I want to change whenever we
+
+13
+00:01:04,010 --> 00:01:05,880
+click on update server.
+
+14
+00:01:06,110 --> 00:01:09,160
+Here of course, we did update the server,
+
+15
+00:01:09,170 --> 00:01:16,240
+so I want to call changesSaved and set this to true here because now, the changes were indeed saved.
+
+16
+00:01:16,670 --> 00:01:18,510
+After the changes were saved here,
+
+17
+00:01:18,560 --> 00:01:24,360
+I want to navigate away. So I will inject the router here, of type router,
+
+18
+00:01:24,560 --> 00:01:31,760
+make sure to add the import at the top as always from the @angular/router package and then here after we
+
+19
+00:01:32,000 --> 00:01:33,840
+saved our changes,
+
+20
+00:01:33,910 --> 00:01:43,180
+I want to navigate away, I want to go up one level to the last loaded server and for this, I will pass the
+
+21
+00:01:43,250 --> 00:01:49,080
+relativeTo configuration and want to navigate relative to the currently active route.
+
+22
+00:01:49,130 --> 00:01:53,990
+So far so good, we're changing this changesSaved property here.
+
+23
+00:01:54,020 --> 00:01:59,630
+Now let's make sure that whenever the user tries to accidentally navigate away, that we prevent him
+
+24
+00:01:59,630 --> 00:02:07,250
+from doing so or at least ask if he really wants to leave. Now we somehow need to execute this code in
+
+25
+00:02:07,250 --> 00:02:13,690
+this component here because we will need access to this changesSaved method which informs us on whether
+
+26
+00:02:13,700 --> 00:02:16,600
+this update button was clicked or not.
+
+27
+00:02:16,790 --> 00:02:23,840
+However a guard always needs to be a service because we need to provide it just like we provided the
+
+28
+00:02:23,870 --> 00:02:25,230
+auth guard.
+
+29
+00:02:25,280 --> 00:02:27,000
+So somehow this doesn't fit,
+
+30
+00:02:27,050 --> 00:02:32,200
+we need to access the code in our component and have a service and that sounds like a complicated set
+
+31
+00:02:32,200 --> 00:02:35,660
+up but it isn't, it's actually really simple.
+
+32
+00:02:35,660 --> 00:02:43,180
+In my edit-server folder here, I'll add a new file, I'll name it can-deactivate-guard
+
+33
+00:02:43,520 --> 00:02:50,920
+and this again will also be a service as all guards are and in here, I
+
+34
+00:02:51,010 --> 00:02:57,910
+first of all now want to export an interface, an interface simply is a contract which can be imported by
+
+35
+00:02:57,910 --> 00:03:02,800
+some other class let's say which forces this class to provide some logic.
+
+36
+00:03:03,250 --> 00:03:10,960
+So here, I will name this CanComponentDeactivate and this interface will require one thing from the
+
+37
+00:03:10,960 --> 00:03:13,030
+component which implements it,
+
+38
+00:03:13,060 --> 00:03:17,080
+this component should have a canDeactivate
+
+39
+00:03:17,800 --> 00:03:21,370
+method. This method and this is simply how I define the type of this canDeactivate
+
+40
+00:03:21,400 --> 00:03:25,240
+method since this is only an interface, it won't contain the actual logic,
+
+41
+00:03:25,270 --> 00:03:28,200
+it will only contain information how it should look like.
+
+42
+00:03:28,210 --> 00:03:33,970
+So this method should take no arguments but in the end, it should return an observable which therefore
+
+43
+00:03:33,970 --> 00:03:42,250
+needs to be imported in this file here, from rxjs/Observable which will resolve to a boolean in the end
+
+44
+00:03:42,790 --> 00:03:49,810
+or a promise which will resolve to a boolean in the end or just a boolean.
+
+45
+00:03:49,810 --> 00:03:53,900
+You might recognize this pattern here from the can-activate-guard,
+
+46
+00:03:54,100 --> 00:03:56,670
+these guards share the same structure.
+
+47
+00:03:57,040 --> 00:04:01,130
+So that is my interface,
+
+48
+00:04:01,200 --> 00:04:04,650
+nice to have it but that alone won't do the trick.
+
+49
+00:04:04,650 --> 00:04:06,240
+Now let's come to the important thing,
+
+50
+00:04:06,300 --> 00:04:10,950
+the meat of this class, of the service here I should say, the service itself.
+
+51
+00:04:10,950 --> 00:04:16,890
+So I'll name it CanDeactivateGuard and this guard will implement
+
+52
+00:04:16,920 --> 00:04:24,450
+CanDeactivate, this is an interface provided by the Angular router, so we need to import it from there.
+
+53
+00:04:24,450 --> 00:04:31,410
+This actually is a generic type and it will wrap our own interface, so it will wrap an interface which
+
+54
+00:04:31,410 --> 00:04:38,880
+forces some component or some class to implement the canDeactivate method. Might sound complicated but
+
+55
+00:04:38,880 --> 00:04:46,040
+this is the set up which will make sure that we later can easily connect a component to our
+
+56
+00:04:46,060 --> 00:04:47,490
+CanDeactivateGuard here.
+
+57
+00:04:47,940 --> 00:04:50,900
+So for now, let's just go with that piece of information
+
+58
+00:04:51,210 --> 00:04:57,240
+and now this class here, this guard will also need to have a canDeactivate method.
+
+59
+00:04:57,390 --> 00:05:02,030
+This is the canDeactivate method which will be called by the Angular router
+
+60
+00:05:02,040 --> 00:05:08,460
+once we try to leave a route. Therefore this will have the component on which we're currently on as an
+
+61
+00:05:08,460 --> 00:05:13,980
+argument and this component needs to be of type CanComponentDeactivate, which means it needs to be
+
+62
+00:05:13,980 --> 00:05:17,690
+a component which has this interface here implemented,
+
+63
+00:05:17,760 --> 00:05:21,240
+therefore a component which has a canDeactivate method,
+
+64
+00:05:21,360 --> 00:05:24,740
+this will become super important in a second.
+
+65
+00:05:24,860 --> 00:05:31,730
+We also will receive the current route as an argument, so that is an activated route snapshot,
+
+66
+00:05:32,030 --> 00:05:36,530
+need to make sure to import this too. It will have the current state,
+
+67
+00:05:36,560 --> 00:05:39,360
+so that's a router state snapshot,
+
+68
+00:05:39,380 --> 00:05:42,380
+import this too and the next state,
+
+69
+00:05:42,380 --> 00:05:44,360
+so where do you want to go,
+
+70
+00:05:44,360 --> 00:05:50,480
+because remember, this will be called at the end when we want to leave a route. So next state is an optional
+
+71
+00:05:50,480 --> 00:05:51,810
+argument though,
+
+72
+00:05:51,980 --> 00:05:59,360
+this will also be a router state snapshot and this will now also return an observable, a promise or
+
+73
+00:05:59,420 --> 00:06:00,290
+a boolean,
+
+74
+00:06:00,290 --> 00:06:08,740
+so just like the CanActivateGuard. That is how the canDeactivate method in our CanDeactivateGuard looks
+
+75
+00:06:08,740 --> 00:06:09,340
+like
+
+76
+00:06:09,580 --> 00:06:16,310
+and here I now want to call canDeactivate on the component we're currently on
+
+77
+00:06:16,480 --> 00:06:22,510
+and this is why I need to implement this interface in this component,
+
+78
+00:06:22,570 --> 00:06:29,560
+why I created this interface in the first place because now, the Angular router can execute canDeactivate
+
+79
+00:06:29,650 --> 00:06:38,200
+in our service and can rely on the fact that the component we're currently on has the canDeactivate
+
+80
+00:06:38,200 --> 00:06:44,920
+method too because this is what we will actually implement the logic checking whether we are allowed to
+
+81
+00:06:44,920 --> 00:06:50,490
+leave or not because we need this connection between our guard and the component.
+
+82
+00:06:51,070 --> 00:06:58,270
+So this is why we can safely call canDeactivate here and now with that information,
+
+83
+00:06:59,220 --> 00:07:07,890
+we can go back to our app routing module and on the edit page here, we want to add this guard.
+
+84
+00:07:07,950 --> 00:07:12,150
+So we can add canDeactivate as a property to this route config,
+
+85
+00:07:12,240 --> 00:07:15,010
+it takes an array just like canActivate
+
+86
+00:07:15,340 --> 00:07:21,200
+and here, we now will point to our CanDeactivateGuard.
+
+87
+00:07:21,300 --> 00:07:26,700
+Make sure to add this import therefore and now Angular will run this guard
+
+88
+00:07:26,730 --> 00:07:33,690
+whenever we try to leave this path here, this component loaded at this path. For this to work,
+
+89
+00:07:33,690 --> 00:07:40,110
+we of course need to go to our module and provide our CanDeactivateGuard, just like before,
+
+90
+00:07:40,120 --> 00:07:40,680
+canDeactivate.
+
+91
+00:07:44,650 --> 00:07:47,550
+With this provided, make sure to add the import,
+
+92
+00:07:47,560 --> 00:07:50,350
+we're almost there but one important piece is missing.
+
+93
+00:07:50,710 --> 00:07:57,460
+Remember that I told you that the CanDeactivateGuard will in the end call canDeactivate, our component.
+
+94
+00:07:57,820 --> 00:08:07,240
+Well, for this to work on our edit-server.component, here we need to implement our CanComponentDeactivate
+
+95
+00:08:07,240 --> 00:08:09,640
+interface, our own interface
+
+96
+00:08:09,790 --> 00:08:13,960
+we exported in our can-deactivate-guard.service file,
+
+97
+00:08:13,990 --> 00:08:21,310
+this interface. This interface now forces us to implement the canDeactivate method in our component
+
+98
+00:08:21,340 --> 00:08:28,990
+which is important because we tried to call this method on our component here. So in the edit-server.component
+
+99
+00:08:29,010 --> 00:08:33,360
+here, I will simply add a canDeactivate method
+
+100
+00:08:33,350 --> 00:08:38,150
+now. We know how this method should look like because we defined it here,
+
+101
+00:08:38,290 --> 00:08:41,580
+it should return an observable, a promise or a boolean,
+
+102
+00:08:41,790 --> 00:08:43,860
+so let's make sure that it does
+
+103
+00:08:44,170 --> 00:08:51,690
+and now here, first of all we need to import observable from rxjs/Observable
+
+104
+00:08:52,640 --> 00:09:00,380
+but with that added, with this import added, here in canDeactivate, we now provide the actual logic deciding
+
+105
+00:09:00,380 --> 00:09:02,690
+on whether we are allowed to leave or not.
+
+106
+00:09:02,810 --> 00:09:09,270
+This logic will be run whenever the CanDeactivateGuard is checked by the Angular router.
+
+107
+00:09:09,560 --> 00:09:18,300
+So here I would quickly check if we're first of all allowed to edit this because if we're not allowed
+
+108
+00:09:18,300 --> 00:09:23,150
+like this, here I will return true anyways because here we weren't allowed to edit it in the first place
+
+109
+00:09:23,150 --> 00:09:24,900
+so sure you may leave
+
+110
+00:09:25,620 --> 00:09:37,570
+and otherwise, I will check if my server name here is unlike the server name we had at the beginning.
+
+111
+00:09:37,690 --> 00:09:44,350
+Server name here, this property is simply bound via two-way binding to user inputs,
+
+112
+00:09:44,380 --> 00:09:51,730
+so initially this sets to the value we get from outside, from the server which was loaded, we bind it here
+
+113
+00:09:52,120 --> 00:09:55,100
+but as soon as we type, we will have some differences.
+
+114
+00:09:55,360 --> 00:10:00,820
+So if we have differences on the server name or on the server status,
+
+115
+00:10:00,850 --> 00:10:06,050
+so here I also check if this is not the same as before, server status.
+
+116
+00:10:06,130 --> 00:10:12,580
+So if one of the two was changed and now I'll wrap it in parentheses, so if one of the two was changed
+
+117
+00:10:15,390 --> 00:10:19,680
+and the changes were not saved,
+
+118
+00:10:19,710 --> 00:10:22,240
+so changesSaved is false,
+
+119
+00:10:22,530 --> 00:10:23,940
+in this case.
+
+120
+00:10:24,090 --> 00:10:33,990
+I want to return a confirm dialog where I ask the user, do you want to discard the changes? Otherwise
+
+121
+00:10:34,260 --> 00:10:39,290
+I will return true because otherwise either nothing was changed or it was changed
+
+122
+00:10:39,420 --> 00:10:42,460
+but changesSaved is set to true, so we did save it
+
+123
+00:10:42,470 --> 00:10:49,140
+indeed. With this in place, let's go back, let's go back to our servers
+
+124
+00:10:50,200 --> 00:10:52,340
+and first of all login maybe.
+
+125
+00:10:52,690 --> 00:10:56,370
+Let's go to the dev server which is the one we are allowed to edit
+
+126
+00:10:56,510 --> 00:10:57,420
+and here,
+
+127
+00:10:57,790 --> 00:11:02,590
+if I now type something there and I didn't click update server and I click somewhere else,
+
+128
+00:11:02,590 --> 00:11:04,660
+we are asked if we want to leave
+
+129
+00:11:04,690 --> 00:11:07,520
+and if I click cancel, we stay on this page.
+
+130
+00:11:07,570 --> 00:11:09,960
+We may now save our changes
+
+131
+00:11:10,820 --> 00:11:15,970
+and then we are navigated away without getting any issues at all
+
+132
+00:11:16,070 --> 00:11:22,220
+and the fact that we updated the wrong server simply happens because here, we still are always loading
+
+133
+00:11:22,220 --> 00:11:24,460
+the server with the ID one,
+
+134
+00:11:24,710 --> 00:11:27,870
+so we should update this to get our real ID.
+
+135
+00:11:28,220 --> 00:11:38,600
+So maybe here, access our route snapshot params ID and pass this as an ID and thereafter of course
+
+136
+00:11:38,660 --> 00:11:47,240
+also subscribe to route parents to update the ID if params change, that is something you can do as
+
+137
+00:11:47,240 --> 00:11:48,230
+an exercise
+
+138
+00:11:48,470 --> 00:11:52,520
+and of course make this of type number by converting it
+
+139
+00:11:52,580 --> 00:11:57,430
+but more importantly here, everything's working as it should,
+
+140
+00:11:57,430 --> 00:12:03,070
+we are only allowed to change this if we did click update, otherwise we are asked
+
+141
+00:12:03,400 --> 00:12:10,280
+or of course if here once we are asked, we click OK, we are allowed to discard our changes,
+
+142
+00:12:10,300 --> 00:12:12,780
+so that is true or that is possible too
+
+143
+00:12:12,790 --> 00:12:17,860
+but now with canDeactivate, we have this extra protection in place.
+
+144
+00:12:18,250 --> 00:12:21,360
+So with this, we learned a lot about routing in this module,
+
+145
+00:12:21,370 --> 00:12:25,960
+now there's one more guard I want to dive into and we will do so in the next lecture.
+

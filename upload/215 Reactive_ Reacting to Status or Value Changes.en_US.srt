@@ -1,0 +1,104 @@
+1
+00:00:02,490 --> 00:00:04,980
+We're almost done with this section,
+
+2
+00:00:05,130 --> 00:00:11,130
+we worked a lot with reactive forms now and in the last lecture, at the end of it with the asynchronous
+
+3
+00:00:11,130 --> 00:00:18,600
+validator, you saw that the status of this input switched from invalid to pending to valid for example.
+
+4
+00:00:19,560 --> 00:00:22,580
+There actually is a form state you can track
+
+5
+00:00:22,620 --> 00:00:28,360
+in general, I'll do this here in ngOnInit. On my signupForm
+
+6
+00:00:28,410 --> 00:00:36,600
+and on each control of this form, so on get any control too, you have two observables you can listen to,
+
+7
+00:00:37,470 --> 00:00:39,080
+statusChanges
+
+8
+00:00:39,930 --> 00:00:41,700
+and valueChanges.
+
+9
+00:00:42,150 --> 00:00:44,430
+So let's listen to valueChanges.
+
+10
+00:00:44,730 --> 00:00:48,090
+As mentioned, this is an observable so we can subscribe to it
+
+11
+00:00:48,570 --> 00:00:53,520
+and as the first argument we passed a callback which is executed when new data arrives, so this will
+
+12
+00:00:53,520 --> 00:00:59,550
+be the value because we're listening to valueChanges and we can log the value here.
+
+13
+00:00:59,550 --> 00:01:07,580
+So if we do this, have a look at our form, if I type something here, you see with every keystroke,
+
+14
+00:01:07,790 --> 00:01:14,330
+the object here is printed, the value of the form actually. This make sense because the valueChanges
+
+15
+00:01:14,330 --> 00:01:17,000
+fired whenever we change something about the form,
+
+16
+00:01:17,000 --> 00:01:19,350
+so whenever we type into any input.
+
+17
+00:01:19,700 --> 00:01:21,320
+So this is valueChanges
+
+18
+00:01:21,320 --> 00:01:27,460
+and again you can also call this on an individual form control. I'm going to copy this and then comment it
+
+19
+00:01:27,500 --> 00:01:32,590
+out because we also have statusChanges.
+
+20
+00:01:32,870 --> 00:01:34,980
+So here, we receive the status
+
+21
+00:01:34,980 --> 00:01:38,860
+now, let's view this. Here
+
+22
+00:01:39,080 --> 00:01:44,110
+if I type something, you see invalid because the form is invalid.
+
+23
+00:01:44,540 --> 00:01:50,130
+If I type something in here where we have an asynchronous validator, you'll see it switched to pending
+
+24
+00:01:50,180 --> 00:01:59,330
+and then after 1 and a half seconds, to valid. So statusChanges and valueChanges, two nice hooks, observables
+
+25
+00:01:59,480 --> 00:02:05,000
+you can listen to or you can subscribe to if you really want to closely watch what happens in your form
+
+26
+00:02:05,060 --> 00:02:09,410
+or again on an individual control and want to react to that.
+

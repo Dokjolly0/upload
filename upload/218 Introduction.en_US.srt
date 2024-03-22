@@ -1,0 +1,60 @@
+1
+00:00:02,270 --> 00:00:04,890
+Welcome back to our recipe book course app,
+
+2
+00:00:05,150 --> 00:00:08,470
+we already added a lot of features to it,
+
+3
+00:00:08,510 --> 00:00:10,660
+now I went to add forms.
+
+4
+00:00:10,700 --> 00:00:16,550
+We have two places where we need to add forms, when we create a new recipe or edit a recipe in the
+
+5
+00:00:16,550 --> 00:00:20,710
+recipe edit component and in the shopping list here.
+
+6
+00:00:20,900 --> 00:00:26,950
+We already are able to add elements to the shopping list but we can handle this in a better way through
+
+7
+00:00:26,960 --> 00:00:30,620
+a form and then I also want to make these other buttons here work.
+
+8
+00:00:30,740 --> 00:00:33,720
+The form for the recipe, as soon as we can create new ones,
+
+9
+00:00:33,740 --> 00:00:36,280
+I also want to make that delete button work.
+
+10
+00:00:36,350 --> 00:00:40,690
+Let's start with the shopping list form in the next lectures. Here
+
+11
+00:00:40,740 --> 00:00:46,100
+I want to use the template driven approach and certainly feel free to go ahead and try implementing this
+
+12
+00:00:46,160 --> 00:00:47,090
+on your own
+
+13
+00:00:47,390 --> 00:00:52,700
+but there are a couple of different approaches of implementing it, so probably we won't have the same
+
+14
+00:00:52,700 --> 00:00:54,650
+solution. In the next lecture,
+
+15
+00:00:54,650 --> 00:00:57,510
+we'll start together and I will show you my approach.
+

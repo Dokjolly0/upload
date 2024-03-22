@@ -1,0 +1,196 @@
+1
+00:00:02,540 --> 00:00:03,330
+In this module,
+
+2
+00:00:03,360 --> 00:00:07,620
+we learned a lot about pipes, what they are, how to use them, how to parameterise them, how to change and
+
+3
+00:00:07,620 --> 00:00:14,550
+how to create our own pipes and how to maybe create an impure pipe forcing update on each data change.
+
+4
+00:00:14,580 --> 00:00:19,800
+Now there is one built-in pipe I want to have a closer look at which does something different than all
+
+5
+00:00:19,800 --> 00:00:21,040
+the other pipes,
+
+6
+00:00:21,060 --> 00:00:26,250
+it helps us with handling asynchronous data and to demonstrate how this works,
+
+7
+00:00:26,280 --> 00:00:34,750
+let's say we have another property right here at the top which says appStatus or which holds our
+
+8
+00:00:34,740 --> 00:00:38,260
+appStatus which could also be offline, critical, whatever
+
+9
+00:00:38,400 --> 00:00:42,180
+but here this will not be a string like offline,
+
+10
+00:00:42,180 --> 00:00:47,670
+instead this should get loaded after let's say two seconds and to simulate this, I will set this equal
+
+11
+00:00:47,670 --> 00:00:54,390
+to a promise and you can imagine this data being returned from a HTTP call, from a server, something like
+
+12
+00:00:54,390 --> 00:00:55,230
+this.
+
+13
+00:00:55,230 --> 00:01:02,160
+So in this promise, I will initialize this promise with a callback method passed to the constructor
+
+14
+00:01:02,370 --> 00:01:07,750
+where this method itself takes two arguments, resolve and reject, the two functions we can execute inside
+
+15
+00:01:07,750 --> 00:01:14,250
+of this promise to resolve or reject the promise and in the promise in this callback function,
+
+16
+00:01:14,280 --> 00:01:16,260
+I will then set up a timeout,
+
+17
+00:01:16,320 --> 00:01:23,160
+let's say it triggers after 2 seconds, so after 2000 milliseconds and then this method here will get
+
+18
+00:01:23,160 --> 00:01:26,420
+executed, this method I passed to the set timeout method.
+
+19
+00:01:26,880 --> 00:01:32,890
+Now here in this function, I want to simply set my appStatus,
+
+20
+00:01:33,060 --> 00:01:38,150
+so I want to resolve to let's say stable, whatever the status should be.
+
+21
+00:01:38,490 --> 00:01:44,290
+So what this will do is it will set appStatus to stable but only after 2 seconds.
+
+22
+00:01:44,610 --> 00:01:50,910
+So if we try to output this appStatus here, let's add a line break or another line break to add a
+
+23
+00:01:50,940 --> 00:01:58,180
+blank line in between and then a heading where I say appStatus and then I try to output appStatus with
+
+24
+00:01:58,290 --> 00:02:02,740
+string interpolation, if we do this, you'll see object object
+
+25
+00:02:02,790 --> 00:02:05,030
+and this is correct because it is object,
+
+26
+00:02:05,040 --> 00:02:07,290
+it's a promise and a promise is an object
+
+27
+00:02:07,770 --> 00:02:12,530
+but after two seconds, we know that this is no longer an object,
+
+28
+00:02:12,630 --> 00:02:18,080
+it now is a string but Angular doesn't know because it doesn't watch our object.
+
+29
+00:02:18,180 --> 00:02:18,830
+It doesn't
+
+30
+00:02:18,930 --> 00:02:22,540
+see if this object actually transforms to something else
+
+31
+00:02:22,540 --> 00:02:26,520
+or if this returns us a value, it just knows it's a promise,
+
+32
+00:02:26,550 --> 00:02:31,180
+I'm done and it's good that it behaves like this, saves us performance.
+
+33
+00:02:31,200 --> 00:02:38,430
+We should be explicit about how our app behaves but thankfully, there is a nice little pipe we can use here
+
+34
+00:02:38,790 --> 00:02:43,540
+to make the transformation of this data easier.
+
+35
+00:02:43,590 --> 00:02:46,220
+We know that it will be a string after two seconds
+
+36
+00:02:46,270 --> 00:02:51,570
+and we want to output the string or it will resolve a string after two seconds, I should say
+
+37
+00:02:51,690 --> 00:02:57,340
+and we want to output the string.So we can add the pipe symbol and then async,
+
+38
+00:02:57,340 --> 00:03:02,960
+this is a built-in pipe and by adding it, well watch for yourself,
+
+39
+00:03:03,940 --> 00:03:05,840
+you see I will reload
+
+40
+00:03:05,860 --> 00:03:13,240
+the app. There's nothing there at the beginning but after two seconds, you see stable and this is what async
+
+41
+00:03:13,240 --> 00:03:14,230
+does,
+
+42
+00:03:14,320 --> 00:03:20,490
+it recognizes that this is a promise and as a side note, it would also work with observables,
+
+43
+00:03:20,550 --> 00:03:29,080
+there it would subscribe automatically and after two seconds, it will simply recognize that something
+
+44
+00:03:29,080 --> 00:03:35,470
+changed, that the promise resolved or in the case of an observable, that data was sent through the subscription
+
+45
+00:03:35,740 --> 00:03:38,810
+and it will print this data to the screen
+
+46
+00:03:39,370 --> 00:03:44,420
+and this is the pipe with which I want to conclude this section about pipes.
+
+47
+00:03:44,440 --> 00:03:51,280
+Now you should feel really comfortable about using them, building your own pipes and as you see here, working
+
+48
+00:03:51,280 --> 00:03:57,480
+with async data with pipes. Now we will see this async pipes being used in the HTTP section later
+
+49
+00:03:57,670 --> 00:04:01,660
+but for now, let's move on to some exercises regarding pipes.
+

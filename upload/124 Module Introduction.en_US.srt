@@ -1,0 +1,68 @@
+1
+00:00:02,660 --> 00:00:06,410
+Welcome to another course module, welcome to this course module.
+
+2
+00:00:06,650 --> 00:00:14,100
+We already learned a lot about Angular and thus far, we really built a single page application.
+
+3
+00:00:14,120 --> 00:00:18,330
+We use directives and so on to change portions of this page
+
+4
+00:00:18,500 --> 00:00:21,410
+but in the end, we always were on the same page,
+
+5
+00:00:21,470 --> 00:00:27,540
+if you looked at the URL at the top, it was always localhost:4200.
+
+6
+00:00:27,860 --> 00:00:33,470
+Now what if you wanted to have a page where you actually display several pages, like you have a
+
+7
+00:00:33,470 --> 00:00:36,650
+/users or a /accounts page?
+
+8
+00:00:36,650 --> 00:00:42,380
+Now you might think that for this, you indeed need multiple pages, multiple index.html files or
+
+9
+00:00:42,380 --> 00:00:43,460
+something like this
+
+10
+00:00:43,610 --> 00:00:50,180
+but you don't, Angular ships with its own router which allows you to change the
+
+11
+00:00:50,360 --> 00:00:59,260
+URL in the URL bar and still only use one page but then exchange major parts or a lot of parts of
+
+12
+00:00:59,270 --> 00:01:05,490
+that page, so that to the user, it really looks like a new page was loaded because maybe only the header
+
+13
+00:01:05,510 --> 00:01:13,550
+is the same but behind the scenes, it is still Javascript changing a lot of parts in your DOM, in
+
+14
+00:01:13,550 --> 00:01:19,730
+your page, making it look like a new page was rendered but you're still in the Angular world in your
+
+15
+00:01:19,790 --> 00:01:21,890
+single page application.
+
+16
+00:01:21,890 --> 00:01:23,240
+Let's take a closer look
+
+17
+00:01:23,300 --> 00:01:24,200
+in this module.
+

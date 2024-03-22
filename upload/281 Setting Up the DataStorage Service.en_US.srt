@@ -1,0 +1,264 @@
+1
+00:00:02,360 --> 00:00:03,570
+To use the Angular
+
+2
+00:00:03,600 --> 00:00:06,180
+HTTP service, just to bring this back in memory,
+
+3
+00:00:06,200 --> 00:00:09,760
+I want to use it here to save and fetch recipes in the end.
+
+4
+00:00:09,830 --> 00:00:14,290
+So to use that, we need a place to make these HTTP requests. Now
+
+5
+00:00:14,380 --> 00:00:18,470
+the buttons I just showed you can be found in the header.
+
+6
+00:00:18,470 --> 00:00:19,930
+So there, indeed
+
+7
+00:00:20,000 --> 00:00:23,360
+if we have a look at our project, we have that header component,
+
+8
+00:00:23,360 --> 00:00:29,180
+here we have the save data and the fetch data buttons and there is our header component.
+
+9
+00:00:29,180 --> 00:00:34,880
+Now of course, one thing we could do is we could add click listeners to these buttons and then in
+
+10
+00:00:34,880 --> 00:00:41,540
+the component body of the header component, we could inject the Angular HTTP service and make our
+
+11
+00:00:41,540 --> 00:00:43,340
+HTTP requests here.
+
+12
+00:00:43,370 --> 00:00:50,210
+Now this has a couple of disadvantages - one disadvantage is that here in the header component, we have
+
+13
+00:00:50,210 --> 00:00:55,090
+the buttons but we don't really have the data we want to interact with. The data
+
+14
+00:00:55,100 --> 00:01:00,660
+we want to interact with are our recipes of course and these are managed in the recipe service.
+
+15
+00:01:00,860 --> 00:01:06,430
+Therefore, a better place to make these requests would be the recipe service,
+
+16
+00:01:06,620 --> 00:01:13,430
+though I'll take yet another route here which is optional though, I will create a new service for this
+
+17
+00:01:13,670 --> 00:01:20,330
+in a shared folder and I will name this data-storage.service and that is totally optional.
+
+18
+00:01:20,330 --> 00:01:23,360
+You could definitely manage this in the recipe service,
+
+19
+00:01:23,360 --> 00:01:29,450
+I just want to split this up to make it really easy to focus on that HTTP functionality and for
+
+20
+00:01:29,450 --> 00:01:33,350
+you to quickly find it if you later go through that project again
+
+21
+00:01:33,350 --> 00:01:39,440
+but handling the HTTP requests in the recipe service would be perfectly fine because we are interacting
+
+22
+00:01:39,440 --> 00:01:40,720
+with recipes in the end.
+
+23
+00:01:41,060 --> 00:01:44,650
+Yet here is the data storage service and there,
+
+24
+00:01:44,840 --> 00:01:51,170
+let's export a class which should be named data storage service to use that typical naming pattern and
+
+25
+00:01:51,290 --> 00:01:52,730
+we can again provide this,
+
+26
+00:01:52,760 --> 00:01:55,300
+we have to provide this. Now
+
+27
+00:01:55,430 --> 00:02:03,500
+first of all, we will inject the Angular HTTP service and since we will inject a service into
+
+28
+00:02:03,500 --> 00:02:06,710
+a service, we need to add @injectable.
+
+29
+00:02:06,710 --> 00:02:10,490
+You learned this in the services section and it is important to keep this in mind.
+
+30
+00:02:10,640 --> 00:02:17,390
+Theoretically, @injectable is optional, you don't need to add it to your services but you need to add
+
+31
+00:02:17,390 --> 00:02:23,720
+it as soon as your service gets another service injected, which will be the case here because I will
+
+32
+00:02:23,720 --> 00:02:31,580
+inject the HTTP service and in addition to that, here we can now also use that newer shortcut
+
+33
+00:02:31,580 --> 00:02:37,370
+of providing this, the alternative to adding it to the providers array in the app module,
+
+34
+00:02:37,550 --> 00:02:43,610
+we can simply add an object which we pass as an argument to @injectable where we set provided in to
+
+35
+00:02:43,620 --> 00:02:44,390
+root.
+
+36
+00:02:44,420 --> 00:02:51,260
+Now again as you learned, this is optional, you could not use that and instead add the data storage service
+
+37
+00:02:51,260 --> 00:02:56,210
+here to providers, just as we're doing it with the shopping list service and the recipe service and on
+
+38
+00:02:56,210 --> 00:03:01,520
+the other hand, you could of course also provide these services in the same way we're providing this
+
+39
+00:03:01,610 --> 00:03:03,560
+data storage service now.
+
+40
+00:03:03,710 --> 00:03:10,190
+Now with that, I already mentioned it, we definitely should inject something into the data storage service
+
+41
+00:03:10,490 --> 00:03:14,600
+and that something will be the Angular HttpClient.
+
+42
+00:03:14,600 --> 00:03:20,570
+Now as you learned in that HTTP module, for that to be usable, we first of all need to do something in the
+
+43
+00:03:20,570 --> 00:03:35,250
+app module. There, we need to import the HttpClient module from @angular/common/http. So this
+
+44
+00:03:35,400 --> 00:03:39,280
+import statement needs to be added at the top of the app module
+
+45
+00:03:39,690 --> 00:03:44,570
+and with that added, we have to import that HttpClient module.
+
+46
+00:03:44,610 --> 00:03:48,850
+So now down there in the imports array of our NgModule, here
+
+47
+00:03:48,940 --> 00:03:55,440
+maybe after the reactive forms module because I like to group all the Angular modules together before
+
+48
+00:03:55,440 --> 00:03:57,030
+our custom modules come,
+
+49
+00:03:57,540 --> 00:04:01,180
+so here, we can now add that HttpClient module
+
+50
+00:04:01,320 --> 00:04:07,290
+and this is crucial to unlock the HttpClient functionality in our application.
+
+51
+00:04:07,290 --> 00:04:14,520
+With that in any part of our application, we can use the Angular HttpClient, which means we can inject
+
+52
+00:04:14,520 --> 00:04:14,810
+it
+
+53
+00:04:14,940 --> 00:04:18,630
+and that's the next step. Here in the data storage service,
+
+54
+00:04:18,660 --> 00:04:25,530
+I want to send HTTP requests and I will do that or we will do that by using the Angular HTTP
+
+55
+00:04:25,530 --> 00:04:26,460
+client.
+
+56
+00:04:26,460 --> 00:04:33,030
+Now with the HttpClient module imported into our project, we can inject the Angular HTTP
+
+57
+00:04:33,030 --> 00:04:37,600
+client here and for that, we first of all need to import it,
+
+58
+00:04:37,650 --> 00:04:45,430
+now here, it's named HttpClient and we import it from @angular/common/http.
+
+59
+00:04:45,480 --> 00:04:53,880
+Now, I will store it in a private property named HTTP and again, this is this TypeScript shortcut where
+
+60
+00:04:53,880 --> 00:04:59,850
+by adding an accessor, like private in front of the argument, TypeScript automatically creates a property
+
+61
+00:04:59,850 --> 00:05:06,800
+of the same name and stores whatever we accept as an argument here in that property. And for Angular's
+
+62
+00:05:06,900 --> 00:05:08,580
+dependency injection to work,
+
+63
+00:05:08,580 --> 00:05:15,180
+we now have to set the type here of that injected argument to HttpClient, so what I imported
+
+64
+00:05:15,180 --> 00:05:15,820
+here.
+
+65
+00:05:16,110 --> 00:05:23,160
+Now Angular is able to inject this, also thanks to us unlocking the HttpClient in the app module
+
+66
+00:05:23,820 --> 00:05:30,420
+and now we can start writing logic to save recipes to our back-end and to fetch them from there.
+

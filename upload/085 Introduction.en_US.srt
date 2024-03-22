@@ -1,0 +1,40 @@
+1
+00:00:02,310 --> 00:00:08,550
+So now that you learned more about components and data binding and especially how you can communicate
+
+2
+00:00:08,550 --> 00:00:12,820
+between your components and how lifecycle hooks work and so on,
+
+3
+00:00:12,960 --> 00:00:19,350
+you gained a lot of new knowledge which is super important for most projects you are going to build, including
+
+4
+00:00:19,410 --> 00:00:21,170
+our course project.
+
+5
+00:00:21,180 --> 00:00:27,960
+So in this section, what we're going to do is we're going to fine tune this, we're going to make sure
+
+6
+00:00:28,220 --> 00:00:33,510
+that we can navigate between recipes and shopping lists, though our solution we'll add right now will
+
+7
+00:00:33,510 --> 00:00:38,880
+not be the final one, we will improve this even more later in the course and we will make sure that we
+
+8
+00:00:38,880 --> 00:00:42,110
+can select recipes here and load them in the detail section
+
+9
+00:00:42,420 --> 00:00:46,750
+and generally, that we have a working communication between our components.
+
+10
+00:00:46,890 --> 00:00:48,180
+So let's dive into this.
+

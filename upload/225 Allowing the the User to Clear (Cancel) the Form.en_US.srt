@@ -1,0 +1,56 @@
+1
+00:00:02,290 --> 00:00:06,830
+We already finished resetting, the clear button is pretty similar to that.
+
+2
+00:00:07,120 --> 00:00:14,940
+So here, I'll add a click listener and I'll execute onClear and in the TypeScript file,
+
+3
+00:00:15,060 --> 00:00:17,800
+I'll now add the onClear method here,
+
+4
+00:00:17,910 --> 00:00:20,120
+how can we clear our form?
+
+5
+00:00:20,790 --> 00:00:28,320
+Well we already got access to the form because we add it here with @ViewChild, so I can simply call this
+
+6
+00:00:29,430 --> 00:00:36,780
+sl form reset and I need to make sure that I also set editMode back to false.
+
+7
+00:00:36,820 --> 00:00:39,100
+If it was false before, it doesn't hurt,
+
+8
+00:00:39,160 --> 00:00:42,180
+if it wasn't false, I ensure that we leave it.
+
+9
+00:00:42,730 --> 00:00:51,630
+So with this now, if I select an item and I click clear, we're out of it again so I can now add a new one
+
+10
+00:00:52,330 --> 00:00:59,920
+and if I'm already adding one, bananas and then I hit clear, I simply cancel this.
+
+11
+00:00:59,970 --> 00:01:04,740
+So now I have to start over but I can still update the existing ones.
+
+12
+00:01:04,950 --> 00:01:07,860
+So that is all working as expected,
+
+13
+00:01:07,860 --> 00:01:13,620
+now with the clear button added. In the last step, I want to make sure that we can delete the items we
+
+14
+00:01:13,620 --> 00:01:14,590
+selected here.
+

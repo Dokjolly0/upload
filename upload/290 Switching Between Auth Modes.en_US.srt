@@ -1,0 +1,232 @@
+1
+00:00:02,120 --> 00:00:09,050
+In order to switch between login and sign up, in the auth component, we need to manage the currently active
+
+2
+00:00:09,050 --> 00:00:16,970
+mode and therefore you could for example add a property, isLoginMode but you can name this whatever
+
+3
+00:00:16,970 --> 00:00:22,550
+you want. In the end, the idea here is that you store if the user is currently in login or in sign up
+
+4
+00:00:22,550 --> 00:00:28,220
+mode and you adjust the user interface but also what you do in the form gets submitted dynamically based
+
+5
+00:00:28,250 --> 00:00:29,210
+on that property.
+
+6
+00:00:29,750 --> 00:00:37,430
+So initially, that could be true and then I will add a method, on switch mode, which we can call from our
+
+7
+00:00:37,430 --> 00:00:39,950
+user interface to change that property,
+
+8
+00:00:39,950 --> 00:00:45,170
+this allows us to dynamically change what's on the user interface upon an event triggered by the user
+
+9
+00:00:45,350 --> 00:00:47,560
+by using that helper property,
+
+10
+00:00:47,640 --> 00:00:50,540
+a pattern we used many times throughout the course already.
+
+11
+00:00:50,540 --> 00:00:56,240
+So in here, we can set isLoginMode to false but that's actually not what I want to do,
+
+12
+00:00:56,480 --> 00:01:00,620
+instead the idea here is that we change it to the opposite of what it was before
+
+13
+00:01:00,770 --> 00:01:03,080
+and for that, we can use a handy shortcut,
+
+14
+00:01:03,200 --> 00:01:04,780
+we can change it to not
+
+15
+00:01:04,790 --> 00:01:06,780
+this isLoginMode.
+
+16
+00:01:06,800 --> 00:01:10,570
+Whilst this might look strange at first, this simply reverses the value.
+
+17
+00:01:10,940 --> 00:01:17,810
+If this previously stored true, then not true will be false and therefore we now store false,
+
+18
+00:01:18,020 --> 00:01:22,430
+if this stored false, then not false will be true and we now store true,
+
+19
+00:01:22,430 --> 00:01:23,530
+that's the idea.
+
+20
+00:01:23,720 --> 00:01:25,860
+Now we just have to connect on switch mode
+
+21
+00:01:26,000 --> 00:01:29,280
+and this isLogin property in our template.
+
+22
+00:01:29,390 --> 00:01:32,960
+Now I want to switch the mode when we click that button here at the bottom.
+
+23
+00:01:33,020 --> 00:01:37,160
+So here upon a click, we can call on switch mode,
+
+24
+00:01:37,160 --> 00:01:37,910
+that's the idea
+
+25
+00:01:37,930 --> 00:01:40,680
+because that should be our trigger for switching the mode
+
+26
+00:01:40,910 --> 00:01:45,990
+but now of course we also need to adjust the user interface based on the mode we are in.
+
+27
+00:01:46,210 --> 00:01:52,760
+The form inputs we show shouldn't change let's say but the button labels certainly should.
+
+28
+00:01:52,760 --> 00:01:58,160
+Here for example, we'll not always show sign up but instead we can use string interpolation to show a
+
+29
+00:01:58,160 --> 00:01:59,690
+dynamic text.
+
+30
+00:01:59,690 --> 00:02:03,140
+We can check isLoginMode which is the property we just added
+
+31
+00:02:03,370 --> 00:02:06,200
+and if that is true, we know we are in login mode,
+
+32
+00:02:06,290 --> 00:02:12,040
+so this button which is there to submit the form, should actually display login as a text
+
+33
+00:02:12,080 --> 00:02:17,270
+and don't forget the single quotes here to really output text in there because you're in the string
+
+34
+00:02:17,270 --> 00:02:22,210
+interpolation syntax, hence everything in there is interpreted as Javascript code.
+
+35
+00:02:22,430 --> 00:02:27,550
+The alternative and this is a ternary expression here with the question mark,
+
+36
+00:02:27,560 --> 00:02:32,270
+then the code we want to execute if this condition is true and then a colon and then the code we want
+
+37
+00:02:32,270 --> 00:02:34,790
+to execute if that condition is not true.
+
+38
+00:02:34,790 --> 00:02:40,190
+So if that is not true, then we are not in logging mode and therefore, I want to output sign up because
+
+39
+00:02:40,190 --> 00:02:46,630
+if we're not in logging mode, we are in sign up mode. A side note by the way, as I just said, this button
+
+40
+00:02:46,630 --> 00:02:47,610
+should submit the form,
+
+41
+00:02:47,800 --> 00:02:53,500
+so we should change it to type submit. The other button here which switches modes should be changed to
+
+42
+00:02:53,500 --> 00:02:57,130
+type button so that it doesn't submit that form here
+
+43
+00:02:57,130 --> 00:03:02,140
+because if you don't set a type, clicking that button which is inside of the form will actually submit
+
+44
+00:03:02,140 --> 00:03:02,450
+it
+
+45
+00:03:02,560 --> 00:03:08,150
+and therefore if Angular doesn't step in, it will send an unnecessary HTTP request into the void
+
+46
+00:03:08,230 --> 00:03:13,300
+and even if Angular steps in and prevents this submission, it will trigger the form submission in Angular
+
+47
+00:03:13,300 --> 00:03:14,000
+nonetheless
+
+48
+00:03:13,990 --> 00:03:18,640
+and we certainly don't want to do that for this button, only for the first one.
+
+49
+00:03:18,640 --> 00:03:22,720
+So now we have that first button changed, the second button here,
+
+50
+00:03:22,780 --> 00:03:28,210
+this text of course also has to change based on the mode we're in because if we are in login mode,
+
+51
+00:03:28,390 --> 00:03:30,410
+then we can switch to sign up mode.
+
+52
+00:03:30,430 --> 00:03:34,930
+So in that case that we are in login mode, we want to say switch to sign up,
+
+53
+00:03:35,110 --> 00:03:38,560
+if we're not in login mode, then we are in sign up mode
+
+54
+00:03:38,590 --> 00:03:43,080
+and then here, we should say switch to login because that is the mode we can switch to.
+
+55
+00:03:44,220 --> 00:03:46,780
+If you now save this and have a look,
+
+56
+00:03:46,780 --> 00:03:52,270
+if I click this button now, indeed correctly our user interface changes.
+
+57
+00:03:52,270 --> 00:03:55,090
+So this is working and that's our first important step,
+
+58
+00:03:55,120 --> 00:04:00,010
+the next important step is of course that we handle the form input here.
+

@@ -1,0 +1,634 @@
+1
+00:00:02,000 --> 00:00:05,333
+I wanna conclude this basic introduction
+
+2
+00:00:05,333 --> 00:00:08,666
+to TypeScript with a
+slightly more advanced
+
+3
+00:00:08,666 --> 00:00:12,333
+yet very important TypeScript feature.
+
+4
+00:00:12,333 --> 00:00:14,500
+And that would be Generics.
+
+5
+00:00:15,700 --> 00:00:18,666
+Now this can be tricky
+to wrap your head around,
+
+6
+00:00:18,666 --> 00:00:23,033
+but I'll try my best to explain
+it such that it makes sense.
+
+7
+00:00:23,033 --> 00:00:25,900
+Let's say we have a function here,
+
+8
+00:00:25,900 --> 00:00:28,066
+which I'll name 'insertAtBeginning',
+
+9
+00:00:29,966 --> 00:00:32,966
+and this function takes
+an array and the value
+
+10
+00:00:32,966 --> 00:00:34,966
+as parameters,
+
+11
+00:00:34,966 --> 00:00:36,733
+and the array should be
+
+12
+00:00:36,733 --> 00:00:39,533
+any array full of any kinds of values.
+
+13
+00:00:39,533 --> 00:00:41,933
+And the values should be any kind of value
+
+14
+00:00:41,933 --> 00:00:43,766
+because I don't care in this function
+
+15
+00:00:43,766 --> 00:00:46,433
+if it's an array full
+of numbers or strings
+
+16
+00:00:46,433 --> 00:00:48,466
+or of personal objects.
+
+17
+00:00:49,333 --> 00:00:52,300
+Whatever it is, what I
+wanna do in this function,
+
+18
+00:00:52,300 --> 00:00:54,933
+is I wanna create a new array,
+
+19
+00:00:57,633 --> 00:00:59,866
+for example by using the spread operator
+
+20
+00:00:59,866 --> 00:01:02,433
+and copying the existing array,
+
+21
+00:01:02,433 --> 00:01:05,400
+that's a standard modern
+JavaScript feature
+
+22
+00:01:05,400 --> 00:01:07,200
+also supported by TypeScript.
+
+23
+00:01:08,066 --> 00:01:10,900
+And then in front of that old array,
+
+24
+00:01:10,900 --> 00:01:12,566
+I wanna insert the value.
+
+25
+00:01:15,433 --> 00:01:18,733
+And then I want to return
+this new array here.
+
+26
+00:01:19,900 --> 00:01:22,100
+That could be a utility helper function,
+
+27
+00:01:22,100 --> 00:01:24,266
+which we create to have a function
+
+28
+00:01:24,266 --> 00:01:27,133
+which we can easily call to add a value
+
+29
+00:01:27,133 --> 00:01:30,200
+in an array without
+changing the existing array.
+
+30
+00:01:30,200 --> 00:01:32,166
+So the advantage of this function could be
+
+31
+00:01:32,166 --> 00:01:34,700
+that the original array never changes,
+
+32
+00:01:34,700 --> 00:01:37,133
+but instead we're getting
+a brand new array.
+
+33
+00:01:38,633 --> 00:01:39,466
+Now for this,
+
+34
+00:01:39,466 --> 00:01:41,833
+I could of course have a demo array with,
+
+35
+00:01:41,833 --> 00:01:44,033
+let's say free values,
+
+36
+00:01:44,033 --> 00:01:48,066
+and then I get my updated array
+
+37
+00:01:48,066 --> 00:01:49,666
+Where I call 'insertAtBeginning'
+
+38
+00:01:50,633 --> 00:01:52,666
+and I pass in the demo array.
+
+39
+00:01:52,666 --> 00:01:57,400
+And then a value of minus one let's say.
+
+40
+00:01:58,233 --> 00:02:00,933
+With that, I know that the updated array
+
+41
+00:02:00,933 --> 00:02:05,066
+will be this array with minus
+one inserted at the beginning.
+
+42
+00:02:05,066 --> 00:02:10,066
+So this will give me minus
+one, one, two, three.
+
+43
+00:02:10,166 --> 00:02:13,333
+And hence thereafter I might
+wanna do things with that array
+
+44
+00:02:13,333 --> 00:02:16,433
+which I can do with an
+array full of numbers.
+
+45
+00:02:16,433 --> 00:02:18,533
+But the problem is that updated array,
+
+46
+00:02:18,533 --> 00:02:19,733
+if I hover over it
+
+47
+00:02:19,733 --> 00:02:22,600
+is inferred to be of type any array.
+
+48
+00:02:22,600 --> 00:02:25,966
+So an array full of any kind of values.
+
+49
+00:02:25,966 --> 00:02:28,600
+TypeScript here doesn't pick up
+
+50
+00:02:28,600 --> 00:02:30,666
+that it's an array full of numbers.
+
+51
+00:02:30,666 --> 00:02:35,066
+Why, because here I have any, as a type
+
+52
+00:02:35,066 --> 00:02:38,333
+And I can't say that I only
+wanna allow numbers here,
+
+53
+00:02:38,333 --> 00:02:41,800
+because what if I want to
+use this utility function
+
+54
+00:02:41,800 --> 00:02:43,833
+with an array full of strings?
+
+55
+00:02:44,866 --> 00:02:47,300
+So we need any, but at the same time
+
+56
+00:02:47,300 --> 00:02:51,466
+that kind of removes all
+kind of TypeScript support
+
+57
+00:02:51,466 --> 00:02:54,300
+we might be getting after
+calling this function.
+
+58
+00:02:54,300 --> 00:02:58,000
+We're not getting any good
+TypeScript support for updated
+
+59
+00:02:58,000 --> 00:03:00,666
+array thereafter, because
+that is an inferred
+
+60
+00:03:00,666 --> 00:03:03,366
+to be an array full of any kind of objects
+
+61
+00:03:03,366 --> 00:03:05,333
+or any kind of values.
+
+62
+00:03:05,333 --> 00:03:07,333
+And that's not useful.
+
+63
+00:03:07,333 --> 00:03:10,733
+If I then for example, try
+to access the first element
+
+64
+00:03:10,733 --> 00:03:14,333
+and called split here, which
+I could call on a string.
+
+65
+00:03:14,333 --> 00:03:16,133
+I don't get an error here.
+
+66
+00:03:16,133 --> 00:03:18,833
+I would get a runtime error instead
+
+67
+00:03:18,833 --> 00:03:21,466
+because I can't call split on a number.
+
+68
+00:03:21,466 --> 00:03:24,966
+But again, TypeScript doesn't
+know that the first value
+
+69
+00:03:24,966 --> 00:03:27,466
+in updated array is a number.
+
+70
+00:03:27,466 --> 00:03:30,466
+We know it as a developer,
+but because of our type
+
+71
+00:03:30,466 --> 00:03:32,766
+definitions here, which we need,
+
+72
+00:03:32,766 --> 00:03:35,000
+TypeScript doesn't know it.
+
+73
+00:03:35,000 --> 00:03:37,100
+And to work around such problems,
+
+74
+00:03:37,100 --> 00:03:39,333
+we have this feature of Generics
+
+75
+00:03:39,333 --> 00:03:42,633
+and that's why I had does
+lengthy introduction here
+
+76
+00:03:42,633 --> 00:03:45,733
+because it is important to understand why
+
+77
+00:03:45,733 --> 00:03:47,433
+this feature exists.
+
+78
+00:03:47,433 --> 00:03:51,766
+With this Generics feature,
+we can convert this function
+
+79
+00:03:51,766 --> 00:03:54,166
+to a Generic function.
+
+80
+00:03:54,166 --> 00:03:56,666
+For this we use a special syntax here
+
+81
+00:03:56,666 --> 00:03:58,333
+after the function name,
+
+82
+00:03:58,333 --> 00:04:02,433
+in front of the parameter
+list, we add angle brackets
+
+83
+00:04:02,433 --> 00:04:05,800
+and that's now not a
+standard JavaScript feature
+
+84
+00:04:05,800 --> 00:04:08,200
+but really only a feature we can use here
+
+85
+00:04:08,200 --> 00:04:10,500
+since we're using TypeScript.
+
+86
+00:04:10,500 --> 00:04:15,166
+And in here we can define a
+Generic type which will only
+
+87
+00:04:15,166 --> 00:04:18,000
+be available inside of this function.
+
+88
+00:04:18,000 --> 00:04:20,600
+Typically that's called T for type
+
+89
+00:04:20,600 --> 00:04:23,866
+but any identifier of your choices okay.
+
+90
+00:04:25,333 --> 00:04:27,833
+Now you can use this
+type in your function,
+
+91
+00:04:27,833 --> 00:04:30,133
+including the parameter list.
+
+92
+00:04:30,133 --> 00:04:34,233
+And here I'm saying, I want
+to use this for my array.
+
+93
+00:04:34,233 --> 00:04:38,666
+So my array will be
+full of Ts and my value.
+
+94
+00:04:40,233 --> 00:04:42,033
+This should always be of type T.
+
+95
+00:04:43,033 --> 00:04:45,033
+But how does this help us?
+
+96
+00:04:45,033 --> 00:04:48,300
+Well like this set of codes
+it's just very cryptic,
+
+97
+00:04:48,300 --> 00:04:52,933
+but now when we call this
+function, now TypeScript actually
+
+98
+00:04:52,933 --> 00:04:55,733
+is able to understand that
+
+99
+00:04:55,733 --> 00:05:00,266
+it should look at the concrete
+values of the arguments here.
+
+100
+00:05:00,266 --> 00:05:03,200
+And it understands that
+this is an array of numbers
+
+101
+00:05:03,200 --> 00:05:06,400
+and this is just a number and
+they are free to understand
+
+102
+00:05:06,400 --> 00:05:10,033
+that updated array will
+be an array of numbers.
+
+103
+00:05:10,033 --> 00:05:13,633
+Because of this generic type
+feature, because we're telling
+
+104
+00:05:13,633 --> 00:05:18,633
+TypeScript that the type
+here is actually not any type
+
+105
+00:05:19,033 --> 00:05:20,933
+it's not any kind of value.
+
+106
+00:05:20,933 --> 00:05:25,900
+Instead, we tell it that
+the type of this array and
+
+107
+00:05:25,900 --> 00:05:28,066
+of this value should be the same
+
+108
+00:05:28,066 --> 00:05:29,633
+just that this is an array,
+
+109
+00:05:29,633 --> 00:05:33,000
+but it's an array full of
+the same types of values
+
+110
+00:05:33,000 --> 00:05:35,766
+as this single value has it.
+
+111
+00:05:35,766 --> 00:05:38,433
+And that's an important
+piece of information.
+
+112
+00:05:38,433 --> 00:05:41,433
+Therefore, TypeScript is
+able to look at the type
+
+113
+00:05:41,433 --> 00:05:43,800
+of demo array, which it knows.
+
+114
+00:05:43,800 --> 00:05:46,933
+It knows that this is a, an
+array of numbers it's able
+
+115
+00:05:46,933 --> 00:05:50,266
+to infer this, and it looks at this type.
+
+116
+00:05:50,266 --> 00:05:53,633
+And then it knows that
+logically, the array which gets
+
+117
+00:05:53,633 --> 00:05:57,100
+constructed here has
+to be of the same type
+
+118
+00:05:57,100 --> 00:05:58,300
+as the input array.
+
+119
+00:05:58,300 --> 00:06:00,166
+It's able to infer this here.
+
+120
+00:06:00,166 --> 00:06:01,966
+And hence, it's able to infer
+
+121
+00:06:01,966 --> 00:06:05,966
+that what we get back here
+has to be an array of numbers.
+
+122
+00:06:05,966 --> 00:06:10,966
+And if I would call,
+'insertAtBeginning' here
+
+123
+00:06:11,066 --> 00:06:14,466
+with an array of strings
+
+124
+00:06:14,466 --> 00:06:18,233
+Like this, and I then
+pass in a string here,
+
+125
+00:06:19,066 --> 00:06:21,166
+and I have my string array here,
+
+126
+00:06:21,166 --> 00:06:24,233
+TypeScript is also able
+to infer this correctly
+
+127
+00:06:24,233 --> 00:06:27,000
+because again, it looks
+at this type and this type
+
+128
+00:06:27,000 --> 00:06:30,433
+and it knows that the return
+type is of the same value
+
+129
+00:06:30,433 --> 00:06:33,566
+as this type, as T input
+array, enhance it again,
+
+130
+00:06:33,566 --> 00:06:35,333
+infers this correctly.
+
+131
+00:06:35,333 --> 00:06:38,600
+And therefore for the updated
+array here where it knows
+
+132
+00:06:38,600 --> 00:06:40,766
+that it has to be an
+array full of numbers.
+
+133
+00:06:40,766 --> 00:06:45,033
+It's now able to warn me
+when I try to call split.
+
+134
+00:06:45,033 --> 00:06:48,133
+It tells me that this does
+not exist on type number.
+
+135
+00:06:49,666 --> 00:06:52,333
+So that's just as important
+feature of generics.
+
+136
+00:06:52,333 --> 00:06:56,033
+It's simply helps you write
+functions in this case,
+
+137
+00:06:56,033 --> 00:06:59,800
+which are type safe yet flexible.
+
+138
+00:06:59,800 --> 00:07:01,033
+They are flexible.
+
+139
+00:07:01,033 --> 00:07:04,200
+They work with any type,
+but then once a certain type
+
+140
+00:07:04,200 --> 00:07:07,266
+is used for that function, execution,
+
+141
+00:07:07,266 --> 00:07:10,866
+that type is locked in and known.
+
+142
+00:07:10,866 --> 00:07:12,866
+And that allows you to get the best
+
+143
+00:07:12,866 --> 00:07:17,866
+of both worlds, flexibility
+and type safety.
+

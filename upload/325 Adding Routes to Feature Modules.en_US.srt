@@ -1,0 +1,196 @@
+1
+00:00:02,370 --> 00:00:08,580
+Now, the work we did on the recipes module was a good start but of course the only thing we're doing
+
+2
+00:00:08,580 --> 00:00:15,690
+thus far is we're outsourcing our recipes component declaration in a separate module so that the app
+
+3
+00:00:15,690 --> 00:00:17,060
+module is a bit leaner.
+
+4
+00:00:17,280 --> 00:00:20,140
+Now that wouldn't be the worst reason to do it,
+
+5
+00:00:20,160 --> 00:00:26,070
+it's absolutely fine to restructure your app to have leaner modules that are easier to understand and
+
+6
+00:00:26,070 --> 00:00:27,360
+to manage,
+
+7
+00:00:27,360 --> 00:00:30,810
+yet we can actually do more than that.
+
+8
+00:00:30,870 --> 00:00:38,460
+We can also move the recipes related route configuration away from the app routing module,
+
+9
+00:00:38,460 --> 00:00:44,880
+so I'm talking about this branch here essentially, away from the app routing module and into our recipes
+
+10
+00:00:44,880 --> 00:00:50,390
+module. For that, here in the router module,
+
+11
+00:00:50,390 --> 00:01:00,390
+you could add forChild now. Now for root is only used once essentially, here in the app routing module
+
+12
+00:01:00,420 --> 00:01:07,790
+where we use for root to configure our root routes. In a feature module which you then plan on importing
+
+13
+00:01:07,800 --> 00:01:14,220
+into your app module, you would use forChild and this will automatically merge the child routing configuration
+
+14
+00:01:14,460 --> 00:01:16,830
+with the root routes.
+
+15
+00:01:16,830 --> 00:01:22,980
+So therefore here, we can use forChild and pass in that same array of route configuration we pass
+
+16
+00:01:22,980 --> 00:01:26,620
+to for root. Now to keep this file leaner
+
+17
+00:01:26,700 --> 00:01:28,260
+and this is totally optional,
+
+18
+00:01:28,380 --> 00:01:30,330
+I'll again create a separate module,
+
+19
+00:01:30,330 --> 00:01:35,020
+the recipes-routing module and therefore I'll export
+
+20
+00:01:35,020 --> 00:01:43,410
+this class, recipes routing module, which will receive the @NgModule decorator and I only do that
+
+21
+00:01:43,590 --> 00:01:50,220
+to focus on the route set up in this file and not clutter the other recipes module file with that.
+
+22
+00:01:50,220 --> 00:01:55,770
+So here, we have our routes which are of type routes which is imported from @angular/router and which
+
+23
+00:01:55,770 --> 00:02:00,080
+is an array and in that array, you add all recipes related routes
+
+24
+00:02:00,090 --> 00:02:08,290
+and in this case, if we have a look at the app routing module, that means I take this single route, this
+
+25
+00:02:08,310 --> 00:02:14,880
+recipes route with all its nested routes, I take that, cut it from my app routing module and move it
+
+26
+00:02:15,000 --> 00:02:17,440
+here into the recipes routing module.
+
+27
+00:02:17,480 --> 00:02:26,360
+So now here, we have that route file, that route setup. That of course means that all these imports have
+
+28
+00:02:26,360 --> 00:02:34,110
+to be added and I will add all missing imports here, so all the recipe components and also the auth
+
+29
+00:02:34,110 --> 00:02:34,550
+guard,
+
+30
+00:02:34,590 --> 00:02:35,550
+that's also important,
+
+31
+00:02:35,550 --> 00:02:42,780
+we use that here too, so that this file now has a correct route setup and now in NgModule, we add
+
+32
+00:02:42,810 --> 00:02:48,740
+imports and import the router module from @angular/router
+
+33
+00:02:48,960 --> 00:02:55,260
+and as I just explained, on that module, you now call forChild and pass in your routes and then just as
+
+34
+00:02:55,260 --> 00:03:03,960
+before, you export this router module here and we export it in the recipes routing module so that in the recipes
+
+35
+00:03:04,050 --> 00:03:11,160
+module, we can actually import our recipes routing module and again of course for that, you need to add
+
+36
+00:03:11,270 --> 00:03:19,980
+an import path, so import recipes routing module from the recipes-routing.module file.
+
+37
+00:03:19,980 --> 00:03:24,310
+So now we're adding the routes here in the recipes area.
+
+38
+00:03:24,390 --> 00:03:31,980
+Now with that adjustment, in the app routing module, we got one route less, we got all the other routes
+
+39
+00:03:32,010 --> 00:03:33,290
+but not this route
+
+40
+00:03:33,480 --> 00:03:40,880
+but now in the app module, we do import the recipes module and since we register our recipes related routes
+
+41
+00:03:40,890 --> 00:03:46,920
+there, they should still be part of our general routing config. The config, the routing config is
+
+42
+00:03:46,920 --> 00:03:49,380
+now just split across two files.
+
+43
+00:03:49,560 --> 00:03:55,830
+That also means that here in the app routing module, we remove all these unused imports,
+
+44
+00:03:56,070 --> 00:04:00,780
+so that they don't pollute this file anymore.
+
+45
+00:04:00,780 --> 00:04:07,990
+Now let's try saving that and this looks good. Here I'm in the recipes area and I can navigate a route,
+
+46
+00:04:08,230 --> 00:04:11,870
+I can go to new recipe, so all these recipes related routes
+
+47
+00:04:11,920 --> 00:04:19,600
+they still work just as they did before but now with our split up route config and again here, the idea
+
+48
+00:04:19,630 --> 00:04:27,850
+can be that we make sure that we have a leaner app module and a leaner app routing module and we manage
+
+49
+00:04:27,910 --> 00:04:32,710
+all recipes related things in our recipes module and nowhere else.
+

@@ -1,0 +1,144 @@
+1
+00:00:02,360 --> 00:00:07,540
+In the last lecture, we registered our controls and we made our form submittable,
+
+2
+00:00:07,540 --> 00:00:09,050
+so that is what we did then,
+
+3
+00:00:09,080 --> 00:00:11,290
+we can still use that form,
+
+4
+00:00:11,320 --> 00:00:13,290
+now I want to add validation.
+
+5
+00:00:13,510 --> 00:00:16,680
+For example, the name should be required,
+
+6
+00:00:16,690 --> 00:00:18,330
+this must not be empty
+
+7
+00:00:18,580 --> 00:00:21,750
+and the same for our number.
+
+8
+00:00:21,880 --> 00:00:27,670
+Now it should be a number and due to the fact that this input is of type number, it should already be
+
+9
+00:00:27,670 --> 00:00:30,040
+hard to enter anything else.
+
+10
+00:00:30,520 --> 00:00:35,470
+So with this, we now added some validation,
+
+11
+00:00:35,470 --> 00:00:41,270
+now to take advantage of this, I want to disable the add button if the form is invalid.
+
+12
+00:00:41,470 --> 00:00:47,390
+So I'll bind to disabled here and disable it if form is not valid,
+
+13
+00:00:47,440 --> 00:00:48,770
+if this is true.
+
+14
+00:00:48,790 --> 00:00:53,140
+So if this check here is true and this will be true if the form is not valid.
+
+15
+00:00:53,620 --> 00:00:55,130
+So let's save this
+
+16
+00:00:55,150 --> 00:00:55,810
+and this looks good,
+
+17
+00:00:55,810 --> 00:00:57,990
+I can't click the add button.
+
+18
+00:00:58,000 --> 00:00:59,040
+Now let's try again,
+
+19
+00:00:59,050 --> 00:01:01,220
+let's insert something into amount and
+
+20
+00:01:01,300 --> 00:01:05,060
+this works, of course a negative amount works too though.
+
+21
+00:01:05,140 --> 00:01:12,460
+So an easy way of making sure that we may only enter numbers greater than zero is to use another built-in
+
+22
+00:01:12,460 --> 00:01:13,390
+validator,
+
+23
+00:01:13,450 --> 00:01:19,660
+the pattern validator, this will check the user input against a regular expression.
+
+24
+00:01:19,660 --> 00:01:24,880
+Now the regular expression achieving what we are looking for would be the following one which needs
+
+25
+00:01:24,880 --> 00:01:27,430
+to be pasted between single quotation marks,
+
+26
+00:01:27,460 --> 00:01:34,750
+so as a string, it's this one. Since it's a string, we can also omit the single quotation marks and omit
+
+27
+00:01:34,810 --> 00:01:40,480
+the square brackets to use this shortcut of using property binding when binding to a string where we
+
+28
+00:01:40,480 --> 00:01:42,580
+don't have to use the square brackets.
+
+29
+00:01:42,910 --> 00:01:49,010
+So what this will basically do, this regular expression, it will allow any number greater than zero.
+
+30
+00:01:49,120 --> 00:01:53,760
+So we can see this in action if we now save this and go back to the application,
+
+31
+00:01:53,860 --> 00:02:01,630
+if I add bread and one, this is valid, -1 doesn't work, -10 doesn't work, -01 doesn't
+
+32
+00:02:01,630 --> 00:02:06,430
+work, +01 does work, 10 does work and 0 does not work,
+
+33
+00:02:06,430 --> 00:02:09,330
+so it does exactly what I want it to do.
+
+34
+00:02:09,640 --> 00:02:12,760
+So now we added validation to this input field,
+
+35
+00:02:12,760 --> 00:02:18,800
+now let's make sure that once we click one of the existing items, we actually load that items so that
+
+36
+00:02:18,820 --> 00:02:19,930
+we can edit it.
+

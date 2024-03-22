@@ -1,0 +1,236 @@
+1
+00:00:02,430 --> 00:00:04,560
+So we set everything up in the last lecture,
+
+2
+00:00:04,560 --> 00:00:06,430
+now let's create our form.
+
+3
+00:00:06,510 --> 00:00:13,720
+Now we could initialize it right here to set a value immediately but I don't like to do this here,
+
+4
+00:00:13,740 --> 00:00:19,320
+I want to have it in a method because it actually is quite a lot of code and it's not the best place
+
+5
+00:00:19,320 --> 00:00:19,900
+to have that right
+
+6
+00:00:19,910 --> 00:00:23,130
+here at the top in the property declaration area.
+
+7
+00:00:23,280 --> 00:00:25,880
+So I will use the onInit lifecycle hook for this,
+
+8
+00:00:25,890 --> 00:00:27,850
+so I will import onInit,
+
+9
+00:00:27,900 --> 00:00:34,110
+make sure to import it from @angular/core and therefore I'm required to implement the ngOnInit
+
+10
+00:00:34,110 --> 00:00:34,890
+method
+
+11
+00:00:34,890 --> 00:00:37,860
+and in here, I will initialize my form.
+
+12
+00:00:37,950 --> 00:00:43,820
+You should initialize it before rendering the template of course, so make sure to use a lifecycle hook
+
+13
+00:00:44,010 --> 00:00:46,790
+which is called before the template is rendered.
+
+14
+00:00:47,030 --> 00:00:52,010
+Here I will set up my signupForm and I will set it equal to, to what?
+
+15
+00:00:52,320 --> 00:00:59,790
+Well keep in mind, signupForm is of type FormGroup, so we need to create a new FormGroup here, just
+
+16
+00:00:59,790 --> 00:01:00,810
+like this.
+
+17
+00:01:00,810 --> 00:01:07,830
+Now we have almost a valid form, we need to pass a Javascript object here and we're theoretically done,
+
+18
+00:01:07,830 --> 00:01:15,360
+this is our first created form. This Javascript object configures it and as it's empty, it simply says
+
+19
+00:01:15,380 --> 00:01:16,930
+or it tells Angular,
+
+20
+00:01:17,070 --> 00:01:24,270
+hey this form doesn't have any controls, so let's add some. Controls are basically just key-value pairs in
+
+21
+00:01:24,270 --> 00:01:27,870
+this object we pass to the overall FormGroup.
+
+22
+00:01:27,930 --> 00:01:30,200
+So let's have a look at our HTML code,
+
+23
+00:01:30,360 --> 00:01:36,350
+we have a username field and an e-mail field and then we get the radio buttons here at the bottom,
+
+24
+00:01:36,420 --> 00:01:41,010
+so it would make sense to have a username control.
+
+25
+00:01:41,070 --> 00:01:47,430
+I'm wrapping this in quotation marks to make sure that during minification when this code gets
+
+26
+00:01:47,430 --> 00:01:53,200
+mangled, this property name is kept because I will reference it in the HTML code.
+
+27
+00:01:53,220 --> 00:01:55,610
+This might not be necessary,
+
+28
+00:01:55,650 --> 00:02:01,800
+it might not get destroyed but just to be sure, I'm wrapping it as a string.
+
+29
+00:02:01,830 --> 00:02:03,970
+So here, what is this now?
+
+30
+00:02:04,260 --> 00:02:10,510
+Well this is a FormControl, another class made available by the reactive forms module or by this
+
+31
+00:02:10,560 --> 00:02:11,460
+forms package here
+
+32
+00:02:11,480 --> 00:02:18,300
+I should say. So I will set up or create a new FormControl here and FormControl should also be added
+
+33
+00:02:18,300 --> 00:02:22,170
+from the forms package, from @angular/forms.
+
+34
+00:02:22,200 --> 00:02:26,810
+Now to this FormControl constructor, we can pass a couple of arguments,
+
+35
+00:02:26,880 --> 00:02:32,580
+the first argument is the initial state, the initial value of this control you could say.
+
+36
+00:02:32,670 --> 00:02:37,890
+The second argument will be a single validator or an array of validators we want to apply to this control,
+
+37
+00:02:37,950 --> 00:02:38,630
+I'll come back
+
+38
+00:02:38,640 --> 00:02:43,890
+to this. The third argument will be potential asynchronous validators,
+
+39
+00:02:43,890 --> 00:02:45,910
+I will also come back to this later.
+
+40
+00:02:46,080 --> 00:02:51,750
+For now, I want to set an initial state of null to have an empty field but you could also pass a string
+
+41
+00:02:51,930 --> 00:02:53,770
+like default username
+
+42
+00:02:53,790 --> 00:02:56,970
+and now this would later be displayed as a default username, again
+
+43
+00:02:57,090 --> 00:02:59,920
+I'll keep it at null for now.
+
+44
+00:02:59,940 --> 00:03:04,070
+Now, have a look at the template again, the next field is the e-mail.
+
+45
+00:03:04,080 --> 00:03:10,080
+So I'm going to add another control, another key-value pair in this Javascript object which
+
+46
+00:03:10,080 --> 00:03:13,050
+will also be a new FormControl
+
+47
+00:03:13,050 --> 00:03:18,840
+and here, I will also set a default value of null, again validation will be added later.
+
+48
+00:03:18,880 --> 00:03:24,790
+Now gender, this gender the user selects is also a new FormControl,
+
+49
+00:03:24,840 --> 00:03:28,350
+it might be a radio button but that is just a normal input in the end,
+
+50
+00:03:28,350 --> 00:03:31,910
+so to Angular, it simply is a control
+
+51
+00:03:31,950 --> 00:03:34,640
+and here I could set this to null
+
+52
+00:03:34,650 --> 00:03:37,690
+but I want to select the default gender.
+
+53
+00:03:37,890 --> 00:03:41,550
+So here, I will actually select male because that's my gender,
+
+54
+00:03:41,550 --> 00:03:48,600
+feel free to pick female of course or add more genders to this array of genders up here to begin with. With
+
+55
+00:03:48,600 --> 00:03:50,720
+this, a basic form is initialized,
+
+56
+00:03:50,730 --> 00:03:54,700
+it has three controls and that is all for now,
+
+57
+00:03:54,720 --> 00:03:58,700
+this is our first basic form. Now in the next lecture,
+
+58
+00:03:58,770 --> 00:04:03,280
+we're going to connect this form we created here in TypeScript to our form
+
+59
+00:04:03,300 --> 00:04:05,010
+we have set up in the HTML code.
+

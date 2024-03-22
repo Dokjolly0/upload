@@ -1,0 +1,92 @@
+1
+00:00:02,530 --> 00:00:08,590
+Let me quickly summarize what we've learned thus far because it really is important. This component communication
+
+2
+00:00:08,740 --> 00:00:17,230
+is such a key feature and with @input and the ability to make your properties bindable from outside,
+
+3
+00:00:17,440 --> 00:00:20,420
+from the parent component using this component
+
+4
+00:00:20,710 --> 00:00:26,530
+and the same for @output which allows parent components using this component to listen to your own
+
+5
+00:00:26,530 --> 00:00:29,520
+events which you created with new eventEmitter,
+
+6
+00:00:29,710 --> 00:00:33,190
+these are such important features in your app.
+
+7
+00:00:33,250 --> 00:00:40,570
+We will use it in the recipe book in the next section because this really allows you to make your application
+
+8
+00:00:40,570 --> 00:00:41,560
+very dynamic,
+
+9
+00:00:41,620 --> 00:00:45,900
+use many components and have them talk to each other.
+
+10
+00:00:45,940 --> 00:00:54,850
+Now one issue you could say with that approach is that if you want to talk between two components sitting
+
+11
+00:00:54,850 --> 00:01:01,600
+next to each other, it can get kind of complicated to emit an event in one component, change something
+
+12
+00:01:01,600 --> 00:01:05,830
+in the parent component and then pass this new data down to the child component
+
+13
+00:01:06,100 --> 00:01:11,790
+and these chains of inputs and outputs can really grow more complex.
+
+14
+00:01:12,100 --> 00:01:18,070
+So while this is absolutely fine here and this is a feature you will use a lot because it's not bad at all,
+
+15
+00:01:18,100 --> 00:01:24,460
+there are some use cases where the distance between two components that should talk to each other is
+
+16
+00:01:24,460 --> 00:01:30,400
+so great that building a chain of outputs and inputs is not very practical.
+
+17
+00:01:30,400 --> 00:01:38,140
+That is why in the services section of this course, I will then show you another approach of having components
+
+18
+00:01:38,140 --> 00:01:40,630
+talk to each other, though and that is important,
+
+19
+00:01:40,630 --> 00:01:42,940
+this will not be a better approach,
+
+20
+00:01:43,000 --> 00:01:46,760
+it is just a better tool for a specific use case.
+
+21
+00:01:47,050 --> 00:01:52,460
+A use case like this here is typically handled with input and output like we are doing it here,
+
+22
+00:01:52,480 --> 00:01:55,810
+it's the perfect tool for this job and it's so important,
+
+23
+00:01:55,870 --> 00:01:59,810
+you will see it getting used a lot throughout the rest of this course.
+

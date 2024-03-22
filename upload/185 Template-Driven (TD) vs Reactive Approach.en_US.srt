@@ -1,0 +1,56 @@
+1
+00:00:02,500 --> 00:00:08,680
+Before diving in the actual code, it's super important to understand that Angular actually offers two
+
+2
+00:00:08,680 --> 00:00:12,010
+approaches when it comes to handling forms.
+
+3
+00:00:12,100 --> 00:00:17,920
+It offers the template driven approach, which is called like this because there, you simply set up your
+
+4
+00:00:17,920 --> 00:00:25,090
+form in the template, in HTML code and Angular will automatically infer the structure of your
+
+5
+00:00:25,090 --> 00:00:32,140
+form, will infer which controls your forms has, which inputs and makes it easy for you to get started
+
+6
+00:00:32,140 --> 00:00:33,400
+quickly.
+
+7
+00:00:33,400 --> 00:00:39,250
+It also has a more complex approach, the reactive approach.
+
+8
+00:00:39,250 --> 00:00:45,150
+There, you actually define the structure of the form in TypeScript code,
+
+9
+00:00:45,250 --> 00:00:51,730
+you also set up the HTML code and then you manually connect it which might sound more complicated
+
+10
+00:00:51,730 --> 00:00:56,230
+than it is in the end and therefore, it gives you greater control over it,
+
+11
+00:00:56,230 --> 00:01:00,300
+you can fine tune every little piece about your form.
+
+12
+00:01:00,310 --> 00:01:05,250
+Now in this module, we're going to have a look at both approaches, in the next videos,
+
+13
+00:01:05,320 --> 00:01:10,200
+I'm going to start with the template driven approach which is fine for a lot of use cases
+
+14
+00:01:10,300 --> 00:01:13,960
+before we then dive into the more advanced reactive approach.
+

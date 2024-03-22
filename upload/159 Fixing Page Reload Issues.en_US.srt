@@ -1,0 +1,148 @@
+1
+00:00:02,300 --> 00:00:06,040
+In the last lecture, we styled our active links here,
+
+2
+00:00:06,060 --> 00:00:10,950
+now I want to fix the behavior that whenever I click one of these recipes icons here, we reload
+
+3
+00:00:10,950 --> 00:00:11,760
+the page.
+
+4
+00:00:12,030 --> 00:00:18,240
+And that simply happens if we have a look at our recipe-list component which of course is responsible
+
+5
+00:00:18,240 --> 00:00:24,490
+for displaying the list, here in the recipe-item which is the individual item we're clicking,
+
+6
+00:00:24,510 --> 00:00:27,320
+we have a link with this ref attribute here.
+
+7
+00:00:27,450 --> 00:00:33,640
+Let's remove it because that will actually send a request to the browser and therefore reload our page.
+
+8
+00:00:33,870 --> 00:00:36,830
+If we remove this, you'll see now I can click it
+
+9
+00:00:36,930 --> 00:00:40,980
+but now we no longer get the cursor which looks like a hand.
+
+10
+00:00:41,490 --> 00:00:47,820
+We can quickly add this manually though by simply adding style and then cursor equal to pointer
+
+11
+00:00:47,880 --> 00:00:52,050
+and now we should have the pointer which clearly indicates that we can click this
+
+12
+00:00:52,370 --> 00:00:55,280
+but now we don't reload the page anymore.
+
+13
+00:00:55,590 --> 00:01:00,840
+Now for the dropdown here, we should also make sure that all these links are not reloading the page
+
+14
+00:01:00,930 --> 00:01:07,020
+because right now they are and that is something we have to fix in the recipe-detail component. Here
+
+15
+00:01:07,020 --> 00:01:14,730
+we also need to remove these ref elements here and I already added the style with the cursor which is set
+
+16
+00:01:14,730 --> 00:01:17,240
+to a pointer to the first anchor tag,
+
+17
+00:01:17,400 --> 00:01:21,490
+let's also add it to the other two and with that, that should be fixed too.
+
+18
+00:01:21,750 --> 00:01:24,360
+Now if we select something here, we don't reload.
+
+19
+00:01:24,660 --> 00:01:30,110
+Let's now also do that for the dropdown, right now clicking the dropdown also reloads the page,
+
+20
+00:01:30,150 --> 00:01:32,880
+that of course has to be fixed in the header component
+
+21
+00:01:33,090 --> 00:01:41,050
+and here we reload the page because our dropdown also has this anchor tag or this ref attribute on it.
+
+22
+00:01:41,250 --> 00:01:48,300
+So we should get rid of this and then maybe also implement this style cursor pointer set up to get
+
+23
+00:01:48,300 --> 00:01:49,730
+the right mouse cursor,
+
+24
+00:01:49,920 --> 00:01:55,470
+let's also do the same for the individual anchor tags inside of that dropdown.
+
+25
+00:01:55,560 --> 00:01:59,640
+So I also removed ref there and added my own cursor style.
+
+26
+00:01:59,640 --> 00:02:02,060
+So with that, this now all works fine,
+
+27
+00:02:02,100 --> 00:02:04,170
+of course the dropdown doesn't do anything,
+
+28
+00:02:04,170 --> 00:02:10,980
+we'll add this later but the app is working again and therefore, we made a big step into the right direction.
+
+29
+00:02:10,980 --> 00:02:19,680
+So with this all added and set up here, our root routes seem to be working fine but now I want to change
+
+30
+00:02:19,680 --> 00:02:25,930
+the way we load the recipe when we click on one here in the list, I actually want to load that
+
+31
+00:02:26,000 --> 00:02:29,480
+via child routing. When we click new recipe,
+
+32
+00:02:29,490 --> 00:02:36,840
+I also want to load the to be created recipe-edit component here on the right, where we now have the detail
+
+33
+00:02:36,840 --> 00:02:40,790
+component and the same for the case that we click edit here.
+
+34
+00:02:40,860 --> 00:02:43,640
+So that is something I definitely want to add,
+
+35
+00:02:43,770 --> 00:02:46,070
+I want to add these routes,
+
+36
+00:02:46,100 --> 00:02:46,960
+these child routes.
+
+37
+00:02:46,980 --> 00:02:49,210
+So that is what we should work on next.
+

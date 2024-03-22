@@ -1,0 +1,96 @@
+1
+00:00:02,450 --> 00:00:06,090
+In the last lecture, we learned something crucial,
+
+2
+00:00:06,090 --> 00:00:13,330
+we learned how to bind to our own properties with @input parentheses in front of it,
+
+3
+00:00:13,440 --> 00:00:15,330
+super important.
+
+4
+00:00:15,330 --> 00:00:18,460
+Now you can even configure this a bit more,
+
+5
+00:00:18,660 --> 00:00:25,800
+sometimes you don't want to use the same property outside of the component as you use inside of it.
+
+6
+00:00:25,800 --> 00:00:30,540
+So inside this component, you might say element is exactly the property name I want to use because it
+
+7
+00:00:30,540 --> 00:00:37,070
+makes the most sense but outside, so here, you maybe don't want to bind to element,
+
+8
+00:00:37,320 --> 00:00:46,260
+maybe you want to bind to srvElement to make it clear it's a server element, anything like that.
+
+9
+00:00:46,260 --> 00:00:52,170
+Now that would of course not work because now you would try to bind to a property, Angular doesn't know
+
+10
+00:00:52,170 --> 00:00:53,620
+that it would be bindable
+
+11
+00:00:53,640 --> 00:00:59,980
+because there is no server element property in this component with @input in front of it.
+
+12
+00:01:00,180 --> 00:01:02,370
+You can assign an alias,
+
+13
+00:01:02,370 --> 00:01:08,970
+you can pass an argument to @input with the property name as you want to have it
+
+14
+00:01:09,030 --> 00:01:11,010
+outside of this component,
+
+15
+00:01:11,100 --> 00:01:15,860
+so srvElement could be added here and now from the outside,
+
+16
+00:01:15,870 --> 00:01:23,490
+so from the component where you implement this component, you now have to target srvElement if you
+
+17
+00:01:23,490 --> 00:01:27,630
+want to bind to this property. Element will no longer work,
+
+18
+00:01:27,630 --> 00:01:34,290
+it has to be srvElement now which is why now with these two places changed in the app component and in
+
+19
+00:01:34,290 --> 00:01:40,400
+the server element component, we see the same as before but now binding through the alias.
+
+20
+00:01:40,500 --> 00:01:43,730
+And just again to be really sure, to make this really clear,
+
+21
+00:01:43,800 --> 00:01:48,070
+now you have to use srvElement, element will no longer work.
+
+22
+00:01:48,090 --> 00:01:54,750
+So that's a little bonus, a little alternative in case you want to bind to some other property name outside
+
+23
+00:01:54,750 --> 00:01:55,640
+of the component,
+
+24
+00:01:55,770 --> 00:01:57,480
+this is how you assign an alias.
+

@@ -1,0 +1,44 @@
+1
+00:00:03,040 --> 00:00:05,580
+Well, we're really covered a lot in this section.
+
+2
+00:00:05,590 --> 00:00:10,810
+We learned a lot about routing, setting up routes, setting up child routes, navigating there, navigating
+
+3
+00:00:10,810 --> 00:00:16,480
+there in code, passing parameters, passing query parameters, extracting parameters, extracting parameters
+
+4
+00:00:16,540 --> 00:00:22,390
+dynamically, using guards, using different types of guards, preventing the user from accidentally navigating
+
+5
+00:00:22,400 --> 00:00:27,140
+away, resolving data, passing static data, styling the links which are active
+
+6
+00:00:27,190 --> 00:00:32,350
+and so much more. This is how you may use the Angular router
+
+7
+00:00:32,440 --> 00:00:38,320
+we're going to use in our course project soon but I can only encourage you to play around with it, to
+
+8
+00:00:38,320 --> 00:00:40,240
+really get a feeling for it
+
+9
+00:00:40,540 --> 00:00:46,120
+and I will also take a closer look at these observables we used in this section so that you feel more
+
+10
+00:00:46,120 --> 00:00:48,200
+comfortable using them too.
+
+11
+00:00:48,370 --> 00:00:49,160
+Let's move on.
+

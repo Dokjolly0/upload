@@ -1,0 +1,156 @@
+1
+00:00:02,420 --> 00:00:08,840
+In our shopping list service, we had more than just adding a single ingredient and adding multiple ingredients,
+
+2
+00:00:08,870 --> 00:00:12,940
+we also had functions to update an ingredient and there we needed
+
+3
+00:00:13,010 --> 00:00:16,920
+the index of the ingredient which we want to update and the new ingredient
+
+4
+00:00:17,120 --> 00:00:19,640
+and we had delete ingredient.
+
+5
+00:00:19,640 --> 00:00:24,910
+Now let's implement these two features with the help of NgRx as well.
+
+6
+00:00:25,040 --> 00:00:30,110
+For that, we can go back to the shopping list actions because first of all, obviously we want to add some
+
+7
+00:00:30,110 --> 00:00:31,100
+actions for that, right?
+
+8
+00:00:31,730 --> 00:00:40,550
+We got two new constants that make sense, update ingredient which also holds update ingredient as an
+
+9
+00:00:40,550 --> 00:00:49,590
+identifier here and then also another constant, delete ingredient which holds delete ingredient as an
+
+10
+00:00:49,620 --> 00:00:51,210
+identifier here.
+
+11
+00:00:51,770 --> 00:00:57,830
+As we learned, we also need classes because an action is actually an object based on such a class and
+
+12
+00:00:57,860 --> 00:01:00,150
+not just a string identifier.
+
+13
+00:01:00,410 --> 00:01:08,940
+So I'll export a class here, update ingredient which will implement action and which therefore needs that
+
+14
+00:01:08,960 --> 00:01:11,570
+readonly type that should be update
+
+15
+00:01:11,570 --> 00:01:13,020
+ingredient here
+
+16
+00:01:13,310 --> 00:01:16,190
+and for updating an ingredient, we also need some data,
+
+17
+00:01:16,190 --> 00:01:23,450
+so let's add a constructor and the constructor here will get a payload again and the payload here will
+
+18
+00:01:23,450 --> 00:01:25,820
+actually be an object,
+
+19
+00:01:25,820 --> 00:01:32,030
+so it's of type object but not an empty object but instead an object with two pieces of information
+
+20
+00:01:32,420 --> 00:01:36,120
+and we find these two pieces in the existing shopping list service.
+
+21
+00:01:36,230 --> 00:01:38,650
+It's the index of the element which we want to update
+
+22
+00:01:38,750 --> 00:01:46,700
+and the new ingredient. So therefore here, we expect to get the index which should be a number and the ingredient
+
+23
+00:01:46,760 --> 00:01:50,350
+which should be of type ingredient.
+
+24
+00:01:50,360 --> 00:01:54,800
+Now that's one of the two classes we need, deleting an ingredient is also an action,
+
+25
+00:01:54,800 --> 00:02:04,370
+so let's also export a class delete ingredient here that also implements action, therefore also
+
+26
+00:02:04,370 --> 00:02:08,150
+has the readonly type which is equal to delete ingredient
+
+27
+00:02:08,630 --> 00:02:15,380
+and we also need a constructor here because we require some data and the data here, the data payload
+
+28
+00:02:15,740 --> 00:02:22,640
+is simply a number because if we have a look at that shopping list service again, the information we
+
+29
+00:02:22,640 --> 00:02:27,710
+need for deleting an ingredient is simply the index, which is a number and therefore the payload here
+
+30
+00:02:27,770 --> 00:02:30,310
+will be the index of the thing we want to delete,
+
+31
+00:02:30,410 --> 00:02:34,800
+so of the ingredient we want to delete and therefore, this is also just a number.
+
+32
+00:02:34,910 --> 00:02:38,310
+Now we should add these actions here to our union type down there,
+
+33
+00:02:38,450 --> 00:02:46,890
+so add update ingredient and add delete ingredient like this, restructure this a bit to make it easier
+
+34
+00:02:46,890 --> 00:02:48,810
+to read, written beneath each other
+
+35
+00:02:48,810 --> 00:02:54,420
+and with that, the shopping list actions file is prepared but of course the shopping list actions file
+
+36
+00:02:54,450 --> 00:02:56,400
+is only one of the things we need,
+
+37
+00:02:56,490 --> 00:02:59,190
+we also need to work on the reducer and
+
+38
+00:02:59,250 --> 00:03:03,060
+we need to add logic there to update an ingredient
+
+39
+00:03:03,090 --> 00:03:06,360
+and unsurprisingly, to delete an ingredient.
+

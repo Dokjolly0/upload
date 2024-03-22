@@ -1,0 +1,360 @@
+1
+00:00:02,400 --> 00:00:09,690
+Having the auto login in place is great but what about an auto logout because our token will expire,
+
+2
+00:00:09,690 --> 00:00:12,030
+it has an expiry time of one hour
+
+3
+00:00:12,030 --> 00:00:18,960
+once we get it and therefore right now, we have a bug in the app because this token will never expire
+
+4
+00:00:18,990 --> 00:00:20,460
+or the token will expire
+
+5
+00:00:20,490 --> 00:00:26,430
+but our application won't reflect that. We will automatically log the user in forever because we now
+
+6
+00:00:26,430 --> 00:00:29,670
+have that snapshot here and we never cleared that snapshot
+
+7
+00:00:29,670 --> 00:00:34,800
+and sure we could clear it when we logout and we should do that and we will do that but it will never
+
+8
+00:00:34,800 --> 00:00:37,890
+clear automatically. If the token expired after one hour,
+
+9
+00:00:37,920 --> 00:00:42,640
+nothing changes in our application and that of course is something we have to change.
+
+10
+00:00:42,660 --> 00:00:48,780
+So first of all in the auth service, we should make sure that since we store a snapshot upon on logging
+
+11
+00:00:48,780 --> 00:00:53,670
+in, we also clear that snapshot here in the logout function because if a user logs out,
+
+12
+00:00:53,670 --> 00:00:58,830
+we certainly have to clear everything about that user in our application and that includes the local
+
+13
+00:00:58,830 --> 00:00:59,310
+storage.
+
+14
+00:00:59,790 --> 00:01:04,950
+So here, we should take our local storage and we can simply call clear, to clear all the data and the
+
+15
+00:01:04,950 --> 00:01:06,130
+local storage,
+
+16
+00:01:06,180 --> 00:01:09,750
+that however only makes sense if we have no other data in there,
+
+17
+00:01:09,780 --> 00:01:14,280
+if we do have, then we clear that as well, so it's better if we don't clear all the data
+
+18
+00:01:14,370 --> 00:01:21,200
+but instead if we call remove item and we just remove that user data key and the data that's stored there.
+
+19
+00:01:21,270 --> 00:01:26,910
+Now that's step number one, that we do actually clear the data when we logout
+
+20
+00:01:26,910 --> 00:01:34,070
+but now we also need to set a timer when the token is stored or when we first get a token
+
+21
+00:01:34,110 --> 00:01:41,690
+so that we know when to invalidate that token at a later point of time. And for this, I'll add yet another
+
+22
+00:01:41,690 --> 00:01:44,410
+method here which I'll call auto logout,
+
+23
+00:01:44,450 --> 00:01:49,040
+we have auto login for automatically retrieving user data and logging the user in,
+
+24
+00:01:49,040 --> 00:01:56,200
+now we need a method that sets a timer and manages a timer for automatically logging the user out. Auto
+
+25
+00:01:56,230 --> 00:02:03,340
+logout should get the expiration duration here which is a number as an argument,
+
+26
+00:02:03,350 --> 00:02:09,890
+so this will be the amount of milliseconds we have until the token is invalid let's say, of course you
+
+27
+00:02:09,890 --> 00:02:14,600
+could write this in a different logic but I will go with milliseconds which we get as an argument here
+
+28
+00:02:15,290 --> 00:02:24,770
+and then we can use set timeout in here to set that to that duration and after that duration here,
+
+29
+00:02:25,250 --> 00:02:27,390
+I want to call this logout,
+
+30
+00:02:27,410 --> 00:02:33,380
+so the logout function we have here should be called automatically after our expiration duration.
+
+31
+00:02:33,380 --> 00:02:39,380
+Now the important thing is that when we do logout, we clear that timer because if we logout automatically,
+
+32
+00:02:39,500 --> 00:02:40,580
+then it's no problem,
+
+33
+00:02:40,640 --> 00:02:46,440
+then the timer expired but if we logout manually because this button is pressed, we also call logout
+
+34
+00:02:46,440 --> 00:02:51,320
+and then we still have the timer in the background which calls logout again at a later point of
+
+35
+00:02:51,320 --> 00:02:52,030
+time.
+
+36
+00:02:52,040 --> 00:02:53,570
+Now we don't want to do that,
+
+37
+00:02:53,600 --> 00:02:57,060
+if a user logs out on his own, then the current session
+
+38
+00:02:57,080 --> 00:03:02,900
+so to say, the current lifetime of the token we have ends anyways and therefore we should also clear
+
+39
+00:03:02,900 --> 00:03:06,070
+that token expiration timer when we logout.
+
+40
+00:03:06,380 --> 00:03:08,690
+Now clearing that timer is not too hard,
+
+41
+00:03:08,690 --> 00:03:15,080
+we simply store it in a property which we can name token expiration timer but you can name this however
+
+42
+00:03:15,080 --> 00:03:24,230
+you want and that this will actually be of type any and now let's store our timer down there, set timeout
+
+43
+00:03:24,290 --> 00:03:31,200
+returns a reference to that timer, so we can simply store that in token expiration timer and in the logout
+
+44
+00:03:31,220 --> 00:03:33,660
+function, we now just have to clear that timer.
+
+45
+00:03:33,710 --> 00:03:41,030
+So in there, in logout, we should check if we do have an active timer because maybe we don't,
+
+46
+00:03:41,030 --> 00:03:45,100
+maybe it expired anyways then we can't clear it but if we do have an active one,
+
+47
+00:03:45,110 --> 00:03:53,900
+so if this is true-ish, then we should clear our timeout here and set this token expiration timer
+
+48
+00:03:53,900 --> 00:04:00,380
+or pass this token expiration timer into clear timeout and this will clear the token expiration
+
+49
+00:04:00,380 --> 00:04:05,430
+timer and thereafter reset token expiration timer back to null manually.
+
+50
+00:04:05,450 --> 00:04:11,810
+So now we cleared the timer when we logout and we also set it here,
+
+51
+00:04:11,810 --> 00:04:16,870
+now of course we just have to make sure we do call auto logout because currently we aren't doing that and
+
+52
+00:04:16,860 --> 00:04:21,300
+we need to call auto logout to make sure that this timer actually starts.
+
+53
+00:04:21,380 --> 00:04:24,290
+Now where do we need to call that?
+
+54
+00:04:24,290 --> 00:04:30,250
+Basically whenever we emit a new user to our application, so whenever we use our user subject
+
+55
+00:04:30,260 --> 00:04:36,040
+and that would be the case here in handle authentication and also in auto login.
+
+56
+00:04:36,050 --> 00:04:39,150
+Now let's start with handle authentication, there
+
+57
+00:04:40,320 --> 00:04:45,160
+we do emit our user. Now right after doing that or right before doing that,
+
+58
+00:04:45,150 --> 00:04:46,090
+doesn't matter,
+
+59
+00:04:46,230 --> 00:04:52,700
+we should call auto logout and pass our current expiration time into that auto logout function.
+
+60
+00:04:52,740 --> 00:04:59,250
+Now the current expiration time of course is our expires in value here which is in seconds
+
+61
+00:04:59,250 --> 00:05:05,580
+times 1000 because we expect milliseconds in auto logout, since expires in is in seconds
+
+62
+00:05:05,580 --> 00:05:12,710
+times 1000 gives us the amount in milliseconds. Now that's handle authentication, in auto login,
+
+63
+00:05:12,720 --> 00:05:19,440
+it's a tiny bit more complex. Here when we know that we do have a token and we therefore emit our user
+
+64
+00:05:19,440 --> 00:05:21,450
+to the application, there
+
+65
+00:05:21,450 --> 00:05:25,050
+we also want to call this auto logout
+
+66
+00:05:25,140 --> 00:05:29,260
+but here, we now have to calculate the remaining time.
+
+67
+00:05:29,550 --> 00:05:32,230
+We do have our token expiration date after all
+
+68
+00:05:32,250 --> 00:05:35,160
+and of course we can always find out what the current date is.
+
+69
+00:05:35,460 --> 00:05:43,370
+So our expiration duration is basically this timestamp here,
+
+70
+00:05:43,410 --> 00:05:51,030
+so the token expiration date wrapped into a date in milliseconds which we get by calling get time, minus
+
+71
+00:05:51,030 --> 00:05:56,370
+the current timestamp which we get with new date, in milliseconds with get time.
+
+72
+00:05:56,400 --> 00:06:04,980
+So future date, the token expiration in milliseconds minus current date in milliseconds gives us the
+
+73
+00:06:04,980 --> 00:06:11,780
+difference in milliseconds and that is the duration we have until the token expires 
+
+74
+00:06:11,880 --> 00:06:19,920
+which we should pass to auto logout. Therefore now, this reloads and we're logged in, now if I call logout, we wipe
+
+75
+00:06:19,920 --> 00:06:23,020
+our data and application and we are logged out of course
+
+76
+00:06:23,070 --> 00:06:31,160
+and now let's try if our timer works correctly and to simulate this, I'll manually set this to two thousand,
+
+77
+00:06:31,380 --> 00:06:37,370
+only temporarily so that this expires after two seconds, so that we can really see if it works.
+
+78
+00:06:37,410 --> 00:06:45,300
+Let's now login and we see our user data snapshot here on the right and now it's gone and we're redirected
+
+79
+00:06:45,450 --> 00:06:50,370
+because now we logged out after two seconds. So auto logout seems to work,
+
+80
+00:06:50,370 --> 00:06:55,020
+let me now reverse this to the expiration duration which we of course want to have here,
+
+81
+00:06:55,080 --> 00:06:57,910
+we don't want to have to add extremely short horizon here,
+
+82
+00:06:57,960 --> 00:07:07,080
+instead let's log the expiration duration and see what we get there. If we do login again like this,
+
+83
+00:07:08,330 --> 00:07:12,200
+then we see this here is one hour in milliseconds
+
+84
+00:07:12,200 --> 00:07:15,460
+and if I reload, you see now it's a shorter value,
+
+85
+00:07:15,470 --> 00:07:20,110
+this comes from auto login and that is the remaining duration we have.
+
+86
+00:07:20,120 --> 00:07:24,370
+So this doesn't look too bad, this looks like it's working correctly,
+
+87
+00:07:24,530 --> 00:07:26,910
+still there are things we should improve,
+
+88
+00:07:26,930 --> 00:07:33,350
+for example we can still visit the recipes route when we are not logged in, I can just type it here and
+
+89
+00:07:33,350 --> 00:07:34,310
+here I am.
+
+90
+00:07:34,340 --> 00:07:37,340
+This is something we definitely want to prevent in our application.
+

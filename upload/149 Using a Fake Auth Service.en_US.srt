@@ -1,0 +1,80 @@
+1
+00:00:02,290 --> 00:00:09,390
+Now let's finish this CanActivate behavior by allowing the user to login. I'll quickly do this by going
+
+2
+00:00:09,390 --> 00:00:10,740
+to my home component
+
+3
+00:00:11,080 --> 00:00:22,020
+and there I want to add two new buttons, one login button and one logout button and I will add some
+
+4
+00:00:22,100 --> 00:00:23,950
+CSS classes,
+
+5
+00:00:24,000 --> 00:00:29,570
+btn-default maybe and btn btn-default here too
+
+6
+00:00:29,900 --> 00:00:40,970
+and here I want to execute onLogout and for the other one of course, I will execute onLogin and I
+
+7
+00:00:40,970 --> 00:00:46,610
+will keep this really simple since it's not about having a nice UI here, I will simply inject my auth
+
+8
+00:00:46,610 --> 00:00:49,340
+service here of type auth service of course,
+
+9
+00:00:49,340 --> 00:00:54,260
+make sure to add the import at the top and then I'll add my two methods here,
+
+10
+00:00:54,350 --> 00:01:02,120
+so onLogin will simply reach out to the auth service and call the login method to set this loggedIn
+
+11
+00:01:02,120 --> 00:01:03,630
+boolean to true
+
+12
+00:01:04,070 --> 00:01:10,660
+and onLogout will of course do the same but will call the logout method to set it to false.
+
+13
+00:01:10,700 --> 00:01:15,320
+And this simple improvement now makes sure that we can of course login,
+
+14
+00:01:15,320 --> 00:01:20,420
+we don't see any visual indication here but we do see it if we try to access a single server.
+
+15
+00:01:20,420 --> 00:01:26,720
+Now this is working, always after this 800 milliseconds which it takes to evaluate whether we are allowed
+
+16
+00:01:26,720 --> 00:01:27,740
+to access
+
+17
+00:01:27,800 --> 00:01:32,330
+but if I switch this back to logout again, you see we're redirected again.
+
+18
+00:01:32,360 --> 00:01:33,810
+So now we can control this,
+
+19
+00:01:33,830 --> 00:01:40,590
+now we finish this fake auth service and more importantly, the
+
+20
+00:01:40,640 --> 00:01:41,090
+CanActivate guards.
+

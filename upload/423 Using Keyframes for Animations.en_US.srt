@@ -1,0 +1,264 @@
+1
+00:00:01,650 --> 00:00:06,650
+Well that was a lot but I want to mention two more things or show two more things.
+
+2
+00:00:06,750 --> 00:00:11,240
+One is a more detailed control over the individual steps.
+
+3
+00:00:11,250 --> 00:00:14,360
+You are in the animation process year.
+
+4
+00:00:14,370 --> 00:00:20,700
+We always saw that we can defy multiple faces but each face gets the same importance.
+
+5
+00:00:20,700 --> 00:00:26,910
+It would be nice if we could define some key frames to specifically say okay you any enemy over one
+
+6
+00:00:26,910 --> 00:00:33,510
+second after 200 Second you should have stayed off for 500 seconds you should have this state and so
+
+7
+00:00:33,510 --> 00:00:34,230
+on.
+
+8
+00:00:34,500 --> 00:00:36,170
+Well we can do this.
+
+9
+00:00:36,300 --> 00:00:39,100
+I'm copying my trigger your final time.
+
+10
+00:00:39,330 --> 00:00:46,680
+And here I want to set up a list to which in my template I bind to my second list year which uses the
+
+11
+00:00:46,680 --> 00:00:48,090
+same data source.
+
+12
+00:00:48,090 --> 00:00:54,740
+So here at least two sets up to trigger to binded and then we can set up the animations here.
+
+13
+00:00:55,050 --> 00:00:57,550
+Well leave d in stage here.
+
+14
+00:00:57,870 --> 00:01:03,620
+But for the transition when coming in I want to change this here.
+
+15
+00:01:03,630 --> 00:01:11,070
+I don't want to specify a normal array as I did before to have these different equally weighted phases
+
+16
+00:01:11,100 --> 00:01:11,580
+.
+
+17
+00:01:11,690 --> 00:01:18,660
+Instead I'll pass an argument which is still an array but they're in the animate function.
+
+18
+00:01:18,660 --> 00:01:20,360
+Let's say one second.
+
+19
+00:01:20,670 --> 00:01:24,120
+I use the keyframes method as the second argument.
+
+20
+00:01:24,240 --> 00:01:27,480
+This needs to be imported from an angle or core.
+
+21
+00:01:27,480 --> 00:01:33,510
+Now the key frames method here in the animate function allows me to be more precise.
+
+22
+00:01:33,630 --> 00:01:40,170
+Which part of multiple styles I can now set up should occur as to which timing the overall animation
+
+23
+00:01:40,170 --> 00:01:47,160
+will take one second but I can control which state in sight of that animation should take how long.
+
+24
+00:01:47,520 --> 00:01:52,290
+So here keyframes therefore it's all an array with now the individual faces.
+
+25
+00:01:52,680 --> 00:01:57,100
+And there I simply apply a couple of styles of the style method again.
+
+26
+00:01:57,120 --> 00:02:05,220
+So let's for let's say when we let it enter it should transform and at the beginning we have it on the
+
+27
+00:02:05,220 --> 00:02:08,000
+left as before minus 100 pixels.
+
+28
+00:02:08,040 --> 00:02:12,990
+We also said that about your past two years before to zero.
+
+29
+00:02:12,990 --> 00:02:18,600
+Now let's say we want to have a number stall during that flight in animation.
+
+30
+00:02:18,600 --> 00:02:21,380
+Here we want to have transform.
+
+31
+00:02:21,560 --> 00:02:29,160
+Set this to translate x 50 pixels minus 50 pixels.
+
+32
+00:02:29,190 --> 00:02:35,670
+So halfway there because we want to end at zero trancelike x zero at the end that's our final state
+
+33
+00:02:35,670 --> 00:02:44,990
+up here that we want to animate the opacity to already be at zero point five.
+
+34
+00:02:45,630 --> 00:02:53,700
+And then we have yet another style let's say where we want to say OK the transform function is now also
+
+35
+00:02:53,880 --> 00:02:54,770
+almost there.
+
+36
+00:02:54,780 --> 00:02:59,540
+So translate X is now minus 20 pixels.
+
+37
+00:03:00,600 --> 00:03:04,350
+But importantly opacity is one.
+
+38
+00:03:04,350 --> 00:03:10,830
+So we're done when it comes to opacity but we're not completely at the position we want to be.
+
+39
+00:03:11,160 --> 00:03:12,440
+This will work like that.
+
+40
+00:03:12,450 --> 00:03:20,210
+I can now save this and if we let this reload you should watch the bottom list you always saw it upon
+
+41
+00:03:20,250 --> 00:03:25,570
+the initial fly in and should see if you watched the compression to the top list.
+
+42
+00:03:25,680 --> 00:03:33,180
+If I add a new item this is much slower and it starts fast and then takes very long for the last bit
+
+43
+00:03:33,180 --> 00:03:33,840
+.
+
+44
+00:03:33,840 --> 00:03:41,040
+The reason for this is that by default all these steps here take equally long I have free elements here
+
+45
+00:03:41,040 --> 00:03:42,290
+in my key from an array.
+
+46
+00:03:42,510 --> 00:03:48,020
+And then every style is triggered after a third for the third of a second.
+
+47
+00:03:48,570 --> 00:03:53,070
+I can override this by passing the offset property.
+
+48
+00:03:53,100 --> 00:03:59,880
+I can't say as to which timing of these 1000 milliseconds in this case should you be at the state sort
+
+49
+00:03:59,900 --> 00:04:03,390
+of first status at the beginning offset zero.
+
+50
+00:04:03,450 --> 00:04:10,020
+Then here let's say you want to be at this not after half of the time which it would make sense because
+
+51
+00:04:10,050 --> 00:04:13,250
+we are half way in and half way the opacity.
+
+52
+00:04:13,440 --> 00:04:20,390
+But we want to be at this point after point three of our animation time.
+
+53
+00:04:20,580 --> 00:04:24,910
+So 30 percent of our animation time so 300 more seconds in this case.
+
+54
+00:04:25,200 --> 00:04:36,450
+And we want to be almost done after let's say Dot 8 and then I will add a final style here
+
+55
+00:04:39,270 --> 00:04:43,570
+with an offset of one where I'm done.
+
+56
+00:04:43,620 --> 00:04:47,570
+This is my final key for him so that it doesn't snap at the end.
+
+57
+00:04:48,000 --> 00:04:54,960
+Well with this if I let it reload we saw it year up on initial loading and if I add a new item it stat
+
+58
+00:04:55,050 --> 00:04:56,210
+starts fast
+
+59
+00:04:58,980 --> 00:05:08,020
+but then smoothly finishes does how we used keyframes to control precisely which state we want to have
+
+60
+00:05:08,020 --> 00:05:08,040
+.
+
+61
+00:05:08,040 --> 00:05:14,160
+At which time during the transition that's important key for EMS are for the time during the transition
+
+62
+00:05:14,160 --> 00:05:14,330
+.
+
+63
+00:05:14,340 --> 00:05:19,620
+So over the time of such or any made function and of course you could still have multiple animated functions
+
+64
+00:05:19,650 --> 00:05:23,110
+as we had before it in that array you passed through the transition.
+
+65
+00:05:23,240 --> 00:05:27,440
+You could have multiple any made in functions and each element functions could have multiple key frames
+
+66
+00:05:27,450 --> 00:05:29,780
+so unlimited possibilities here
+

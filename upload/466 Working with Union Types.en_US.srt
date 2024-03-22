@@ -1,0 +1,216 @@
+1
+00:00:02,260 --> 00:00:03,864
+Now type inference is great.
+
+2
+00:00:03,864 --> 00:00:06,230
+And in general, up to this point
+
+3
+00:00:06,230 --> 00:00:08,900
+we already learned quite a bit
+
+4
+00:00:08,900 --> 00:00:11,668
+about TypeScript and its core types.
+
+5
+00:00:11,668 --> 00:00:15,512
+But up to this point, we also always had the scenario
+
+6
+00:00:15,512 --> 00:00:20,512
+that every variable took just one type.
+
+7
+00:00:20,519 --> 00:00:24,127
+So we always had just one possible type that could be stored
+
+8
+00:00:24,127 --> 00:00:26,230
+in a variable,
+
+9
+00:00:26,230 --> 00:00:29,490
+just a number or just a string or just a boolean.
+
+10
+00:00:29,490 --> 00:00:32,122
+And often that is what you need,
+
+11
+00:00:32,122 --> 00:00:36,634
+but sometimes you want to allow multiple, different types.
+
+12
+00:00:36,634 --> 00:00:38,849
+Let's say here for the course
+
+13
+00:00:38,849 --> 00:00:43,760
+we might be fine with storing a string in there
+
+14
+00:00:43,760 --> 00:00:45,889
+but maybe storing a course ID
+
+15
+00:00:45,889 --> 00:00:49,020
+as a number should also be correct.
+
+16
+00:00:49,020 --> 00:00:51,760
+It really depends on what you're building.
+
+17
+00:00:51,760 --> 00:00:54,777
+It's not unrealistic that we could have a variable
+
+18
+00:00:54,777 --> 00:00:59,259
+where both a string, as well as a number should be allowed
+
+19
+00:00:59,259 --> 00:01:01,549
+or that you have some variable
+
+20
+00:01:01,549 --> 00:01:05,720
+which should allow two different kinds of objects.
+
+21
+00:01:05,720 --> 00:01:08,725
+And for this scenario, that you have more than one type
+
+22
+00:01:08,725 --> 00:01:10,678
+which you want to allow
+
+23
+00:01:10,678 --> 00:01:13,545
+you have a feature called union types.
+
+24
+00:01:13,545 --> 00:01:17,975
+A union type is a type definition that allows more
+
+25
+00:01:17,975 --> 00:01:19,322
+than one type.
+
+26
+00:01:19,322 --> 00:01:23,562
+You add it like any other type assignment by adding a colon
+
+27
+00:01:23,562 --> 00:01:25,080
+after the variable name,
+
+28
+00:01:25,080 --> 00:01:27,085
+on the left side of the equal sign,
+
+29
+00:01:27,085 --> 00:01:28,588
+and then your type.
+
+30
+00:01:28,588 --> 00:01:32,068
+Now I mentioned that explicitly setting string
+
+31
+00:01:32,068 --> 00:01:35,720
+again here would be redundant, but it's not redundant
+
+32
+00:01:35,720 --> 00:01:38,168
+if you don't want to use the type inference here.
+
+33
+00:01:38,168 --> 00:01:41,690
+But if you instead want to specify such a union type,
+
+34
+00:01:41,690 --> 00:01:45,923
+hence allowing multiple types, you set up such a union type
+
+35
+00:01:45,923 --> 00:01:49,879
+by adding a pipe symbol after your first type
+
+36
+00:01:49,879 --> 00:01:52,735
+and then adding another type, like number.
+
+37
+00:01:52,735 --> 00:01:55,850
+And you can have as many types
+
+38
+00:01:55,850 --> 00:01:58,649
+which you want to allow here as needed,
+
+39
+00:01:58,649 --> 00:02:01,452
+but here I just want to have string or number.
+
+40
+00:02:01,452 --> 00:02:04,260
+And now you see that that error
+
+41
+00:02:04,260 --> 00:02:07,050
+which we had down here before is gone,
+
+42
+00:02:07,050 --> 00:02:10,207
+because now we are allowing a number alternatively
+
+43
+00:02:10,207 --> 00:02:12,710
+to a string value.
+
+44
+00:02:12,710 --> 00:02:15,822
+And of course you can use such a union type anywhere
+
+45
+00:02:15,822 --> 00:02:18,990
+where you have a type assignment,
+
+46
+00:02:18,990 --> 00:02:22,010
+not just when you're using type inference.
+
+47
+00:02:22,010 --> 00:02:23,762
+I could also use a union type up here
+
+48
+00:02:23,762 --> 00:02:27,033
+allowing username to be a string or
+
+49
+00:02:27,033 --> 00:02:30,128
+let's say an array of strings, for example
+
+50
+00:02:30,128 --> 00:02:32,810
+so that we have first and last name
+
+51
+00:02:32,810 --> 00:02:34,760
+in an array, for example.
+
+52
+00:02:34,760 --> 00:02:37,410
+That's also something I could allow here.
+
+53
+00:02:37,410 --> 00:02:41,088
+Union types are a never key TypeScript feature
+
+54
+00:02:41,088 --> 00:02:46,088
+which allows you to define more flexible values and types.
+

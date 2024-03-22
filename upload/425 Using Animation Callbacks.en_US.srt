@@ -1,0 +1,124 @@
+1
+00:00:01,770 --> 00:00:07,980
+To Raptor's animation introduction up there are a couple of callbacks you can listen to so that when
+
+2
+00:00:07,980 --> 00:00:11,560
+an animation finished you might want to execute some Abaroa code.
+
+3
+00:00:11,820 --> 00:00:19,680
+So here in EPK component let's say on that day of element here we can listen to you these callbacks
+
+4
+00:00:19,680 --> 00:00:20,390
+here.
+
+5
+00:00:20,520 --> 00:00:22,300
+We set up event binding.
+
+6
+00:00:22,320 --> 00:00:27,080
+But then again with the sign to indicate that we're in the animation world like here with the proper
+
+7
+00:00:27,080 --> 00:00:31,130
+keybinding But we also used the sign we set up the trigger here.
+
+8
+00:00:31,140 --> 00:00:37,880
+So Dave stayed for this death and then we got the start and the Done trigger.
+
+9
+00:00:38,010 --> 00:00:43,260
+This method will get executed whenever the animation starts.
+
+10
+00:00:43,260 --> 00:00:51,820
+So here we could say animation animation started execute this method and let's pastie when exposed spangle
+
+11
+00:00:51,850 --> 00:00:54,060
+to see what's inside of it.
+
+12
+00:00:54,660 --> 00:00:58,040
+And I also want to listen to you.
+
+13
+00:00:58,150 --> 00:01:08,340
+Finishing with done you went on our trigger animation and it an old past event there and then the app
+
+14
+00:01:08,340 --> 00:01:09,030
+component.
+
+15
+00:01:09,030 --> 00:01:15,780
+I want to set up the two methods here so animations started which received some event and here I want
+
+16
+00:01:15,780 --> 00:01:23,130
+to simply lock this event so that we can see what's inside and then animation ended with the wind and
+
+17
+00:01:23,130 --> 00:01:32,670
+also log this he went here with Dad let's save this and reload this application here.
+
+18
+00:01:34,080 --> 00:01:39,700
+And now if I click any made you see we had the starting and the ending animation fired.
+
+19
+00:01:39,750 --> 00:01:41,780
+And here you see what's inside the wind.
+
+20
+00:01:41,850 --> 00:01:50,070
+We see the starting state to state and timing and the same is true for the same data is part of the
+
+21
+00:01:50,160 --> 00:01:53,920
+animation ended event object Englad to give us.
+
+22
+00:01:53,940 --> 00:02:00,330
+So these callbacks might be useful for you if you have some code which animate something but after the
+
+23
+00:02:00,330 --> 00:02:06,420
+animation finishes you want to execute some other code and you can do that by listening to these built
+
+24
+00:02:06,450 --> 00:02:15,130
+in starred and done events on your trigger I hope with that you feel a bit more comfortable using animations
+
+25
+00:02:15,210 --> 00:02:20,650
+you get a nice introduction to how you might create your own animations and what you how you can ANY
+
+26
+00:02:20,700 --> 00:02:23,120
+made things you your Englad to application.
+
+27
+00:02:23,220 --> 00:02:29,070
+And with that play around with it set your own challenges take your existing projects maybe the recipe
+
+28
+00:02:29,070 --> 00:02:31,070
+book and any made some things.
+
+29
+00:02:31,080 --> 00:02:32,090
+This is a challenge.
+
+30
+00:02:32,090 --> 00:02:34,070
+This is where you'll learn the most.
+
+31
+00:02:34,110 --> 00:02:35,880
+See and other modules by
+

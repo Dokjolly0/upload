@@ -1,0 +1,192 @@
+1
+00:00:02,300 --> 00:00:06,170
+So we already reorganized our code quite a bit,
+
+2
+00:00:06,170 --> 00:00:10,190
+what's remaining here in the app module is the auth component
+
+3
+00:00:10,610 --> 00:00:14,260
+and we also got a couple of imports here which we might not need
+
+4
+00:00:14,260 --> 00:00:19,110
+in the app component anymore because our app component already got pretty lean.
+
+5
+00:00:19,220 --> 00:00:23,420
+Now the forms module is still required because the auth component needs it
+
+6
+00:00:23,600 --> 00:00:26,490
+but we can definitely drop the reactive forms module.
+
+7
+00:00:26,510 --> 00:00:32,090
+We need the HttpClient module because it turns out that this is a module that only sets up some
+
+8
+00:00:32,150 --> 00:00:36,230
+global services, the injectable HTTP service and we need that,
+
+9
+00:00:36,250 --> 00:00:41,750
+so we will keep that. We need the app routing module, we need the recipes and a shopping list module and
+
+10
+00:00:41,750 --> 00:00:45,970
+all these modules but the reactive forms module could be dropped
+
+11
+00:00:45,980 --> 00:00:51,890
+and I also want to drop the forms module and get rid of the auth component here because we can simply
+
+12
+00:00:51,890 --> 00:00:54,460
+create a new feature module for that.
+
+13
+00:00:54,560 --> 00:01:00,320
+I analyzed at the start of this module that this is our third feature area and therefore, creating a
+
+14
+00:01:00,320 --> 00:01:05,630
+separate module would make sense. Again, definitely feel free to pause the video and try this on your own
+
+15
+00:01:05,630 --> 00:01:10,970
+here, outsource the auth component and its route into a separate feature module.
+
+16
+00:01:14,000 --> 00:01:18,420
+Were you successful? To do it together here in the auth folder,
+
+17
+00:01:18,420 --> 00:01:27,450
+I'll add an auth.module.ts file and as before, export a class, auth module which receives our normal
+
+18
+00:01:28,470 --> 00:01:32,500
+@NgModule decorator.
+
+19
+00:01:32,520 --> 00:01:38,970
+Now here, we as we learned, need to declare whatever we're using in this module and in the auth module,
+
+20
+00:01:38,970 --> 00:01:41,280
+that is the auth component.
+
+21
+00:01:41,640 --> 00:01:49,920
+So let's cut the auth component from the app module and move it here into declarations of auth module.
+
+22
+00:01:49,920 --> 00:01:54,990
+Now for that of course, we also need to add the missing import.
+
+23
+00:01:54,990 --> 00:02:02,160
+Now the auth component is using certain Angular features which we should import. We need the common module,
+
+24
+00:02:02,400 --> 00:02:08,030
+in case we're using ngIf or ngFor and you need to add the import to that as well.
+
+25
+00:02:08,220 --> 00:02:14,430
+We also need the forms module, because we're using the template driven forms approach here in the
+
+26
+00:02:14,430 --> 00:02:21,570
+auth component. That allows us now in the app module to get rid of that forms module.
+
+27
+00:02:24,350 --> 00:02:32,690
+Now we can also import, maybe here, our auth module and make sure to add that import path of course but
+
+28
+00:02:32,780 --> 00:02:39,350
+I also wanted to outsource my routes, so in the app routing module, let's grab that auth route here, remove
+
+29
+00:02:39,350 --> 00:02:46,340
+it from the app routing module and go to the auth module and in here, simply add router module which you
+
+30
+00:02:46,340 --> 00:02:53,210
+import from @angular/router and as you learned it, forChild and add this route and if you put this
+
+31
+00:02:53,210 --> 00:02:58,970
+into a separate routing file, into a separate routing module and import that separate routing module
+
+32
+00:02:58,970 --> 00:03:02,420
+into the auth module, that would have been correct as well.
+
+33
+00:03:02,420 --> 00:03:11,090
+So now I have my auth module, that focuses on all the auth related stuff. The auth service still is provided
+
+34
+00:03:11,090 --> 00:03:11,710
+like this
+
+35
+00:03:11,720 --> 00:03:16,310
+and if you would provide it in a module, you would still keep it in the app module to have it available
+
+36
+00:03:16,310 --> 00:03:23,880
+application-wide but other than that, this is looking good. Let's now save it all and see if that works
+
+37
+00:03:24,030 --> 00:03:29,620
+and I'm getting an error, the app loading spinner is missing in the auth component or in the auth module.
+
+38
+00:03:29,670 --> 00:03:31,340
+Now do you know what the issue is here?
+
+39
+00:03:32,970 --> 00:03:39,570
+Well, the app loading spinner, the loading spinner component is defined in our shared module and as I mentioned,
+
+40
+00:03:39,960 --> 00:03:42,720
+you only have access to what you declare in a module.
+
+41
+00:03:43,230 --> 00:03:49,590
+So if we need the loading spinner component in the auth module, we could add it to declarations but double
+
+42
+00:03:49,590 --> 00:03:51,120
+declarations are not allowed,
+
+43
+00:03:51,120 --> 00:03:54,780
+so declaring it here and in the shared module is not allowed.
+
+44
+00:03:54,780 --> 00:04:00,930
+Therefore the solution is to simply import the shared module to get access to its features
+
+45
+00:04:01,170 --> 00:04:04,460
+and now with that, everything seems to work.
+
+46
+00:04:04,460 --> 00:04:10,700
+If I now logout and I test the login flow again, first of all with invalid credentials, that works
+
+47
+00:04:10,700 --> 00:04:14,570
+and now with valid credentials, that also works.
+
+48
+00:04:14,570 --> 00:04:20,000
+So now we also outsourced the auth related things into their separate feature module.
+

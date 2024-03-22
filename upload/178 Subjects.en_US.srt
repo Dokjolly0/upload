@@ -1,0 +1,400 @@
+1
+00:00:02,180 --> 00:00:04,360
+Now that we learned so much about observables,
+
+2
+00:00:04,370 --> 00:00:07,190
+we're almost done with that section and ready to continue
+
+3
+00:00:07,340 --> 00:00:12,790
+but there is one other important construct that you should not miss
+
+4
+00:00:12,860 --> 00:00:14,960
+and that is the subject.
+
+5
+00:00:15,020 --> 00:00:17,120
+Now what's the subject?
+
+6
+00:00:17,120 --> 00:00:23,990
+Well let's say in our user component here, we have a button which I'll add and I'll give it a class of
+
+7
+00:00:24,740 --> 00:00:32,100
+btn-btn-primary and I'll give it a label of activate.
+
+8
+00:00:32,100 --> 00:00:36,630
+Now the idea is that when we click this button, we change something in the app component,
+
+9
+00:00:36,630 --> 00:00:43,560
+so in a different component and we simply print activated here let's say. So we add another horizontal
+
+10
+00:00:43,680 --> 00:00:48,480
+line and in-between, we want to print activated
+
+11
+00:00:48,630 --> 00:00:55,460
+but we want to only show this if we clicked activated on the user component.
+
+12
+00:00:55,470 --> 00:01:00,120
+Now how can we make this work? Well with a service and an event emitter for example,
+
+13
+00:01:00,120 --> 00:01:01,980
+that is something you also learned about earlier.
+
+14
+00:01:02,010 --> 00:01:03,520
+So let's quickly do that,
+
+15
+00:01:03,750 --> 00:01:07,210
+let's add a new file here,
+
+16
+00:01:07,350 --> 00:01:15,190
+the user.service.ts file, here next to the app component and in there, I'll export a class,
+
+17
+00:01:15,220 --> 00:01:23,070
+user service, nothing too special, it will get the @injectable decorator which is imported from 
+
+18
+00:01:23,080 --> 00:01:24,070
+@angular/core
+
+19
+00:01:24,220 --> 00:01:27,640
+and I will use the more modern syntax for providing it,
+
+20
+00:01:27,640 --> 00:01:30,230
+I'll add provided in root here.
+
+21
+00:01:30,250 --> 00:01:36,190
+Alternatively, you use simply add it to providers in the app module, here which is also fine
+
+22
+00:01:36,250 --> 00:01:39,090
+but this is a shortcut, a shorter and easier way.
+
+23
+00:01:39,100 --> 00:01:50,270
+Now we have that service and in there, I'll add a property, activated emitter, which is a new event emitter
+
+24
+00:01:50,540 --> 00:01:53,620
+and event emitter is also imported from @angular/core and
+
+25
+00:01:53,720 --> 00:01:56,970
+that's a pattern I showed you earlier already
+
+26
+00:01:56,980 --> 00:02:01,230
+and that event emitter will emit a boolean and
+
+27
+00:02:01,330 --> 00:02:07,150
+we can now use that event emitter from inside our user component
+
+28
+00:02:07,150 --> 00:02:09,120
+if we inject that service here.
+
+29
+00:02:09,340 --> 00:02:17,690
+So the user service is injected here and for that of course, make sure to also import it from that user service
+
+30
+00:02:17,690 --> 00:02:18,570
+file
+
+31
+00:02:18,900 --> 00:02:26,220
+and now we just need to add a new method, on activate and in there, I'll call my user service,
+
+32
+00:02:26,220 --> 00:02:32,710
+reach out to activated emitter and call emit and pass true here as a value.
+
+33
+00:02:32,730 --> 00:02:38,130
+Now the last step is to wire up on activate, here in the user component to the button by adding
+
+34
+00:02:38,130 --> 00:02:42,690
+a click listener to the button and there, I will call on activate.
+
+35
+00:02:42,930 --> 00:02:49,150
+Thus far, nothing too fancy, that is a normal way of passing the data around or at least, of emitting an
+
+36
+00:02:49,150 --> 00:02:50,820
+event across components.
+
+37
+00:02:50,820 --> 00:02:54,180
+Now we want to listen to that event from inside the app component
+
+38
+00:02:54,180 --> 00:02:59,320
+and for that, we simply inject the user service here too by using that injection
+
+39
+00:02:59,350 --> 00:03:06,060
+shortcut also where we automatically bind it to a private property named user service and I'll then
+
+40
+00:03:06,330 --> 00:03:13,350
+add a new property here too, user activated which is false initially and in ngOnInit, we can set up a
+
+41
+00:03:13,350 --> 00:03:21,930
+listener, we can reach out to the user service, activated emitter and subscribe to it and in there, we get
+
+42
+00:03:21,930 --> 00:03:30,000
+our did activate, or whatever you want to call it, boolean and we'll set user, this user activated
+
+43
+00:03:30,360 --> 00:03:36,720
+equal to did activate and therefore whenever we emit true as a value here, user activated will switch
+
+44
+00:03:36,720 --> 00:03:43,440
+to true and in the app.component.html file, that now means that we can use ngIf here to conditionally
+
+45
+00:03:43,440 --> 00:03:51,270
+show that paragraph as soon as user activated is true. Let's save all of that and let's navigate to that user
+
+46
+00:03:51,270 --> 00:03:57,030
+page here and let's click activate and indeed, we see activated here.
+
+47
+00:03:57,030 --> 00:03:59,930
+So this is working, which of course is nice.
+
+48
+00:03:59,970 --> 00:04:05,250
+This is the old approach with the event emitter and this is an approach you could use but there is a
+
+49
+00:04:05,250 --> 00:04:14,640
+better one, a more recommended one and that new approach, the better approach uses a subject. Now a subject
+
+50
+00:04:14,670 --> 00:04:18,040
+is something we import from RxJS,
+
+51
+00:04:18,210 --> 00:04:26,590
+SO you import subject from RxJS, instead of event emitter, you now create a subject here. Other
+
+52
+00:04:26,590 --> 00:04:31,600
+than that, it's pretty similar though, it's a generic type where you define which data will eventually
+
+53
+00:04:31,600 --> 00:04:34,150
+be emitted, in this case a boolean.
+
+54
+00:04:34,780 --> 00:04:37,780
+So it's very similar to event emitter thus far.
+
+55
+00:04:37,780 --> 00:04:43,450
+We also use it very similarly, in the user component we don't call emit however but something you saw
+
+56
+00:04:43,450 --> 00:04:44,680
+before already,
+
+57
+00:04:44,680 --> 00:04:50,200
+you call next because a subject is a special kind of observable
+
+58
+00:04:50,200 --> 00:04:56,820
+you could say. We know observables, we can subscribe to them as you learned but they're rather passive.
+
+59
+00:04:56,930 --> 00:05:02,060
+You'll learn how to create your own observable but the core idea always is that you wrap a callback
+
+60
+00:05:02,090 --> 00:05:09,950
+or an event or something like that. A subject is different, a subject also is an object you can subscribe
+
+61
+00:05:09,950 --> 00:05:16,060
+to but it's more active because you can actively call next on it from outside.
+
+62
+00:05:16,070 --> 00:05:18,210
+Remember in the observable, we also called next
+
+63
+00:05:18,230 --> 00:05:21,580
+but that was from inside the observable when we created it.
+
+64
+00:05:21,650 --> 00:05:24,730
+So that is a more active observable that is perfect
+
+65
+00:05:24,740 --> 00:05:26,690
+when we want to use it as an event emitter,
+
+66
+00:05:26,720 --> 00:05:33,320
+so if we don't have a passive event source, like an HTTP request or DOM events but if we have something
+
+67
+00:05:33,320 --> 00:05:38,840
+that actively needs to be triggered by us in our application and that's exactly the use case we have
+
+68
+00:05:38,840 --> 00:05:47,090
+here. We now can call next here in the user service on our activated emitter, the activated emitter is
+
+69
+00:05:47,090 --> 00:05:49,370
+that subject and in the app component,
+
+70
+00:05:49,370 --> 00:05:54,710
+we still call it subscribe because it is an observable and therefore, we can subscribe. If it now save
+
+71
+00:05:54,710 --> 00:05:57,160
+that, you click activate again,
+
+72
+00:05:57,230 --> 00:06:03,890
+it still works but now it's a subject and whilst it technically of course works in a similar way, using
+
+73
+00:06:03,890 --> 00:06:10,250
+a subject is recommended way. Don't use event emitter,, use subjects they are in the end a bit more efficient
+
+74
+00:06:10,250 --> 00:06:11,170
+behind the scenes,
+
+75
+00:06:11,270 --> 00:06:17,180
+you can also now use all these cool operators because a subject in the end also is kind of an observable.
+
+76
+00:06:17,300 --> 00:06:22,690
+So you have that too which is a huge advantage and it's simply something you can and should keep in mind,
+
+77
+00:06:22,700 --> 00:06:25,980
+use subjects instead of observables.
+
+78
+00:06:26,150 --> 00:06:29,720
+One important note, just as with your own observables,
+
+79
+00:06:29,810 --> 00:06:33,510
+you should unsubscribe to your subjects though whenever you don't need them.
+
+80
+00:06:33,560 --> 00:06:39,860
+So add onDestroy here to the app component which you need to import or to any other component where
+
+81
+00:06:39,860 --> 00:06:46,550
+you set up a subscription to your subject. Store the subscription, activated
+
+82
+00:06:46,650 --> 00:06:54,290
+sub is a subscription, subscription needs to be imported from RxJS, so make sure to add
+
+83
+00:06:54,290 --> 00:06:56,270
+that import in your file as well.
+
+84
+00:06:57,250 --> 00:07:03,850
+Store that subscription then, so here where you call subscribe, you simply set this equal to activated
+
+85
+00:07:03,850 --> 00:07:10,720
+sub so that the subscription is stored here and then you add ngOnDestroy and inside of
+
+86
+00:07:10,720 --> 00:07:17,650
+ngOnDestroy, you simply use your subscription and call unsubscribe and now you have a great application
+
+87
+00:07:17,740 --> 00:07:20,720
+without any memory leaks or anything like that.
+
+88
+00:07:20,800 --> 00:07:24,780
+Now one important note about subjects as a replacement for event emitters,
+
+89
+00:07:24,850 --> 00:07:32,110
+this only counts if you're using them as cross component event emitters, where you manually call next
+
+90
+00:07:32,140 --> 00:07:34,130
+or previously emit.
+
+91
+00:07:34,210 --> 00:07:37,180
+You don't use subjects instead of event emitter
+
+92
+00:07:37,300 --> 00:07:39,640
+when you're using @output.
+
+93
+00:07:39,640 --> 00:07:46,840
+So in a component if you're using @output here with your own event, you still use the
+
+94
+00:07:46,840 --> 00:07:47,950
+Angular event emitter,
+
+95
+00:07:47,950 --> 00:07:52,520
+you're not using subject there because the subject is not suitable for that,
+
+96
+00:07:52,540 --> 00:07:54,700
+there you need the Angular event emitter,
+
+97
+00:07:54,820 --> 00:08:02,950
+you only use subjects to communicate across components, through services so through a mechanism where
+
+98
+00:08:02,950 --> 00:08:07,320
+you in the end subscribe to somewhere, like here in the app component.
+
+99
+00:08:07,360 --> 00:08:11,740
+If you're not subscribing to an event emitter, then it probably is an output,
+
+100
+00:08:11,740 --> 00:08:15,370
+if you do plan to subscribe manually, then it is a subject.
+

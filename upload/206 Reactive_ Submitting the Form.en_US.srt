@@ -1,0 +1,108 @@
+1
+00:00:02,740 --> 00:00:08,920
+In the last lecture, we successfully synchronized our HTML form and our TypeScript form,
+
+2
+00:00:09,250 --> 00:00:15,500
+let's now have a look at how we can submit this form. In the template driven approach, we used ngSubmit,
+
+3
+00:00:15,520 --> 00:00:19,580
+the ngSubmit directive here on this form element.
+
+4
+00:00:19,870 --> 00:00:25,510
+Well we still do the same here because we still want to react to this default submit event which is
+
+5
+00:00:25,510 --> 00:00:28,340
+fired by HTML, by Javascript.
+
+6
+00:00:28,420 --> 00:00:32,850
+So we still add ngSubmit here and we could execute an onSubmit method,
+
+7
+00:00:32,860 --> 00:00:34,330
+any method you like.
+
+8
+00:00:34,480 --> 00:00:41,690
+So let's add this method here now, onSubmit, the difference to the template driven approach
+
+9
+00:00:41,710 --> 00:00:47,980
+now is that we don't need to get the form via this local reference, that actually wouldn't work
+
+10
+00:00:48,000 --> 00:00:52,160
+anymore because we're not using Angular's auto-creation mechanism
+
+11
+00:00:52,480 --> 00:00:57,880
+but we don't need to get this reference because hey we created the form on our own,
+
+12
+00:00:57,910 --> 00:01:01,360
+we already got access to it here in our TypeScript code,
+
+13
+00:01:01,360 --> 00:01:09,400
+actually in every method in the TypeScript code. So we can simply console log this signupForm, just
+
+14
+00:01:09,400 --> 00:01:10,240
+like this
+
+15
+00:01:10,310 --> 00:01:12,370
+and this is how we get access to the form.
+
+16
+00:01:12,520 --> 00:01:20,170
+Now if we go back to our running project and we simply enter something here, switch this to female to see
+
+17
+00:01:20,170 --> 00:01:22,920
+if it is correctly updated and hit submit,
+
+18
+00:01:22,990 --> 00:01:27,550
+we see our FormGroup here and it has the properties we already know,
+
+19
+00:01:27,550 --> 00:01:35,740
+amongst them the value which correctly represents the object we passed here, key-value pairs with username,
+
+20
+00:01:35,740 --> 00:01:39,310
+e-mail and gender and the appropriate values.
+
+21
+00:01:39,330 --> 00:01:45,520
+This is the cool thing about the reactive approach, whatever you set up here as an argument, whatever
+
+22
+00:01:45,520 --> 00:01:50,030
+you set up here as an object you pass to the FormGroup which makes up your form,
+
+23
+00:01:50,170 --> 00:01:53,480
+that is what you get out as a value of the form.
+
+24
+00:01:53,710 --> 00:02:00,490
+So you can bind it to your own model, the model of your application and easily make sure that the form
+
+25
+00:02:00,490 --> 00:02:03,650
+structure matches the structure of your model.
+
+26
+00:02:03,850 --> 00:02:09,460
+So this is how you can submit the form, how you can still access the value as you did before but now
+
+27
+00:02:09,460 --> 00:02:13,590
+using your own form, the form you created in TypeScript.
+

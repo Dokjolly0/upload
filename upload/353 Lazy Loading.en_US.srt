@@ -1,0 +1,692 @@
+1
+00:00:02,040 --> 00:00:04,410
+So how can you migrate those components
+
+2
+00:00:04,410 --> 00:00:05,730
+to Standalone Components,
+
+3
+00:00:05,730 --> 00:00:07,980
+and which adjustments are needed then?
+
+4
+00:00:07,980 --> 00:00:10,600
+Let's start with the AboutComponent.
+
+5
+00:00:10,600 --> 00:00:13,220
+Here we can add the standalone flag,
+
+6
+00:00:13,220 --> 00:00:15,810
+just as we did it before and set it to true.
+
+7
+00:00:15,810 --> 00:00:19,230
+And if this component would be using any other directives
+
+8
+00:00:19,230 --> 00:00:21,170
+or other Standalone Components,
+
+9
+00:00:21,170 --> 00:00:24,033
+we would have to add them here to the imports array.
+
+10
+00:00:24,890 --> 00:00:27,620
+But for this component, that's not the case.
+
+11
+00:00:27,620 --> 00:00:29,730
+And now this AboutComponent
+
+12
+00:00:29,730 --> 00:00:32,910
+is in the end referenced here in app-routing.
+
+13
+00:00:32,910 --> 00:00:35,320
+There we have this AboutComponent
+
+14
+00:00:35,320 --> 00:00:38,530
+at which we're pointing, which we wanna load here.
+
+15
+00:00:38,530 --> 00:00:42,130
+Now, if we are dealing with a Standalone Component,
+
+16
+00:00:42,130 --> 00:00:43,660
+this will still work.
+
+17
+00:00:43,660 --> 00:00:46,900
+If I save this code, if I even restart ng serve
+
+18
+00:00:46,900 --> 00:00:49,630
+to be super safe that this all works,
+
+19
+00:00:49,630 --> 00:00:51,440
+you will notice that if I reload the app,
+
+20
+00:00:51,440 --> 00:00:54,210
+we can still visit About as before.
+
+21
+00:00:54,210 --> 00:00:57,310
+So you can use Standalone Components here.
+
+22
+00:00:57,310 --> 00:00:59,570
+And this shouldn't be too surprising
+
+23
+00:00:59,570 --> 00:01:01,240
+because the WelcomeComponent
+
+24
+00:01:01,240 --> 00:01:03,380
+already was a Standalone Component
+
+25
+00:01:03,380 --> 00:01:06,800
+and navigating to it worked just fine.
+
+26
+00:01:06,800 --> 00:01:10,260
+However, if you are dealing with Standalone Components,
+
+27
+00:01:10,260 --> 00:01:12,950
+you can also load them with a different syntax,
+
+28
+00:01:12,950 --> 00:01:15,960
+which will actually use lazy loading
+
+29
+00:01:15,960 --> 00:01:18,150
+because with this syntax here,
+
+30
+00:01:18,150 --> 00:01:21,320
+you are not loading this component lazily.
+
+31
+00:01:21,320 --> 00:01:24,430
+Instead, it is included in the main bundle.
+
+32
+00:01:24,430 --> 00:01:26,500
+But with a Standalone Component,
+
+33
+00:01:26,500 --> 00:01:30,270
+you can go to your route configuration here
+
+34
+00:01:30,270 --> 00:01:34,063
+and add a special loadComponent key here.
+
+35
+00:01:35,130 --> 00:01:38,520
+And now loadComponent, just like loadChildren,
+
+36
+00:01:38,520 --> 00:01:40,030
+takes a function,
+
+37
+00:01:40,030 --> 00:01:43,190
+which should return the result of calling import
+
+38
+00:01:44,070 --> 00:01:46,640
+and then here we point at the component
+
+39
+00:01:46,640 --> 00:01:48,440
+which we wanna load lazily,
+
+40
+00:01:48,440 --> 00:01:53,420
+add then and then simply extract our component here
+
+41
+00:01:53,420 --> 00:01:55,630
+from the module, which is loaded lazily.
+
+42
+00:01:55,630 --> 00:01:58,403
+So from the file which is loaded lazily.
+
+43
+00:01:59,850 --> 00:02:01,610
+Now, this is a brand new feature,
+
+44
+00:02:01,610 --> 00:02:03,250
+a brand new syntax,
+
+45
+00:02:03,250 --> 00:02:07,080
+which only works with Standalone Components.
+
+46
+00:02:07,080 --> 00:02:10,660
+If we save this, the application works like before.
+
+47
+00:02:10,660 --> 00:02:12,740
+We can still go to the About page
+
+48
+00:02:12,740 --> 00:02:14,460
+but if you open the Network tab again
+
+49
+00:02:14,460 --> 00:02:16,940
+and you reload the app on the Home page,
+
+50
+00:02:16,940 --> 00:02:19,090
+you will note that when you go to About,
+
+51
+00:02:19,090 --> 00:02:21,890
+the code for this page is also just downloaded
+
+52
+00:02:21,890 --> 00:02:23,330
+when it's needed.
+
+53
+00:02:23,330 --> 00:02:25,730
+And this is actually an enhancement you get
+
+54
+00:02:25,730 --> 00:02:27,710
+with Standalone Components
+
+55
+00:02:27,710 --> 00:02:30,490
+because now with Standalone Components,
+
+56
+00:02:30,490 --> 00:02:33,960
+you can load individual components lazily
+
+57
+00:02:33,960 --> 00:02:36,930
+without having to wrap them into a module
+
+58
+00:02:36,930 --> 00:02:39,993
+like this dashboard-routing.module, which uses forChild.
+
+59
+00:02:41,350 --> 00:02:43,430
+Without Standalone Components,
+
+60
+00:02:43,430 --> 00:02:47,240
+even if you just wanna load a single component lazily,
+
+61
+00:02:47,240 --> 00:02:51,050
+you basically have to wrap it into such a routing module
+
+62
+00:02:51,050 --> 00:02:53,040
+where you use RouterModule.forChild
+
+63
+00:02:53,960 --> 00:02:55,430
+and then you have to load
+
+64
+00:02:55,430 --> 00:02:59,100
+that router module lazily with loadChildren.
+
+65
+00:02:59,100 --> 00:03:02,190
+That's how you have to do it prior to version 14
+
+66
+00:03:02,190 --> 00:03:04,229
+without Standalone Components
+
+67
+00:03:04,229 --> 00:03:07,933
+even if it's just one component you wanna load lazily.
+
+68
+00:03:08,820 --> 00:03:11,070
+Here with Standalone Components,
+
+69
+00:03:11,070 --> 00:03:13,010
+this is now made way simpler.
+
+70
+00:03:13,010 --> 00:03:14,540
+We can use loadComponent
+
+71
+00:03:14,540 --> 00:03:16,940
+and point directly at the component
+
+72
+00:03:16,940 --> 00:03:18,670
+which we wanna load lazily.
+
+73
+00:03:18,670 --> 00:03:21,780
+You don't need an extra wrapper routing module.
+
+74
+00:03:21,780 --> 00:03:25,023
+So this is a great simplification which we get here.
+
+75
+00:03:26,120 --> 00:03:28,540
+Now, if you have multiple components
+
+76
+00:03:28,540 --> 00:03:30,220
+that should be loaded lazily,
+
+77
+00:03:30,220 --> 00:03:32,300
+you can still use the old approach
+
+78
+00:03:32,300 --> 00:03:35,200
+of having a separate wrapper module.
+
+79
+00:03:35,200 --> 00:03:37,540
+But it's also not something you have to do.
+
+80
+00:03:37,540 --> 00:03:40,370
+You can simplify this code as well.
+
+81
+00:03:40,370 --> 00:03:41,970
+And for this, first of all,
+
+82
+00:03:41,970 --> 00:03:44,210
+let's turn these components, today
+
+83
+00:03:44,210 --> 00:03:45,960
+and dashboard.component
+
+84
+00:03:45,960 --> 00:03:48,200
+into Standalone Components as well
+
+85
+00:03:48,200 --> 00:03:51,133
+by adding the standalone: true flag to them.
+
+86
+00:03:52,180 --> 00:03:54,220
+Now, these are Standalone Components
+
+87
+00:03:54,220 --> 00:03:56,990
+and we could use them in any other components
+
+88
+00:03:56,990 --> 00:03:58,890
+by adding them to the imports array
+
+89
+00:03:58,890 --> 00:04:00,630
+of those components,
+
+90
+00:04:00,630 --> 00:04:02,683
+but we can also use them with routing.
+
+91
+00:04:03,670 --> 00:04:06,560
+Of course, back in our app-routing.module,
+
+92
+00:04:06,560 --> 00:04:10,360
+we could use them by simply repeating
+
+93
+00:04:10,360 --> 00:04:12,650
+this syntax here, for example.
+
+94
+00:04:12,650 --> 00:04:15,853
+Or even without lazy loading with this syntax.
+
+95
+00:04:16,840 --> 00:04:19,950
+But we can also still use loadChildren
+
+96
+00:04:19,950 --> 00:04:23,490
+but instead of adding this extra wrapper module
+
+97
+00:04:23,490 --> 00:04:25,450
+and this extra module,
+
+98
+00:04:25,450 --> 00:04:28,730
+we can get rid of dashboard.module.ts
+
+99
+00:04:28,730 --> 00:04:33,540
+and actually also get rid of dashboard-routing.module.ts.
+
+100
+00:04:33,540 --> 00:04:35,950
+And instead here in the dashboard folder,
+
+101
+00:04:35,950 --> 00:04:39,170
+which has these components which I wanna load via routing,
+
+102
+00:04:39,170 --> 00:04:40,570
+we could add a new file,
+
+103
+00:04:40,570 --> 00:04:42,650
+for example, named routes.ts,
+
+104
+00:04:42,650 --> 00:04:44,710
+the name is up to you though,
+
+105
+00:04:44,710 --> 00:04:48,370
+and in that file, you can simply export a constant
+
+106
+00:04:48,370 --> 00:04:52,000
+or a variable maybe named DASHBOARD_ROUTES.
+
+107
+00:04:52,000 --> 00:04:53,100
+The name is up to you.
+
+108
+00:04:54,150 --> 00:04:57,003
+And that should be of type Route array.
+
+109
+00:04:58,060 --> 00:05:00,963
+Route is a type imported from angular/router.
+
+110
+00:05:01,830 --> 00:05:05,460
+And then here you set up your route configuration objects
+
+111
+00:05:05,460 --> 00:05:08,270
+and you have a path nothing,
+
+112
+00:05:08,270 --> 00:05:12,190
+which should maybe load the DashboardComponent.
+
+113
+00:05:12,190 --> 00:05:14,430
+So you must import this component
+
+114
+00:05:14,430 --> 00:05:16,183
+and then point at it here.
+
+115
+00:05:17,270 --> 00:05:20,070
+And you add another object
+
+116
+00:05:20,070 --> 00:05:22,110
+with a path of today
+
+117
+00:05:22,110 --> 00:05:25,393
+where you point at the TodayComponent.
+
+118
+00:05:26,330 --> 00:05:29,330
+Alternatively here, you could also use loadComponent
+
+119
+00:05:29,330 --> 00:05:33,030
+to load this component lazily only if it's needed.
+
+120
+00:05:33,030 --> 00:05:36,610
+So you could be more granular if you wanted to.
+
+121
+00:05:36,610 --> 00:05:38,860
+Here I'm loading both routes together
+
+122
+00:05:38,860 --> 00:05:41,430
+but not when the application starts
+
+123
+00:05:41,430 --> 00:05:44,340
+but instead when we navigate to the dashboard area
+
+124
+00:05:44,340 --> 00:05:46,040
+of this application.
+
+125
+00:05:46,040 --> 00:05:48,960
+And here we just have a route definition.
+
+126
+00:05:48,960 --> 00:05:50,650
+To make Angular aware of this,
+
+127
+00:05:50,650 --> 00:05:53,370
+what we can do now and what we have to do now
+
+128
+00:05:53,370 --> 00:05:56,570
+is we have to go back to the app-routing.module
+
+129
+00:05:56,570 --> 00:05:58,830
+and here for the dashboard route,
+
+130
+00:05:58,830 --> 00:06:00,550
+instead of using loadChildren
+
+131
+00:06:00,550 --> 00:06:03,670
+to point at the dashboard-routing.module,
+
+132
+00:06:03,670 --> 00:06:08,040
+we use it to point at dashboard/routes
+
+133
+00:06:08,040 --> 00:06:09,680
+and then from that file,
+
+134
+00:06:09,680 --> 00:06:13,773
+we import the DASHBOARD_ROUTES constant, which we exported.
+
+135
+00:06:14,950 --> 00:06:18,200
+So this will now load these routes lazily
+
+136
+00:06:18,200 --> 00:06:22,680
+but we only need to define the route definitions here.
+
+137
+00:06:22,680 --> 00:06:24,880
+So again, we save a lot of code.
+
+138
+00:06:24,880 --> 00:06:27,050
+We don't need the wrapper modules
+
+139
+00:06:27,050 --> 00:06:29,900
+because we converted the dashboard.component
+
+140
+00:06:29,900 --> 00:06:33,880
+and the today.component to Standalone Components.
+
+141
+00:06:33,880 --> 00:06:36,450
+Well, and with that, if we rerun ng serve
+
+142
+00:06:36,450 --> 00:06:38,720
+to make sure everything is picked up,
+
+143
+00:06:38,720 --> 00:06:40,520
+if we reload the application,
+
+144
+00:06:40,520 --> 00:06:42,630
+we can go to Dashboard and About,
+
+145
+00:06:42,630 --> 00:06:44,473
+and this all works.
+
+146
+00:06:45,620 --> 00:06:47,163
+Now, as a last step to make sure
+
+147
+00:06:47,163 --> 00:06:49,700
+that today's highlights work here,
+
+148
+00:06:49,700 --> 00:06:54,200
+we should also go to the dashboard.component again.
+
+149
+00:06:54,200 --> 00:06:56,190
+So to this component,
+
+150
+00:06:56,190 --> 00:06:58,210
+and add imports here
+
+151
+00:06:58,210 --> 00:07:00,940
+and import the RouterModule simply
+
+152
+00:07:00,940 --> 00:07:04,160
+to unlock all these router-specific directives
+
+153
+00:07:04,160 --> 00:07:06,690
+like routerLink, which we're using here
+
+154
+00:07:06,690 --> 00:07:08,730
+because otherwise, this is not available
+
+155
+00:07:08,730 --> 00:07:10,580
+in this Standalone Component
+
+156
+00:07:10,580 --> 00:07:14,250
+because you must never forget Standalone Components
+
+157
+00:07:14,250 --> 00:07:18,930
+are totally decoupled from any ng modules you might have.
+
+158
+00:07:18,930 --> 00:07:22,310
+And here we almost have no ng modules left.
+
+159
+00:07:22,310 --> 00:07:24,010
+We have the routing module though
+
+160
+00:07:24,010 --> 00:07:26,650
+but they're decoupled from all those modules
+
+161
+00:07:26,650 --> 00:07:29,200
+and therefore, they don't know about the RouterModule
+
+162
+00:07:29,200 --> 00:07:30,300
+in this case.
+
+163
+00:07:30,300 --> 00:07:32,070
+If you use routing features,
+
+164
+00:07:32,070 --> 00:07:34,410
+routing directives in this component,
+
+165
+00:07:34,410 --> 00:07:38,650
+you have to add RouterModule here to imports.
+
+166
+00:07:38,650 --> 00:07:41,773
+And with that, this link will work again.
+
+167
+00:07:42,870 --> 00:07:44,500
+So now this all works.
+
+168
+00:07:44,500 --> 00:07:47,890
+We have routing back with less modules
+
+169
+00:07:47,890 --> 00:07:50,253
+and more Standalone Components.
+
+170
+00:07:51,110 --> 00:07:53,300
+And we now only have the routing module,
+
+171
+00:07:53,300 --> 00:07:55,950
+which we still need here to define our routes,
+
+172
+00:07:55,950 --> 00:07:58,100
+which we make available in main.ts
+
+173
+00:07:58,100 --> 00:08:01,663
+for Bootstrap application with help of importProvidersFrom.
+

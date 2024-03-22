@@ -1,0 +1,236 @@
+1
+00:00:02,520 --> 00:00:07,570
+In the last lecture, we used our recipe service and we create it in the first place, we filled it with some life
+
+2
+00:00:07,870 --> 00:00:12,780
+to manage our recipes in a central place. That is working great,
+
+3
+00:00:12,790 --> 00:00:16,670
+now let's use that service to improve our app.
+
+4
+00:00:16,690 --> 00:00:23,710
+Remember, we have this long chain of inputs and outputs getting a selected item from the recipe item
+
+5
+00:00:23,710 --> 00:00:24,730
+component
+
+6
+00:00:24,920 --> 00:00:29,590
+over the recipe list component to the recipes component, here
+
+7
+00:00:29,590 --> 00:00:35,980
+where we listen to that event and then all the way down using the selected recipe property to the recipe
+
+8
+00:00:36,050 --> 00:00:43,830
+detail component, so this cross-component communication. That is a super long way for just informing
+
+9
+00:00:43,920 --> 00:00:50,120
+another component that we selected an item but we can do better and we should.
+
+10
+00:00:50,590 --> 00:00:58,510
+So what my goal is that in the recipe item component where we have is onSelected click, that here
+
+11
+00:00:58,540 --> 00:01:02,390
+we can directly inform the recipe detail component.
+
+12
+00:01:02,890 --> 00:01:03,710
+So in onClick
+
+13
+00:01:03,730 --> 00:01:08,780
+what I actually want to do here is, I want to not emit an event here,
+
+14
+00:01:08,830 --> 00:01:14,730
+I will get rid of it here and therefore I can remove the imports from, of output an event emitter,
+
+15
+00:01:14,980 --> 00:01:22,420
+instead here I want to call some method in my service which will then transfer this data for
+
+16
+00:01:22,420 --> 00:01:23,920
+me.
+
+17
+00:01:23,920 --> 00:01:31,060
+So in the recipe service, I'll add a new property, the public property which will name recipe selected, of course
+
+18
+00:01:31,060 --> 00:01:38,680
+you could choose a different name, it will be an object instantiated by using event emitter from @angular/core,
+
+19
+00:01:38,680 --> 00:01:40,900
+so you need to add this import,
+
+20
+00:01:41,050 --> 00:01:43,070
+let's put it at the top of that file,
+
+21
+00:01:43,070 --> 00:01:46,620
+that's kind of a good practice to do with your Angular imports.
+
+22
+00:01:46,780 --> 00:01:52,770
+It will hold some recipe data and that's all I want to do in the recipe service.
+
+23
+00:01:53,050 --> 00:01:58,090
+With this set up and of course you could also encapsulate this by providing a method to get access to
+
+24
+00:01:58,090 --> 00:01:59,320
+it and want to emit the event
+
+25
+00:01:59,350 --> 00:02:07,450
+but I will use the property itself. So by adding this, I can now go back to my recipe item component and
+
+26
+00:02:07,450 --> 00:02:12,910
+in onSelected, I want to do something with that property in the recipe service.
+
+27
+00:02:12,910 --> 00:02:18,130
+So first of all, let's inject it, let's inject the recipe service as you learned to do it,
+
+28
+00:02:18,160 --> 00:02:24,490
+make sure to import it, point it to the recipe service file on the right folder and then on the recipe
+
+29
+00:02:24,490 --> 00:02:25,360
+service,
+
+30
+00:02:25,360 --> 00:02:34,330
+we can use this recipe selected event emitter and call emit and emit the recipe of this recipe item
+
+31
+00:02:34,330 --> 00:02:39,560
+component because that is the one we selected and that's the data we want to pass.
+
+32
+00:02:39,580 --> 00:02:47,770
+Now with this trick or with this approach, we can go to the recipe list component and remove this listener
+
+33
+00:02:47,770 --> 00:02:51,580
+where we listened to whether we did select it or not,
+
+34
+00:02:51,580 --> 00:02:58,120
+we can get rid of the onRecipeSelected code and get rid of our own emitted event here, so we're already
+
+35
+00:02:58,120 --> 00:02:59,510
+saving a lot of code,
+
+36
+00:02:59,530 --> 00:03:06,220
+get rid of all these imports which we don't need anymore and in the recipes.component.html file,
+
+37
+00:03:06,310 --> 00:03:07,940
+we can also get rid of this event here
+
+38
+00:03:07,940 --> 00:03:14,060
+on the recipe list because we no longer use this chain of data to pass it around
+
+39
+00:03:14,230 --> 00:03:20,920
+and now all I want to do is in this component here, I want to listen to this event in the recipe service
+
+40
+00:03:21,280 --> 00:03:26,680
+so that I can now correctly decide whether we do have a selected recipe and should therefore render
+
+41
+00:03:26,680 --> 00:03:27,990
+the detail component
+
+42
+00:03:28,060 --> 00:03:33,400
+or if we should still show this template with this please select a recipe text.
+
+43
+00:03:33,400 --> 00:03:40,630
+Therefore, I will inject the service here to recipe service and since I provide the recipe service on
+
+44
+00:03:40,630 --> 00:03:46,450
+this component, this component and all the other components in this recipe folder use the same instance
+
+45
+00:03:46,450 --> 00:03:47,620
+of the service
+
+46
+00:03:47,620 --> 00:03:49,520
+which of course is super important,
+
+47
+00:03:49,520 --> 00:03:55,150
+otherwise the service where I emit the event would be a different one to the one I listened to it,
+
+48
+00:03:55,150 --> 00:04:01,350
+so I would never get informed about the event but here it will work because we're using the same instance.
+
+49
+00:04:01,630 --> 00:04:11,110
+So here in ngOnInit for example, I can set up my listener, so on the recipe selected, I can subscribe
+
+50
+00:04:11,110 --> 00:04:13,990
+to it and get informed about any changes.
+
+51
+00:04:15,080 --> 00:04:21,290
+And now here, I know I will receive some data which is of type recipe because that's how we configure
+
+52
+00:04:21,300 --> 00:04:22,260
+the event emitter,
+
+53
+00:04:22,280 --> 00:04:27,940
+it would give us a recipe and in this ES6 arrow function here,
+
+54
+00:04:27,940 --> 00:04:31,520
+that is the argument list and here is the function body,
+
+55
+00:04:31,900 --> 00:04:40,920
+here I simply want to set this selected recipe equal to the recipe we got with the event. And with that,
+
+56
+00:04:41,550 --> 00:04:46,680
+we should get the same behavior as before if we reload the app
+
+57
+00:04:46,840 --> 00:04:55,390
+but now, having a much leaner approach of using a service for cross-component communication which of course
+
+58
+00:04:55,390 --> 00:04:57,920
+makes it much easier to pass this data
+
+59
+00:04:58,030 --> 00:05:04,900
+as you saw and we don't have to build this complex chain of events and property binding.
+

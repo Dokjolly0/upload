@@ -1,0 +1,88 @@
+1
+00:00:01,960 --> 00:00:04,030
+Welcome back to the Recipe Book.
+
+2
+00:00:04,030 --> 00:00:09,660
+Now that we learned about routing in the last course section, it's time to add it to our recipe book
+
+3
+00:00:09,690 --> 00:00:11,020
+course app.
+
+4
+00:00:11,180 --> 00:00:17,020
+This is the structure of our app thus far and we already get a lot of components and so on.
+
+5
+00:00:17,100 --> 00:00:23,940
+Right now we implemented the navigation in our application with ngIf though and that is not really the
+
+6
+00:00:23,940 --> 00:00:26,000
+best way of navigating around,
+
+7
+00:00:26,340 --> 00:00:32,880
+instead I want to use the Angular router to load pages and to allow the user to switch between pages.
+
+8
+00:00:33,120 --> 00:00:33,960
+In this section
+
+9
+00:00:33,960 --> 00:00:40,920
+however, we will not only add the router, we will also add one new component, the recipe-edit component
+
+10
+00:00:41,250 --> 00:00:44,560
+because now that we have a way of loading different pages,
+
+11
+00:00:44,580 --> 00:00:51,420
+we can also add this, this is the component which we will fill with some life after the form section in this course
+
+12
+00:00:51,510 --> 00:00:55,520
+which will then allow us to create new recipes or edit existing ones.
+
+13
+00:00:55,560 --> 00:01:02,460
+So I want to set up routing in this section and we definitely need routes to load either the shopping
+
+14
+00:01:02,460 --> 00:01:04,090
+list or the recipe book
+
+15
+00:01:04,230 --> 00:01:11,310
+but inside of the Recipe Book section of the app, I want to have some child routes targeting the recipe
+
+16
+00:01:11,310 --> 00:01:13,710
+detail or recipe-edit component.
+
+17
+00:01:13,940 --> 00:01:20,040
+These components which will always be loaded on the left side of our list of recipes should be loaded
+
+18
+00:01:20,040 --> 00:01:23,320
+dynamically and only one of the two should be loaded at a time,
+
+19
+00:01:23,340 --> 00:01:25,070
+therefore child routing.
+
+20
+00:01:25,200 --> 00:01:27,580
+So that is the general structure,
+
+21
+00:01:27,660 --> 00:01:32,470
+let's now put this into practice and build our application, add routing to it
+
+22
+00:01:32,520 --> 00:01:34,170
+starting in the next lecture.
+

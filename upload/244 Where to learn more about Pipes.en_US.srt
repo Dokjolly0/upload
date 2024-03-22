@@ -1,0 +1,108 @@
+1
+00:00:02,560 --> 00:00:07,080
+In the last lecture, we parameterised our first pipe here, the date pipe.
+
+2
+00:00:07,080 --> 00:00:12,450
+Now let's learn more about all the built-in pipes and how we can configure them. The place to learn more
+
+3
+00:00:12,650 --> 00:00:14,580
+is the official documentation,
+
+4
+00:00:14,640 --> 00:00:19,180
+so you can just head to angular.io and there under docs,
+
+5
+00:00:19,290 --> 00:00:21,280
+click on API reference.
+
+6
+00:00:21,300 --> 00:00:26,190
+Now you may ignore the version number up here, it should be 4.something at the point of time you
+
+7
+00:00:26,190 --> 00:00:27,100
+view the video,
+
+8
+00:00:27,240 --> 00:00:29,280
+I'm just recording this in advance
+
+9
+00:00:29,460 --> 00:00:33,740
+but the pipes won't change or haven't changed.
+
+10
+00:00:33,750 --> 00:00:41,810
+So here, you can enter pipe as a filter and then you view all the pipes which are built into Angular
+
+11
+00:00:42,240 --> 00:00:44,150
+and there you see we get a couple of them,
+
+12
+00:00:44,220 --> 00:00:47,680
+we already use the date pipe and the uppercase pipe but
+
+13
+00:00:47,860 --> 00:00:53,750
+there also is a slice pipe which allows you to take a slice of the input and there you would see that
+
+14
+00:00:53,750 --> 00:01:00,120
+the slice pipe actually takes multiple arguments, the start and the end, so where it should start slicing
+
+15
+00:01:00,120 --> 00:01:03,070
+out a piece of the word and where it should end.
+
+16
+00:01:03,340 --> 00:01:07,140
+There you can also give you a detailed explanation and an example,
+
+17
+00:01:07,140 --> 00:01:12,480
+so this is really a great place to dive into pipes and play around with them since there is not much
+
+18
+00:01:12,480 --> 00:01:14,660
+sense in covering them all in detail here
+
+19
+00:01:14,670 --> 00:01:20,550
+video by video as they are very specific in the use case and the documentation here is really great
+
+20
+00:01:20,550 --> 00:01:22,250
+for diving deeper into it.
+
+21
+00:01:22,620 --> 00:01:27,780
+So with that out of the way, I want to have a look at the date pipe. Here
+
+22
+00:01:27,810 --> 00:01:30,370
+you can see how you can configure it,
+
+23
+00:01:30,450 --> 00:01:34,480
+you can see a couple of different shortcuts for getting a specific date format
+
+24
+00:01:34,710 --> 00:01:41,410
+or you can format it from scratch with the typical symbols like a lowercase D for a day and so on.
+
+25
+00:01:41,550 --> 00:01:47,340
+So this is where you can dive into how to make the date look exactly how you want it to look.
+
+26
+00:01:47,340 --> 00:01:52,030
+Now with that, let's move on to creating our own pipe or almost move to that point
+
+27
+00:01:52,140 --> 00:01:54,310
+one other thing and then we'll move on.
+

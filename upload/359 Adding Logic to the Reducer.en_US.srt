@@ -1,0 +1,296 @@
+1
+00:00:02,410 --> 00:00:05,270
+So now we have the initial state, we have that function,
+
+2
+00:00:05,440 --> 00:00:08,000
+what happens inside of the function then?
+
+3
+00:00:08,050 --> 00:00:11,910
+I mentioned that we now have to find out which kind of action was dispatched
+
+4
+00:00:11,920 --> 00:00:14,710
+so that we know how to edit our state.
+
+5
+00:00:14,710 --> 00:00:17,830
+Again don't get confused that we're not dispatching actions yet,
+
+6
+00:00:17,830 --> 00:00:23,850
+we'll soon add the code to do so. Now to check different kinds of possible actions,
+
+7
+00:00:23,890 --> 00:00:29,290
+you could add multiple if statements and run different codes depending on which action you have or since
+
+8
+00:00:29,290 --> 00:00:36,370
+we have multiple possible conditions, you can use a switch case statement and then on the action, you
+
+9
+00:00:36,370 --> 00:00:44,560
+have to check the type of that action. Now to get better TypeScript support, you can add a type here
+
+10
+00:00:44,590 --> 00:00:53,440
+to the argument, to the action argument and the type would be action, where action is actually imported
+
+11
+00:00:53,500 --> 00:01:01,900
+not from this package but where action is actually imported from @ngrx/store. This exports an
+
+12
+00:01:01,900 --> 00:01:03,560
+action interface
+
+13
+00:01:03,670 --> 00:01:09,220
+and this simply is an interface that forces any action to have a type property, which is why we can safely
+
+14
+00:01:09,220 --> 00:01:11,610
+check it here.
+
+15
+00:01:11,620 --> 00:01:18,880
+So now I'm switching on the action type and now we can just register different cases, so different action
+
+16
+00:01:19,000 --> 00:01:20,830
+types we want to handle.
+
+17
+00:01:20,830 --> 00:01:27,860
+Now it's totally up to you as a developer of this application which action types your application has
+
+18
+00:01:27,910 --> 00:01:35,370
+and here, we could start with a simple one, if we have a look at the shopping service, getting doesn't really
+
+19
+00:01:35,370 --> 00:01:40,620
+change the state but maybe we start with adding an ingredient because that will change our ingredients
+
+20
+00:01:40,640 --> 00:01:40,860
+state,
+
+21
+00:01:40,930 --> 00:01:42,550
+it will add a new one.
+
+22
+00:01:42,690 --> 00:01:48,900
+So we could start with a simple state which we now give an identifier or type is the identifier but
+
+23
+00:01:48,900 --> 00:01:50,840
+the value of type is a string.
+
+24
+00:01:51,510 --> 00:01:54,960
+So here, we could name this add ingredient.
+
+25
+00:01:54,960 --> 00:01:58,240
+Now it's absolutely up to you what the value here is
+
+26
+00:01:58,320 --> 00:02:05,310
+but the convention is to use an all uppercase text which kind of is clear about what this action will
+
+27
+00:02:05,310 --> 00:02:05,820
+do,
+
+28
+00:02:05,820 --> 00:02:12,210
+so here if I give this action an identifier, a type of add ingredient, it's pretty clear that this
+
+29
+00:02:12,210 --> 00:02:15,000
+action will probably add an ingredient.
+
+30
+00:02:15,000 --> 00:02:19,020
+So add ingredient is the case here
+
+31
+00:02:19,020 --> 00:02:23,160
+and with that case registered, we now have to do what?
+
+32
+00:02:23,880 --> 00:02:29,810
+If you recall what I said on the slide, we have to return a new state now.
+
+33
+00:02:29,910 --> 00:02:32,930
+So we get the old state and we need to return a new state,
+
+34
+00:02:32,940 --> 00:02:38,500
+now what you could do is you could take the state which has the ingredients property and then simply
+
+35
+00:02:38,510 --> 00:02:44,910
+use push to add a new ingredient and that would be totally wrong because state changes with NgRx
+
+36
+00:02:44,910 --> 00:02:51,930
+always have to be immutable, which means you must not edit the existing or the previous state,
+
+37
+00:02:51,960 --> 00:02:55,610
+it's absolutely forbidden and a bad practice if you do so.
+
+38
+00:02:56,190 --> 00:02:58,500
+So never touch the existing state,
+
+39
+00:02:58,680 --> 00:03:02,340
+instead return a new object which will replace the old state
+
+40
+00:03:02,520 --> 00:03:09,630
+and to not lose all the old data, copy the old state with the spread operator. That is next generation
+
+41
+00:03:09,630 --> 00:03:15,870
+Javascript syntax which is also supported by TypeScript, it essentially pulls out all the properties
+
+42
+00:03:16,020 --> 00:03:20,110
+of the old state and adds these properties to this new object.
+
+43
+00:03:20,190 --> 00:03:25,100
+Hence we have a new object with the old data and hence we have a copy of the old state
+
+44
+00:03:25,140 --> 00:03:32,190
+and if we now edit this copy, it's OK. So we copied all the old state and now I want to overwrite the ingredients,
+
+45
+00:03:33,340 --> 00:03:38,100
+so I'll add the ingredients property and now we can assign a new value to that.
+
+46
+00:03:38,330 --> 00:03:43,790
+Now correctly, you would say that the old state was just an object with the ingredients property.
+
+47
+00:03:44,270 --> 00:03:49,970
+So if I copy the entire old state and I then change the ingredients, I essentially don't need to copy
+
+48
+00:03:49,970 --> 00:03:54,770
+it and indeed, you could omit this here because we're changing the only thing the state has.
+
+49
+00:03:54,920 --> 00:04:00,590
+Still, it is a good practice to always copy the old state because later and in other apps, you will certainly
+
+50
+00:04:00,590 --> 00:04:04,040
+have some states that consist of more than one property
+
+51
+00:04:04,040 --> 00:04:09,290
+and if you then only change one of the properties and you forget to copy the others, you overwrite the
+
+52
+00:04:09,290 --> 00:04:14,030
+old state with the new state where you dumped all the properties you didn't change
+
+53
+00:04:14,090 --> 00:04:15,890
+and that's not something you want.
+
+54
+00:04:15,890 --> 00:04:20,920
+So rule of thumb, always copy the old state then overwrite what you want to change.
+
+55
+00:04:21,260 --> 00:04:27,060
+Now ingredients has to be an array and of course here, I don't want to lose my old ingredients. Therefore
+
+56
+00:04:27,060 --> 00:04:28,850
+in this ingredients array,
+
+57
+00:04:29,090 --> 00:04:35,780
+I also again copy my old state ingredients now. So I access the previous state which we still have here
+
+58
+00:04:35,780 --> 00:04:41,450
+in the state argument and there, I access the ingredients property which holds this array of ingredients
+
+59
+00:04:41,810 --> 00:04:47,510
+and the spread operator can also be used on arrays to pull out all the elements and I then add all these
+
+60
+00:04:47,510 --> 00:04:50,410
+elements I pulled out to this array here.
+
+61
+00:04:50,570 --> 00:04:57,590
+So therefore now, the ingredients array is a new array with the old elements in there. Now
+
+62
+00:04:57,680 --> 00:05:02,450
+side note, the elements themselves are also objects and I didn't copy those, 
+
+63
+00:05:02,450 --> 00:05:07,070
+so here we technically still have the old objects in that array but we don't change them,
+
+64
+00:05:07,070 --> 00:05:08,400
+so that is fine.
+
+65
+00:05:08,630 --> 00:05:12,520
+When I do change however is I do add a new element here
+
+66
+00:05:13,160 --> 00:05:14,680
+and
+
+67
+00:05:14,850 --> 00:05:17,330
+where do I find this?
+
+68
+00:05:17,330 --> 00:05:20,330
+It has to be part of the action somehow
+
+69
+00:05:20,360 --> 00:05:21,960
+but we don't know yet.
+
+70
+00:05:21,980 --> 00:05:27,650
+So for now, let's just add the entire action object here even though I can already tell you that this
+
+71
+00:05:27,650 --> 00:05:33,650
+is not the final solution because this is an object that for example has a type property and ingredient
+
+72
+00:05:33,650 --> 00:05:35,160
+doesn't have a type property,
+
+73
+00:05:35,240 --> 00:05:39,280
+so adding the action is certainly wrong but it's a first step.
+
+74
+00:05:39,290 --> 00:05:45,530
+Let's next have a look at these actions and see how we actually create and dispatch actions.
+

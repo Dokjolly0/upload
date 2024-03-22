@@ -1,0 +1,264 @@
+1
+00:00:01,210 --> 00:00:04,810
+All the first thing you can do and for that I'm animating this.
+
+2
+00:00:04,920 --> 00:00:10,140
+Excuse me I'm commenting on this out if you want to use the same timing.
+
+3
+00:00:10,140 --> 00:00:16,060
+You don't have to duplicate is and simply write highlighted to normal here.
+
+4
+00:00:16,620 --> 00:00:21,270
+Instead you can use one line and simply make an arrow point in both directions.
+
+5
+00:00:21,270 --> 00:00:24,840
+Now this means back and forth use the same animate function.
+
+6
+00:00:24,840 --> 00:00:30,360
+So in this case use the three hundred milliseconds which now means we have the same timing.
+
+7
+00:00:30,390 --> 00:00:31,970
+That's one thing.
+
+8
+00:00:32,280 --> 00:00:39,210
+But also you might have a more complex animation where you want to control the styling this has during
+
+9
+00:00:39,210 --> 00:00:39,790
+the movement.
+
+10
+00:00:39,860 --> 00:00:44,100
+So not the beginning and not the end state only during the transition.
+
+11
+00:00:44,130 --> 00:00:50,040
+You might have some extra styles at this place or at this point of time too well to simulate this.
+
+12
+00:00:50,190 --> 00:00:57,150
+Let me copy this trigger here so that we keep the simple one two and I will name it wild state because
+
+13
+00:00:57,150 --> 00:00:58,770
+it's getting more wild now.
+
+14
+00:00:59,040 --> 00:01:02,220
+So the wild state should now be applied to a new.
+
+15
+00:01:02,250 --> 00:01:06,780
+I'm copying here Q which is now bound to that new wall state.
+
+16
+00:01:06,810 --> 00:01:09,220
+It still uses my state property.
+
+17
+00:01:09,240 --> 00:01:13,480
+Don't get me wrong but here it now uses the wildside.
+
+18
+00:01:13,740 --> 00:01:17,660
+Now with that I'm handing it to the wall state animation trigger.
+
+19
+00:01:17,670 --> 00:01:26,580
+I also want to set up a new property I'll name it wild state and therefore here in my component of duplicate
+
+20
+00:01:26,790 --> 00:01:32,310
+normal and set this to wild state so that I have two different dates where we can see two different
+
+21
+00:01:32,310 --> 00:01:34,160
+things.
+
+22
+00:01:34,170 --> 00:01:38,310
+Now how does wild state work or how do you want to control this.
+
+23
+00:01:38,460 --> 00:01:43,620
+Well I still want to have my normal and my highlighted style and I will leave to styling I have here
+
+24
+00:01:44,100 --> 00:01:46,450
+but I want to set up a third state.
+
+25
+00:01:46,560 --> 00:01:49,130
+This is the srong state let's say.
+
+26
+00:01:49,130 --> 00:01:56,490
+So I'm able to shrink this square the background color let's say should then be green and we transform
+
+27
+00:01:56,490 --> 00:01:57,680
+it such dead.
+
+28
+00:01:57,840 --> 00:02:09,150
+We want to translate it 100 pixels but we want to scale it to zero point five let's say and no let's
+
+29
+00:02:09,150 --> 00:02:15,690
+actually translated 0 pixels so at the starting point therefore in the average You state you want to
+
+30
+00:02:15,690 --> 00:02:16,830
+scale it to 1.
+
+31
+00:02:16,830 --> 00:02:20,650
+So that's again normalcy is a set up here.
+
+32
+00:02:20,820 --> 00:02:23,540
+And with that we set up the different states.
+
+33
+00:02:23,560 --> 00:02:32,340
+Now when I go back to where the two directions highlighted two normal and normal two highlighted have
+
+34
+00:02:32,340 --> 00:02:35,340
+different durations like we had before.
+
+35
+00:02:35,580 --> 00:02:39,420
+So like this you have just commented this out anyways.
+
+36
+00:02:39,900 --> 00:02:48,090
+Now i also an injustice and also hook up is on Szeryng method here does shrink button.
+
+37
+00:02:48,090 --> 00:02:59,100
+So on shrink show now I assigned this wild state to be shrunken that is that third stage set up appear
+
+38
+00:02:59,190 --> 00:03:02,500
+shrunken in on any mate.
+
+39
+00:03:02,550 --> 00:03:08,700
+I therefore also want to set this wild state equal to or for us compare it.
+
+40
+00:03:08,700 --> 00:03:13,560
+If it's equal to normal and if not well I basically want to do the same as year.
+
+41
+00:03:13,560 --> 00:03:16,980
+So let me quickly capitis and replace this.
+
+42
+00:03:17,010 --> 00:03:24,370
+So you're I'm not using the shrunken state that's something I'm only setting here now with this set
+
+43
+00:03:24,370 --> 00:03:33,510
+up I can of course reload my application and once it does reload we should see a new square below the
+
+44
+00:03:33,510 --> 00:03:41,640
+first one or maybe let's introduce a little divider here like a line break so that we can clearly see
+
+45
+00:03:41,640 --> 00:03:44,070
+the difference and now if it like animate.
+
+46
+00:03:44,100 --> 00:03:51,330
+They both move with different speeds of course because it changes but shrinking still happens instantly
+
+47
+00:03:51,330 --> 00:03:51,710
+.
+
+48
+00:03:51,750 --> 00:03:54,420
+So shrinking is not really animated.
+
+49
+00:03:54,420 --> 00:03:56,540
+And that is something I want to change.
+
+50
+00:03:56,940 --> 00:04:02,850
+So back in the up component we basically need a forward transition because we're only targeting normal
+
+51
+00:04:02,850 --> 00:04:07,430
+and highlighted and we're not using shrunk now to do that.
+
+52
+00:04:07,470 --> 00:04:15,180
+I can use the fallings transitional where a transition from an to shrunk and now from anywhere.
+
+53
+00:04:15,180 --> 00:04:21,260
+So I don't care if I have normal or highlighted no matter which of the both states it is.
+
+54
+00:04:21,270 --> 00:04:23,430
+I want to play the same animation.
+
+55
+00:04:23,700 --> 00:04:27,110
+And for that I can use the wildcard character which means any state.
+
+56
+00:04:27,210 --> 00:04:34,630
+So shrunken to any state and shrunken from any state should play the same animation here for now.
+
+57
+00:04:34,650 --> 00:04:41,090
+And we made it over 500 milliseconds so that we can see something before I then find this.
+
+58
+00:04:41,130 --> 00:04:46,200
+So after reloading this find our shrink get you see shrink down.
+
+59
+00:04:46,350 --> 00:04:52,290
+And if I animate you now see it switch and animate correctly.
+
+60
+00:04:52,290 --> 00:04:57,050
+So now we are animating days and the wildcard character here is the key to all.
+
+61
+00:04:57,050 --> 00:05:03,240
+Give us the flexibility that we don't manually have to specify any possible state and an application
+
+62
+00:05:03,240 --> 00:05:05,530
+where you maybe derive a state dynamically.
+
+63
+00:05:05,550 --> 00:05:08,300
+You might really not know which states it could have.
+
+64
+00:05:08,400 --> 00:05:11,260
+And they're the wildcard character is what you need.
+
+65
+00:05:11,460 --> 00:05:18,180
+Now in the next few I want to dive in how to manipulate this animate function and have some in-between
+
+66
+00:05:18,210 --> 00:05:19,860
+styles during the animation
+

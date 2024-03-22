@@ -1,0 +1,76 @@
+1
+00:00:02,720 --> 00:00:09,620
+Welcome to a new module in this course. This module is about services and dependency injection,
+
+2
+00:00:09,680 --> 00:00:12,030
+now what is that?
+
+3
+00:00:12,420 --> 00:00:14,190
+Let's start with services,
+
+4
+00:00:14,190 --> 00:00:21,450
+what are services? Let's consider this application, we get an AppComponent, an AboutComponent, a
+
+5
+00:00:21,450 --> 00:00:24,810
+UserComponent and a UserDetailComponent.
+
+6
+00:00:24,810 --> 00:00:28,400
+Now we might have some methods in those components,
+
+7
+00:00:28,620 --> 00:00:34,730
+let's say we want to log some data to the console in the AboutComponent and in the UserDetailComponent
+
+8
+00:00:34,740 --> 00:00:37,800
+and somehow this log statement is pretty similar,
+
+9
+00:00:37,800 --> 00:00:44,130
+so pretty much the same text, so we're basically repeating ourselves here, we're duplicating code in two different
+
+10
+00:00:44,130 --> 00:00:45,420
+components.
+
+11
+00:00:45,870 --> 00:00:53,280
+Let's say in the UserComponent, we also want to access some data, some array of users maybe and maybe we
+
+12
+00:00:53,370 --> 00:00:58,590
+also don't know if we will later use that in some other part of our application.
+
+13
+00:00:58,590 --> 00:01:08,190
+Both use cases, duplication of code and data storage, providing data are typical use cases for a service
+
+14
+00:01:08,250 --> 00:01:15,180
+because a service is basically just another piece in your Angular app, another class you can add which
+
+15
+00:01:15,180 --> 00:01:22,350
+acts as a central repository, as a central business unit you could say, something where you can store, where
+
+16
+00:01:22,350 --> 00:01:28,850
+you can centralize your code in. So we could create a log service for example to centralize our log
+
+17
+00:01:28,850 --> 00:01:30,120
+statement,
+
+18
+00:01:30,120 --> 00:01:33,790
+we could create a user service to manage the data storage here.
+
+19
+00:01:33,870 --> 00:01:37,850
+Let's see this in a real app so that it becomes more clear though.
+

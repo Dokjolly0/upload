@@ -1,0 +1,52 @@
+1
+00:00:02,010 --> 00:00:04,820
+In this application you are seeing here I get two buttons.
+
+2
+00:00:04,830 --> 00:00:07,250
+Any made in shrink and they don't do anything.
+
+3
+00:00:07,250 --> 00:00:10,760
+I'll come back to these buttons in a second and then me got two lists and I can.
+
+4
+00:00:10,760 --> 00:00:15,900
+Items to the list with the Add button list or witty add item button you can add a to build lists.
+
+5
+00:00:15,900 --> 00:00:20,920
+Actually I do have twice the same list because I want to show different animations later on.
+
+6
+00:00:21,180 --> 00:00:25,620
+Let's start with the two buttons up here and the basics of animations.
+
+7
+00:00:25,680 --> 00:00:29,390
+As a side note this project is of course attached to this lecture.
+
+8
+00:00:29,790 --> 00:00:32,250
+So how do we start with that.
+
+9
+00:00:32,250 --> 00:00:36,340
+How does the enemy mation system in England generally work.
+
+10
+00:00:36,630 --> 00:00:42,300
+Well if we have a look at the source code behind this template here we see that you would get two buttons
+
+11
+00:00:42,390 --> 00:00:44,150
+and then we get this empty div..
+
+12
+00:00:44,200 --> 00:00:50,280
+Now that's the death of one to animate and on which I want to show how any mation turning on to generally
+
+13
+00:00:50,280 --> 00:00:51,530
+work.
+

@@ -1,0 +1,100 @@
+1
+00:00:02,300 --> 00:00:07,040
+Instead it's related to the auth effects where I redirect
+
+2
+00:00:07,040 --> 00:00:14,450
+whenever we logged in, here when we have an authentication success which is also the case after I
+
+3
+00:00:14,450 --> 00:00:16,880
+auto login, I navigate.
+
+4
+00:00:16,880 --> 00:00:19,610
+Now we would probably want to tweak this a little bit,
+
+5
+00:00:19,610 --> 00:00:27,010
+we should only do that if we have an authentication success outside of the auto logging mechanism
+
+6
+00:00:28,350 --> 00:00:33,530
+or to handle it differently, in auth actions, for authenticate success
+
+7
+00:00:33,540 --> 00:00:41,680
+we can add a new item here to the payload and that could be redirect which is a boolean.
+
+8
+00:00:41,780 --> 00:00:46,700
+Now we can go to the effects and when we auto login,
+
+9
+00:00:46,790 --> 00:00:50,810
+we can set redirect to false.
+
+10
+00:00:50,810 --> 00:00:54,140
+I don't want to redirect to that default page,
+
+11
+00:00:54,230 --> 00:01:01,850
+I only want to do this up here in the normal handle authentication function for manual login and sign
+
+12
+00:01:01,850 --> 00:01:04,940
+up, there we can set redirect to true.
+
+13
+00:01:05,010 --> 00:01:06,750
+Now what's the advantage of this?
+
+14
+00:01:06,770 --> 00:01:13,940
+Now we can go to our auth redirect effect here, where we redirect after a successful login and actually
+
+15
+00:01:13,940 --> 00:01:21,000
+what we do get here is our auth success action.
+
+16
+00:01:21,000 --> 00:01:24,510
+So here we can then simply check if auth success
+
+17
+00:01:24,510 --> 00:01:25,110
+action
+
+18
+00:01:28,390 --> 00:01:36,060
+and I should set a type here to get better auto completion, the type here will be auth actions authenticate
+
+19
+00:01:36,080 --> 00:01:36,700
+success.
+
+20
+00:01:39,500 --> 00:01:46,850
+If my payload here includes redirect or it will include that but if it is true, only if it is true, I
+
+21
+00:01:46,850 --> 00:01:48,020
+will call navigate,
+
+22
+00:01:48,020 --> 00:01:50,690
+otherwise we won't. With that,
+
+23
+00:01:52,170 --> 00:01:53,790
+let's first of all login manually,
+
+24
+00:01:58,050 --> 00:02:03,410
+that works as before and now if I fetch data and I reload here on the detail page,
+
+25
+00:02:03,630 --> 00:02:07,950
+you see that now also works, we stay on the page and the data here is loaded without any errors.
+

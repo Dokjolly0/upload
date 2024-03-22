@@ -1,0 +1,168 @@
+1
+00:00:02,510 --> 00:00:08,150
+I get a little example project set up here and you can find it attached to this video.
+
+2
+00:00:08,150 --> 00:00:14,120
+Now the code responsible for what you saw here on the screen is basically this app component template
+
+3
+00:00:14,210 --> 00:00:20,560
+where I output a list of servers and the servers are stored here in my app.component.ts file,
+
+4
+00:00:20,570 --> 00:00:26,270
+I got the servers array which simply holds a couple of Javascript object, each representing a server and then
+
+5
+00:00:26,270 --> 00:00:32,060
+at the bottom here, I got a little helper class which simply retrieves the right CSS classes which should be
+
+6
+00:00:32,060 --> 00:00:36,050
+attached to that list group item depending on the state of the server,
+
+7
+00:00:36,080 --> 00:00:38,110
+if it's stable or offline.
+
+8
+00:00:38,510 --> 00:00:40,820
+So this is the project we're starting with,
+
+9
+00:00:40,940 --> 00:00:45,000
+it looks all right but we get a couple of things we could fix here.
+
+10
+00:00:45,050 --> 00:00:51,750
+Now for example, we get a server name which looks all right to me but then we get this instance type
+
+11
+00:00:51,750 --> 00:00:55,980
+here, medium, large, small and we get the state.
+
+12
+00:00:56,030 --> 00:01:03,990
+Now you could for example put this instance type to be all uppercase and the date,
+
+13
+00:01:04,130 --> 00:01:06,660
+I'd like to change something about the state too
+
+14
+00:01:06,830 --> 00:01:13,340
+but let's start with the instance type, medium, large, small here to see how to use pipes and you will
+
+15
+00:01:13,340 --> 00:01:16,970
+see it's actually pretty simple. To change it,
+
+16
+00:01:17,000 --> 00:01:24,650
+we have to go to the template, to the HTML file because remember, a pipe is only responsible for transforming
+
+17
+00:01:24,650 --> 00:01:25,340
+the output,
+
+18
+00:01:25,400 --> 00:01:30,150
+so the right place to use it logically is the template.
+
+19
+00:01:30,170 --> 00:01:34,940
+Now here, I want to change this server instance type thing here.
+
+20
+00:01:34,940 --> 00:01:37,760
+I'll just bring it into a new line here
+
+21
+00:01:38,030 --> 00:01:42,850
+and the same for server started just to make it a bit easier to read
+
+22
+00:01:43,280 --> 00:01:48,320
+and now I would like this server instance type to be uppercase.
+
+23
+00:01:48,320 --> 00:01:49,740
+Now that's easy to achieve,
+
+24
+00:01:49,760 --> 00:01:55,290
+we just add the pipe symbol, hence the name, pipes and then the name of the pipe
+
+25
+00:01:55,310 --> 00:02:00,400
+and as mentioned before, there are a couple of built-in pipes and you can also build pipes on your own,
+
+26
+00:02:00,410 --> 00:02:02,690
+we will have a look at this in one of the next lectures.
+
+27
+00:02:02,780 --> 00:02:08,420
+Now a good built-in pipe for making this all uppercase of course is the uppercase pipe you saw in the
+
+28
+00:02:08,420 --> 00:02:11,690
+slide before. With that added, you
+
+29
+00:02:11,720 --> 00:02:19,310
+now see if you save this and go back to your webpage, that all the instance types here have been converted
+
+30
+00:02:19,310 --> 00:02:21,570
+to be uppercase.
+
+31
+00:02:21,620 --> 00:02:29,590
+So without changing anything else, without and that's important, changing the property itself, here
+
+32
+00:02:29,620 --> 00:02:35,700
+the instance types are still lowercase, without changing anything here,
+
+33
+00:02:35,810 --> 00:02:40,490
+we change the way users can view it simply by adding a pipe here.
+
+34
+00:02:40,790 --> 00:02:42,950
+That looks pretty good to me,
+
+35
+00:02:42,990 --> 00:02:49,810
+now let's move on to the date and for this, we get another pipe we could use.
+
+36
+00:02:49,970 --> 00:02:56,540
+So if we have a look at the HTML code here, the server started output here is responsible for rendering
+
+37
+00:02:56,540 --> 00:02:57,280
+the date,
+
+38
+00:02:57,560 --> 00:03:04,100
+well if we add the pipe symbol here too, we could add the date pipe, another built-in type and I will
+
+39
+00:03:04,100 --> 00:03:08,700
+come back to where you find those built-in pipes in a second.
+
+40
+00:03:08,720 --> 00:03:14,890
+Now with this added, let's save this and now you see out of the box,
+
+41
+00:03:14,930 --> 00:03:20,690
+this looks much nicer but it might not be the way you want it to look.
+
+42
+00:03:20,690 --> 00:03:25,960
+So let's learn more about how to configure pipes in the next video.
+

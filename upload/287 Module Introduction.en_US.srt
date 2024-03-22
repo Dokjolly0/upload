@@ -1,0 +1,44 @@
+1
+00:00:02,180 --> 00:00:07,400
+One thing we haven't covered thus far in this cause is authentication.
+
+2
+00:00:07,400 --> 00:00:12,080
+Now of course a lot of modern web applications require users to authenticate,
+
+3
+00:00:12,080 --> 00:00:18,290
+that means to sign up and login, at least to use certain features of these applications typically
+
+4
+00:00:18,410 --> 00:00:25,070
+and it's also something we can add to our application here. Thus far in the course project, in the recipe
+
+5
+00:00:25,070 --> 00:00:25,670
+book,
+
+6
+00:00:25,670 --> 00:00:27,680
+we're not using authentication.
+
+7
+00:00:27,680 --> 00:00:32,510
+We always interact with our back-end where we store our data in an unauthenticated way,
+
+8
+00:00:32,510 --> 00:00:36,630
+there is no feature in our application that would require authentication.
+
+9
+00:00:36,650 --> 00:00:42,350
+Therefore in this module, you will learn how you can add authentication to an Angular application,
+
+10
+00:00:42,350 --> 00:00:49,220
+how it works and how to make sure that you lock down parts of your application or the entire application
+
+11
+00:00:49,430 --> 00:00:50,630
+with authentication.
+

@@ -1,0 +1,424 @@
+1
+00:00:02,700 --> 00:00:07,210
+So here I am in the source code responsible for the app you saw in the last lecture
+
+2
+00:00:07,440 --> 00:00:12,750
+and as you can see, here I got three major components and then some subcomponents
+
+3
+00:00:12,810 --> 00:00:18,790
+of these components. In the app component, I'm loading them all, my home component, my users component and
+
+4
+00:00:18,840 --> 00:00:20,450
+servers component.
+
+5
+00:00:20,610 --> 00:00:25,530
+But for now, I'm going to ignore my subcomponents here, edit server and a single server,
+
+6
+00:00:25,540 --> 00:00:28,180
+so we will later nest this even more
+
+7
+00:00:28,260 --> 00:00:31,370
+but for now it would be nice if of these three components,
+
+8
+00:00:31,380 --> 00:00:37,650
+I would only display one at a time so that we can dynamically load them by clicking on these links here
+
+9
+00:00:37,650 --> 00:00:38,260
+at the top
+
+10
+00:00:38,280 --> 00:00:41,630
+and we really load a different route in our app.
+
+11
+00:00:41,820 --> 00:00:44,250
+Now where do we register such routes?
+
+12
+00:00:44,250 --> 00:00:46,270
+Let's think about this logically.
+
+13
+00:00:46,260 --> 00:00:51,240
+These routes are responsible for our whole app. Everywhere in our application,
+
+14
+00:00:51,240 --> 00:00:58,230
+if we enter /users, we want to load the users component as our main page let's say.
+
+15
+00:00:58,260 --> 00:01:03,740
+So since this is really a core part of our app, where should we register it?
+
+16
+00:01:04,290 --> 00:01:10,500
+Well, the app module sounds like a good place because here is where we configure our app, where we add
+
+17
+00:01:10,530 --> 00:01:12,110
+all these components and so on,
+
+18
+00:01:12,110 --> 00:01:18,840
+so this might be a good place to also inform Angular about the routes our application has and it is.
+
+19
+00:01:19,080 --> 00:01:27,210
+So here above this @NgModule decorator here, I will add a new constant and I will name it appRoutes
+
+20
+00:01:27,210 --> 00:01:30,530
+because it should hold all the routes of my application.
+
+21
+00:01:30,530 --> 00:01:38,520
+Now these routes constant should be of a specific type, the routes type, which needs to be imported from
+
+22
+00:01:38,590 --> 00:01:40,310
+@Angular/router.
+
+23
+00:01:40,410 --> 00:01:42,960
+So make sure to add this import at the top,
+
+24
+00:01:42,960 --> 00:01:48,500
+this is the type informing Angular or giving these routes some structure I should say.
+
+25
+00:01:48,570 --> 00:01:53,040
+You don't necessarily have to add it here but it is a good practice.
+
+26
+00:01:53,040 --> 00:01:59,430
+Now with this import added and the constant set up, what should this constant actually hold? It should hold an
+
+27
+00:01:59,490 --> 00:02:02,810
+array because we will have multiple routes.
+
+28
+00:02:03,180 --> 00:02:06,900
+So we add all the routes we want to set up to this array for now
+
+29
+00:02:06,960 --> 00:02:10,990
+and each route now is just a Javascript object in this array.
+
+30
+00:02:11,250 --> 00:02:15,750
+Now the question is, how should such a route be configured in an Angular app?
+
+31
+00:02:15,750 --> 00:02:21,820
+It has to follow a specific pattern, a specific structure for Angular to be able to use it
+
+32
+00:02:22,020 --> 00:02:25,000
+and this structure always needs a path,
+
+33
+00:02:25,080 --> 00:02:30,100
+this is what gets entered in the URL after your domain.
+
+34
+00:02:30,100 --> 00:02:36,660
+This should be a string and the first route I want to add could be my users route,
+
+35
+00:02:36,960 --> 00:02:41,580
+this allows me to then visit localhost or whatever your domain is,
+
+36
+00:02:41,660 --> 00:02:45,240
+4200 in this case here and then /users.
+
+37
+00:02:45,240 --> 00:02:48,360
+So that is your path without the slash
+
+38
+00:02:48,450 --> 00:02:49,230
+and this is important,
+
+39
+00:02:49,230 --> 00:02:52,070
+make sure you don't add the slash here,
+
+40
+00:02:52,140 --> 00:02:55,450
+this would be incorrect added without the slash.
+
+41
+00:02:55,740 --> 00:03:01,830
+So this is now the path and this will later allow Angular to determine which route in our array of routes here
+
+42
+00:03:01,860 --> 00:03:03,240
+should be selected
+
+43
+00:03:03,390 --> 00:03:10,550
+if we enter something in the URL or click some link because it clearly defines well which path this route
+
+44
+00:03:10,660 --> 00:03:12,150
+should be.
+
+45
+00:03:12,150 --> 00:03:17,340
+Now we also need to define what should happen when is path here is reached.
+
+46
+00:03:17,490 --> 00:03:19,050
+Right now, nothing happens,
+
+47
+00:03:19,050 --> 00:03:22,650
+it's a route but yes, there is no action attached to it.
+
+48
+00:03:22,680 --> 00:03:30,090
+The action typically is a component so that you inform Angular that once this part here is reached, a certain
+
+49
+00:03:30,090 --> 00:03:36,460
+component should be loaded and this component will then be the page you could say which gets loaded.
+
+50
+00:03:36,480 --> 00:03:42,150
+So here for users, it sounds about right to load our users component
+
+51
+00:03:42,150 --> 00:03:48,720
+and of course it's up to you to make sure that in your application, you are indeed configuring your
+
+52
+00:03:48,720 --> 00:03:54,090
+components you want to serve as pages, to look like pages, to have all the content you want to have on
+
+53
+00:03:54,090 --> 00:03:55,170
+this page.
+
+54
+00:03:55,200 --> 00:04:01,440
+In this case, that's the case for my users component, here at least for now it will output my list of
+
+55
+00:04:01,440 --> 00:04:08,010
+users and then the single user component next to it and we will later improve this to also be able to select
+
+56
+00:04:08,010 --> 00:04:10,020
+the user from this list of users here
+
+57
+00:04:10,030 --> 00:04:11,560
+but for now, that's fine.
+
+58
+00:04:11,910 --> 00:04:16,120
+So this is now my first route with the users component getting loaded
+
+59
+00:04:16,140 --> 00:04:18,800
+once we target /users.
+
+60
+00:04:18,960 --> 00:04:20,980
+Now let's add a couple of other routes,
+
+61
+00:04:21,000 --> 00:04:24,600
+I'll duplicate this or replicate this twice.
+
+62
+00:04:24,600 --> 00:04:31,650
+I also want to have a certain page I display once we have just localhost:4200,
+
+63
+00:04:31,650 --> 00:04:34,470
+so an empty path after it, you could say.
+
+64
+00:04:34,770 --> 00:04:39,680
+So we should also create a route for this with just an empty path
+
+65
+00:04:39,830 --> 00:04:42,270
+and here I want to load my home component,
+
+66
+00:04:42,320 --> 00:04:48,300
+this is the starting page you could say. You of course don't need to have such an empty path but then you
+
+67
+00:04:48,300 --> 00:04:49,990
+somehow need to handle this,
+
+68
+00:04:50,070 --> 00:04:55,040
+well the user accesses an empty path differently and I will come back to this later.
+
+69
+00:04:55,320 --> 00:05:01,950
+So for now we have an empty path, just localhost:4200 loading the home component, /users will load
+
+70
+00:05:02,060 --> 00:05:09,790
+the users component and I also want to have /servers which will load my server or servers component.
+
+71
+00:05:10,610 --> 00:05:13,500
+With that, three routes are set up here
+
+72
+00:05:13,730 --> 00:05:16,550
+but that alone won't do anything.
+
+73
+00:05:16,550 --> 00:05:20,000
+How would Angular know that you want to use this constant?
+
+74
+00:05:20,030 --> 00:05:23,590
+You could have added any constant here and the name appRoutes,
+
+75
+00:05:23,600 --> 00:05:25,440
+well that is totally up to you.
+
+76
+00:05:25,700 --> 00:05:30,740
+So right now, these routes will be ignored by Angular and the type routes here doesn't do anything
+
+77
+00:05:30,740 --> 00:05:32,320
+when it comes to this.
+
+78
+00:05:32,330 --> 00:05:39,260
+So we somehow need to register these routes in our app and we do this by adding a new import here to
+
+79
+00:05:39,260 --> 00:05:40,510
+this imports array,
+
+80
+00:05:40,730 --> 00:05:49,520
+we need to add the RouterModule here and this RouterModule should be imported from our @angular/router
+
+81
+00:05:49,580 --> 00:05:51,100
+package here.
+
+82
+00:05:51,110 --> 00:05:59,070
+So with this added, we're adding the routing functionality to app but still, our routes are not registered.
+
+83
+00:05:59,150 --> 00:06:05,660
+That is why this RouterModule has a special method we can call, forRoot, which allows us to register
+
+84
+00:06:05,690 --> 00:06:08,920
+some routes for our main application here.
+
+85
+00:06:09,170 --> 00:06:17,630
+So forRoot will now receive our appRoutes constant here as an argument and with that, our routes
+
+86
+00:06:17,690 --> 00:06:24,480
+are now registered in our Angular app on this RouterModule which gives us this routing functionality
+
+87
+00:06:24,560 --> 00:06:28,140
+and now Angular knows our routes.
+
+88
+00:06:28,310 --> 00:06:33,770
+The missing piece is someplace to render the currently selected component because if you have a look
+
+89
+00:06:33,770 --> 00:06:40,420
+at our app component template, we still add our components here with their selector. Now
+
+90
+00:06:40,430 --> 00:06:46,700
+OK we visit /users, so Angular knows we want to load the users page but how does it know where to
+
+91
+00:06:46,700 --> 00:06:47,740
+display it?
+
+92
+00:06:47,780 --> 00:06:53,480
+How does it know if you want to display it here or here or maybe here in the header, it doesn't know.
+
+93
+00:06:53,800 --> 00:07:01,010
+So the right place to inform where to load it is to get rid of all these rows here but one, so only have
+
+94
+00:07:01,010 --> 00:07:03,570
+the place where you actually want to render your route
+
+95
+00:07:03,650 --> 00:07:09,770
+and now you don't add your component with its selector but you add a special directive shipping with
+
+96
+00:07:09,770 --> 00:07:13,080
+Angular, the router-outlet.
+
+97
+00:07:13,100 --> 00:07:16,510
+Now this looks like a component but it still only is a directive,
+
+98
+00:07:16,520 --> 00:07:22,480
+keep in mind directives may have any selector including this component or this elements style selector.
+
+99
+00:07:22,670 --> 00:07:30,020
+And with this, this now simply marks the place in our document where we want the Angular router to load
+
+100
+00:07:30,020 --> 00:07:33,080
+the component of the currently selected route.
+
+101
+00:07:33,380 --> 00:07:39,160
+And with this all set up, if we now save this and let it rebuild therefore, we should see that this rebuild
+
+102
+00:07:39,170 --> 00:07:46,250
+successfully and if we visit our page now, you see we only see the home page now and if we now enter
+
+103
+00:07:46,310 --> 00:07:54,070
+/users here, we see the users page and if we enter /servers, we see the servers page.
+
+104
+00:07:54,080 --> 00:07:55,020
+So this is working,
+
+105
+00:07:55,040 --> 00:07:57,140
+of course our links are not working,
+
+106
+00:07:57,140 --> 00:07:59,600
+this is something we will work on next.
+

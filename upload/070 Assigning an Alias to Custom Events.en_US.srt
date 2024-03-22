@@ -1,0 +1,44 @@
+1
+00:00:02,470 --> 00:00:08,870
+In the last lecture, you learned how to use @output to enable other components to listen to your
+
+2
+00:00:08,870 --> 00:00:12,540
+own custom events which you could create with eventEmitter.
+
+3
+00:00:12,890 --> 00:00:20,300
+Now just like on @input, on @output you also can assign an alias but here for blueprintCreated,
+
+4
+00:00:20,360 --> 00:00:23,840
+maybe you want to name this bpCreated. Now with this,
+
+5
+00:00:23,980 --> 00:00:27,770
+this is the event you can listen to from outside.
+
+6
+00:00:27,800 --> 00:00:34,820
+So in the app component where we try to listen, we now need to rename it here to and listen to be bpCreated,
+
+7
+00:00:35,030 --> 00:00:37,940
+which is now just like on @imput,
+
+8
+00:00:38,120 --> 00:00:42,880
+the one and only event you can listen to when it comes to this blueprintCreated event.
+
+9
+00:00:43,040 --> 00:00:50,730
+The other name, blueprintCreated here will not be exposed to the outside anymore, so it has to be
+
+10
+00:00:50,750 --> 00:00:51,240
+bpCreated now.
+
+11
+00:00:51,240 --> 00:00:55,170
+All the rest stays in touch and works just like before.
+

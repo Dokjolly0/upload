@@ -1,0 +1,256 @@
+1
+00:00:03,210 --> 00:00:10,170
+In the last lecture we learned about this hierarchical injector and that we can choose between one instance
+
+2
+00:00:10,170 --> 00:00:13,770
+or multiple instances of the same service class.
+
+3
+00:00:13,770 --> 00:00:16,540
+I mentioned at the highest possible level.
+
+4
+00:00:16,740 --> 00:00:18,810
+It's actually not the app component.
+
+5
+00:00:18,870 --> 00:00:19,950
+So let's remove it here.
+
+6
+00:00:19,950 --> 00:00:26,070
+This provider's array leave it in the constructor and leave the import but the highest possible level
+
+7
+00:00:26,340 --> 00:00:28,140
+is in the app module.
+
+8
+00:00:28,140 --> 00:00:30,910
+Here we also have a provider's array added.
+
+9
+00:00:30,990 --> 00:00:36,520
+If you don't have it and here we can also provide the accounts service.
+
+10
+00:00:36,540 --> 00:00:39,650
+Make sure to also add to import at the top here.
+
+11
+00:00:39,660 --> 00:00:47,370
+Then with that little addition heater we're making sure that our whole application everything in our
+
+12
+00:00:47,370 --> 00:00:54,140
+application receives the same instance of the service unless it overrides it as we did before.
+
+13
+00:00:54,150 --> 00:01:01,650
+Now with that we can now even inject a service into another service because that's not possible by providing
+
+14
+00:01:01,650 --> 00:01:08,310
+it on a component level for that we need to provide it in the app module so let's say we want to log
+
+15
+00:01:08,310 --> 00:01:13,010
+something if we call actually in the account service.
+
+16
+00:01:13,440 --> 00:01:20,640
+So it would have to provide a logging service in my app module now and therefore I will simply comment
+
+17
+00:01:20,670 --> 00:01:30,580
+out providers here and why add component decorators and I don't want to call logging service here anymore
+
+18
+00:01:30,700 --> 00:01:36,700
+so will comment this out and I will actually leave the injection here so that you have it for reference
+
+19
+00:01:36,700 --> 00:01:38,010
+if you download the code.
+
+20
+00:01:38,110 --> 00:01:42,050
+I'll also comment it out here in you account component instead.
+
+21
+00:01:42,050 --> 00:01:47,980
+Let's say I want to use this logging service and the account service and I want to call the log status
+
+22
+00:01:47,980 --> 00:01:53,230
+change method there because this isn't the end the place where the status changes even because we added
+
+23
+00:01:53,230 --> 00:01:59,530
+a new account or because we called update status so to use the service there.
+
+24
+00:01:59,920 --> 00:02:06,370
+Generally we start in the same way we add a constructor and we checked our logging service in this case
+
+25
+00:02:06,820 --> 00:02:09,230
+set the type import.
+
+26
+00:02:09,280 --> 00:02:16,220
+This type at the top make sure to add to import and we provided it an app module so you could think
+
+27
+00:02:16,220 --> 00:02:23,830
+that we are set to go that we can now go to add account coal logging service log the status change paths
+
+28
+00:02:23,830 --> 00:02:28,240
+to status here and do the same year for update status.
+
+29
+00:02:28,250 --> 00:02:29,800
+You could think this is how we do it.
+
+30
+00:02:30,230 --> 00:02:38,430
+And it's not a logical to think so but let's see if this works if we load our app we already get an
+
+31
+00:02:38,430 --> 00:02:42,810
+error cannot resolve all parameters for account service.
+
+32
+00:02:42,810 --> 00:02:45,330
+Something's not working.
+
+33
+00:02:45,360 --> 00:02:53,250
+The reason is if you inject a service into something this something needs to have some metadata attached
+
+34
+00:02:53,250 --> 00:02:54,010
+to it.
+
+35
+00:02:54,090 --> 00:03:00,630
+Now a component has some metadata because we have at component a directive has some metadata because
+
+36
+00:03:00,630 --> 00:03:07,070
+we have at directive account or excuse me a service doesn't have any metadata.
+
+37
+00:03:07,440 --> 00:03:10,400
+It's just how Angela works that we need to attach some metadata.
+
+38
+00:03:10,410 --> 00:03:12,240
+And of course not any metadata.
+
+39
+00:03:12,240 --> 00:03:15,060
+You shouldn't attach at components here.
+
+40
+00:03:15,060 --> 00:03:18,630
+There is a specific metadata you should attach in such cases.
+
+41
+00:03:18,630 --> 00:03:24,900
+It's at injectable which needs to be imported from at angular core.
+
+42
+00:03:24,900 --> 00:03:31,980
+This tail's annual are dead now this service is is injectable or that something can be injected in there
+
+43
+00:03:31,980 --> 00:03:33,330
+to be precise.
+
+44
+00:03:33,330 --> 00:03:34,710
+So that's important.
+
+45
+00:03:34,860 --> 00:03:42,030
+You don't add at injectable to the service you want to inject but to the service very you want to inject
+
+46
+00:03:42,030 --> 00:03:42,630
+something.
+
+47
+00:03:42,660 --> 00:03:49,230
+So the receiving service you could say that to be injected in service and you don't need to add it to
+
+48
+00:03:49,230 --> 00:03:54,480
+any other service if you don't want to inject anything in the service like here for the logging service.
+
+49
+00:03:54,480 --> 00:04:01,510
+You don't need to add add injectable only added If you expect to get something injected.
+
+50
+00:04:01,530 --> 00:04:07,560
+Now one important note here as I explained we don't need to add injectable the injectable decorator
+
+51
+00:04:07,560 --> 00:04:13,650
+here to this class because this is a service which we only inject somewhere else but where we don't
+
+52
+00:04:13,650 --> 00:04:19,500
+inject anything into this service and you technically really only need injectable if you inject something
+
+53
+00:04:19,560 --> 00:04:20,640
+into this service.
+
+54
+00:04:20,640 --> 00:04:28,200
+Not if you just inject this service somewhere else in newer wordings of angular however it is recommended
+
+55
+00:04:28,350 --> 00:04:34,500
+that you always add at injectable it's technically makes no difference right now in the future it might
+
+56
+00:04:34,500 --> 00:04:34,950
+though.
+
+57
+00:04:34,950 --> 00:04:38,620
+So it's already a habit you might get into that you added here.
+
+58
+00:04:38,640 --> 00:04:44,670
+I do admit it but you could consider adding it also to ensure that in the future it doesn't unexpectedly
+
+59
+00:04:44,670 --> 00:04:45,330
+break.
+
+60
+00:04:45,420 --> 00:04:50,340
+What I explained about why you need it and that you don't need it here technically still holds though
+
+61
+00:04:51,030 --> 00:04:56,180
+with this if I now safeties and we let the app reload now it works.
+
+62
+00:04:56,280 --> 00:05:02,520
+And now you see that if I save this we still log it to the console with the correct status the same
+
+63
+00:05:02,520 --> 00:05:04,020
+happens if I click here.
+
+64
+00:05:04,020 --> 00:05:10,560
+But now everything is centralized into our service and now we're also injecting a service into a service.
+

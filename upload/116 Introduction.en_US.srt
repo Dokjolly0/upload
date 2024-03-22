@@ -1,0 +1,68 @@
+1
+00:00:02,490 --> 00:00:04,480
+Welcome back to the recipe project.
+
+2
+00:00:04,770 --> 00:00:07,420
+We already added a lot of features to it,
+
+3
+00:00:07,440 --> 00:00:15,040
+now it's time to add services to it which will give us the possibility to greatly enhance this project.
+
+4
+00:00:15,630 --> 00:00:18,370
+Which services do we need?
+
+5
+00:00:18,910 --> 00:00:21,060
+Let's have a look at our application again,
+
+6
+00:00:21,150 --> 00:00:25,170
+this is the application the way it looks right now.
+
+7
+00:00:25,200 --> 00:00:32,890
+Now services allow us to centralize tasks, manage data in a central place and so on.
+
+8
+00:00:32,910 --> 00:00:39,360
+So we probably need a service for both feature areas, we will need a shopping list service and a recipe
+
+9
+00:00:39,360 --> 00:00:45,930
+service. The shopping list service managing our shopping list and we will also access it from the
+
+10
+00:00:45,930 --> 00:00:50,890
+recipe, from the recipe area because we want to add items to the shopping list from there
+
+11
+00:00:51,120 --> 00:00:58,080
+and well the recipe service, that will be responsible for managing our recipe, managing the data there
+
+12
+00:00:58,110 --> 00:00:59,120
+and so on.
+
+13
+00:00:59,310 --> 00:01:01,420
+So we'll use both services
+
+14
+00:01:01,530 --> 00:01:10,260
+and as always, the challenge for you, create both services. For now only create the files and try to find
+
+15
+00:01:10,410 --> 00:01:13,860
+places in our app structure where they just fit in
+
+16
+00:01:14,110 --> 00:01:16,960
+and thereafter, we will fill them with some life together.
+
+17
+00:01:17,040 --> 00:01:21,570
+So let's start together in the next section, try to create these files on your own.
+

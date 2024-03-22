@@ -1,0 +1,172 @@
+1
+00:00:02,680 --> 00:00:05,160
+Well we already covered quite some things.
+
+2
+00:00:05,210 --> 00:00:11,200
+We learned how to add routes and how to load them, either by typing it manually into our navigation bar
+
+3
+00:00:11,200 --> 00:00:13,040
+here or by clicking some links,
+
+4
+00:00:13,060 --> 00:00:16,910
+we also learned how to style these links. But what
+
+5
+00:00:16,900 --> 00:00:23,290
+now if we wanted to load a route programmatically? So we don't have a link the user can click but we've
+
+6
+00:00:23,290 --> 00:00:29,680
+finished some operation or the user clicked some button and then we want to trigger the navigation
+
+7
+00:00:29,890 --> 00:00:32,050
+from our TypeScript code,
+
+8
+00:00:32,050 --> 00:00:35,570
+we can do this. Let's say in our home component here,
+
+9
+00:00:35,740 --> 00:00:43,810
+I add a new button to it and on this button, I simply want to load the server, the servers page.
+
+10
+00:00:43,810 --> 00:00:50,260
+So here, now we could try adding routerLink but let's say I want to have a click listener and execute
+
+11
+00:00:50,260 --> 00:00:55,750
+some method because we do something else than just navigating there. I will also add some CSS classes
+
+12
+00:00:55,750 --> 00:00:57,420
+to make this button look nice.
+
+13
+00:00:57,940 --> 00:00:59,420
+So on this click listener,
+
+14
+00:00:59,500 --> 00:01:08,300
+I want to execute onLoadServers and here, this method now gets implemented in the home component
+
+15
+00:01:09,460 --> 00:01:11,020
+and in onLoadServers,
+
+16
+00:01:11,020 --> 00:01:16,600
+I now, still again I simply want to navigate to the servers component. So we could for this example of
+
+17
+00:01:16,600 --> 00:01:23,320
+course also use a routerLink but let's say here, we have some complex calculation or we reach out to
+
+18
+00:01:23,320 --> 00:01:25,860
+our back-end, we store something on the server
+
+19
+00:01:25,930 --> 00:01:27,450
+and once we are done,
+
+20
+00:01:27,440 --> 00:01:34,540
+now we want to navigate away. To do so, we somehow need to get access to our router,
+
+21
+00:01:34,540 --> 00:01:39,520
+this Angular router because we need to tell it hey please navigate somewhere else.
+
+22
+00:01:39,520 --> 00:01:42,350
+The nice thing is we can inject this router.
+
+23
+00:01:42,490 --> 00:01:50,190
+So let's bind it to a private property, maybe we name it router and this will be of type router, router
+
+24
+00:01:50,190 --> 00:01:56,760
+needs to be imported from @angular/router. With this injected, we can use this router here,
+
+25
+00:01:56,790 --> 00:02:03,240
+so this router and then we get a couple of methods there, one of the most important ones being navigate.
+
+26
+00:02:03,620 --> 00:02:10,950
+Now navigate takes an argument which allows us to guess what? Navigate to a new route and here, a route
+
+27
+00:02:10,950 --> 00:02:16,730
+is defined as an array of the single or the different elements of this new path.
+
+28
+00:02:16,860 --> 00:02:22,960
+So just like here in app component where I also explain this alternative way of binding routerLink, binding
+
+29
+00:02:22,960 --> 00:02:28,910
+it to an array where you could have users for the users part of your path and then another element for
+
+30
+00:02:28,920 --> 00:02:32,120
+maybe something, for the something part of your path,
+
+31
+00:02:32,340 --> 00:02:37,890
+now you always have to pass such an array when using the navigate method but in here still, the first
+
+32
+00:02:37,890 --> 00:02:42,330
+element is simply the first element or the first segment of your path.
+
+33
+00:02:42,450 --> 00:02:49,410
+So if let's say we want to go to /servers here, we could add /servers here and as before,
+
+34
+00:02:49,410 --> 00:02:51,090
+this is now an absolute path,
+
+35
+00:02:51,180 --> 00:02:56,500
+you could have a relative one but here, you have to control to what this should be relative to
+
+36
+00:02:56,700 --> 00:02:58,270
+and I will come back to this.
+
+37
+00:02:58,290 --> 00:03:01,400
+So for now, let's make it an absolute path here
+
+38
+00:03:01,570 --> 00:03:06,630
+and once we did this, let's check our page here,
+
+39
+00:03:06,660 --> 00:03:09,540
+click this button and we go to servers.
+
+40
+00:03:09,690 --> 00:03:13,670
+So this is now programmatically routing to a different page,
+
+41
+00:03:13,680 --> 00:03:18,210
+still it doesn't reload our page, it does the same as if we clicked a routerLink
+
+42
+00:03:18,330 --> 00:03:24,900
+but with this router navigate method, we are able to trigger this programmatically, so trigger this in
+
+43
+00:03:24,930 --> 00:03:25,900
+our code.
+

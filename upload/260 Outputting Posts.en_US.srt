@@ -1,0 +1,88 @@
+1
+00:00:02,170 --> 00:00:03,610
+Let's now output our data
+
+2
+00:00:03,640 --> 00:00:07,940
+now that we're fetching it. For that when we're getting the data instead of logging it,
+
+3
+00:00:08,050 --> 00:00:14,170
+since we now transform this into an array of posts, we can set this loaded post, which is a property
+
+4
+00:00:14,170 --> 00:00:19,360
+I created earlier, where we now also can be more explicit about the type it will store because that will
+
+5
+00:00:19,360 --> 00:00:27,430
+be an array of posts of course, we can set this loaded posts here equal to the posts we fetched.
+
+6
+00:00:27,620 --> 00:00:33,530
+Now we just have to use loaded posts in our template and for that, of course in this area where I say
+
+7
+00:00:33,530 --> 00:00:40,160
+no posts available, I only want to say that if we really have no posts, so I'll add ngIf here
+
+8
+00:00:40,550 --> 00:00:49,190
+and check if loaded posts length is smaller than one, which means we have no posts. If it is longer than
+
+9
+00:00:49,190 --> 00:00:55,910
+one, then I want to output an unordered list with a class of list group which is a Bootstrap class which
+
+10
+00:00:55,910 --> 00:01:04,610
+has list items with list group item as a class and in there, we'll have a h1 tag for the title and a
+
+11
+00:01:04,610 --> 00:01:07,570
+paragraph for the content of the post.
+
+12
+00:01:07,580 --> 00:01:14,300
+Now, I want to only show this of course and hence I'll add ngIf on the unordered list if loaded posts
+
+13
+00:01:14,300 --> 00:01:17,100
+length is greater or equal than one,
+
+14
+00:01:17,120 --> 00:01:19,630
+so it's the opposite of this condition here.
+
+15
+00:01:20,930 --> 00:01:25,880
+If that's true, we'll show the list and now I want to loop through all the loaded posts and recreate
+
+16
+00:01:25,880 --> 00:01:28,300
+a list item for every loaded post.
+
+17
+00:01:28,580 --> 00:01:36,290
+So here, I'll add ngFor to go through all my posts, so I'll name this post of loaded posts and then
+
+18
+00:01:36,290 --> 00:01:49,130
+here, we can output post title and for the paragraph, we can output post content. Let's have a look at
+
+19
+00:01:49,130 --> 00:01:54,500
+whether this works, if this now reloads, it fetches the posts and you see thereafter, these posts appear
+
+20
+00:01:54,500 --> 00:02:01,550
+here. Now maybe the heading is a bit big, let's maybe use h3 here but the important takeaway
+
+21
+00:02:01,550 --> 00:02:08,300
+is that our data loads of course. Now that is super awesome and this shows us how we can make the step
+
+22
+00:02:08,420 --> 00:02:13,120
+from loading the data to outputting it in our front-end.
+

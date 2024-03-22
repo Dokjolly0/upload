@@ -1,0 +1,236 @@
+1
+00:00:02,420 --> 00:00:05,130
+So were you successful hooking up these buttons?
+
+2
+00:00:05,210 --> 00:00:06,950
+Let's do it together.
+
+3
+00:00:07,280 --> 00:00:09,640
+I want to start with the new recipe button
+
+4
+00:00:09,830 --> 00:00:17,510
+and for that, I'll go to my recipe-list component which is where I have this button here and I simply
+
+5
+00:00:17,510 --> 00:00:24,150
+want to add a click listener to it, onNewRecipe could be a fitting name.
+
+6
+00:00:24,290 --> 00:00:29,150
+So let's copy that name and add it to our TypeScript code so that here we have the method which will
+
+7
+00:00:29,150 --> 00:00:30,060
+get triggered
+
+8
+00:00:30,110 --> 00:00:34,190
+and now I need to inject the router to be able to navigate to this route
+
+9
+00:00:34,190 --> 00:00:43,850
+I want to go to. So I'll add my router here of type router to be imported from @angular/router here,
+
+10
+00:00:43,850 --> 00:00:46,240
+so I'll add this import.
+
+11
+00:00:46,750 --> 00:00:49,150
+And with that in onNewRecipe,
+
+12
+00:00:49,150 --> 00:00:56,780
+I simply want to target or use my router to use the navigate method to target this path
+
+13
+00:00:56,800 --> 00:01:03,310
+I want to go to. Now which path is that? We already are on /recipes here,
+
+14
+00:01:03,310 --> 00:01:09,850
+keep this in mind because we're on the recipe list. So I can use a relative route and simply add new to
+
+15
+00:01:09,850 --> 00:01:10,320
+it.
+
+16
+00:01:10,390 --> 00:01:16,300
+Now to be able to use a relative route in the navigate method though, we also need to inform the router
+
+17
+00:01:16,300 --> 00:01:25,440
+about our current route, so let's inject this too. Here the route of course, of type ActivatedRoute needs
+
+18
+00:01:25,440 --> 00:01:31,650
+to be added and ActivatedRoute should also be added from the @angular/router package and then I'll add
+
+19
+00:01:31,650 --> 00:01:39,570
+my Javascript object, add the relative to configuration and point to this route, to my current route.
+
+20
+00:01:40,080 --> 00:01:41,490
+With that, let's see if that works.
+
+21
+00:01:41,490 --> 00:01:45,820
+Back in the application, let's try this new recipe button,
+
+22
+00:01:45,890 --> 00:01:47,630
+that looks great.
+
+23
+00:01:47,630 --> 00:01:50,730
+So let's try going to just recipes, works,
+
+24
+00:01:50,750 --> 00:01:53,060
+select a recipe, works too,
+
+25
+00:01:53,300 --> 00:01:56,330
+so that is indeed working as expected.
+
+26
+00:01:56,330 --> 00:02:04,040
+Now we should do the same basically for the edit recipe, though there we also need to pass our ID. The
+
+27
+00:02:04,040 --> 00:02:10,340
+recipe-detail component is of course the place where we have this link, here the edit recipe link,
+
+28
+00:02:10,890 --> 00:02:15,200
+so I'll add a click listener and say onEditRecipe here.
+
+29
+00:02:16,200 --> 00:02:21,870
+I'll also copy this name into the TypeScript code of the edit recipe component, like this
+
+30
+00:02:22,100 --> 00:02:26,920
+and then here, we also need to get access to the router so that we can call the navigate method,
+
+31
+00:02:26,960 --> 00:02:30,270
+so let's inject it, of type router as before.
+
+32
+00:02:30,350 --> 00:02:34,680
+Make sure to import the router from @angular/router
+
+33
+00:02:34,790 --> 00:02:40,860
+and now that is why I stored the ID in this property here. With that stored,
+
+34
+00:02:40,970 --> 00:02:49,550
+I can now use my router here to navigate and I want to navigate basically to the current ID and
+
+35
+00:02:49,550 --> 00:02:50,540
+then edit.
+
+36
+00:02:50,690 --> 00:02:56,530
+Now I could simply add edit to the current route, so let's add
+
+37
+00:02:56,630 --> 00:03:00,080
+relative to here, this route
+
+38
+00:03:00,240 --> 00:03:03,070
+and let's see if this works as expected.
+
+39
+00:03:03,270 --> 00:03:09,510
+If I click edit recipe, we go to zero edit and the same for one.
+
+40
+00:03:09,510 --> 00:03:13,410
+So actually, we don't need the ID here in this case
+
+41
+00:03:13,410 --> 00:03:16,330
+then, why did I get it then?
+
+42
+00:03:16,950 --> 00:03:24,420
+Well, simply for demo purposes. This is an absolutely fine way and probably the way you will navigate,
+
+43
+00:03:25,200 --> 00:03:26,910
+the alternative though
+
+44
+00:03:27,090 --> 00:03:32,600
+and just to show this, how that would work and to practice this, is to use navigate
+
+45
+00:03:32,760 --> 00:03:41,460
+and now let's say we move up one level and then we want to add our ID again, so this ID and then edit
+
+46
+00:03:41,460 --> 00:03:41,970
+.
+
+47
+00:03:42,060 --> 00:03:49,700
+So now I'm deliberately constructing a more complex path, simply to show how that would work.
+
+48
+00:03:49,710 --> 00:03:54,010
+So now, that is also relative to our current route, so this route
+
+49
+00:03:54,060 --> 00:03:58,550
+and with that you should see that this still works because what we do is we go up one level,
+
+50
+00:03:58,680 --> 00:04:05,740
+so to just /recipes in this case, then we again add our ID and then edit.
+
+51
+00:04:06,020 --> 00:04:11,940
+And we should see that if I click this button again, even if we reload the app to be sure that it
+
+52
+00:04:11,940 --> 00:04:15,100
+did indeed update, it works as before,
+
+53
+00:04:15,150 --> 00:04:21,300
+now with a more complex set up. Again you would probably use the first one which is why I'll comment out the
+
+54
+00:04:21,300 --> 00:04:22,410
+second one,
+
+55
+00:04:22,470 --> 00:04:29,040
+I just wanted to highlight again how that works, how you can use that more complex navigation and also
+
+56
+00:04:29,040 --> 00:04:36,780
+navigate around with this go up one level command you see here as the first segment of this more complex
+
+57
+00:04:36,780 --> 00:04:37,370
+path.
+
+58
+00:04:37,440 --> 00:04:44,030
+However again, just adding edit to the relative or to the current route I should say is of course the straightforward
+
+59
+00:04:44,040 --> 00:04:44,370
+way.
+

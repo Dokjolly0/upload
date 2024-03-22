@@ -1,0 +1,132 @@
+1
+00:00:02,430 --> 00:00:09,060
+So we added the resetting and the clear mechanism, let's make sure we can delete the items. For this of
+
+2
+00:00:09,060 --> 00:00:14,080
+course and even our click listener here and definitely try solving this on your own if you want,
+
+3
+00:00:14,100 --> 00:00:16,740
+so that's your chance to pause the video,
+
+4
+00:00:19,490 --> 00:00:23,400
+if you don't want to solve it on your own or if you are already finished with it now,
+
+5
+00:00:23,570 --> 00:00:26,230
+well we can definitely go ahead and do it together.
+
+6
+00:00:26,360 --> 00:00:27,930
+So I'm calling onDelete here
+
+7
+00:00:27,950 --> 00:00:33,720
+when I click the delete button and I'll add this method to my shopping edit component.
+
+8
+00:00:34,160 --> 00:00:38,470
+Well in onDelete, what do we need to do here?
+
+9
+00:00:38,600 --> 00:00:45,020
+We need to inform the service that it should remove one of the items in the array and that is basically almost
+
+10
+00:00:45,020 --> 00:00:53,360
+all, we also need to make sure that we call this onClear because we definitely also want to clear a form
+
+11
+00:00:53,360 --> 00:00:55,660
+if we delete the item which was loaded.
+
+12
+00:00:56,150 --> 00:01:04,380
+Now in the shopping list service, I need to add a method, deleteIngredient and I expect to get an index
+
+13
+00:01:04,400 --> 00:01:11,060
+where I should delete it. With that information, I can simply use my ingredients array and splice one
+
+14
+00:01:11,060 --> 00:01:18,250
+of the elements. Splice allows us to start at a specific point, for example at index here and then splice
+
+15
+00:01:18,270 --> 00:01:20,810
+one element, thus removing it
+
+16
+00:01:21,350 --> 00:01:26,320
+and then of course as always, we should call ingredientsChanged and of course you could refactor this
+
+17
+00:01:26,320 --> 00:01:27,880
+in its own method
+
+18
+00:01:28,010 --> 00:01:29,990
+but I think that's OK, I like this too.
+
+19
+00:01:30,350 --> 00:01:38,510
+So here, I will slice or simply pass a copy of my ingredients and with that, the final step is before
+
+20
+00:01:38,510 --> 00:01:47,030
+we clear everything, I will reach out to my shopping list service, call deleteIngredient and simply pass
+
+21
+00:01:47,390 --> 00:01:51,320
+the editedItemIndex as a value.
+
+22
+00:01:51,320 --> 00:01:56,510
+Now this will throw an error if we click delete without loading an item,
+
+23
+00:01:56,510 --> 00:02:02,840
+so therefore I will simply add ngIf to the button and I'll just restructure to make it easier to read,
+
+24
+00:02:03,500 --> 00:02:06,440
+ngIf to only display the button
+
+25
+00:02:06,530 --> 00:02:14,260
+if we are in editMode. So now by default we don't see delete, if I switch to an item,
+
+26
+00:02:14,260 --> 00:02:19,210
+I can see and I click it, it resets the form and deleted an item.
+
+27
+00:02:19,210 --> 00:02:22,170
+Now no more items are left, of course.
+
+28
+00:02:22,210 --> 00:02:27,760
+I can still add new ones and delete them again. So that is our shopping list form
+
+29
+00:02:27,790 --> 00:02:33,940
+working with the template driven approach and a lot of other nice features like the service really showing
+
+30
+00:02:33,940 --> 00:02:36,310
+you how you could set up something like this,
+
+31
+00:02:36,400 --> 00:02:42,910
+how you can use set value, how you can reset the form and therefore hopefully both the form you need. 
+
+32
+00:02:43,630 --> 00:02:44,930
+Now in the next lectures,
+
+33
+00:02:44,950 --> 00:02:50,660
+I will move on to the recipe edit form which you will create using the reactive approach.
+

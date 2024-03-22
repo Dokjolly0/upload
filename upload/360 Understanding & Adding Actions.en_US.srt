@@ -1,0 +1,284 @@
+1
+00:00:02,330 --> 00:00:09,450
+We added our first reducer and thus far, NgRx is not doing anything for us but we're getting there.
+
+2
+00:00:09,500 --> 00:00:15,620
+The next step is that we also take care about the actions that we want to have or about the one action
+
+3
+00:00:15,620 --> 00:00:16,790
+which we support right now,
+
+4
+00:00:16,880 --> 00:00:24,380
+adding an ingredient. We want to be able to dispatch this and to dispatch this and to there also reliably
+
+5
+00:00:24,400 --> 00:00:31,220
+dispatch it in the same way by having the right identifier where we rule out typos and by adding the
+
+6
+00:00:31,220 --> 00:00:35,000
+right payload ingredient that can be added here,
+
+7
+00:00:35,120 --> 00:00:42,120
+we should also standardize this action creation process or how such an action looks like
+
+8
+00:00:42,320 --> 00:00:46,280
+because at the moment, I'm just checking for this identifier here
+
+9
+00:00:46,460 --> 00:00:52,430
+but if I now would dispatch this action from anywhere in my code, I would have to make sure that I type
+
+10
+00:00:52,430 --> 00:00:58,640
+this same identifier and as you might imagine, if you're in a hurry, if your application is bigger, it's
+
+11
+00:00:58,640 --> 00:01:04,520
+easy to forget a character and then you have a bug that's super hard to spot, your app does not work
+
+12
+00:01:04,520 --> 00:01:12,320
+correctly and you waste hours looking for that stupid typo. To rule that out, NgRx also kind
+
+13
+00:01:12,320 --> 00:01:19,250
+of at least pushes us into a direction where we have a clear pattern about creating and providing our
+
+14
+00:01:19,250 --> 00:01:20,860
+actions as well.
+
+15
+00:01:20,880 --> 00:01:26,150
+Now for that, I'll create a new file next to the shopping list reducer and that is my
+
+16
+00:01:26,360 --> 00:01:29,950
+shopping-list.actions.ts file.
+
+17
+00:01:30,030 --> 00:01:36,410
+Now since the actions and the reducer kind of belong together and belong both to the NgRx setup,
+
+18
+00:01:36,890 --> 00:01:43,160
+I'll add a new subfolder here in the shopping list folder and I'll name it store because it's all
+
+19
+00:01:43,160 --> 00:01:45,220
+related to the @ngrx/store.
+
+20
+00:01:45,410 --> 00:01:51,410
+So let's move the reducer and the actions file into that store folder now and now let's work on the shopping
+
+21
+00:01:51,410 --> 00:01:53,050
+list actions file.
+
+22
+00:01:53,480 --> 00:02:02,060
+Now in that file, I first of all want to export my identifiers or my single identifier I have thus far
+
+23
+00:02:02,360 --> 00:02:08,000
+in a way that we can simply import it and we don't have to type it manually, to rule out typos.
+
+24
+00:02:08,070 --> 00:02:14,960
+So in the shopping list actions file, I'll therefore export a constant which I also name add ingredient,
+
+25
+00:02:15,080 --> 00:02:16,920
+though that name is totally up to you
+
+26
+00:02:17,120 --> 00:02:20,370
+and then I assign a value of add ingredient.
+
+27
+00:02:20,370 --> 00:02:27,260
+Now this is a convention which I recommend following, you use a constant whose name is the same name
+
+28
+00:02:27,260 --> 00:02:33,260
+as the one of your identifier, which in turn should be descriptive about what this action does and you
+
+29
+00:02:33,290 --> 00:02:39,950
+then simply store your string identifier in that constant and by exporting it here in the actions file,
+
+30
+00:02:40,160 --> 00:02:45,860
+we can import it into our files, like in our shopping list reducer file where we need that action and
+
+31
+00:02:45,860 --> 00:02:51,650
+therefore since we never have to type it again and we just import it and the IDE will yell at us if
+
+32
+00:02:51,650 --> 00:02:55,990
+we mess up the import, it won't yell at us if we mess up a string,
+
+33
+00:02:56,360 --> 00:03:01,760
+therefore for all these reasons we then have a secure way where we rule out typos in the action identifiers.
+
+34
+00:03:02,540 --> 00:03:10,610
+So now, I will import add ingredient from the shopping list actions file here and instead of using the
+
+35
+00:03:10,610 --> 00:03:14,750
+string like this down there, I just use add ingredient like this
+
+36
+00:03:14,810 --> 00:03:16,910
+and this now refers to that string.
+
+37
+00:03:16,950 --> 00:03:22,580
+Now that's the first step but of course this step doesn't ensure that we for example have the right
+
+38
+00:03:22,580 --> 00:03:24,410
+payload.
+
+39
+00:03:24,620 --> 00:03:31,820
+The next step therefore is that we export another thing that describes our action and our action,
+
+40
+00:03:31,910 --> 00:03:35,210
+if we go back to reducer, is of course not that string.
+
+41
+00:03:35,210 --> 00:03:41,510
+Keep in mind the action is an object which needs to have a type property, so the action actually is an object,
+
+42
+00:03:41,510 --> 00:03:42,680
+not a string,
+
+43
+00:03:42,680 --> 00:03:50,270
+it is of type action and action is imported from @ngrx/store. So it probably doesn't hurt if we grab
+
+44
+00:03:50,300 --> 00:03:54,190
+that action import and we import it here in the shopping-list.actions.ts
+
+45
+00:03:54,200 --> 00:03:56,420
+file as well
+
+46
+00:03:56,420 --> 00:04:02,990
+and that what we export here should be our action and that should be a class therefore, since the action
+
+47
+00:04:02,990 --> 00:04:09,050
+is an object and objects can be created based on classes, that should have a descriptive name and I'll name
+
+48
+00:04:09,050 --> 00:04:09,230
+it
+
+49
+00:04:09,260 --> 00:04:15,550
+add ingredient, now not all uppercase because class names should be pascal case,
+
+50
+00:04:15,560 --> 00:04:20,960
+so using this convention but it still is of course belonging to that action,
+
+51
+00:04:20,960 --> 00:04:23,550
+I think that's pretty clear by the name.
+
+52
+00:04:23,550 --> 00:04:28,470
+Now it's a class and that class needs to implement the action interface
+
+53
+00:04:28,520 --> 00:04:35,090
+we're importing from @ngrx/store. Action as I mentioned earlier already is an interface, not itself an
+
+54
+00:04:35,090 --> 00:04:42,190
+object and this interface being implemented into add ingredient
+
+55
+00:04:42,350 --> 00:04:49,140
+now forces us to structure the add ingredient class in a certain way. To be precise,
+
+56
+00:04:49,280 --> 00:04:57,290
+we need to have a type property in the add ingredient class and that type is the identifier of this action.
+
+57
+00:04:57,330 --> 00:05:00,620
+Now this will always be an add ingredient action,
+
+58
+00:05:00,620 --> 00:05:06,880
+so type here should simply be add ingredient, so our string from up there and now an extra annotation
+
+59
+00:05:06,890 --> 00:05:09,420
+which we should add here is readonly,
+
+60
+00:05:09,560 --> 00:05:15,640
+that is a TypeScript feature which indicates to TypeScript that this must never be changed from outside and
+
+61
+00:05:15,760 --> 00:05:19,840
+if we ever try so from anywhere in our code, we'll get an error
+
+62
+00:05:20,240 --> 00:05:26,310
+and this simply enhances type safety and ensures that we don't mess up with our pattern.
+
+63
+00:05:26,360 --> 00:05:29,300
+Now as I mentioned, this action needs more than just a type though,
+
+64
+00:05:29,390 --> 00:05:35,660
+it also needs the ingredient that should be added and therefore, we can add more. We can add a second
+
+65
+00:05:35,660 --> 00:05:40,530
+property, the payload and that should be of type ingredient
+
+66
+00:05:40,530 --> 00:05:48,760
+and for that, you should also add an import to the ingredient model, like this.
+
+67
+00:05:51,550 --> 00:05:55,660
+Now with that, we finished our action definition.
+
+68
+00:05:55,660 --> 00:06:00,070
+Now it still might be hard to see all these pieces come together but we're almost there.
+
+69
+00:06:00,430 --> 00:06:03,760
+Let's now use this action in the shopping list reducer,
+
+70
+00:06:04,030 --> 00:06:11,140
+let's extract the payload and let's then finally work on registering the application store and also
+
+71
+00:06:11,140 --> 00:06:13,780
+on selecting our state and dispatching actions.
+

@@ -1,0 +1,316 @@
+1
+00:00:02,130 --> 00:00:07,710
+So before we explore, does Angler not Jason fall, let's see which angler Seelie commands we can use
+
+2
+00:00:07,710 --> 00:00:11,120
+inside of a project we used, Engie knew outside of it.
+
+3
+00:00:11,460 --> 00:00:14,460
+Now we can basically use all remaining commands inside of it.
+
+4
+00:00:14,850 --> 00:00:20,730
+Now you can type energy help here, not engy Dash does help, but just engy help to learn about all
+
+5
+00:00:20,730 --> 00:00:21,330
+the commands.
+
+6
+00:00:21,600 --> 00:00:25,950
+And of course, as mentioned, you have that page in the official documentation.
+
+7
+00:00:26,790 --> 00:00:28,350
+They're under seal commands.
+
+8
+00:00:28,350 --> 00:00:29,670
+You'll also see all the commands.
+
+9
+00:00:32,340 --> 00:00:37,260
+Now, some commands are really niche commands, which you really need, but of course there are also
+
+10
+00:00:37,260 --> 00:00:41,790
+some commands which you'll need all the time, for example, and you serve, you know, this one, it
+
+11
+00:00:41,790 --> 00:00:44,580
+serves your application now just as before.
+
+12
+00:00:44,580 --> 00:00:49,850
+If you add dash to help thereafter, you get details about this command and you can see there are quite
+
+13
+00:00:49,860 --> 00:00:51,150
+some flags you can set.
+
+14
+00:00:51,660 --> 00:00:54,090
+Now, not all of these flags are required.
+
+15
+00:00:54,090 --> 00:00:55,830
+Of course, the defaults work just fine.
+
+16
+00:00:56,190 --> 00:01:03,720
+But for example, you can set a port flag here to use a different port than the default of four thousand
+
+17
+00:01:03,720 --> 00:01:04,260
+two hundred.
+
+18
+00:01:04,860 --> 00:01:11,070
+You can add Dasht as Pirot to actually serve your app in production mode, to have kind of an idea of
+
+19
+00:01:11,070 --> 00:01:14,160
+how it will work once you do build it for production.
+
+20
+00:01:15,000 --> 00:01:17,730
+This, however, is not something you can use on a real web server.
+
+21
+00:01:17,730 --> 00:01:18,950
+It's not production ready.
+
+22
+00:01:19,020 --> 00:01:21,440
+It's just a preview of how production mode will work.
+
+23
+00:01:22,290 --> 00:01:24,590
+You also have dash dash open.
+
+24
+00:01:24,960 --> 00:01:31,020
+This will actually tell these Seelie to not only served yet, but to open the app in a new browser tab
+
+25
+00:01:31,020 --> 00:01:36,500
+once it's done, serving it up so so that you don't have to manually open it there and so on.
+
+26
+00:01:36,510 --> 00:01:39,410
+There are a bunch of configuration options you can set there.
+
+27
+00:01:39,450 --> 00:01:45,000
+Again, most of them are rarely needed, but if you do need them, well, here they are.
+
+28
+00:01:45,090 --> 00:01:47,280
+As mentioned over time, they might change.
+
+29
+00:01:47,610 --> 00:01:52,010
+But still, this command and the official docs here are a great place to learn more about them.
+
+30
+00:01:53,110 --> 00:01:59,560
+Now, besides energy surf, we also got engy generate an energy generate with Dashty to help.
+
+31
+00:02:00,390 --> 00:02:03,700
+Allows us to generate things in our application.
+
+32
+00:02:04,290 --> 00:02:06,700
+Here are the things we can generate.
+
+33
+00:02:07,110 --> 00:02:12,300
+You saw a couple of them from the course like component's directive's, but you could also generate
+
+34
+00:02:12,300 --> 00:02:14,490
+guards or services.
+
+35
+00:02:14,880 --> 00:02:23,370
+You could generate tie pipes or modules, interfaces and interest setters for the be client, an application,
+
+36
+00:02:23,370 --> 00:02:28,130
+which is something I'll come back to and some neat things like a service worker or a web worker.
+
+37
+00:02:28,800 --> 00:02:34,470
+You also see additional flags here, but to see all the available flags, you should be a bit more specific.
+
+38
+00:02:34,470 --> 00:02:40,230
+And for example, say energy, generate component, dash, dash help to see how you can configure degeneration
+
+39
+00:02:40,230 --> 00:02:41,070
+of a component.
+
+40
+00:02:41,550 --> 00:02:45,520
+And there you see that there are again a bunch of configuration options.
+
+41
+00:02:45,720 --> 00:02:48,180
+Now, this might, by the way, be overwhelming by now.
+
+42
+00:02:48,270 --> 00:02:50,820
+But keep in mind that you don't have to learn those by heart.
+
+43
+00:02:51,040 --> 00:02:54,450
+The defaults will work just fine in most situations.
+
+44
+00:02:54,780 --> 00:03:00,450
+Just when you find that a default doesn't work for you, you might want to look into these configuration
+
+45
+00:03:00,450 --> 00:03:06,000
+flags here and see whether you can change the default to give you the component or whatever you're trying
+
+46
+00:03:06,000 --> 00:03:08,010
+to generate in the way you want it.
+
+47
+00:03:08,130 --> 00:03:14,730
+For example, to not use inline styles, to not use inline templates to change the default prefix,
+
+48
+00:03:14,730 --> 00:03:18,870
+which is added to not generate test files and so on.
+
+49
+00:03:19,230 --> 00:03:24,170
+And of course, this does not just exist for the component generation, but for pipes and so on.
+
+50
+00:03:24,540 --> 00:03:28,040
+So you generate, of course, is an important command engine.
+
+51
+00:03:28,050 --> 00:03:31,050
+Lind uses this Tiercelin I mentioned before.
+
+52
+00:03:31,320 --> 00:03:37,740
+It will now basically go through your entire setup and tell you if you have any LINTANG errors in here,
+
+53
+00:03:37,740 --> 00:03:38,670
+everything past.
+
+54
+00:03:38,670 --> 00:03:46,260
+But for example, if I go to the app component here and I do remove this prefix app route and I wouldn't
+
+55
+00:03:46,260 --> 00:03:48,810
+list again, it should tell me about this.
+
+56
+00:03:49,350 --> 00:03:51,090
+So let's wait for this to finish.
+
+57
+00:03:53,750 --> 00:04:00,930
+And indeed, it found lint error and now it tells you that in the app component fall in line for here,
+
+58
+00:04:01,430 --> 00:04:04,490
+these electors should be Kabab case and include a dash.
+
+59
+00:04:04,820 --> 00:04:10,220
+So it tells me that I'm not following this recommended practice of naming my components like this.
+
+60
+00:04:10,520 --> 00:04:11,420
+So that's limiting.
+
+61
+00:04:11,420 --> 00:04:14,270
+And you can always use this little command from time to time to check your code.
+
+62
+00:04:14,270 --> 00:04:17,690
+Quality energy bill, of course, is all that important.
+
+63
+00:04:17,690 --> 00:04:23,300
+Command to build your project with Dash Dash brought you build it for production so you'll optimize
+
+64
+00:04:23,300 --> 00:04:24,560
+it as much as possible.
+
+65
+00:04:24,920 --> 00:04:30,800
+And you also saw before in this course in the deployment section that this will generate ADESTE folder
+
+66
+00:04:30,800 --> 00:04:36,950
+where you find your generated project files, which you then can put onto a server to well serve your
+
+67
+00:04:36,950 --> 00:04:43,010
+application from there and to really serve your application to all the users out there in the world.
+
+68
+00:04:43,900 --> 00:04:45,820
+So here is this, this folder.
+
+69
+00:04:46,750 --> 00:04:51,130
+Now, I will come back to deployment a little bit later, you learned how you can deploy it, but actually
+
+70
+00:04:51,130 --> 00:04:54,970
+there is a different way of deploying with help of DCI and that's mentioned.
+
+71
+00:04:54,970 --> 00:04:56,400
+I will come back to that for now.
+
+72
+00:04:56,410 --> 00:04:57,020
+Let's ignore it.
+
+73
+00:04:57,670 --> 00:04:59,070
+So these are these Seelie commands.
+
+74
+00:04:59,080 --> 00:05:04,150
+And again, I pointed at it before, but check out the official docs to learn about all the commands
+
+75
+00:05:04,150 --> 00:05:06,170
+and all the configuration options.
+
+76
+00:05:06,400 --> 00:05:12,670
+There are some commands like Engy Update and add an entry deploy, which will have a closer look in
+
+77
+00:05:12,670 --> 00:05:13,630
+this module, though.
+
+78
+00:05:14,980 --> 00:05:20,830
+Before we do that, let's analyze the angler, Jason Valdo, because dad configures our project in the
+
+79
+00:05:20,830 --> 00:05:23,470
+end, and thus far we didn't have a close look yet.
+

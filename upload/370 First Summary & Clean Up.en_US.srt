@@ -1,0 +1,232 @@
+1
+00:00:02,170 --> 00:00:09,940
+So we started working with NgRx and at this point before we continue and we move more of the functionality
+
+2
+00:00:09,940 --> 00:00:13,550
+we have in our application into the NgRx world,
+
+3
+00:00:13,690 --> 00:00:15,680
+I want to sum up what we did thus far
+
+4
+00:00:16,090 --> 00:00:22,630
+and it's really important to follow along here so that it becomes clear which strengths and weaknesses
+
+5
+00:00:22,750 --> 00:00:27,280
+NgRx has and why you might want to use it or might not want to use it.
+
+6
+00:00:27,280 --> 00:00:35,620
+So we added NgRx to our application by including the store module and calling for root. For root then
+
+7
+00:00:35,650 --> 00:00:37,390
+needs a map,
+
+8
+00:00:37,390 --> 00:00:44,980
+so basically an object that tells NgRx which reducers we have in our application because all these
+
+9
+00:00:44,990 --> 00:00:52,290
+reducers and the state they generate make up the store of this application, make up the NgRx
+
+10
+00:00:52,300 --> 00:00:53,560
+store. 
+
+11
+00:00:53,650 --> 00:01:01,240
+Now we add a feature for that with an identifier of our choice and then the reducer for that feature.
+
+12
+00:01:01,270 --> 00:01:05,140
+Now that reducer as you learned here is just a function
+
+13
+00:01:05,410 --> 00:01:12,100
+and now the important thing about that reducer function is that NgRx will automatically pass in the
+
+14
+00:01:12,100 --> 00:01:20,020
+current state and an action it received, so it will execute this function whenever a new action is received
+
+15
+00:01:20,410 --> 00:01:26,320
+and then this function executes and gets both the current state and the action that was received. In
+
+16
+00:01:26,320 --> 00:01:27,100
+the reducer,
+
+17
+00:01:27,100 --> 00:01:33,220
+I then use a switch case statement and this is a typical setup you see in the Redux and NgRx world,
+
+18
+00:01:33,760 --> 00:01:39,710
+where we check the type of action we got because action is actually a Javascript object with a type
+
+19
+00:01:39,710 --> 00:01:46,330
+property and depending on the type which we have, we return a new state and that is how a reducer function
+
+20
+00:01:46,420 --> 00:01:52,490
+always works, data in data out, no asynchronous code, it's all synchronous,
+
+21
+00:01:52,630 --> 00:01:58,720
+so we only have synchronous code in here and we always return a new object which will be used to replace
+
+22
+00:01:58,810 --> 00:02:02,120
+the old state for this part of the application,
+
+23
+00:02:02,140 --> 00:02:08,950
+so for the shopping list here and this return state is what NgRx will in the end register for
+
+24
+00:02:08,950 --> 00:02:16,970
+the shopping list slice of the overall AppState, of the App store it manages here. So this is what we
+
+25
+00:02:16,970 --> 00:02:20,630
+added, we added this reducer and regarding the actions,
+
+26
+00:02:20,630 --> 00:02:27,220
+we also added an actions file where we for one defined unique identifiers for all our actions,
+
+27
+00:02:27,230 --> 00:02:34,070
+these are simply strings that identify each action and then the action itself is not just this identifier
+
+28
+00:02:34,250 --> 00:02:38,440
+but it's a complete object based on classes we define in here.
+
+29
+00:02:38,690 --> 00:02:46,400
+Each action needs to have a type property where we do store the string identifier for the action but in addition,
+
+30
+00:02:46,490 --> 00:02:53,480
+we might also have a payload, so a property which can be set to attach data to that action and we needed
+
+31
+00:02:53,480 --> 00:02:58,850
+that for example for adding an ingredient, though we also have an action, the delete action which has
+
+32
+00:02:58,850 --> 00:03:01,860
+no extra data because it doesn't need any.
+
+33
+00:03:01,970 --> 00:03:05,050
+Now this entire setup was really a lot of work,
+
+34
+00:03:05,060 --> 00:03:11,210
+we have to be honest there, adding the reducer, adding the actions, injecting the store, dispatching actions,
+
+35
+00:03:11,510 --> 00:03:18,110
+that is a lot of overhead work and using the normal shopping list service definitely was easier there
+
+36
+00:03:18,590 --> 00:03:25,580
+and therefore using a service with subjects is a more than fine alternative to using NgRx.
+
+37
+00:03:25,610 --> 00:03:31,640
+However, once you've gone through that first initial setup and you got NgRx going, you saw that it's
+
+38
+00:03:31,640 --> 00:03:39,800
+pretty easy to add new actions, new state slices and therefore, it's really easy to grow our state and
+
+39
+00:03:39,800 --> 00:03:46,880
+to manage everything in our app or thus far in this app, in a part of our app with NgRx.
+
+40
+00:03:46,940 --> 00:03:50,100
+So it's mainly that initial setup that requires a lot of work,
+
+41
+00:03:50,150 --> 00:03:54,650
+once that is set up it's actually quite fast to work with NgRx.
+
+42
+00:03:54,710 --> 00:04:00,350
+Nonetheless, it's of course always up to you whether you want to add NgRx or whether you say in
+
+43
+00:04:00,350 --> 00:04:01,280
+this application,
+
+44
+00:04:01,310 --> 00:04:08,060
+I'm fine with subjects and normal services and as I mentioned multiple times, that would be fine.
+
+45
+00:04:08,060 --> 00:04:15,120
+Now here, we're now managing everything for the shopping list with the help of NgRx though and therefore,
+
+46
+00:04:15,140 --> 00:04:19,250
+we can really get rid of our shopping lists service here.
+
+47
+00:04:19,340 --> 00:04:27,480
+So let's remove that shopping list service file and hence in the core module, get rid of the shopping
+
+48
+00:04:27,480 --> 00:04:33,450
+list service we provide and of the import here and now we've got a couple of other places in the application
+
+49
+00:04:33,450 --> 00:04:38,880
+as well where I still injected the shopping list service, like here in the shopping list component
+
+50
+00:04:39,130 --> 00:04:45,270
+and we have to remove that as well as the import reference from all these places to avoid errors in
+
+51
+00:04:45,270 --> 00:04:46,410
+our application.
+
+52
+00:04:46,410 --> 00:04:53,820
+So also here in the shopping-edit component, also remove the import and also in the recipes service, there
+
+53
+00:04:53,820 --> 00:04:56,230
+I also injected the shopping list service,
+
+54
+00:04:56,370 --> 00:04:59,260
+it has to be removed from there as well.
+
+55
+00:05:01,180 --> 00:05:10,520
+With all that removed, it compiles fine and our application should also work just fine as it did before
+
+56
+00:05:10,940 --> 00:05:15,810
+now entirely powered by NgRx for that shopping list,
+
+57
+00:05:15,860 --> 00:05:20,960
+so the rest of the applications still use the services and we'll of course continue there as well and
+
+58
+00:05:21,020 --> 00:05:23,500
+add NgRx in the other parts as well.
+

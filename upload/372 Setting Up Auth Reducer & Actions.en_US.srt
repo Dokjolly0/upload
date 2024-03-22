@@ -1,0 +1,408 @@
+1
+00:00:02,250 --> 00:00:09,320
+So let's work on our authReducer and for the moment as I mentioned, we'll ignore any HTTP requests we send,
+
+2
+00:00:09,330 --> 00:00:17,150
+so for example this will stay here but instead, my goal is to dispatch actions once we're done with the
+
+3
+00:00:17,160 --> 00:00:18,240
+HTTP request,
+
+4
+00:00:18,240 --> 00:00:19,680
+so once we got a response,
+
+5
+00:00:19,710 --> 00:00:27,360
+so for example here where I tap in and I call this handle authentication, in handle authentication, we
+
+6
+00:00:27,360 --> 00:00:30,340
+effectively create a new user object
+
+7
+00:00:30,360 --> 00:00:35,690
+and previously, we used our subject to then emit this to our application.
+
+8
+00:00:35,700 --> 00:00:41,130
+This is exactly what I need to store in my @ngrx/store now and that is therefore where I want to step
+
+9
+00:00:41,130 --> 00:00:43,110
+in and dispatch a new action,
+
+10
+00:00:43,110 --> 00:00:50,340
+so here in handle authentication. The same for example in logout, there where we cleared our user,
+
+11
+00:00:50,340 --> 00:00:57,500
+so basically whenever I called user next in all these places, I want to step in and use NgRx and
+
+12
+00:00:57,500 --> 00:01:00,510
+dispatch and action. For that we need actions,
+
+13
+00:01:00,510 --> 00:01:09,620
+so let's go back here and add an auth.actions.ts file and in that auth.actions.ts file,
+
+14
+00:01:10,060 --> 00:01:12,910
+let's create a couple of constants again,
+
+15
+00:01:12,910 --> 00:01:19,180
+a couple of identifiers for these different actions and which actions do we have here?
+
+16
+00:01:19,180 --> 00:01:26,380
+Well we have login for example, so when a user did login and we also of course have logout when a user
+
+17
+00:01:26,380 --> 00:01:28,570
+did logout and therefore should be removed,
+
+18
+00:01:28,570 --> 00:01:32,510
+so when that user object should be cleared.
+
+19
+00:01:32,650 --> 00:01:35,670
+Now as you learned, actions are not just about their identifiers,
+
+20
+00:01:35,710 --> 00:01:38,970
+instead an action is an object based on a class.
+
+21
+00:01:39,100 --> 00:01:46,930
+So export a class here, named login and there just as before, we'll implement action which is imported,
+
+22
+00:01:47,590 --> 00:01:51,820
+so let's import action from @ngrx/store,
+
+23
+00:01:51,820 --> 00:01:53,080
+that's important.
+
+24
+00:01:53,200 --> 00:02:00,040
+Now this action interface which we implement forces us to add a readonly type and that type here will
+
+25
+00:02:00,040 --> 00:02:01,120
+be login,
+
+26
+00:02:01,120 --> 00:02:04,000
+that's the identifier for the login action.
+
+27
+00:02:04,150 --> 00:02:10,690
+Now when logging in, we want to create and store a new user and if we have a look at the auth service,
+
+28
+00:02:11,110 --> 00:02:18,040
+at handle authentication, we see that a user is in the end created here with e-mail, user ID, token and expiration
+
+29
+00:02:18,040 --> 00:02:18,970
+date.
+
+30
+00:02:18,970 --> 00:02:20,650
+Now we have two routes we can take,
+
+31
+00:02:20,740 --> 00:02:27,340
+we can either create the user before we dispatch and then just attach the finished user object to
+
+32
+00:02:27,340 --> 00:02:33,460
+the action as a payload or we attach these four pieces of information as a payload and create the user
+
+33
+00:02:33,550 --> 00:02:34,720
+in the reducer.
+
+34
+00:02:34,750 --> 00:02:42,040
+Now ultimately, that is up to you but I'm a fan of moving more of that logic into the reducer
+
+35
+00:02:42,490 --> 00:02:45,840
+and therefore in my action here, I'll add a constructor,
+
+36
+00:02:45,880 --> 00:02:53,170
+well we would have needed that anyways but here, my payload will actually be a type or of type object
+
+37
+00:02:53,590 --> 00:02:59,760
+where we get these four pieces that make up a user - e-mail, user ID, token and expiration date.
+
+38
+00:02:59,860 --> 00:03:06,280
+So e-mail which is a string, a user ID which is a string, a token which is a string and an expiration
+
+39
+00:03:06,550 --> 00:03:09,060
+date which is a date object.
+
+40
+00:03:09,100 --> 00:03:16,900
+This is how payload for the login action will look for me but as I mentioned, you could also argue that
+
+41
+00:03:16,900 --> 00:03:24,150
+a payload is just a user object and then you create that user object before you dispatch. Anyways,
+
+42
+00:03:24,190 --> 00:03:27,100
+that's the login class I want to go with,
+
+43
+00:03:27,100 --> 00:03:33,690
+now we also need a logout class that implements action and that's our logout action.
+
+44
+00:03:33,690 --> 00:03:41,680
+This also has a readonly type which is in this case logout and does it need any payload, any data that
+
+45
+00:03:41,680 --> 00:03:43,590
+is attached to it?
+
+46
+00:03:43,660 --> 00:03:49,630
+No it doesn't, it doesn't need any payload because if we logout, we just want to clear a user but we
+
+47
+00:03:49,630 --> 00:03:51,070
+need no extra data for that,
+
+48
+00:03:51,100 --> 00:03:53,970
+we will just set user equal to null.
+
+49
+00:03:54,280 --> 00:04:00,630
+Therefore, this looks like a good auth actions file to me, almost at least,
+
+50
+00:04:00,760 --> 00:04:09,660
+I of course want to export my union type, my auth actions union type just as we had it in the shopping list
+
+51
+00:04:09,690 --> 00:04:10,800
+actions file as well,
+
+52
+00:04:10,800 --> 00:04:16,490
+there we had the shopping list actions where we united all these actions into one type,
+
+53
+00:04:16,620 --> 00:04:24,330
+I want to do the same here and there for login or logout can all be used with that of actions summary
+
+54
+00:04:24,330 --> 00:04:26,350
+or union type here,
+
+55
+00:04:26,610 --> 00:04:34,360
+back to the auth reducer. In the reducer, I now of course want to use my actions and first of all, we can
+
+56
+00:04:34,360 --> 00:04:37,310
+be clear about the type action will be here,
+
+57
+00:04:37,450 --> 00:04:45,100
+it will be of type auth actions, auth actions is here imported from auth actions and we could definitely
+
+58
+00:04:45,100 --> 00:04:50,120
+import it like this but I will fallback to that star as auth actions
+
+59
+00:04:50,200 --> 00:04:57,520
+import syntax, now auth actions is an object with all of things exported by the auth actions file and therefore
+
+60
+00:04:57,520 --> 00:05:02,730
+if I want to have the auth actions type, we have to access it with .auth actions.
+
+61
+00:05:02,740 --> 00:05:08,650
+Now this double name might be confusing but again, the first part here is just this container name of all
+
+62
+00:05:08,650 --> 00:05:14,260
+the things that are exported by the file and then with a dot we accessed the different exported things,
+
+63
+00:05:14,440 --> 00:05:21,870
+like our string identifiers or this auth actions union type. Now inside of the reducer, we can again
+
+64
+00:05:21,870 --> 00:05:30,420
+switch on the action type and handle the different cases and the first case on my auth actions will
+
+65
+00:05:30,420 --> 00:05:40,170
+be login, the second case will be logout, not the class though but the identifier with the uppercase
+
+66
+00:05:40,170 --> 00:05:44,570
+characters and we will also have a default case where we just return the state,
+
+67
+00:05:44,580 --> 00:05:52,810
+this is extremely important for correctly initializing our overall store. Now let's start with the login
+
+68
+00:05:52,900 --> 00:05:54,040
+auth action,
+
+69
+00:05:54,040 --> 00:05:55,150
+what's the idea here?
+
+70
+00:05:55,150 --> 00:06:03,010
+What do we have to do? Well if we have a look at the auth service, we in the end called handle authentication
+
+71
+00:06:03,430 --> 00:06:10,640
+where we in the end have to simply create such a user object, with the data we're getting,
+
+72
+00:06:10,700 --> 00:06:12,800
+that's all we have to do for now.
+
+73
+00:06:12,830 --> 00:06:21,080
+So in the auth reducer, I will create a new user here by calling new user, using the user model which you
+
+74
+00:06:21,380 --> 00:06:24,680
+therefore need to import into this file,
+
+75
+00:06:24,820 --> 00:06:31,080
+we are already doing that here and now to that user, we need to pass some data and that's all data we're
+
+76
+00:06:31,080 --> 00:06:32,570
+getting from our payload.
+
+77
+00:06:32,790 --> 00:06:35,400
+So user here takes an e-mail for example,
+
+78
+00:06:35,430 --> 00:06:41,310
+we get that from our action.payload which has an e-mail property. For the ID it's the same,
+
+79
+00:06:41,310 --> 00:06:45,810
+we have a payload which has a user ID property. For the token,
+
+80
+00:06:45,810 --> 00:06:50,030
+it's again the same with a payload with our token property
+
+81
+00:06:50,280 --> 00:06:55,670
+and for the date, again we have a payload with an expiration date property.
+
+82
+00:06:55,680 --> 00:06:57,840
+So this creates a new user object
+
+83
+00:06:57,900 --> 00:07:02,730
+and now of course we don't need to emit this with a subject, we simply have to return this as part of
+
+84
+00:07:02,730 --> 00:07:05,730
+our state for this part of the application store.
+
+85
+00:07:06,420 --> 00:07:12,390
+So here, we return a new object and just as before, always copy the old state and then overwrite what
+
+86
+00:07:12,390 --> 00:07:13,510
+you want to overwrite
+
+87
+00:07:13,620 --> 00:07:17,880
+and here I want to overwrite the user property and store my new user,
+
+88
+00:07:17,910 --> 00:07:24,410
+so I set user equal to user, where the first user refers to my user property in that state slice
+
+89
+00:07:24,480 --> 00:07:30,410
+and the second user after the colon refers to this constant.
+
+90
+00:07:30,470 --> 00:07:35,640
+Now the green wiggly lines here simply mean that I could shorten this to just this syntax which is a TypeScript
+
+91
+00:07:35,640 --> 00:07:37,820
+simplification that allows me to,
+
+92
+00:07:37,830 --> 00:07:42,750
+if the variable name of the value and the property name are the same, we can shorten this but to
+
+93
+00:07:42,750 --> 00:07:44,320
+make it really clear what's happening,
+
+94
+00:07:44,400 --> 00:07:49,800
+I'm deliberately using the longer syntax. Now for logging out,
+
+95
+00:07:49,800 --> 00:07:51,380
+it's very simple, there
+
+96
+00:07:51,420 --> 00:07:56,190
+I also want to copy the old state and then I will set user to null here,
+
+97
+00:07:56,220 --> 00:07:57,680
+it's as simple as that,
+
+98
+00:07:57,720 --> 00:08:04,010
+just want to clear it. Well with that, the reducer is prepared, the actions are prepared,
+
+99
+00:08:04,060 --> 00:08:05,670
+what's missing?
+
+100
+00:08:05,680 --> 00:08:13,670
+We're never dispatching actions and of course, we're also not using our store in any part of the application,
+
+101
+00:08:13,690 --> 00:08:21,250
+instead we're still always using our subject here, our user subject from the shopping list service.
+
+102
+00:08:21,250 --> 00:08:23,330
+Let's tackle that next.
+

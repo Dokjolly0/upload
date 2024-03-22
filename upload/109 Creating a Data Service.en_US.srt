@@ -1,0 +1,348 @@
+1
+00:00:03,380 --> 00:00:07,730
+We saw how to use that loggingService in the last lecture,
+
+2
+00:00:07,730 --> 00:00:14,170
+now let me show you another typical use case for a service, to store and manage our data.
+
+3
+00:00:14,480 --> 00:00:20,540
+So for example our accounts, right now I store them here in the app component and then we have this chain
+
+4
+00:00:20,540 --> 00:00:25,720
+of property and event binding to get data to the app component so that we there can
+
+5
+00:00:25,820 --> 00:00:27,450
+update our accounts.
+
+6
+00:00:27,800 --> 00:00:29,660
+Let's create a service for that,
+
+7
+00:00:29,770 --> 00:00:31,920
+the account service maybe.
+
+8
+00:00:31,990 --> 00:00:41,550
+So I will create this and I will export my accounts service class here, just like that
+
+9
+00:00:41,740 --> 00:00:49,210
+and here I will now copy in my accounts, so I will remove them from my app component and paste them into
+
+10
+00:00:49,210 --> 00:00:57,940
+my accounts service and I will add an addAccount method here where I simply expect to get an account name
+
+11
+00:00:57,970 --> 00:01:10,440
+and status and I will add an updateStatus method where I expect to get the ID of the account I want
+
+12
+00:01:10,430 --> 00:01:14,470
+to update and then the new status here.
+
+13
+00:01:15,000 --> 00:01:21,860
+Now the logic for these two methods is basically the same as in the app component, for a new account
+
+14
+00:01:21,960 --> 00:01:23,370
+or in the add account,
+
+15
+00:01:23,370 --> 00:01:29,640
+I simply want to push a new account onto my array of accounts and here, I will simply quickly create a new
+
+16
+00:01:29,640 --> 00:01:33,410
+object where I assign the name and the status,
+
+17
+00:01:33,420 --> 00:01:38,850
+so the data we get passed into this method and for the status changed,
+
+18
+00:01:38,970 --> 00:01:48,930
+well here I basically want to also just access my account with that ID here and set the status to
+
+19
+00:01:48,990 --> 00:01:52,190
+the new status we get passed as an argument too.
+
+20
+00:01:52,560 --> 00:01:59,490
+So with that, this service looks all right, we got our accounts there and we got our methods to
+
+21
+00:01:59,490 --> 00:02:00,890
+change something there,
+
+22
+00:02:00,930 --> 00:02:07,690
+of course the app is broken though because for one, I don't need that code in the app component anymore.
+
+23
+00:02:07,950 --> 00:02:13,480
+If we have a look at the app component template, we still loop through all the accounts here,
+
+24
+00:02:13,740 --> 00:02:18,990
+so I should still have my accounts here in the app component but we remove them from here,
+
+25
+00:02:19,000 --> 00:02:20,710
+they're now in the service.
+
+26
+00:02:21,060 --> 00:02:29,110
+So we should maybe re-add them here but now, this should simply be an array of accounts,
+
+27
+00:02:29,190 --> 00:02:34,830
+so each account object has a name which is a string and a status which is a string, so
+
+28
+00:02:34,830 --> 00:02:36,710
+I'm just defining the type here
+
+29
+00:02:36,770 --> 00:02:39,530
+and we want to have an array of such objects, initially
+
+30
+00:02:39,570 --> 00:02:40,740
+it should be an empty array,
+
+31
+00:02:40,740 --> 00:02:42,200
+this is what I'm saying here.
+
+32
+00:02:42,600 --> 00:02:46,910
+Now since we have our account service, we should inject it here as we learned it.
+
+33
+00:02:47,040 --> 00:02:54,720
+So let's add our accounts service here, of type accounts service, the type is super important to inform Angular
+
+34
+00:02:54,720 --> 00:02:56,570
+about what we need here.
+
+35
+00:02:56,940 --> 00:02:58,110
+Let's close
+
+36
+00:02:58,110 --> 00:03:00,250
+this body of the constructor
+
+37
+00:03:00,260 --> 00:03:05,940
+and make sure to add the import at the top pointing to your account service file.
+
+38
+00:03:05,940 --> 00:03:07,480
+Now what did we learn?
+
+39
+00:03:07,530 --> 00:03:10,090
+We also need to add a provider.
+
+40
+00:03:10,230 --> 00:03:17,850
+So here at the providers array, we should add accounts service so that Angular knows how to create such
+
+41
+00:03:17,850 --> 00:03:19,230
+an account service.
+
+42
+00:03:19,530 --> 00:03:27,090
+With that, we can now add for example onInit, this onInit lifecycle hook as most initialization should
+
+43
+00:03:27,090 --> 00:03:35,070
+not be done in the constructor but instead here and simply set this accounts, accounts equal to this
+
+44
+00:03:35,130 --> 00:03:41,130
+account service which is available as a property because I use this shortcut with the accessor in front
+
+45
+00:03:41,130 --> 00:03:43,280
+of the argument name
+
+46
+00:03:43,440 --> 00:03:50,760
+and here, I can access my accounts field. Just as a little note, since accounts here is an array,
+
+47
+00:03:50,790 --> 00:03:52,380
+it is a reference type,
+
+48
+00:03:52,410 --> 00:03:54,660
+this is normal Javascript behavior.
+
+49
+00:03:54,720 --> 00:03:56,440
+So this is a reference type,
+
+50
+00:03:56,460 --> 00:04:03,600
+so by setting it equal here, we're actually getting access to the exact same array as stored in the service,
+
+51
+00:04:03,750 --> 00:04:05,150
+just as a side note.
+
+52
+00:04:05,520 --> 00:04:13,770
+So with that, we do have access to the accounts and if we save this and have a look at our application,
+
+53
+00:04:14,650 --> 00:04:19,450
+this still seems to work. These buttons will not work and will actually give us errors because I remove
+
+54
+00:04:19,450 --> 00:04:20,570
+the event listeners
+
+55
+00:04:20,790 --> 00:04:23,020
+but in general, this looks all right,
+
+56
+00:04:23,040 --> 00:04:28,290
+we can see the three accounts which are now stored in our accounts service.
+
+57
+00:04:28,290 --> 00:04:35,770
+So with that, let's go back to our application and here, I now want to update the account component and the new
+
+58
+00:04:35,830 --> 00:04:36,910
+account component,
+
+59
+00:04:37,050 --> 00:04:39,710
+let's start with the new account. Here
+
+60
+00:04:39,750 --> 00:04:45,180
+we no longer need to emit this event here because we're not listening to it anyways. So we can get rid
+
+61
+00:04:45,180 --> 00:04:46,320
+of the output here,
+
+62
+00:04:46,350 --> 00:04:49,860
+get rid of the imports up here, of eventEmitter and output,
+
+63
+00:04:50,010 --> 00:04:58,010
+instead we should inject our service, our accounts service of type accounts service.
+
+64
+00:04:58,290 --> 00:04:59,640
+And what did we learn?
+
+65
+00:04:59,760 --> 00:05:01,280
+We should provide it, right,
+
+66
+00:05:01,290 --> 00:05:08,250
+so let's add account service, account service and make sure to add the import at the top.
+
+67
+00:05:08,250 --> 00:05:16,650
+Now with this, in here I can call accounts service, add account and pass the account name and the account
+
+68
+00:05:16,650 --> 00:05:17,510
+status
+
+69
+00:05:17,540 --> 00:05:21,260
+as this is what this method expects to get as arguments.
+
+70
+00:05:21,270 --> 00:05:23,760
+So with that, let's go to our account component now,
+
+71
+00:05:23,770 --> 00:05:26,070
+let's also get rid of the output here.
+
+72
+00:05:26,160 --> 00:05:32,400
+We still need the inputs because we're still receiving that data from outside and we can get rid of this
+
+73
+00:05:32,540 --> 00:05:37,850
+event calling here, we removed the output anyways, get rid of the imports we don't need anymore
+
+74
+00:05:38,100 --> 00:05:42,030
+and now here, I also want to get access to the accounts service.
+
+75
+00:05:42,030 --> 00:05:46,660
+So let's inject it here too, maybe in a new line to make it more readable,
+
+76
+00:05:46,800 --> 00:05:56,730
+the accounts service of type accounts service, like this, make sure to add the import at the top and let's add
+
+77
+00:05:56,730 --> 00:06:05,520
+it to the providers array here. With that, I can now call it here, account service, call update status, pass
+
+78
+00:06:05,520 --> 00:06:08,040
+my ID and the new status,
+
+79
+00:06:08,040 --> 00:06:10,960
+again this is what this method expects.
+
+80
+00:06:11,100 --> 00:06:17,550
+If we now save this and go back to our application, it looks all right but we quickly realized that if
+
+81
+00:06:17,550 --> 00:06:22,680
+we click on add account, we don't get an error, we get the log
+
+82
+00:06:22,710 --> 00:06:24,860
+but I don't see the account.
+
+83
+00:06:25,050 --> 00:06:30,500
+If I click these buttons, I also see the log but I don't see the change here,
+
+84
+00:06:30,540 --> 00:06:33,320
+so something is not working correctly,
+
+85
+00:06:33,450 --> 00:06:34,530
+it seems like it doesn't,
+
+86
+00:06:34,530 --> 00:06:35,200
+right.
+
+87
+00:06:35,550 --> 00:06:39,200
+Well let's have a look at what's going wrong here in the next lecture.
+

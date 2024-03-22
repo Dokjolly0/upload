@@ -1,0 +1,92 @@
+1
+00:00:02,370 --> 00:00:09,480
+That's it for authentication. In this module, we added an auth service to our Angular application to manage
+
+2
+00:00:09,480 --> 00:00:13,110
+the entire front-end authentication logic we need.
+
+3
+00:00:13,110 --> 00:00:18,990
+That includes signing user up and signing the user in based on the inputs in that form here,
+
+4
+00:00:18,990 --> 00:00:24,870
+it also includes things like switching between sign up and sign in, showing error messages and storing
+
+5
+00:00:24,870 --> 00:00:28,850
+a token that we then get after a successful login.
+
+6
+00:00:28,860 --> 00:00:34,380
+We're also storing the tokens such that it persists once we reload the page and we can also use that
+
+7
+00:00:34,380 --> 00:00:41,190
+token to then fetch data and save data from our now protected Firebase back-end. Again as I stressed throughout
+
+8
+00:00:41,190 --> 00:00:44,690
+this module already, Firebase is just one example here,
+
+9
+00:00:44,700 --> 00:00:49,430
+the general logic of how you exchange tokens always is the same.
+
+10
+00:00:49,430 --> 00:00:54,630
+Now you also learned that there is more to managing the token than just logging in and getting a token,
+
+11
+00:00:54,750 --> 00:00:56,450
+you don't just want to store it in memory,
+
+12
+00:00:56,460 --> 00:01:01,560
+you want to store it in a place that survives browser reloads and you want to make sure that it is cleared
+
+13
+00:01:01,560 --> 00:01:09,570
+once it did expire. We also used a router guard, a routing guard to protect a route against unauthenticated
+
+14
+00:01:09,570 --> 00:01:10,420
+access,
+
+15
+00:01:10,470 --> 00:01:17,400
+our recipes area in this case, with help of the auth service and the logic we have in there.
+
+16
+00:01:17,430 --> 00:01:23,400
+Last but not least, we made sure that the header is updated correctly based on our authentication status
+
+17
+00:01:23,580 --> 00:01:29,880
+which in turn is derived from our auth service and the user we're storing there in this behavior subject.
+
+18
+00:01:30,330 --> 00:01:36,030
+Behavior subject because unlike a normal subject, this always gives us access to the previous value
+
+19
+00:01:36,390 --> 00:01:42,510
+and that simply helps us ensure that we can get access to the user even if in this part of the application
+
+20
+00:01:42,510 --> 00:01:43,200
+where we need it,
+
+21
+00:01:43,260 --> 00:01:48,110
+we missed the previous user update and that's it for authentication.
+
+22
+00:01:48,120 --> 00:01:53,100
+I hope you learned a lot here and you now feel confident adding authentication to your applications
+
+23
+00:01:53,100 --> 00:01:53,540
+as well.
+

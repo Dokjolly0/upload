@@ -1,0 +1,64 @@
+1
+00:00:02,670 --> 00:00:10,050
+Welcome to this course module. This course module is about forms, so forms on your HTML page and
+
+2
+00:00:10,050 --> 00:00:12,930
+how Angular can help you with those forms.
+
+3
+00:00:13,120 --> 00:00:19,500
+Now on first sight, it might be strange why you would need that help, right, because a form is something
+
+4
+00:00:19,500 --> 00:00:25,260
+you can simply submit to the server but then keep in mind, you're creating a single page application,
+
+5
+00:00:25,260 --> 00:00:28,230
+so there is no submitting to the server,
+
+6
+00:00:28,230 --> 00:00:31,750
+instead you will need to handle the form through Angular
+
+7
+00:00:31,860 --> 00:00:39,000
+and if you then want to submit something to the server, you will need to reach out via Angular's HTTP
+
+8
+00:00:39,060 --> 00:00:42,510
+service which we'll cover later in the course to that server.
+
+9
+00:00:42,690 --> 00:00:48,090
+So you will need to handle your forms through Angular and actually, Angular will help you in handling it
+
+10
+00:00:48,330 --> 00:00:53,070
+because not only will it allow you to get the values the user entered,
+
+11
+00:00:53,070 --> 00:00:56,430
+it will also allow you to check if a form is valid,
+
+12
+00:00:56,550 --> 00:01:01,470
+it will allow you to conditionally change the way the form is displayed,
+
+13
+00:01:01,470 --> 00:01:08,040
+put some red borders around invalid controls, so Angular really ships with some powerful tools when
+
+14
+00:01:08,040 --> 00:01:09,840
+it comes to working with forms.
+
+15
+00:01:10,020 --> 00:01:13,980
+Let's take a closer look and let's understand what exactly
+
+16
+00:01:14,020 --> 00:01:17,100
+Angular does for you, how it handles forms.
+

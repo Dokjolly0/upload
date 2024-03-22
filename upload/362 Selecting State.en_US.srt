@@ -1,0 +1,436 @@
+1
+00:00:02,480 --> 00:00:08,830
+With the store module registered here in app module and it being connected to our shopping list reducer,
+
+2
+00:00:08,870 --> 00:00:12,360
+as I said in the last lecture, finally NgRx gets going.
+
+3
+00:00:12,470 --> 00:00:18,560
+Time to use it and I want to use it in my shopping list component. In the shopping list component,
+
+4
+00:00:18,560 --> 00:00:23,360
+thus far we're injecting the shopping list service and the LoggingService.
+
+5
+00:00:23,440 --> 00:00:25,790
+Now the LoggingService doesn't really matter, we can leave it here,
+
+6
+00:00:25,790 --> 00:00:30,860
+we could remove it, it's not involved with our AppState management.
+
+7
+00:00:30,860 --> 00:00:36,950
+So I will leave it here but I will inject something new and that will be our application store.
+
+8
+00:00:36,950 --> 00:00:42,730
+If you remember the earliest slides of this module, I mentioned that we're not using Redux but NgRx
+
+9
+00:00:42,740 --> 00:00:48,230
+because it gives us some extra features and deeper integration into Angular and
+
+10
+00:00:48,380 --> 00:00:54,590
+for example, it gives us an injectable store that makes it easy for us to access our application state
+
+11
+00:00:54,860 --> 00:01:01,740
+which is stored in that store after all. Now the type here which is important for the injection is store
+
+12
+00:01:02,280 --> 00:01:06,990
+and store needs to be imported from @ngrx/store,
+
+13
+00:01:07,020 --> 00:01:13,170
+so this import needs to be added in the shopping list component and therefore, we now have the store
+
+14
+00:01:13,190 --> 00:01:17,160
+but we still have an error here because store turns out to be a generic type,
+
+15
+00:01:17,270 --> 00:01:23,480
+you need to describe how your application store looks like and now that is the structure you set up
+
+16
+00:01:23,480 --> 00:01:25,010
+in the app module.
+
+17
+00:01:25,010 --> 00:01:29,570
+Here, it's this ActionReducerMap which you set up here,
+
+18
+00:01:29,570 --> 00:01:33,740
+this object where you have a key of your choice and then the reducer,
+
+19
+00:01:33,740 --> 00:01:37,870
+this is in the end the structure of your store. Of course, in your application,
+
+20
+00:01:37,880 --> 00:01:44,870
+you might and in this module you will have at some point a store that is made up of many different pieces,
+
+21
+00:01:45,290 --> 00:01:50,990
+later for example we'll have a shopping list area and a recipes area and that's all merged together
+
+22
+00:01:50,990 --> 00:01:57,920
+into one store and therefore, our type is in the end a description of the different parts we have in
+
+23
+00:01:57,920 --> 00:01:59,050
+the store.
+
+24
+00:01:59,060 --> 00:02:04,790
+So back in the shopping this component, here the type would be a Javascript object where we have a shopping
+
+25
+00:02:04,790 --> 00:02:13,400
+list key and now this has to be the name you chose here on the left as a key and the type of the data
+
+26
+00:02:13,400 --> 00:02:19,730
+stored in that shopping list area is now not your reducer function but what this reducer function
+
+27
+00:02:19,730 --> 00:02:24,470
+yields and what does our shopping list reducer yield in the end?
+
+28
+00:02:24,470 --> 00:02:32,210
+Well, a state of this type. It yields a state of a type object with an ingredients key where this ingredients
+
+29
+00:02:32,210 --> 00:02:34,380
+key holds an array of ingredients,
+
+30
+00:02:34,400 --> 00:02:40,910
+that's the state data that this part of our global store holds and therefore, back in the shopping list
+
+31
+00:02:40,910 --> 00:02:47,600
+component, the value of the shopping list part of our application store is an object which will have
+
+32
+00:02:47,600 --> 00:02:49,110
+an ingredients key,
+
+33
+00:02:49,220 --> 00:02:55,160
+again this now has to be typed correctly, if it's ingredients in a shopping list reducer which it is
+
+34
+00:02:55,160 --> 00:02:58,570
+here, it has to be ingredients here as well
+
+35
+00:02:58,850 --> 00:03:05,390
+and the value, so the type of the values stored in this ingredient key is ingredient array,
+
+36
+00:03:05,420 --> 00:03:07,340
+so an array of ingredients.
+
+37
+00:03:07,400 --> 00:03:11,380
+So this is the final type of our store data,
+
+38
+00:03:11,500 --> 00:03:17,780
+it's an object with a shopping list area and in the shopping list area, our data will be stored in an object
+
+39
+00:03:17,780 --> 00:03:25,900
+which has an ingredients key which is holding a list of ingredients. Now with that store injected,
+
+40
+00:03:26,000 --> 00:03:36,560
+we can use it and thus far, we use our shopping list service to get our ingredients and to react to changes
+
+41
+00:03:36,560 --> 00:03:38,630
+in our ingredients.
+
+42
+00:03:38,630 --> 00:03:45,830
+Well now, I want to use my store here and get access to the ingredients stored in that store and that
+
+43
+00:03:45,830 --> 00:03:49,950
+will then, as it turns out, handle both these cases.
+
+44
+00:03:50,060 --> 00:03:55,010
+Now on this store, which is this injected store service provided by NgRx, you have a select
+
+45
+00:03:55,040 --> 00:03:59,490
+method and that helps you select a slice of your state.
+
+46
+00:03:59,590 --> 00:04:06,970
+Now that slice is identified as a string and here, I automatically get type support, it's shopping list.
+
+47
+00:04:06,980 --> 00:04:09,080
+Now how did TypeScript know this?
+
+48
+00:04:09,100 --> 00:04:15,080
+Well because here, we tell TypeScript that the type of data stored in our store is an object with a shopping
+
+49
+00:04:15,080 --> 00:04:16,010
+list key.
+
+50
+00:04:16,010 --> 00:04:19,490
+So here I am selecting that shopping list part of my global store,
+
+51
+00:04:19,670 --> 00:04:24,410
+again right now the shopping this part is the only thing I have in this store but as this will change
+
+52
+00:04:24,410 --> 00:04:25,180
+throughout the app,
+
+53
+00:04:25,220 --> 00:04:30,980
+you of course need to tell NgRx into which part of the store you are interested in at this point.
+
+54
+00:04:31,010 --> 00:04:39,700
+So here, I select my shopping list and this turns out to give us an observable.
+
+55
+00:04:39,710 --> 00:04:44,200
+Now I actually want to store this observable in this ingredients,
+
+56
+00:04:44,240 --> 00:04:46,730
+so I'll set this ingredients equal to this
+
+57
+00:04:46,880 --> 00:04:52,050
+but of course TypeScript doesn't like this because ingredients is a property which is of type ingredient
+
+58
+00:04:52,050 --> 00:04:52,660
+array.
+
+59
+00:04:53,060 --> 00:04:54,680
+We need to change this,
+
+60
+00:04:54,740 --> 00:05:03,140
+it should instead be an observable and for that, you should import observable from RxJS, so make sure
+
+61
+00:05:03,140 --> 00:05:04,820
+to add this import
+
+62
+00:05:04,970 --> 00:05:11,780
+and now this is a generic type which will in the end yield an object with an ingredients array which
+
+63
+00:05:11,780 --> 00:05:15,350
+will then hold an array of ingredients.
+
+64
+00:05:15,350 --> 00:05:21,350
+Now why do I know that we get data in this format? Because that is the data format of our store. In the
+
+65
+00:05:21,350 --> 00:05:24,080
+shopping list part which we are selecting here,
+
+66
+00:05:24,110 --> 00:05:27,950
+we get an object with ingredients which holds an array of ingredients,
+
+67
+00:05:28,100 --> 00:05:32,730
+so this inner part which is part of the shopping list stop part which we select here,
+
+68
+00:05:32,830 --> 00:05:35,380
+that is what we get on this observable.
+
+69
+00:05:35,570 --> 00:05:41,130
+Now we can get rid of these two parts here,
+
+70
+00:05:41,130 --> 00:05:42,490
+we get rid of that,
+
+71
+00:05:42,630 --> 00:05:49,080
+we can also get rid of that subscription which we clear here, we don't need to manage the NgRx subscription
+
+72
+00:05:49,080 --> 00:05:50,490
+here,
+
+73
+00:05:50,620 --> 00:05:55,720
+we don't need to unsubscribe from this selection here but now,
+
+74
+00:05:55,720 --> 00:05:58,300
+NgRx and Angular do that for us.
+
+75
+00:05:58,720 --> 00:06:04,070
+Now ingredients is an observable and not an array of ingredients anymore
+
+76
+00:06:04,330 --> 00:06:09,550
+and that of course will break our template because if we have a look at the shopping list component,
+
+77
+00:06:10,000 --> 00:06:16,000
+we actually do loop through all the ingredients and that of course only works with an array and not with
+
+78
+00:06:16,000 --> 00:06:20,710
+an observable but Angular has us covered there,
+
+79
+00:06:20,710 --> 00:06:24,660
+you might remember the async pipe from the pipes section.
+
+80
+00:06:25,000 --> 00:06:31,750
+I can wrap ingredients with parentheses and ingredients again is an observable and add the async pipe
+
+81
+00:06:31,750 --> 00:06:32,670
+like this.
+
+82
+00:06:32,890 --> 00:06:38,650
+What this will do is that Angular will subscribe to ingredients for us and therefore it will manage
+
+83
+00:06:38,650 --> 00:06:45,280
+that subscription for us and we don't need to do that on our own and will resolve that and in the end
+
+84
+00:06:45,310 --> 00:06:51,880
+therefore, we can access ingredients on that value that Angular will ultimately give us once it has resolved
+
+85
+00:06:51,910 --> 00:06:58,130
+this and once it got a value from RxJS, from that observable and then ingredients again is an
+
+86
+00:06:58,130 --> 00:06:59,500
+array through which we can loop.
+
+87
+00:06:59,590 --> 00:07:03,400
+So the async pipe provided by Angular is doing the magic here,
+
+88
+00:07:03,400 --> 00:07:09,820
+it subscribes to that observable that we get here, that we store in ingredients, it subscribes to that
+
+89
+00:07:09,820 --> 00:07:13,030
+observable and allows us to then access the ingredients,
+
+90
+00:07:13,030 --> 00:07:19,570
+so the array of ingredients once that observable has been resolved and therefore, this code should indeed
+
+91
+00:07:19,750 --> 00:07:21,130
+work correctly.
+
+92
+00:07:21,280 --> 00:07:28,390
+If we now finally go back to our application, we login real quick and I go to the shopping list here,
+
+93
+00:07:29,410 --> 00:07:36,220
+I get an error. Now we get this error not because our setup is wrong but because one tiny piece is
+
+94
+00:07:36,220 --> 00:07:38,910
+missing and that's in the shopping list reducer.
+
+95
+00:07:39,040 --> 00:07:45,820
+Now I did mention that at the first time when this application starts up and NgRx loads our
+
+96
+00:07:45,820 --> 00:07:51,460
+reducer here, thanks to the store module, it would initialize our state with the initial state.
+
+97
+00:07:51,490 --> 00:07:58,210
+Well it does so but not magically. To use that initial state and return it unchanged,
+
+98
+00:07:58,210 --> 00:08:06,250
+we need to add a default case to our switch statement to handle any cases we're not explicitly handling
+
+99
+00:08:06,430 --> 00:08:10,530
+and we're only handling one explicit case here and that's not the action
+
+100
+00:08:10,600 --> 00:08:16,960
+NgRx will dispatch automatically when it starts, it kind of dispatches an initialization action
+
+101
+00:08:17,290 --> 00:08:20,790
+and we need to handle this and we can handle it here with the default case
+
+102
+00:08:20,980 --> 00:08:26,500
+and there I simply want to return the unchanged state and that will now be the initial state.
+
+103
+00:08:26,500 --> 00:08:28,170
+This is how this will now work
+
+104
+00:08:28,210 --> 00:08:32,420
+and now if we come back, we indeed see our ingredients here.
+
+105
+00:08:32,420 --> 00:08:38,490
+Now that was quite a lot of work for seeing some ingredients here but now, we got this general setup
+
+106
+00:08:38,540 --> 00:08:39,360
+going,
+
+107
+00:08:39,460 --> 00:08:42,620
+the last missing piece is now to dispatch an action
+
+108
+00:08:42,760 --> 00:08:46,860
+and thereafter, we got the whole NgRx thing set up and we can dive deeper.
+
+109
+00:08:46,870 --> 00:08:49,270
+So let's focus on dispatching actions next.
+

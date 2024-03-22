@@ -1,0 +1,328 @@
+1
+00:00:02,600 --> 00:00:05,230
+Our directive is looking really great,
+
+2
+00:00:05,300 --> 00:00:09,520
+we're almost there but there's one other thing I want to add,
+
+3
+00:00:09,560 --> 00:00:15,980
+one functionality I want to add, right now it's dynamic in a way that we can mouse over and then move
+
+4
+00:00:15,980 --> 00:00:17,050
+the mouse away
+
+5
+00:00:17,420 --> 00:00:20,230
+but we can't decide which colors get used.
+
+6
+00:00:20,390 --> 00:00:26,630
+Now if that were a directive we want to ship with, like say a third-party package we're offering, the
+
+7
+00:00:26,630 --> 00:00:31,630
+user, the developer using this directive should be able to dynamically set the value.
+
+8
+00:00:31,940 --> 00:00:37,940
+Maybe we even want to do this on our own app because the color we want to set changes depending on some
+
+9
+00:00:37,940 --> 00:00:39,800
+other parameters in our app.
+
+10
+00:00:39,860 --> 00:00:45,510
+Right now, the color is hardcoded in there, transparent by default and blue if we mouse over it.
+
+11
+00:00:45,890 --> 00:00:52,370
+So that is something we can improve and we can improve it with a tool we already learned, custom property
+
+12
+00:00:52,370 --> 00:00:56,810
+binding. As a side note, custom event binding also works in directives
+
+13
+00:00:56,810 --> 00:00:59,400
+but you probably won't use that that often.
+
+14
+00:00:59,750 --> 00:01:09,110
+So how can we use custom property binding then? Let's add two properties to which we bind. I'll add it with
+
+15
+00:01:09,170 --> 00:01:12,660
+input here and I'll name the first one
+
+16
+00:01:12,950 --> 00:01:20,900
+defaultColor and set it equal to a string and even assign a default color which is transparent.
+
+17
+00:01:22,680 --> 00:01:27,000
+Now @input of course needs to be imported from @angular/core.
+
+18
+00:01:27,480 --> 00:01:34,650
+I'll duplicate this and I'll set this to highlight color, that will be blue by default.
+
+19
+00:01:34,680 --> 00:01:40,150
+So we do have some default values to use but that can be overwritten from outside.
+
+20
+00:01:40,680 --> 00:01:52,420
+So now by default here, I will assign my highlight color for initially setting this and in my host listeners
+
+21
+00:01:52,430 --> 00:01:53,240
+here,
+
+22
+00:01:53,280 --> 00:02:00,000
+if I mouse over it, I will assign my highlight color, excuse me, here it should be my default color at the
+
+23
+00:02:00,000 --> 00:02:00,800
+top of course,
+
+24
+00:02:00,810 --> 00:02:07,950
+so default color when we initialize this and then highlight color once we mouse over this and
+
+25
+00:02:07,950 --> 00:02:10,960
+then default color again once we move the mouse away,
+
+26
+00:02:10,980 --> 00:02:13,020
+so here, default color.
+
+27
+00:02:13,590 --> 00:02:21,810
+So with this, it should still work just the way as it did before but now we can actually bind this from
+
+28
+00:02:21,810 --> 00:02:22,820
+outside.
+
+29
+00:02:23,070 --> 00:02:28,890
+So in our app component where we use the better-highlight directive, we can now bind to default color
+
+30
+00:02:29,310 --> 00:02:37,270
+and maybe set this to yellow, should be a string though, yellow and we can bind to highlight color and pass
+
+31
+00:02:37,270 --> 00:02:39,500
+a string which could be red.
+
+32
+00:02:39,970 --> 00:02:46,120
+And now if we save this, notice that appBetterHighlight, the directive itself, the name is not enclosed
+
+33
+00:02:46,120 --> 00:02:47,840
+in square brackets,
+
+34
+00:02:47,890 --> 00:02:55,170
+now you see it's red and yellow here, though we also detect a bug, initially before we mouse over, it's
+
+35
+00:02:55,170 --> 00:02:56,170
+white.
+
+36
+00:02:56,170 --> 00:03:01,620
+The reason for this is when we assign default color here, it's just not set here.
+
+37
+00:03:01,900 --> 00:03:09,250
+So to prevent this from happening, what we can simply do is we initialize it here in ngOnInit instead, that
+
+38
+00:03:09,340 --> 00:03:11,680
+also before anything has been rendered
+
+39
+00:03:11,710 --> 00:03:15,560
+but after our values here are available.
+
+40
+00:03:15,610 --> 00:03:22,120
+So here, we can set this background color to this default, this default color and now it should work fine,
+
+41
+00:03:22,120 --> 00:03:23,890
+now we have yellow by default.
+
+42
+00:03:24,190 --> 00:03:27,880
+So this now works and now we are able to overwrite this,
+
+43
+00:03:27,880 --> 00:03:33,100
+there are a couple of interesting things we can observe regarding the way we pass down these values
+
+44
+00:03:33,150 --> 00:03:34,490
+though.
+
+45
+00:03:34,750 --> 00:03:42,920
+The first interesting thing is that we have two extra directives-like looking things on the paragraph
+
+46
+00:03:43,470 --> 00:03:45,460
+and that is just property binding.
+
+47
+00:03:45,460 --> 00:03:51,670
+Now how does Angular know if we want to bind to a property of paragraph, which of course doesn't have
+
+48
+00:03:51,670 --> 00:03:55,340
+a default color or to a property of our directive?
+
+49
+00:03:55,750 --> 00:03:58,180
+The answer is it just figures that out,
+
+50
+00:03:58,180 --> 00:04:04,660
+it simply checks our own directives and so on first before it reaches the native properties
+
+51
+00:04:04,660 --> 00:04:05,570
+of elements.
+
+52
+00:04:05,740 --> 00:04:07,600
+That's an important takeaway,
+
+53
+00:04:07,720 --> 00:04:13,310
+we can bind to properties of our own directives by simply placing them on the same element,
+
+54
+00:04:13,330 --> 00:04:17,130
+these properties I mean, enclosed in square brackets of course.
+
+55
+00:04:17,260 --> 00:04:23,940
+Now for ngClass, you'll see that somehow the directive itself is enclosed in square brackets
+
+56
+00:04:24,100 --> 00:04:29,710
+and that's a typical use case especially if you only have one property to bind or at least one main
+
+57
+00:04:29,710 --> 00:04:38,350
+property, then you can provide an alias and we can do this here for, let's say the highlight color and
+
+58
+00:04:38,350 --> 00:04:41,590
+set this equal to your directive selector,
+
+59
+00:04:41,590 --> 00:04:44,000
+so appBetterHighlight in this case.
+
+60
+00:04:44,200 --> 00:04:48,640
+If I set this as an alias for the highlight color,
+
+61
+00:04:48,850 --> 00:04:54,770
+now this assignment here won't work anymore, so I will remove it, instead
+
+62
+00:04:54,850 --> 00:05:01,050
+now I can enclose my main directive into square brackets and set this equal to red.
+
+63
+00:05:01,510 --> 00:05:05,000
+So now we should still see yellow and red
+
+64
+00:05:05,200 --> 00:05:09,450
+but now we're having this same style of enclosing the directive itself.
+
+65
+00:05:09,640 --> 00:05:13,120
+And it's important to understand that this is only an option,
+
+66
+00:05:13,150 --> 00:05:18,950
+you can set such an alias but that's not something you have to do
+
+67
+00:05:19,210 --> 00:05:25,540
+and by default as you saw before, the directive name is not enclosed in square brackets, that really
+
+68
+00:05:25,630 --> 00:05:33,100
+only happens if you want to bind to a property which has the same name or alias like your directive
+
+69
+00:05:33,210 --> 00:05:40,880
+selector. One other thing about how we pass down data, one other thing which is true about property
+
+70
+00:05:40,880 --> 00:05:49,900
+binding in general. If you pass down a string, like now we use square brackets and then single quotation
+
+71
+00:05:49,900 --> 00:05:52,270
+marks, while you can take a shortcut,
+
+72
+00:05:52,450 --> 00:05:56,260
+you can remove the square brackets and remove the single quotation marks
+
+73
+00:05:56,380 --> 00:05:57,910
+and that is a special case
+
+74
+00:05:57,910 --> 00:06:00,580
+if you are passing down a string. You can do,
+
+75
+00:06:00,580 --> 00:06:06,970
+you can add property binding without square brackets if you then also omit the single quotation marks
+
+76
+00:06:07,030 --> 00:06:11,310
+between the double quotation marks and that should work as it did before,
+
+77
+00:06:11,410 --> 00:06:13,900
+no error. You can use this,
+
+78
+00:06:13,930 --> 00:06:18,350
+you will see me use this later in the course with official Angular directive,
+
+79
+00:06:18,790 --> 00:06:24,760
+be careful that if you use it, it's really clear that this is property binding, that no one thinks that
+
+80
+00:06:24,760 --> 00:06:29,440
+this could be a real attribute existing for the element you placed it on,
+
+81
+00:06:29,500 --> 00:06:36,100
+then there is absolutely fine to be used. And this is our directive finished, with some extra features
+
+82
+00:06:36,100 --> 00:06:41,160
+like @HostListener, @HostBinding and dynamically setting values from outside.
+

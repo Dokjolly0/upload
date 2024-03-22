@@ -1,0 +1,148 @@
+1
+00:00:02,320 --> 00:00:07,760
+To create a library, we run and generate library, an alternative to application.
+
+2
+00:00:07,960 --> 00:00:13,300
+In this case, let's say my button, because it's an amazing library where I will share my own custom
+
+3
+00:00:13,300 --> 00:00:16,870
+button component, which every other application should be able to use.
+
+4
+00:00:17,080 --> 00:00:18,130
+And that's maybe important.
+
+5
+00:00:18,340 --> 00:00:19,260
+What is a library?
+
+6
+00:00:19,480 --> 00:00:25,960
+A library differs from an application such that you still write angular code and there you still build
+
+7
+00:00:25,960 --> 00:00:27,700
+angular components and so on.
+
+8
+00:00:27,700 --> 00:00:30,550
+You can grouped them with modules, you can add directive's.
+
+9
+00:00:30,820 --> 00:00:34,950
+That does not change, but it's not meant to run standalone as a web application.
+
+10
+00:00:35,260 --> 00:00:42,220
+Instead, it's meant to have some code that can be shared across multiple angular web applications.
+
+11
+00:00:42,760 --> 00:00:48,910
+So something like angular material, angular material is angular library.
+
+12
+00:00:49,030 --> 00:00:54,550
+It comes with a bunch of built in components and you can use these components in any application.
+
+13
+00:00:54,580 --> 00:00:58,100
+So this is an angular library and you can build your own.
+
+14
+00:00:58,510 --> 00:01:03,360
+Now, we already made our first steps by creating it with the energy generated library command.
+
+15
+00:01:03,880 --> 00:01:08,350
+You see, you generally get the same as before, but there are some differences.
+
+16
+00:01:08,500 --> 00:01:14,170
+For example, we have the energy packaged adjacent file, which in the end allows us to configure this
+
+17
+00:01:14,170 --> 00:01:15,730
+library in a certain way.
+
+18
+00:01:16,120 --> 00:01:22,840
+In the source folder we see we have a public API, its file, where we in the end export to different
+
+19
+00:01:22,840 --> 00:01:24,520
+things that make up our library.
+
+20
+00:01:24,880 --> 00:01:29,830
+And in the lit folder we got some starting files, for example, on my button component where we can
+
+21
+00:01:29,830 --> 00:01:37,660
+write our own library component already added to a module and also a service, which you can or cannot
+
+22
+00:01:37,660 --> 00:01:41,440
+use now to learn all about library creation.
+
+23
+00:01:41,440 --> 00:01:44,650
+Of course, as always, the official docs are your friends.
+
+24
+00:01:44,800 --> 00:01:52,810
+Under technique's Angella libraries creating libraries, you can learn all about creating and also deploying,
+
+25
+00:01:52,810 --> 00:01:56,590
+publishing your own custom libraries to NPM for dad.
+
+26
+00:01:56,590 --> 00:01:58,380
+You will also need that NPM account, though.
+
+27
+00:01:59,080 --> 00:02:01,930
+So this is in the end something you can also do.
+
+28
+00:02:02,410 --> 00:02:05,980
+And building a library really is straightforward here.
+
+29
+00:02:05,980 --> 00:02:11,620
+For example, I could build my own custom button, which of course is super amazing there.
+
+30
+00:02:11,650 --> 00:02:17,530
+I will use energy content so that users can pass in anything they want between my custom button tax
+
+31
+00:02:18,310 --> 00:02:19,130
+and that's it.
+
+32
+00:02:19,270 --> 00:02:23,890
+So of course, the most amazing button in the world has no stall's, no extra features.
+
+33
+00:02:23,890 --> 00:02:26,490
+You absolutely need this library.
+
+34
+00:02:27,430 --> 00:02:31,780
+Now, with that, we already would have a very basic library, which we now can configure.
+
+35
+00:02:31,780 --> 00:02:36,970
+And again, the official docs can help you there to learn about how to exactly configure this.
+
+36
+00:02:37,540 --> 00:02:45,910
+And with this, we are also able to build libraries and share them across even our own angular applications
+
+37
+00:02:45,940 --> 00:02:49,540
+or also publish them to them to share them with others.
+

@@ -1,0 +1,532 @@
+1
+00:00:02,250 --> 00:00:10,290
+So here's our code and to add angular universal here, you only have to run one command, you run engy
+
+2
+00:00:10,290 --> 00:00:17,240
+ad at Engie Universal Slash Express dash engine, make sure to get this right.
+
+3
+00:00:18,290 --> 00:00:24,050
+Then blank space and then dash dash client project written like this.
+
+4
+00:00:25,510 --> 00:00:32,800
+And now take the identifier you find in your angular JSON file, this identifier here, this name under
+
+5
+00:00:32,800 --> 00:00:41,230
+projects introduce after a blank after decline project here with debt, your project will be transformed
+
+6
+00:00:41,230 --> 00:00:43,080
+such that it still works as before.
+
+7
+00:00:43,090 --> 00:00:45,880
+And you can still run it as a normal, angular app if you wish.
+
+8
+00:00:46,060 --> 00:00:50,500
+But you now also have the option of running it on a server and getting that pre rendering stuff.
+
+9
+00:00:51,040 --> 00:00:55,330
+Notis will take a while because it will do a couple of installations and transformations will do quite
+
+10
+00:00:55,330 --> 00:00:56,260
+a complex setup.
+
+11
+00:00:56,260 --> 00:01:00,880
+And as a short side note, until a few months ago, you had to do all of that manually.
+
+12
+00:01:00,880 --> 00:01:05,800
+And actually later down in the module, I still have the older version of this module where I do it
+
+13
+00:01:05,800 --> 00:01:06,520
+all manually.
+
+14
+00:01:06,820 --> 00:01:07,660
+That still works.
+
+15
+00:01:07,660 --> 00:01:12,070
+And I will leave it in here so that you can also have a look at the manual approach and get a better
+
+16
+00:01:12,070 --> 00:01:15,340
+idea of what's happening behind the scenes in case you're interested.
+
+17
+00:01:16,210 --> 00:01:17,770
+So now this is done here.
+
+18
+00:01:18,280 --> 00:01:23,380
+And now with that being done, there are two important things you need to do before you can take advantage
+
+19
+00:01:23,380 --> 00:01:23,740
+of this.
+
+20
+00:01:24,040 --> 00:01:30,970
+The first important thing is that you should head over to your app server module and in there, make
+
+21
+00:01:30,970 --> 00:01:34,910
+sure you have that module map loader module imported.
+
+22
+00:01:35,260 --> 00:01:41,710
+Now, if that hasn't been set up for you simply at this by going to the terminal and by running NPM,
+
+23
+00:01:41,710 --> 00:01:51,220
+install, dash, dash, save and then at Engie Universal slash module, dash map, dash engine factory
+
+24
+00:01:51,220 --> 00:01:52,320
+dash loader.
+
+25
+00:01:52,660 --> 00:01:54,430
+Now, that's obviously a very good name.
+
+26
+00:01:54,640 --> 00:01:59,860
+In the end, this is a crucial package which provides this module map loader thing here, which is angular
+
+27
+00:01:59,860 --> 00:02:05,710
+module, which we have to add to imports in the app server module, not in the app module, but in the
+
+28
+00:02:05,710 --> 00:02:10,210
+app server module to enable lazy loading with angular universal.
+
+29
+00:02:10,210 --> 00:02:16,120
+Without that, your app would fail if you use lazy loading because the Lezley loaded Rawat's wouldn't
+
+30
+00:02:16,120 --> 00:02:17,770
+be able to be rendered yet.
+
+31
+00:02:18,490 --> 00:02:21,640
+So let's wait for this installation to finish here.
+
+32
+00:02:23,000 --> 00:02:24,170
+And with it finished.
+
+33
+00:02:25,040 --> 00:02:31,340
+Make sure you at the airport and then add the imported module, map, loader module, package or module
+
+34
+00:02:31,340 --> 00:02:36,050
+as it is here to imports in the engine module, in the observer module file.
+
+35
+00:02:36,680 --> 00:02:37,690
+Now, that's one thing.
+
+36
+00:02:37,940 --> 00:02:41,240
+There is another important thing you have to understand, though.
+
+37
+00:02:41,720 --> 00:02:47,990
+Your code here now is first rendered and executed on the server, not in the browser.
+
+38
+00:02:48,380 --> 00:02:55,520
+So the first page to first load is rendered on the server and only after that first page has been rendered
+
+39
+00:02:55,520 --> 00:02:57,050
+on a server and returned to the user.
+
+40
+00:02:57,230 --> 00:03:02,180
+Only then a normal single page application starts to run in the browser of the user.
+
+41
+00:03:02,690 --> 00:03:04,400
+That has one important implication.
+
+42
+00:03:04,760 --> 00:03:12,650
+It means that certain browser only APIs are not available, namely in our project here, local storage.
+
+43
+00:03:13,190 --> 00:03:19,580
+If you search for local storage where setting data in local storage and we're also reading data from
+
+44
+00:03:19,580 --> 00:03:20,480
+local storage.
+
+45
+00:03:23,120 --> 00:03:31,400
+I'm extracting user data from a local storage down there in my order log, in effect, this would fail
+
+46
+00:03:31,400 --> 00:03:35,360
+on a server because local storage is a browser only API.
+
+47
+00:03:35,360 --> 00:03:36,950
+It's not available in no chance.
+
+48
+00:03:36,950 --> 00:03:38,390
+It's not available on the server.
+
+49
+00:03:38,420 --> 00:03:43,670
+Therefore, now, to fix this, you should therefore go to your app.
+
+50
+00:03:43,670 --> 00:03:49,370
+Component types could fall where we are dispatching this order login action and make sure you don't
+
+51
+00:03:49,370 --> 00:03:51,930
+dispatch it when this gets rendered on a server.
+
+52
+00:03:52,700 --> 00:03:58,970
+Now, for that to work or to avoid doing this on the server, you need to find out whether you're running
+
+53
+00:03:58,970 --> 00:03:59,990
+on a server or not.
+
+54
+00:04:00,560 --> 00:04:05,000
+And that can be done by injecting something special here into the app component.
+
+55
+00:04:05,720 --> 00:04:12,110
+You can inject an identifier provided by Engelhard that tells you on which platform you're running,
+
+56
+00:04:12,110 --> 00:04:12,680
+basically.
+
+57
+00:04:13,010 --> 00:04:18,140
+So let's store does injected value in a property and I'll name it platform ID because that's what we'll
+
+58
+00:04:18,140 --> 00:04:18,950
+inject in the end.
+
+59
+00:04:18,960 --> 00:04:25,940
+And now you don't inject by assigning a type here as we always did before, but instead now you use
+
+60
+00:04:25,940 --> 00:04:31,940
+a special decorator, which we haven't used thus far because you rarely need it used to inject decorator.
+
+61
+00:04:32,330 --> 00:04:36,980
+Normally dependency injection works such that you defined a type here in angular looks for this type.
+
+62
+00:04:37,430 --> 00:04:42,320
+Now we're not injecting a class though, or an object based on a class, and therefore we don't use
+
+63
+00:04:42,320 --> 00:04:47,180
+the type of a class, but we inject a hard coded values, so to say.
+
+64
+00:04:47,450 --> 00:04:54,080
+And Disvalue has an identifier defined by a which we can also import from Anglicare, and that's the
+
+65
+00:04:54,080 --> 00:04:58,040
+platform ID identifier that's a constant provided by ANGULAR.
+
+66
+00:04:58,610 --> 00:05:05,600
+And you use it here with add inject in front of this argument now in front of this argument to construct
+
+67
+00:05:05,600 --> 00:05:11,960
+a receives and there you pass that identifier platform ID and this tells Anjelah, please look for the
+
+68
+00:05:11,960 --> 00:05:18,680
+globally provided value with this identifier and inject the value which is globally provided by Angular
+
+69
+00:05:18,830 --> 00:05:22,340
+into this class and store it in this platform ID property.
+
+70
+00:05:22,340 --> 00:05:23,390
+That's what's happening here.
+
+71
+00:05:23,630 --> 00:05:25,450
+Therefore we don't need to assign the type here.
+
+72
+00:05:26,210 --> 00:05:31,910
+So now it does inject that we can use this here, an engine in it to check if and now we need one more
+
+73
+00:05:31,910 --> 00:05:36,770
+thing from Angular and now that's coming from the angular.
+
+74
+00:05:37,830 --> 00:05:46,280
+Common model, that's a method of function which Angella provides the ES platform, browser or server,
+
+75
+00:05:46,290 --> 00:05:49,790
+whatever you want, functional to go with its platform browser.
+
+76
+00:05:50,160 --> 00:05:53,490
+And this allows us to check whether the platform is a browser to platform.
+
+77
+00:05:53,490 --> 00:05:57,150
+This code is running on so we can run is platform browser.
+
+78
+00:05:58,270 --> 00:06:03,760
+And this function requires such a platform ID, and that's why we injected it, so as an argument to
+
+79
+00:06:03,760 --> 00:06:09,190
+the function, we passed this platform ID and with that, Angella is able to find out where our code
+
+80
+00:06:09,190 --> 00:06:09,760
+is running.
+
+81
+00:06:09,970 --> 00:06:16,930
+And I only want to dispatched you all to log in here if we're running on the browser, not in the server.
+
+82
+00:06:17,410 --> 00:06:23,020
+Now, here I have this log in my app component Halib from App Component Engine in it, and I only have
+
+83
+00:06:23,020 --> 00:06:26,680
+that in here to prove that this still runs in the browser.
+
+84
+00:06:26,680 --> 00:06:31,900
+So it's not just running in the server because that would be bad because there we won't try to log in.
+
+85
+00:06:31,900 --> 00:06:33,520
+It will also run in the browser.
+
+86
+00:06:33,550 --> 00:06:35,440
+So in the browser this will be repeated.
+
+87
+00:06:35,650 --> 00:06:39,820
+So the page will be pre rendered on a server, but once it served, this code will run again on the
+
+88
+00:06:39,820 --> 00:06:44,310
+browser and therefore all the logging will work in the browser, but not in the server.
+
+89
+00:06:44,380 --> 00:06:49,180
+That's good because all the login relies on local storage, which is not available on the server.
+
+90
+00:06:49,840 --> 00:06:54,820
+With all of that, we're now done setting up angular universal for this app.
+
+91
+00:06:54,820 --> 00:07:01,330
+And this work around here is always needed when you are working with some browser only API and now with
+
+92
+00:07:01,330 --> 00:07:01,660
+that.
+
+93
+00:07:03,730 --> 00:07:09,250
+We have a look at Pakistan, Jason, we see there is this new build, as is our command, which we can
+
+94
+00:07:09,250 --> 00:07:16,570
+now run NPM run, build coal in SSR, which will now build our app for angular Universal, to be precise.
+
+95
+00:07:16,570 --> 00:07:21,890
+It builds it with the energy build command and production mode and then also creates a universal service
+
+96
+00:07:21,890 --> 00:07:27,180
+side built, so to say, and that stand allowing us to serve this app.
+
+97
+00:07:27,190 --> 00:07:31,420
+So let's wait for this to finish and a few words about serving this app.
+
+98
+00:07:31,420 --> 00:07:34,170
+Then you will need a notorious server.
+
+99
+00:07:34,180 --> 00:07:40,000
+So a host, a Web host capable of executing no chance to serve your Angella Universal app.
+
+100
+00:07:40,270 --> 00:07:45,490
+A static host likened into deployment, marginalises course will no longer do because you no longer
+
+101
+00:07:45,490 --> 00:07:46,530
+have a static site.
+
+102
+00:07:46,540 --> 00:07:49,480
+It's now no longer HTML, JavaScript and access.
+
+103
+00:07:49,720 --> 00:07:55,540
+Now you have code that runs on the server and hence you need a server that is capable of running that
+
+104
+00:07:55,540 --> 00:07:55,870
+code.
+
+105
+00:07:56,200 --> 00:08:02,530
+So if you now deploy your angular universal app, you need a server that is able to run node jazz and
+
+106
+00:08:02,530 --> 00:08:08,080
+on that server you can then run a command, which will show you in a second or which I can show you
+
+107
+00:08:08,080 --> 00:08:08,470
+right now.
+
+108
+00:08:08,470 --> 00:08:11,350
+Already it's this serve SSR Command.
+
+109
+00:08:11,800 --> 00:08:18,760
+You would take your entire folder here in the end, upload that on your node server and then run NPM
+
+110
+00:08:19,120 --> 00:08:25,960
+run services are on your node server to get that server up and running and serve angular universal so
+
+111
+00:08:25,960 --> 00:08:32,000
+that when requests hit that server, they are pre rendered and users then have the pre rendered thereafter
+
+112
+00:08:32,000 --> 00:08:34,340
+a normal, angular universal application.
+
+113
+00:08:35,020 --> 00:08:36,640
+So now it is finished executing.
+
+114
+00:08:36,940 --> 00:08:39,940
+And now I'm running the command which you all would run on the server.
+
+115
+00:08:39,940 --> 00:08:45,310
+You deployed your app to its NPM run serve Colen Ezat.
+
+116
+00:08:45,730 --> 00:08:50,830
+This will now surface through no chasten on this host localhost 4000.
+
+117
+00:08:50,830 --> 00:08:52,000
+You can now visit this app.
+
+118
+00:08:52,950 --> 00:08:57,930
+So here it is, and if I opened the developer tools, you'll also see hello from App Component here
+
+119
+00:08:57,930 --> 00:09:03,960
+in the browser log, which means this code also ran on the browser or in the browser and not just on
+
+120
+00:09:03,960 --> 00:09:05,100
+the server there.
+
+121
+00:09:05,100 --> 00:09:06,150
+It also executed.
+
+122
+00:09:06,270 --> 00:09:07,940
+You see it here, but there.
+
+123
+00:09:08,130 --> 00:09:12,810
+Thanks to our check, we didn't execute the code which accesses local storage.
+
+124
+00:09:13,590 --> 00:09:21,300
+And now back here, if I now inspect the page source we see here, we got some real contender.
+
+125
+00:09:21,330 --> 00:09:24,630
+What we see on the screen really was returned back by the server.
+
+126
+00:09:24,750 --> 00:09:26,630
+And that is, of course, how it should be.
+
+127
+00:09:26,910 --> 00:09:31,950
+This is how it should work, because this ensures that our page is loaded and presented, as it should
+
+128
+00:09:31,950 --> 00:09:36,590
+look like, and that search engines see our page the way they should see it.
+
+129
+00:09:37,350 --> 00:09:40,200
+So this is how you can enable angular universal.
+
+130
+00:09:40,230 --> 00:09:46,440
+Now, as I mentioned, you had to do a lot of that manually only a few months ago and offer later down
+
+131
+00:09:46,440 --> 00:09:51,900
+in this module, you'll find that full manual approach just in case you're interested in seeing what
+
+132
+00:09:51,900 --> 00:09:53,110
+happened behind the scenes.
+
+133
+00:09:53,130 --> 00:09:58,860
+Basically, what we do manually, there has been an automatically that engie ad script we used earlier.
+

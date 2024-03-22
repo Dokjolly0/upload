@@ -1,0 +1,164 @@
+1
+00:00:02,160 --> 00:00:03,990
+So requests are sent
+
+2
+00:00:03,990 --> 00:00:09,840
+with the post method and we do only send them when we subscribe. Let's ignore the data we get back here
+
+3
+00:00:09,840 --> 00:00:10,520
+for now
+
+4
+00:00:10,700 --> 00:00:16,950
+and let's now add another request that actually gets us all the posts and for this,
+
+5
+00:00:16,980 --> 00:00:23,700
+I'll add a new private property here which I'll name fetch posts and in here, I want to again use
+
+6
+00:00:23,700 --> 00:00:25,460
+the HttpClient
+
+7
+00:00:25,530 --> 00:00:32,460
+and now the get method and send a get request to that same URL we used for storing the data because
+
+8
+00:00:32,460 --> 00:00:36,350
+is the URL from which we'll be able to get that data.
+
+9
+00:00:36,420 --> 00:00:40,820
+Now before we actually go further, let's have a quick look at Firebase
+
+10
+00:00:40,920 --> 00:00:45,850
+and there, you should now also see that posts node here and in there, you have that cryptic key
+
+11
+00:00:45,850 --> 00:00:49,940
+again which is an automatically generated ID by Firebase by the way,
+
+12
+00:00:49,950 --> 00:00:51,970
+that's a convenience feature by Firebase,
+
+13
+00:00:51,990 --> 00:00:54,130
+it generates such ID for you
+
+14
+00:00:54,270 --> 00:00:57,300
+but if you expand this too, you see your data.
+
+15
+00:00:57,300 --> 00:00:59,760
+So now the goal is to fetch that data,
+
+16
+00:00:59,820 --> 00:01:03,230
+we want to fetch all the posts that were created.
+
+17
+00:01:03,280 --> 00:01:06,000
+Therefore, we're preparing this get request
+
+18
+00:01:06,120 --> 00:01:08,490
+and now since this is a get request, this also needs
+
+19
+00:01:08,490 --> 00:01:14,100
+no second argument because get requests have no request body because you're not sending any data,
+
+20
+00:01:14,260 --> 00:01:21,810
+you're instead just requesting data. One thing you need to do here too however is you need to subscribe,
+
+21
+00:01:21,820 --> 00:01:23,940
+no subscription, no request.
+
+22
+00:01:24,010 --> 00:01:28,960
+So you need to subscribe here and we should get back our posts here,
+
+23
+00:01:28,960 --> 00:01:30,040
+that's the hope.
+
+24
+00:01:30,040 --> 00:01:36,880
+So we get back our posts here and we can then console log posts, to get an idea of what we're actually
+
+25
+00:01:36,880 --> 00:01:37,470
+getting back.
+
+26
+00:01:38,530 --> 00:01:44,400
+Now I put this into that fetch posts method because we can now call this from two different places,
+
+27
+00:01:44,530 --> 00:01:52,520
+from in onFetchPosts here, where I now just call this fetch posts but I also want to call this from
+
+28
+00:01:52,520 --> 00:01:53,730
+inside ngOnInit,
+
+29
+00:01:53,840 --> 00:02:01,300
+so whenever this page loads, whenever this app loads, I want to fetch post and this should therefore call this
+
+30
+00:02:01,300 --> 00:02:02,500
+method and send this request.
+
+31
+00:02:03,220 --> 00:02:08,050
+Let's save this and this will reload the page and should now already send such a request and indeed,
+
+32
+00:02:08,350 --> 00:02:09,930
+here is some data we get back
+
+33
+00:02:11,150 --> 00:02:17,690
+and it looks like we're getting back a Javascript object which has one key-value pair in our case, where
+
+34
+00:02:17,690 --> 00:02:24,140
+the key is this cryptic key, this cryptic string and the value of that is the original object we stored,
+
+35
+00:02:24,140 --> 00:02:25,950
+so it's a nested object here,
+
+36
+00:02:26,060 --> 00:02:28,730
+that is the data we originally sent to the back-end
+
+37
+00:02:28,730 --> 00:02:32,490
+and this is the data we are getting back. Now
+
+38
+00:02:32,490 --> 00:02:40,240
+that of course means that if I want to store all my posts in an array here through which we then can loop
+
+39
+00:02:40,240 --> 00:02:48,910
+to output that, we would need to transform this object here because it's a Javascript object to an array
+
+40
+00:02:48,940 --> 00:02:51,130
+and we need to transform that data,
+
+41
+00:02:51,190 --> 00:02:54,400
+that screams for observable operators.
+

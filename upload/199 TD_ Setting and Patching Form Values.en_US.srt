@@ -1,0 +1,216 @@
+1
+00:00:03,170 --> 00:00:09,410
+We learned a lot about the template driven approach. Before concluding the first part of the module, let's
+
+2
+00:00:09,540 --> 00:00:12,570
+have a look at the suggest a username button here,
+
+3
+00:00:12,650 --> 00:00:20,530
+it doesn't work but I added this suggest username method here where I create a default username.
+
+4
+00:00:20,640 --> 00:00:23,780
+Now it would be nice that upon clicking this button,
+
+5
+00:00:23,780 --> 00:00:30,290
+we populate this username input here with this username.
+
+6
+00:00:30,290 --> 00:00:35,540
+Now you could think about some solutions using two-way data binding and they would probably work,
+
+7
+00:00:35,540 --> 00:00:42,440
+you could two-way data bind this to username property which you then change with this method,
+
+8
+00:00:43,040 --> 00:00:45,550
+I just want to show you a different approach.
+
+9
+00:00:45,560 --> 00:00:48,500
+Remember that we do have access to this form here
+
+10
+00:00:48,530 --> 00:00:58,130
+through @ViewChild, of course it would be nice if we could set the value of one of our inputs and turns
+
+11
+00:00:58,130 --> 00:00:59,720
+out we can.
+
+12
+00:00:59,720 --> 00:01:03,090
+For this, we get two different methods we can use.
+
+13
+00:01:03,320 --> 00:01:08,910
+The first one would be on our signupForm,
+
+14
+00:01:11,390 --> 00:01:15,110
+the setValue method here.
+
+15
+00:01:15,110 --> 00:01:18,120
+This allows you to set the value of the whole form
+
+16
+00:01:18,200 --> 00:01:23,260
+and here we need to pass a Javascript object exactly representing our form.
+
+17
+00:01:23,570 --> 00:01:32,870
+So we need to use or set up user data which is an object too where we have, let's check, a username
+
+18
+00:01:33,200 --> 00:01:38,630
+field, username set to the suggested name here
+
+19
+00:01:38,990 --> 00:01:52,010
+and then also e-mail set to maybe an empty string and secret set to pet maybe and 
+
+20
+00:01:52,070 --> 00:01:53,810
+questionAnswer,
+
+21
+00:01:53,810 --> 00:01:57,850
+keep in mind this is this text area here,
+
+22
+00:01:57,890 --> 00:02:01,530
+so questionAnswer set to an empty string
+
+23
+00:02:01,760 --> 00:02:09,910
+and last but not least, the gender set to male and with this all added,
+
+24
+00:02:09,930 --> 00:02:16,320
+let's go to our template and hook up this button, this button here which is of type button so that it
+
+25
+00:02:16,320 --> 00:02:19,830
+doesn't submit the form and here I'll add a click listener
+
+26
+00:02:19,830 --> 00:02:22,730
+and target the suggestUserName method.
+
+27
+00:02:23,040 --> 00:02:28,430
+So if this now recompiles and we hit this button, you'll see super user was entered here,
+
+28
+00:02:28,440 --> 00:02:31,900
+however this approach does have one downside.
+
+29
+00:02:32,070 --> 00:02:38,760
+If we already had some value we enter there and then want to click suggest username, it overwrites
+
+30
+00:02:38,790 --> 00:02:40,580
+all our other content.
+
+31
+00:02:40,590 --> 00:02:43,380
+So this is not necessarily the best approach,
+
+32
+00:02:43,380 --> 00:02:51,090
+however it does show you how you can set the values of all controls with one convenient command, with
+
+33
+00:02:51,090 --> 00:02:57,240
+the setValue command where you pass an exact copy of that form, of the form value
+
+34
+00:02:57,240 --> 00:03:02,610
+I should say as a Javascript object and can overwrite the value of each control.
+
+35
+00:03:02,610 --> 00:03:07,370
+Now as mentioned, this is not the best approach so let's comment it out,
+
+36
+00:03:07,770 --> 00:03:14,850
+the better approach here would be to access the signupForm and now actually, the form object on it
+
+37
+00:03:14,880 --> 00:03:22,990
+because signupForm, this overall ngForm object is kind of the container of your form you could say
+
+38
+00:03:23,190 --> 00:03:25,910
+and there you also have the patch value method.
+
+39
+00:03:25,950 --> 00:03:32,280
+So this is not available on the signupForm itself but on the FormGroup wrapped inside of it
+
+40
+00:03:32,280 --> 00:03:39,670
+and here you can pass Javascript object too, where you only overwrite specific certain controls.
+
+41
+00:03:39,780 --> 00:03:42,770
+So here you could also pass user data,
+
+42
+00:03:43,060 --> 00:03:46,850
+let me restructure this so that it's easier to read, userData
+
+43
+00:03:48,200 --> 00:03:56,180
+and then inside of userData, here you might want to overwrite the username, set it to the suggested name
+
+44
+00:03:56,420 --> 00:03:59,110
+but don't overwrite any other value.
+
+45
+00:03:59,300 --> 00:04:05,810
+So with this in place, if I now save this and I already have an e-mail address entered and something here
+
+46
+00:04:05,840 --> 00:04:08,020
+and here and I click this button,
+
+47
+00:04:08,180 --> 00:04:13,280
+now it only added super user and left all my other controls untouched.
+
+48
+00:04:13,520 --> 00:04:15,780
+So set value and patch value,
+
+49
+00:04:15,800 --> 00:04:21,770
+important, patch value only available on the form wrapped by ngForm itself.
+
+50
+00:04:21,890 --> 00:04:24,840
+As a side note, setValue would be available here too.
+
+51
+00:04:25,100 --> 00:04:27,510
+So these two commands are very helpful,
+
+52
+00:04:27,590 --> 00:04:35,530
+setValue to set your whole form, patch value to overwrite parts of the form.
+
+53
+00:04:35,660 --> 00:04:37,630
+Very useful helper methods
+
+54
+00:04:37,640 --> 00:04:39,700
+I wanted to bring to your attention.
+

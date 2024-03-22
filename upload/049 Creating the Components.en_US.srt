@@ -1,0 +1,492 @@
+1
+00:00:02,290 --> 00:00:06,670
+So in the last lecture, we set up our project and we add bootstrap to it,
+
+2
+00:00:06,670 --> 00:00:09,870
+now I want to get started adding the components we laid out here.
+
+3
+00:00:09,970 --> 00:00:11,740
+Here's your challenge,
+
+4
+00:00:11,740 --> 00:00:13,540
+try doing this on your own,
+
+5
+00:00:13,540 --> 00:00:18,670
+now with that I don't mean filling these component templates with life, for now each component may
+
+6
+00:00:18,670 --> 00:00:22,530
+simply hold some dummy text so that we can see that it's there,
+
+7
+00:00:22,570 --> 00:00:30,370
+I mean create the components and try to create a clever folder structure in your app folder. Not every
+
+8
+00:00:30,370 --> 00:00:33,640
+component should have a folder on the root level,
+
+9
+00:00:33,640 --> 00:00:40,420
+you should also nest them by feature maybe and try to create at least one component manually by hand,
+
+10
+00:00:40,480 --> 00:00:42,580
+not using the CLI.
+
+11
+00:00:42,580 --> 00:00:45,820
+I'll give you a chance to pause the video and then I will show you my approach,
+
+12
+00:00:45,820 --> 00:00:48,460
+chances are that we deviate in our solution
+
+13
+00:00:48,460 --> 00:00:50,450
+but that's a good practice for you,
+
+14
+00:00:50,530 --> 00:00:56,320
+so definitely go ahead and try creating these components without any content for init for now on your
+
+15
+00:00:56,320 --> 00:00:56,940
+own.
+
+16
+00:01:00,000 --> 00:01:01,890
+So were you successful?
+
+17
+00:01:02,070 --> 00:01:06,090
+Let's see how I would solve this, how I would approach this.
+
+18
+00:01:06,090 --> 00:01:11,110
+We got two main areas, recipes in the shopping-list and we get this header component.
+
+19
+00:01:11,490 --> 00:01:16,020
+Now I will create the header component manually.
+
+20
+00:01:16,020 --> 00:01:21,510
+So for this, we can already start the discussions, should we create a header folder in the app folder
+
+21
+00:01:21,510 --> 00:01:27,510
+where we store this component or should we create a component in the app folder itself?
+
+22
+00:01:27,510 --> 00:01:33,300
+Now I will create a header folder but placing the component directly in the app folder would also not be wrong
+
+23
+00:01:33,510 --> 00:01:37,230
+since it is really only used by our app component.
+
+24
+00:01:37,620 --> 00:01:44,490
+So here, I will create this new folder named header and in there, I'll add my header.component.ts
+
+25
+00:01:44,520 --> 00:01:46,400
+file.
+
+26
+00:01:46,470 --> 00:01:50,220
+Now as you learned, a component is simply just a TypeScript class, so
+
+27
+00:01:50,220 --> 00:01:56,580
+let's name it HeaderComponent here and right now, that would not be recognized as a component by
+
+28
+00:01:56,580 --> 00:01:57,690
+Angular,
+
+29
+00:01:57,700 --> 00:02:06,540
+instead here we have to add the @component decorator and later, I'm going to use the autoimport feature
+
+30
+00:02:06,540 --> 00:02:07,590
+of my IDE.
+
+31
+00:02:07,650 --> 00:02:17,280
+For now I'll import it manually, we have to import component between curly braces from @angular/core,
+
+32
+00:02:17,400 --> 00:02:19,020
+that's important.
+
+33
+00:02:19,020 --> 00:02:24,220
+Now with that, we need to pass a Javascript object to this decorator to configure this component,
+
+34
+00:02:24,420 --> 00:02:30,330
+specifically we need to add a template and I'll put this in external file, so templateUrl in this
+
+35
+00:02:30,330 --> 00:02:37,470
+case and a selector so that we can use this component. So the selector here is app-header because I want
+
+36
+00:02:37,470 --> 00:02:44,460
+to ensure that I have a unique selector and that I don't overwrite an existing HTML element for example
+
+37
+00:02:44,550 --> 00:02:47,580
+and header would be an existing element.
+
+38
+00:02:47,580 --> 00:02:54,730
+The templateUrl, here I want to point to the header.component.html file
+
+39
+00:02:54,870 --> 00:02:58,630
+and as you've probably recognized, this file doesn't exist.
+
+40
+00:02:58,920 --> 00:03:05,050
+So I can quickly create this by creating a new file in the same folder, in the header folder, here
+
+41
+00:03:05,080 --> 00:03:11,130
+header.component.html is the full file name and in this HTML file here,
+
+42
+00:03:11,370 --> 00:03:14,740
+I simply want to output the header for now,
+
+43
+00:03:14,760 --> 00:03:17,050
+I'm going to add some content soon.
+
+44
+00:03:17,370 --> 00:03:22,230
+So that's my header component and I can already include this in my app component,
+
+45
+00:03:22,320 --> 00:03:29,730
+maybe above the container because in the container, I later only want to contain my content component
+
+46
+00:03:29,760 --> 00:03:34,820
+I will say, so here I'll add the app-header, just like this.
+
+47
+00:03:35,280 --> 00:03:37,160
+So with that, we added it here,
+
+48
+00:03:37,410 --> 00:03:39,390
+now let's see if we can see it
+
+49
+00:03:40,770 --> 00:03:46,350
+and I just see loading... which always is an indicator that there has been an error.
+
+50
+00:03:46,480 --> 00:03:52,400
+So check the Javascript console in your developer tools to see the error and the error is pretty clear,
+
+51
+00:03:52,410 --> 00:03:55,400
+app-header is not a known element.
+
+52
+00:03:55,510 --> 00:03:58,930
+This is a common gotcha which is why I wanted to show it.
+
+53
+00:03:58,930 --> 00:04:00,090
+Why is it not known?
+
+54
+00:04:00,100 --> 00:04:03,410
+We added it here and we set up selector here, right?
+
+55
+00:04:03,670 --> 00:04:09,300
+Well remember, you have to register all the features you're going to use in the app module
+
+56
+00:04:09,460 --> 00:04:14,770
+and since we didn't use the CLI to create this component, it wasn't added there automatically.
+
+57
+00:04:14,770 --> 00:04:18,970
+So we have to add it manually to our declarations array
+
+58
+00:04:19,270 --> 00:04:22,300
+and that means we also have to add the import.
+
+59
+00:04:22,300 --> 00:04:30,680
+So we should import header component from and now pointing to the header folder and then in there,
+
+60
+00:04:30,690 --> 00:04:34,370
+the header.component file without the file extension.
+
+61
+00:04:34,870 --> 00:04:42,740
+So that now unlocks the header component in our app and if we save this, now we see the header.
+
+62
+00:04:42,740 --> 00:04:43,900
+Now that's not pretty,
+
+63
+00:04:43,900 --> 00:04:48,380
+we're going to change this soon but we can see that it is working.
+
+64
+00:04:48,380 --> 00:04:53,810
+Now, let's move on to adding all the other components with the CLI for now.
+
+65
+00:04:54,160 --> 00:05:01,630
+So we had a couple of components we wanted to add and I will use the ng generate command or just ng g as
+
+66
+00:05:01,630 --> 00:05:04,570
+a shortcut and then we want to generate a component
+
+67
+00:05:04,690 --> 00:05:12,330
+or just c as a shortcut and the first component I want to add is the recipes component for this recipes
+
+68
+00:05:12,340 --> 00:05:13,640
+feature area.
+
+69
+00:05:14,080 --> 00:05:20,400
+I'll add spec false to prevent the creation of a testing file which I don't need.
+
+70
+00:05:20,980 --> 00:05:27,730
+So with that, we get a new folder in our app folder, the recipes folder which holds our recipes component,
+
+71
+00:05:28,420 --> 00:05:30,150
+that is great.
+
+72
+00:05:30,230 --> 00:05:37,090
+Now this will be our overall recipes feature component and that actually is a component
+
+73
+00:05:37,090 --> 00:05:38,390
+I didn't sketch out here,
+
+74
+00:05:38,410 --> 00:05:41,300
+here we only have recipe-list item in detail.
+
+75
+00:05:41,320 --> 00:05:43,370
+Now you could also just work with these
+
+76
+00:05:43,540 --> 00:05:47,960
+but I want to create a set up where I have a list on the left let's say
+
+77
+00:05:47,980 --> 00:05:52,090
+and if I click an item, the detail component is displayed on the right,
+
+78
+00:05:52,270 --> 00:05:55,480
+so I will need an overall component holding both.
+
+79
+00:05:55,510 --> 00:05:57,310
+Now that is an optional set up,
+
+80
+00:05:57,310 --> 00:06:03,190
+you can also go with another one where the detail is somehow embedded into the list component,
+
+81
+00:06:03,190 --> 00:06:07,370
+I chose to create this overall component.
+
+82
+00:06:07,420 --> 00:06:11,940
+Now besides that, I will go ahead and create the other components though,
+
+83
+00:06:11,990 --> 00:06:13,790
+so besides recipes,
+
+84
+00:06:13,990 --> 00:06:19,060
+I will also now create the recipe-list component as laid out on the slides.
+
+85
+00:06:19,120 --> 00:06:25,400
+Now here, I don't want to create the recipe-list on the or inside the app folder though, which is the default
+
+86
+00:06:25,420 --> 00:06:26,730
+behavior by the CLI if
+
+87
+00:06:26,740 --> 00:06:29,420
+I now would hit enter, instead
+
+88
+00:06:29,470 --> 00:06:34,870
+that should go inside the recipes folder because that is where all the recipe related components should
+
+89
+00:06:34,870 --> 00:06:35,950
+go.
+
+90
+00:06:35,950 --> 00:06:42,550
+We can easily tell the CLI to create this component in a subfolder by basically passing a path here,
+
+91
+00:06:42,610 --> 00:06:49,780
+so instead of just saying recipe-list, we can say recipes/recipe-list and since you already have
+
+92
+00:06:49,780 --> 00:06:56,050
+the recipes folder, this will create the recipes-list folder inside of the recipes folder,
+
+93
+00:06:56,080 --> 00:07:05,250
+that is what I meant with structuring the folders by feature. Now with the recipe-list added, I also
+
+94
+00:07:05,250 --> 00:07:12,720
+want to add the recipe detail here because the recipe detail should be displayed next to the list in
+
+95
+00:07:12,720 --> 00:07:17,200
+my set up here, so I will add it to the recipes folder too,
+
+96
+00:07:17,310 --> 00:07:20,580
+so that now we also have the recipe detail folder here
+
+97
+00:07:21,090 --> 00:07:25,390
+and we also need the component for a single recipe-item, right,
+
+98
+00:07:25,560 --> 00:07:27,560
+so recipe-item.
+
+99
+00:07:27,630 --> 00:07:35,520
+However I don't want to add that to the recipes folder, that should go inside the recipe-list folder
+
+100
+00:07:35,790 --> 00:07:41,150
+because it's in the recipe-list where I want to also have that item,
+
+101
+00:07:41,490 --> 00:07:45,920
+so I'll point to the recipe-list subfolder here and now hit enter.
+
+102
+00:07:46,290 --> 00:07:52,590
+And now we get the component inside the recipe-list because again the recipe-item is just one item in
+
+103
+00:07:52,590 --> 00:07:54,690
+this list of recipes.
+
+104
+00:07:54,690 --> 00:07:57,400
+Now again, it's only one possible folder structure,
+
+105
+00:07:57,540 --> 00:08:04,620
+you could remove the recipes component and put the recipe-list component as the main recipe feature
+
+106
+00:08:04,650 --> 00:08:07,480
+component and add details somewhere in this component
+
+107
+00:08:07,470 --> 00:08:10,810
+then, I chose to have this set up here though.
+
+108
+00:08:11,850 --> 00:08:13,990
+Now let's move on to the shopping-list.
+
+109
+00:08:14,310 --> 00:08:22,950
+Well for this, I'll of course run ng g c again to generate a new component and I name it shopping-list,
+
+110
+00:08:22,950 --> 00:08:30,120
+I'll also add spec false here to prevent the creation of this testing file and this will give
+
+111
+00:08:30,120 --> 00:08:33,500
+me a shopping-list folder in my main app folder,
+
+112
+00:08:33,510 --> 00:08:38,080
+so next to recipes and header. Inside the shopping-list,
+
+113
+00:08:38,080 --> 00:08:44,580
+there's only one other component I want to create and that's the shopping-list edit component which
+
+114
+00:08:44,580 --> 00:08:50,880
+will allow us to add new ingredients or edit existing ones, that should now go into the shopping-list
+
+115
+00:08:50,880 --> 00:08:51,800
+component,
+
+116
+00:08:51,810 --> 00:08:58,920
+so just like before with recipes, I'll simply change this to shopping-list/shopping-edit and this
+
+117
+00:08:58,920 --> 00:09:01,670
+will now add it inside of this component.
+
+118
+00:09:01,980 --> 00:09:08,030
+So now we get all the components we need for now or at least I think we need for now,
+
+119
+00:09:08,100 --> 00:09:13,560
+of course feel free to choose a different set up but with all these components added and since you use
+
+120
+00:09:13,560 --> 00:09:16,830
+the CLI, they were also added automatically to app module.
+
+121
+00:09:16,890 --> 00:09:20,430
+If you did create them manually, make sure to add them here too.
+
+122
+00:09:20,760 --> 00:09:25,190
+So with all that created and added to app module, we can now use them.
+
+123
+00:09:25,200 --> 00:09:30,660
+So let's start using them in the next lecture and let's also start filling them with some life there.
+

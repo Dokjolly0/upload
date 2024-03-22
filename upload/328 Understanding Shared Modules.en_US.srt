@@ -1,0 +1,388 @@
+1
+00:00:02,320 --> 00:00:05,120
+We had a look at feature modules,
+
+2
+00:00:05,170 --> 00:00:07,750
+now let's dive into shared modules.
+
+3
+00:00:07,750 --> 00:00:09,620
+Now what's a shared module?
+
+4
+00:00:09,910 --> 00:00:15,820
+In this hypothetical app here, we got two feature modules and of course, we would also have an app module
+
+5
+00:00:15,850 --> 00:00:18,490
+but it's not important for the shared module here.
+
+6
+00:00:18,490 --> 00:00:21,760
+So we got two feature modules - products and sales
+
+7
+00:00:21,790 --> 00:00:25,840
+and as you can see, these two modules only differ in one component.
+
+8
+00:00:25,840 --> 00:00:32,080
+The products module has the products component, here on the left and the sales module on the bottom right
+
+9
+00:00:32,080 --> 00:00:39,210
+has a sales component. All the other components and directives they use are essentially the same.
+
+10
+00:00:39,220 --> 00:00:46,930
+Now you can put such shared features, shared components, directives and other modules even into a shared
+
+11
+00:00:46,930 --> 00:00:50,770
+module which you then import into both other modules,
+
+12
+00:00:50,770 --> 00:00:56,760
+this again is a great step to avoid code duplication and have leaner modules.
+
+13
+00:00:56,770 --> 00:01:01,380
+Now let's see this in practice in our application. In our application,
+
+14
+00:01:01,390 --> 00:01:06,750
+we have no real shared features across our feature modules.
+
+15
+00:01:06,820 --> 00:01:12,610
+If we have a look at the shopping list module and the recipes module, the only thing they have in common
+
+16
+00:01:12,950 --> 00:01:15,960
+is in the end the common module which unlocks ngIf.
+
+17
+00:01:16,060 --> 00:01:21,550
+Now we could put this into a separate shared module and we will actually but this alone would not be
+
+18
+00:01:21,550 --> 00:01:27,550
+worth it because then we just import our shared module, which exports the common module instead of just
+
+19
+00:01:27,550 --> 00:01:33,160
+importing the common module, so we wouldn't win much by that. But in theory in this application, we have
+
+20
+00:01:33,160 --> 00:01:34,580
+more shared content,
+
+21
+00:01:34,660 --> 00:01:40,180
+we have the alert, the loading spinner and the placeholder and the dropdown directive. The data storage service
+
+22
+00:01:40,180 --> 00:01:44,110
+not because services are special as you will learn soon.
+
+23
+00:01:44,110 --> 00:01:48,480
+So therefore here in the shared folder, I'll create a shared.module.ts
+
+24
+00:01:48,530 --> 00:01:53,770
+file and you can have multiple shared modules and therefore, they don't have to be named
+
+25
+00:01:53,860 --> 00:01:55,450
+shared.module.
+
+26
+00:01:55,600 --> 00:01:57,040
+If you only have one, it makes sense,
+
+27
+00:01:57,040 --> 00:02:03,080
+otherwise you should give them a name that kind of summarizes which features you're grouping in there.
+
+28
+00:02:03,100 --> 00:02:09,010
+Now here I'll name it just shared module and export a class, shared module therefore and just as before,
+
+29
+00:02:09,010 --> 00:02:15,310
+this is a regular Angular module and it therefore will receive the @NgModule decorator like
+
+30
+00:02:15,310 --> 00:02:16,490
+this.
+
+31
+00:02:16,510 --> 00:02:22,510
+Now the idea here is that you still now declare and import anything into this module
+
+32
+00:02:22,570 --> 00:02:29,590
+that might be used by other modules but since every module works standalone, to then also make these
+
+33
+00:02:29,590 --> 00:02:31,360
+things then available in other modules,
+
+34
+00:02:31,360 --> 00:02:37,090
+you will also export all these things which you're importing. So therefore here,
+
+35
+00:02:37,240 --> 00:02:46,450
+for example here we add a declaration to declare our alert component, to declare our loading spinner component
+
+36
+00:02:46,540 --> 00:02:53,320
+and make sure you also add the import paths at the top, to declare our placeholder directive and our
+
+37
+00:02:53,320 --> 00:02:54,450
+dropdown directive
+
+38
+00:02:54,460 --> 00:03:00,760
+let's say and again, make sure to add all these imports and this would be it
+
+39
+00:03:00,800 --> 00:03:08,150
+and let's now also say we also want to share some services, like the common module, not services,
+
+40
+00:03:08,150 --> 00:03:13,370
+excuse me I mean modules, like the common module which we import from @angular/common, so I add this
+
+41
+00:03:13,370 --> 00:03:19,940
+import here too and then, since we don't want to use these features in the shared module but import the
+
+42
+00:03:19,940 --> 00:03:29,300
+shared module into other modules, we can export this here and we export the alert component, the loading
+
+43
+00:03:29,360 --> 00:03:37,760
+spinner component, the placeholder directive, the dropdown directive and also the common module and now the
+
+44
+00:03:37,760 --> 00:03:44,750
+idea is that wherever we import the shared module, we have access to all these features which we initialize
+
+45
+00:03:44,750 --> 00:03:45,320
+here.
+
+46
+00:03:45,350 --> 00:03:50,870
+So in other modules, where we want to use one or all of these features, we don't have to add them to their
+
+47
+00:03:50,870 --> 00:03:56,390
+modules, we just import the shared module and we got access because we're exporting all these stuff.
+
+48
+00:03:56,390 --> 00:04:02,040
+If we wouldn't export it, we would not have access. So let's now use the shared module,
+
+49
+00:04:02,650 --> 00:04:06,760
+let's go to our shopping list module
+
+50
+00:04:06,760 --> 00:04:12,790
+and there, we can at least now replace the common module, although that alone would not be worth it
+
+51
+00:04:12,820 --> 00:04:17,700
+but to demonstrate it and we replace that with the shared module.
+
+52
+00:04:17,740 --> 00:04:19,930
+Now as I mentioned and that that's really important,
+
+53
+00:04:19,930 --> 00:04:25,540
+it's not worth it here because the only thing we really need from the shared module in the shopping
+
+54
+00:04:25,540 --> 00:04:31,270
+list module is the common module and therefore we replaced one module import with another
+
+55
+00:04:31,360 --> 00:04:36,190
+but if you would use the alert component here or the placeholder directive or the dropdown directive,
+
+56
+00:04:36,490 --> 00:04:41,620
+then we would gain much more from that because now, we don't have to add all of that to declarations
+
+57
+00:04:41,620 --> 00:04:47,020
+here, we just bring in the shared module and we got access to all the things declared in the shared module
+
+58
+00:04:47,230 --> 00:04:49,150
+and exported there.
+
+59
+00:04:49,180 --> 00:04:53,610
+So in the recipes module, we can do the same,
+
+60
+00:04:53,710 --> 00:05:01,850
+we've got the common module. Now we can remove that here and instead, simply bring in that shared module.
+
+61
+00:05:02,020 --> 00:05:08,050
+Again here, not super useful but to practice this, of course we can now remove the common module import
+
+62
+00:05:08,050 --> 00:05:10,860
+here and just import the shared module.
+
+63
+00:05:10,870 --> 00:05:16,060
+Now with that if we try to save that, we'll face an issue though. As the app reloads, we get an error
+
+64
+00:05:16,480 --> 00:05:22,630
+that the dropdown directive is part of the declaration of two modules and that is now another super
+
+65
+00:05:22,630 --> 00:05:30,910
+important concept you gotta understand about modules. You can only define or declare components, directives
+
+66
+00:05:30,910 --> 00:05:38,470
+and pipes once, you can't do that multiple times. You can import a module into multiple imports. So it
+
+67
+00:05:38,470 --> 00:05:43,960
+is fine if we import the router module here in the recipes module and also in the shopping list module,
+
+68
+00:05:44,200 --> 00:05:52,210
+imports are OK but declarations are not. If you declare the shopping list components here in the shopping
+
+69
+00:05:52,210 --> 00:05:59,410
+list module, you must not declare it anywhere else, even if you need it in another module, you must not
+
+70
+00:05:59,410 --> 00:06:00,450
+declare it there.
+
+71
+00:06:00,490 --> 00:06:06,240
+The solution then instead is to export it here and import that module into another module and
+
+72
+00:06:06,280 --> 00:06:08,590
+that's exactly what we're doing with the shared module.
+
+73
+00:06:08,620 --> 00:06:11,980
+Here, we are declaring and exporting stuff,
+
+74
+00:06:11,980 --> 00:06:17,830
+so anywhere where we use one of these features, we now have to bring in the shared module because double
+
+75
+00:06:17,830 --> 00:06:23,800
+declarations as we currently have them here in the app module where I again declared a dropdown directive
+
+76
+00:06:23,800 --> 00:06:25,840
+and so on are not allowed.
+
+77
+00:06:25,840 --> 00:06:31,630
+So instead here, we now have to remove the dropdown directive, the loading spinner component and the 
+
+78
+00:06:31,630 --> 00:06:37,060
+placeholder directive in the alert component, we have to remove all of that here and therefore, we also should
+
+79
+00:06:37,060 --> 00:06:48,190
+remove these import statements here at the top, like this, all of that has to go, also remove the alert
+
+80
+00:06:48,220 --> 00:06:49,140
+component here
+
+81
+00:06:50,390 --> 00:06:59,220
+and now cut entry components and add this to the shared module.
+
+82
+00:06:59,240 --> 00:07:05,840
+Now the app module is cleaned up and now we just have to make sure that we import the shared module
+
+83
+00:07:05,840 --> 00:07:08,290
+here because we still need access to certain features,
+
+84
+00:07:08,360 --> 00:07:13,700
+we need access to the dropdown directive because we are using it in the header component which is part
+
+85
+00:07:13,850 --> 00:07:15,710
+of the app module.
+
+86
+00:07:15,710 --> 00:07:21,290
+So now we need to import the shared module here into the app module because that now declares features
+
+87
+00:07:21,290 --> 00:07:25,160
+like the dropdown directive and with that if we save that,
+
+88
+00:07:25,250 --> 00:07:27,950
+now this is looking better. Now if we reload and so on,
+
+89
+00:07:27,950 --> 00:07:29,300
+this seems to work.
+
+90
+00:07:29,540 --> 00:07:36,050
+Now if I test my alert component again, this also works again because this is also declared in the shared
+
+91
+00:07:36,050 --> 00:07:37,020
+module,
+
+92
+00:07:37,020 --> 00:07:40,700
+there we also have our entry component which is still required
+
+93
+00:07:40,700 --> 00:07:45,890
+and since I export the alert component in the shared module and I'm importing the shared module into
+
+94
+00:07:45,890 --> 00:07:51,770
+the app module, the app module which at the moment is the place where we define our auth component which
+
+95
+00:07:51,770 --> 00:07:57,830
+in turn is the component that uses the alert component, that all works but only because we respect the
+
+96
+00:07:57,830 --> 00:08:05,120
+rule of only declaring things once and then using export and imports to share them. Multiple declarations
+
+97
+00:08:05,120 --> 00:08:07,850
+of the same thing are not allowed.
+

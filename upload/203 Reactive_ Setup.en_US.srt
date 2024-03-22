@@ -1,0 +1,136 @@
+1
+00:00:02,600 --> 00:00:09,050
+Just like before, I already created a little template, a little HTML code for the form with which
+
+2
+00:00:09,050 --> 00:00:10,240
+we're going to work,
+
+3
+00:00:10,430 --> 00:00:11,800
+it looks like this
+
+4
+00:00:12,260 --> 00:00:14,910
+and you can find it attached to this video.
+
+5
+00:00:15,260 --> 00:00:20,790
+Now as I said, in the reactive approach, the form is created programmatically,
+
+6
+00:00:20,870 --> 00:00:22,450
+so in TypeScript code,
+
+7
+00:00:22,490 --> 00:00:24,560
+so this is where we should start working on it,
+
+8
+00:00:24,560 --> 00:00:31,610
+in this app component here, in this TypeScript file. Here I want to create a new property which will hold
+
+9
+00:00:31,610 --> 00:00:38,150
+my form in the end and no worries, programmatically doesn't mean from scratch, Angular offers us a lot
+
+10
+00:00:38,150 --> 00:00:40,480
+of tools to quickly create such a form.
+
+11
+00:00:40,670 --> 00:00:44,660
+So I want to store it in a property which you may give any name you like, I'll name it
+
+12
+00:00:44,660 --> 00:00:53,840
+signupForm and important, this will be of type FormGroup. Now I could auto-import but since it's important
+
+13
+00:00:53,860 --> 00:01:01,560
+to understand, I'm going to import it manually this time, FormGroup needs to be imported from 
+
+14
+00:01:01,650 --> 00:01:03,100
+@angular/forms.
+
+15
+00:01:03,170 --> 00:01:08,790
+This is the forms package as the name says and it contains a lot of classes
+
+16
+00:01:08,790 --> 00:01:11,190
+we will work with. In a template driven approach,
+
+17
+00:01:11,190 --> 00:01:14,190
+we already imported ngForm from it,
+
+18
+00:01:14,190 --> 00:01:18,180
+now ngForm was this automatically created wrapper
+
+19
+00:01:18,180 --> 00:01:25,050
+you could say but it was wrapping a FormGroup in the end because in Angular, a form in the end is just
+
+20
+00:01:25,050 --> 00:01:26,730
+a group of controls
+
+21
+00:01:26,850 --> 00:01:28,840
+and this is what a form group holds.
+
+22
+00:01:28,890 --> 00:01:33,350
+Therefore, the overall form also is just a form group.
+
+23
+00:01:33,350 --> 00:01:36,870
+Now this is all, we don't need to set an initial value for now,
+
+24
+00:01:36,900 --> 00:01:41,790
+this gives us a property with which we can work which will hold our form in the end.
+
+25
+00:01:41,820 --> 00:01:48,540
+Now important, for the reactive approach to work, especially later when we connect our programmatically
+
+26
+00:01:48,540 --> 00:01:51,290
+created form to our HTML code,
+
+27
+00:01:51,570 --> 00:01:54,510
+you need to import something in app module.
+
+28
+00:01:54,690 --> 00:01:57,200
+You don't need the forms module,
+
+29
+00:01:57,210 --> 00:02:00,430
+this is required for the template driven approach,
+
+30
+00:02:00,780 --> 00:02:04,900
+instead you need the reactive forms module,
+
+31
+00:02:04,920 --> 00:02:10,920
+make sure to also import it up here from @angular/forms. So reactive forms module,
+
+32
+00:02:10,920 --> 00:02:17,370
+this is the module containing all the tools we need now to build our form on our own and then connect it
+
+33
+00:02:17,490 --> 00:02:19,130
+to our HTML code.
+
+34
+00:02:19,350 --> 00:02:24,050
+So back in the template, in the next video, we're going to create the actual form.
+

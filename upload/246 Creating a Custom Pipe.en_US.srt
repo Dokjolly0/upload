@@ -1,0 +1,344 @@
+1
+00:00:02,750 --> 00:00:08,750
+Thus far, we already learned a lot about the built-in pipes or on pipes in general. You learned how to use them,
+
+2
+00:00:08,810 --> 00:00:14,960
+where to find out more about them, how to pass parameters or possibly multiple parameters and also how
+
+3
+00:00:14,960 --> 00:00:16,460
+to chain pipes.
+
+4
+00:00:16,490 --> 00:00:22,340
+This is great but sometimes, you need some functionality which just isn't built-in,
+
+5
+00:00:22,430 --> 00:00:24,950
+in this case you need to create your own pipe
+
+6
+00:00:24,980 --> 00:00:28,040
+and thankfully, this is super simple.
+
+7
+00:00:28,370 --> 00:00:34,700
+Now creating our own pipe is as simple as creating a new file in your app folder and then giving it
+
+8
+00:00:34,790 --> 00:00:36,370
+a descriptive name,
+
+9
+00:00:36,410 --> 00:00:44,360
+for example here I want to create a pipe which shortens my words, the input because let's say I want
+
+10
+00:00:44,360 --> 00:00:47,240
+to shorten this name of my server,
+
+11
+00:00:47,240 --> 00:00:51,960
+so the testing environment server somehow gets cut off.
+
+12
+00:00:52,100 --> 00:00:58,820
+Now for this, I will create a ShortenPipe, so I will name the file shorten.pipe.ts, to keep
+
+13
+00:00:58,820 --> 00:01:03,910
+this naming convention of being descriptive about what's in a file.
+
+14
+00:01:03,930 --> 00:01:10,480
+Now this newly created TypeScript file should simply hold a class which I export of course which
+
+15
+00:01:10,480 --> 00:01:19,380
+I'll name ShortenPipe. Now this ShortenPipe, this class needs to have one special method to be usable
+
+16
+00:01:19,380 --> 00:01:22,790
+as a pipe and whilst not strictly necessary,
+
+17
+00:01:22,830 --> 00:01:29,270
+it's a good practice to implement a certain interface which requires you to implement the method,
+
+18
+00:01:29,550 --> 00:01:38,780
+the interface is called PipeTransform and you need to import it from @angular/core.
+
+19
+00:01:38,970 --> 00:01:45,480
+So make sure to add this import at the top, PipeTransform from @angular/core
+
+20
+00:01:45,900 --> 00:01:49,630
+and with that implemented, you see that I now get an error in my IDE,
+
+21
+00:01:49,800 --> 00:01:53,200
+you would also get an error if you now try to compile this
+
+22
+00:01:53,490 --> 00:02:00,560
+because what we need to do here is we need to apply or we need to provide the transform method.
+
+23
+00:02:00,690 --> 00:02:05,140
+Now adding the transform method like this still is not 100% correct,
+
+24
+00:02:05,340 --> 00:02:10,670
+transform needs to receive the value which should get transformed.
+
+25
+00:02:10,830 --> 00:02:15,570
+So we need to get the value here which is of type any
+
+26
+00:02:16,170 --> 00:02:19,320
+and then we would receive a list of arguments.
+
+27
+00:02:19,320 --> 00:02:25,710
+Now for now our pipe here doesn't take any arguments, so I will omit any other arguments here in the
+
+28
+00:02:25,710 --> 00:02:26,940
+transform method,
+
+29
+00:02:27,180 --> 00:02:29,450
+so we only received the value.
+
+30
+00:02:29,610 --> 00:02:36,290
+Now to shorten this value, a quick and easy way to do this would be to return
+
+31
+00:02:36,300 --> 00:02:37,220
+and this is important,
+
+32
+00:02:37,230 --> 00:02:42,100
+transform always needs to return something because a pipe is just you put something in,
+
+33
+00:02:42,120 --> 00:02:43,340
+you get something out,
+
+34
+00:02:43,380 --> 00:02:46,480
+so you need to get something out otherwise it won't work.
+
+35
+00:02:46,800 --> 00:02:51,540
+So here, we want to return a new string and this new string should be the old
+
+36
+00:02:51,570 --> 00:02:58,530
+value but somehow shortened and we could simply use the substring method, substr,
+
+37
+00:02:58,560 --> 00:03:06,120
+this is a built-in method Javascript offers, where you can define how long this string, the substring we
+
+38
+00:03:06,120 --> 00:03:07,500
+want to extract should be.
+
+39
+00:03:07,590 --> 00:03:15,000
+So you want to start at index 0, at the start of the value and then let's say we want to have it 10 characters
+
+40
+00:03:15,090 --> 00:03:16,160
+long,
+
+41
+00:03:16,170 --> 00:03:19,380
+this would only give us back the first 10 characters.
+
+42
+00:03:19,380 --> 00:03:25,530
+Again we can see this if we save it like this, returning the substring of values so that we only get
+
+43
+00:03:25,530 --> 00:03:27,470
+the first 10 characters.
+
+44
+00:03:27,470 --> 00:03:29,070
+Now to use this pipe,
+
+45
+00:03:29,070 --> 00:03:35,070
+we need to go to app module and add it to declarations here, the ShortenPipe.
+
+46
+00:03:35,160 --> 00:03:41,700
+So just like components and directives, you also need to add pipes to declarations.
+
+47
+00:03:41,700 --> 00:03:49,950
+Make sure to also add the import pointing to the shorten.pipe.ts TS file, of course as always without
+
+48
+00:03:49,950 --> 00:03:52,220
+the .ts at the end here.
+
+49
+00:03:52,230 --> 00:04:01,020
+Now with this added, we make this pipe available and then we can go to our app component and use it
+
+50
+00:04:01,020 --> 00:04:03,470
+let's say but how would we use it?
+
+51
+00:04:03,900 --> 00:04:06,780
+Well we have to go back to the ShortenPipe first,
+
+52
+00:04:06,780 --> 00:04:13,650
+this class is implementing the interface we need to implement but it lacks one important thing, we need
+
+53
+00:04:13,650 --> 00:04:21,870
+to add a special decorator, the @Pipe decorator which is also imported from @angular/core. In the @Pipe
+
+54
+00:04:21,870 --> 00:04:23,400
+decorator,
+
+55
+00:04:23,400 --> 00:04:31,710
+you can specify the name for the pipe by simply adding name and then for example, shorten. Now by setting
+
+56
+00:04:31,710 --> 00:04:33,050
+it up like this,
+
+57
+00:04:33,060 --> 00:04:41,220
+you can now go to your template and on the server instance type, which is, excuse me on the server name,
+
+58
+00:04:41,250 --> 00:04:46,660
+here, we simply add a pipe symbol and now shorten our own pipe.
+
+59
+00:04:46,680 --> 00:04:51,240
+Now if we do this and save, you see it gets cut off
+
+60
+00:04:51,240 --> 00:04:52,940
+and if we count the characters,
+
+61
+00:04:53,010 --> 00:04:57,580
+this looks like 10 characters. So now our ShortenPipe is in use,
+
+62
+00:04:57,600 --> 00:05:03,780
+it's not super pretty though. So we can improve our pipe and this is now something which is not really
+
+63
+00:05:03,780 --> 00:05:05,210
+related to pipes,
+
+64
+00:05:05,290 --> 00:05:12,780
+I'm simply adding a new string to my shortened string and this will simply be three dots and maybe a
+
+65
+00:05:12,780 --> 00:05:14,490
+blank space in front of it.
+
+66
+00:05:14,730 --> 00:05:19,680
+So now the shortening should look a bit prettier because now we cut it off,
+
+67
+00:05:19,710 --> 00:05:22,560
+though we always see the three strings,
+
+68
+00:05:22,560 --> 00:05:26,360
+so another improvement might be to first check if the character,
+
+69
+00:05:26,370 --> 00:05:29,970
+excuse me, if the string is really longer than 10 characters.
+
+70
+00:05:29,970 --> 00:05:37,230
+So here I first check if value length is greater than 10 characters because only if it is greater,
+
+71
+00:05:37,230 --> 00:05:38,170
+only in this case
+
+72
+00:05:38,190 --> 00:05:39,660
+I want to shorten it,
+
+73
+00:05:39,870 --> 00:05:43,470
+otherwise I will return the unchanged value.
+
+74
+00:05:43,830 --> 00:05:51,400
+So now in this case, you see if this reloads, it shortens all these names
+
+75
+00:05:51,510 --> 00:05:57,870
+but if we were to remove the server here and the blank space on the first server, so that it's just
+
+76
+00:05:57,870 --> 00:06:01,630
+for production, therefore it just has 10 characters,
+
+77
+00:06:01,770 --> 00:06:07,320
+you see now we don't have the three dots here because we improved our pipe but this is all pure Javascript
+
+78
+00:06:07,320 --> 00:06:09,450
+tuning, not really related to pipes,
+
+79
+00:06:09,450 --> 00:06:11,680
+the important part about pipes is that you
+
+80
+00:06:11,690 --> 00:06:12,340
+a)
+
+81
+00:06:12,540 --> 00:06:14,790
+add this pipe decorator,
+
+82
+00:06:15,240 --> 00:06:21,030
+b) make sure you have the transform method possibly enforced by adding the PipeTransform interface which
+
+83
+00:06:21,300 --> 00:06:28,860
+is a good idea, which is a good practice and c) by adding your pipe to the declarations array in your
+
+84
+00:06:28,860 --> 00:06:29,670
+app module.
+
+85
+00:06:29,670 --> 00:06:37,800
+And with that, you're good to use your own pipe and to create your own pipes and adjust them to your needs.
+
+86
+00:06:37,800 --> 00:06:40,240
+Now let's improve this pipe in the next lecture.
+

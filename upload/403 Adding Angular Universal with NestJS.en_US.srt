@@ -1,0 +1,340 @@
+1
+00:00:02,590 --> 00:00:09,670
+Now, I'll go back one step and restart it so we have the added universal rendering, yet let's say
+
+2
+00:00:10,060 --> 00:00:12,850
+we still have that app that only renders in the browser.
+
+3
+00:00:13,360 --> 00:00:18,220
+There is another way of adding universal rendering using nest eggs.
+
+4
+00:00:19,120 --> 00:00:26,290
+Nest Eggs is a service site framework for a notorious it's not an angular library, not an angle framework.
+
+5
+00:00:26,290 --> 00:00:27,910
+It's a server side framework.
+
+6
+00:00:28,180 --> 00:00:32,980
+And I have a video on YouTube, but you can check out where I thoroughly explain what Nest is.
+
+7
+00:00:33,010 --> 00:00:35,160
+I attached a link to that here on this lecture.
+
+8
+00:00:35,560 --> 00:00:40,900
+So Nachas is a service side framework, but it borrowed a lot of ideas from ANGULAR.
+
+9
+00:00:40,930 --> 00:00:47,110
+It is basically like angular for the server side in quotes, because it fills a totally different role
+
+10
+00:00:47,110 --> 00:00:48,460
+being a server side framework.
+
+11
+00:00:49,030 --> 00:00:54,880
+So Nest's is pretty exciting and all the uses TypeScript and as I said, borrows some ideas from Angular
+
+12
+00:00:55,120 --> 00:00:58,000
+and the team behind Nestor's really likes Angular.
+
+13
+00:00:58,480 --> 00:01:02,860
+Therefore, they also added a command which you can use with Engy add.
+
+14
+00:01:03,250 --> 00:01:09,520
+We can use energy at at Nestlings, Engie Dasch Universal.
+
+15
+00:01:09,940 --> 00:01:12,220
+You can run this in any angular application.
+
+16
+00:01:12,340 --> 00:01:18,630
+And this will now also set up universal rendering, but with a nest gess application attached to it.
+
+17
+00:01:19,090 --> 00:01:24,780
+Now, the difference to the approach before is that before we had a simple server that simply pre renderers
+
+18
+00:01:24,790 --> 00:01:26,020
+our angular pages.
+
+19
+00:01:26,260 --> 00:01:30,460
+When we visit the page now here, that will work differently.
+
+20
+00:01:30,470 --> 00:01:33,280
+Let me quickly enter the name of the application before we continue.
+
+21
+00:01:33,670 --> 00:01:36,010
+We get it here in the angular Jason file.
+
+22
+00:01:36,010 --> 00:01:37,090
+It's this name here.
+
+23
+00:01:37,210 --> 00:01:38,680
+So let's use that.
+
+24
+00:01:39,820 --> 00:01:41,860
+And now back to what next that's different.
+
+25
+00:01:41,870 --> 00:01:47,980
+Ewer, what's special about in this case, what Nestea does now is it also sets up universal rendering,
+
+26
+00:01:47,980 --> 00:01:52,960
+but in addition, it gives you a full nest gess application to go with.
+
+27
+00:01:53,230 --> 00:01:57,340
+And SJS is a service that framework which you could use to build an API.
+
+28
+00:01:57,730 --> 00:02:02,410
+So with Dad, you would have a simpler approach of getting a full stack angular app where you don't
+
+29
+00:02:02,410 --> 00:02:07,600
+just have the browser front end, but where you actually also have everything you need to build a server
+
+30
+00:02:07,600 --> 00:02:10,480
+side API to which your angular app then could talk.
+
+31
+00:02:10,690 --> 00:02:12,190
+You don't need to use Nestor's.
+
+32
+00:02:12,190 --> 00:02:18,610
+Of course you could build an API with node expressed with PHP, with Java, with Python, or you use
+
+33
+00:02:18,610 --> 00:02:22,930
+a service like Firebase or you maybe have an application that doesn't need an API at all.
+
+34
+00:02:23,500 --> 00:02:28,510
+But if you want to build a full Steg app where you also write your own server side code and build your
+
+35
+00:02:28,510 --> 00:02:33,420
+own API to which your ANGULAR app can talk, then this is an easy way of getting started.
+
+36
+00:02:34,060 --> 00:02:40,900
+So now that this is done, what we have actually is our app here, but we now also have a server folder
+
+37
+00:02:40,900 --> 00:02:45,730
+and in there we have a very simple set up for Nest's application.
+
+38
+00:02:46,120 --> 00:02:50,440
+Again, in that YouTube video I mentioned, I will formally introduce you to next year.
+
+39
+00:02:50,440 --> 00:02:56,080
+So if you want to dive into writing your own API with that dead video should be helpful here.
+
+40
+00:02:56,080 --> 00:03:01,140
+Does is already set up to simply render our app pre render our app on the fly.
+
+41
+00:03:01,150 --> 00:03:05,470
+So right now it's only doing what we did with the approach before as well.
+
+42
+00:03:05,830 --> 00:03:12,220
+But now with the possibility of easily turning this into a complete full stack application by adding
+
+43
+00:03:12,220 --> 00:03:13,200
+server side code here.
+
+44
+00:03:13,660 --> 00:03:19,540
+Now, one important note, though, just as before, you should make sure that in your normal angular
+
+45
+00:03:19,540 --> 00:03:25,000
+code, in the source folder, in your app server module, which still was added, you have that module
+
+46
+00:03:25,000 --> 00:03:27,340
+map loader module added to imports.
+
+47
+00:03:27,760 --> 00:03:29,020
+So make sure you have that here.
+
+48
+00:03:29,020 --> 00:03:32,080
+If it wasn't added automatically, I show you how to add this.
+
+49
+00:03:32,080 --> 00:03:39,520
+In the last lecture, you basically installed this package at NBC Universal Module Dash Map Dash and
+
+50
+00:03:39,520 --> 00:03:40,810
+you factory dash loader.
+
+51
+00:03:41,110 --> 00:03:46,000
+Whence does this installed as a dependency you import does module, then add it to imports.
+
+52
+00:03:46,210 --> 00:03:50,680
+And then there's one other thing which we also did in the last lecture, which you need to do for this
+
+53
+00:03:50,680 --> 00:03:51,430
+approach as well.
+
+54
+00:03:51,820 --> 00:03:56,920
+You need to make sure that in your app component, this code you are the login code doesn't run on the
+
+55
+00:03:56,920 --> 00:03:58,600
+server and you can avoid that.
+
+56
+00:03:58,600 --> 00:04:03,730
+This happens by checking whether you're executing this code on the server side or on the client side.
+
+57
+00:04:03,730 --> 00:04:05,830
+And I explained all about this in the last lecture.
+
+58
+00:04:06,130 --> 00:04:12,730
+So here, I'll just quickly add to fix by importing something from at Angular Common.
+
+59
+00:04:13,660 --> 00:04:17,020
+And that something is this is platform.
+
+60
+00:04:18,240 --> 00:04:19,050
+Browsr.
+
+61
+00:04:20,510 --> 00:04:21,140
+Function.
+
+62
+00:04:23,850 --> 00:04:29,620
+And I also explained that you need to inject something with the inject decorator, you need to inject
+
+63
+00:04:29,620 --> 00:04:35,940
+the platform IDEAglobal, which ANGULAR exposes you do so in the app component by going to the constructor
+
+64
+00:04:35,940 --> 00:04:39,090
+there and then you simply add at inject.
+
+65
+00:04:39,990 --> 00:04:47,540
+Platform, I'd stored it in our private property, for example, platform ID seems to be a fitting name
+
+66
+00:04:47,880 --> 00:04:55,770
+and then here an NGO and in it you check if is platform browser, you pass this platform ideas of value
+
+67
+00:04:55,770 --> 00:04:58,650
+and only if that is true, so only if the code runs in the browser.
+
+68
+00:04:58,680 --> 00:04:59,700
+This should get executed.
+
+69
+00:05:00,330 --> 00:05:08,470
+And now you run this just as you run a normal anon nest eggs universe lap by running NPM run build colonies
+
+70
+00:05:08,500 --> 00:05:12,600
+SSR and then followed by NPM run SIRF Colen Ezat.
+
+71
+00:05:12,750 --> 00:05:18,900
+And you need to deploy this application if you want to deploy it on a no charge server, just as you
+
+72
+00:05:18,900 --> 00:05:22,280
+do it for a nonserious universe app.
+
+73
+00:05:22,300 --> 00:05:24,120
+So that does not change.
+
+74
+00:05:24,990 --> 00:05:26,790
+So let's wait for this to finish.
+
+75
+00:05:27,510 --> 00:05:33,300
+And now with this finished, we can again run, npm run, serve coal and SS are in.
+
+76
+00:05:33,300 --> 00:05:38,430
+This will now well served as EBP still in a similar way as before.
+
+77
+00:05:38,670 --> 00:05:43,890
+But now using this Jass and taking our SJS server into account, if you would want to deploy this,
+
+78
+00:05:43,890 --> 00:05:47,670
+however, you would still deploy the dist folder and the package.
+
+79
+00:05:47,790 --> 00:05:55,440
+JSON file deployed us onto a server and then they're installed the dependencies and run the services
+
+80
+00:05:55,440 --> 00:05:59,360
+I recommend here, which also just use this node to well run the server file.
+
+81
+00:05:59,850 --> 00:06:01,260
+So now this is up and running.
+
+82
+00:06:01,620 --> 00:06:06,870
+It's running on the same port as before and therefore we can simply reload this page here and you can
+
+83
+00:06:06,870 --> 00:06:10,320
+ignore this error, which is just related to life, reloading, loading.
+
+84
+00:06:10,350 --> 00:06:15,570
+What does matter is that this application works here and that we are able to use it and to work with
+
+85
+00:06:15,570 --> 00:06:15,750
+it.
+

@@ -1,0 +1,332 @@
+1
+00:00:02,490 --> 00:00:05,960
+We covered a lot about the reactive approach,
+
+2
+00:00:06,140 --> 00:00:13,380
+there is one other nice feature I want to show you though. Let's add a new area to our form, maybe below
+
+3
+00:00:13,380 --> 00:00:14,840
+the radio buttons here,
+
+4
+00:00:15,270 --> 00:00:24,550
+here I want to add a new div and in this div, I want to allow the user to dynamically add form controls.
+
+5
+00:00:24,600 --> 00:00:34,240
+Let's say I want to allow the user to add his hobbies, so your hobbies, something like that, then I'll add a
+
+6
+00:00:34,240 --> 00:00:40,090
+button with some Bootstrap classes button and then maybe btn-default.
+
+7
+00:00:40,100 --> 00:00:46,230
+Make it of type button, that's important so that this button doesn't accidentally submit the whole form
+
+8
+00:00:46,360 --> 00:00:48,880
+and here I'll say add hobby.
+
+9
+00:00:49,000 --> 00:00:55,780
+Now when the user clicks the button, I want to dynamically add a control to my form here and that's actually
+
+10
+00:00:55,780 --> 00:00:57,310
+super simple to do,
+
+11
+00:00:57,430 --> 00:01:03,300
+specifically I want to add this control to an array of controls because I might have multiple hobbies.
+
+12
+00:01:03,790 --> 00:01:10,480
+So I'll add a click listener here, onAddHobby seems like an appropriate name for this
+
+13
+00:01:10,720 --> 00:01:12,100
+method here
+
+14
+00:01:12,760 --> 00:01:18,500
+and in there again, I want to add controls. So I'll add the method
+
+15
+00:01:18,520 --> 00:01:19,770
+in my TypeScript code,
+
+16
+00:01:20,770 --> 00:01:23,240
+onAddHobby like this
+
+17
+00:01:23,470 --> 00:01:29,430
+and now I need to add a new control, type of control to my overall form.
+
+18
+00:01:30,420 --> 00:01:33,590
+I'll name it hobbies because that is what I'll store in there in the end
+
+19
+00:01:33,750 --> 00:01:40,150
+and as I said, this should be an array because it could be no hobbies or 10 or 100.
+
+20
+00:01:40,830 --> 00:01:45,260
+So the type here is not FormControl and it is not FormGroup,
+
+21
+00:01:45,540 --> 00:01:48,610
+instead it's a FormArray,
+
+22
+00:01:48,660 --> 00:01:53,070
+make sure to import this from @angular/forms as well.
+
+23
+00:01:53,100 --> 00:02:02,250
+Now a FormArray of course holds an array of controls, so you pass an array here to initialize it. In this array,
+
+24
+00:02:02,370 --> 00:02:08,360
+you could already initialize some form controls with new FormControl or like I am doing it here,
+
+25
+00:02:08,400 --> 00:02:13,190
+you leave it empty to not have any hobbies at the beginning.
+
+26
+00:02:13,290 --> 00:02:19,970
+Now when we click onAddHobby, I want to add a new hobby to that array.
+
+27
+00:02:20,040 --> 00:02:23,700
+So here, I need to access my form,
+
+28
+00:02:23,880 --> 00:02:34,240
+now I want to get access to my hobbies array and I can do this by getting hobbies,
+
+29
+00:02:34,420 --> 00:02:37,250
+it is a control in my overall form in the end
+
+30
+00:02:38,110 --> 00:02:43,270
+and now I need to tell TypeScript that this is of type FormArray to not get an error,
+
+31
+00:02:43,630 --> 00:02:50,410
+you rarely have to do this but here we have to explicitly cast this. So by placing a lower than sign,
+
+32
+00:02:50,710 --> 00:02:59,010
+then FormArray, so the type and then a greater than sign and then placing this in parentheses, we're
+
+33
+00:02:59,110 --> 00:03:00,670
+telling TypeScript
+
+34
+00:03:00,670 --> 00:03:07,180
+this part here actually is a FormArray, so everything enclosed in these outer parentheses now is treated
+
+35
+00:03:07,180 --> 00:03:08,340
+as FormArray,
+
+36
+00:03:08,350 --> 00:03:16,780
+so now I can push a new control on this array, if we would have not casted this, we would get an error. So
+
+37
+00:03:16,810 --> 00:03:23,310
+now we can push a new FormControl there but I will outsource this to keep this line short,
+
+38
+00:03:23,410 --> 00:03:31,460
+so here the control is created and stored in a constant, formControl and the hobby,
+
+39
+00:03:31,810 --> 00:03:40,340
+well that should be something the user can now enter, so we'll actually create it with no default value.
+
+40
+00:03:40,360 --> 00:03:45,760
+Of course you could also change this behaviour to pass an argument to onAddHobby and then pre-populate it
+
+41
+00:03:45,760 --> 00:03:47,130
+with this value.
+
+42
+00:03:47,590 --> 00:03:52,430
+I want to add a validator though, so this still works because I'm creating a normal FormControl here,
+
+43
+00:03:52,810 --> 00:03:59,000
+so the required validator seems appropriate because the hobby input should not be empty
+
+44
+00:03:59,170 --> 00:04:04,240
+and now I can push this control on my array of controls.
+
+45
+00:04:04,690 --> 00:04:09,160
+With this, we are creating this, we are able to add controls but we won't see it,
+
+46
+00:04:09,160 --> 00:04:12,600
+we need to synchronize it with our HTML code.
+
+47
+00:04:12,660 --> 00:04:21,310
+Therefore on this outer div here, I'll add a directive, formArrayName.
+
+48
+00:04:21,310 --> 00:04:28,540
+So again you see the pattern, we had formControlName to tell Angular that we want to connect the input
+
+49
+00:04:28,660 --> 00:04:29,830
+to a FormControl,
+
+50
+00:04:29,860 --> 00:04:34,690
+we had formGroupName to do the same for FormGroup and now we have formArrayName to do the
+
+51
+00:04:34,690 --> 00:04:36,430
+same for an array.
+
+52
+00:04:36,670 --> 00:04:44,370
+So formArrayName and the name was hobbies, the name we chose in our TypeScript object, this tells
+
+53
+00:04:44,430 --> 00:04:50,250
+Angular that somewhere in this div, our array will live. Now we can use this array here,
+
+54
+00:04:50,260 --> 00:04:56,130
+so I will create a new div with the ID FormGroup for some Bootstrap styling
+
+55
+00:04:56,140 --> 00:05:01,010
+and here I simply want to have an input which allows the user to enter the actual hobby.
+
+56
+00:05:01,420 --> 00:05:04,000
+So this type text is all right,
+
+57
+00:05:04,270 --> 00:05:09,680
+I now somehow need to loop through all the controls which are in this array.
+
+58
+00:05:10,060 --> 00:05:20,500
+So on my FormGroup here, I will actually add an ngFor loop to loop through all my hobby controls,
+
+59
+00:05:21,320 --> 00:05:33,560
+so in my sign-up form, that would be my hobbies which I can get like this and there, the controls. With
+
+60
+00:05:33,560 --> 00:05:39,590
+that, I can loop through all of them and I also want to extract the index of the current iteration,
+
+61
+00:05:39,590 --> 00:05:47,960
+I will need this to assign this input to one of these dynamically created controls because on this input,
+
+62
+00:05:48,440 --> 00:05:52,320
+I of course want to add the form-controls CSS class
+
+63
+00:05:52,520 --> 00:05:59,090
+but besides this, very important, I need to add formControlName because we still need to synchronize
+
+64
+00:05:59,150 --> 00:06:03,410
+this input with the dynamically created input.
+
+65
+00:06:03,410 --> 00:06:09,840
+Now this dynamically created input will not have a name chosen by us but it is an array,
+
+66
+00:06:09,850 --> 00:06:16,010
+so the name will simply be the index in this array, which is why I'm retrieving it here. So I can simply
+
+67
+00:06:16,010 --> 00:06:22,010
+bind formControlName and now I will need property binding because I'm now not passing a string,
+
+68
+00:06:22,220 --> 00:06:28,980
+I'm instead passing this local variable I'm creating here, i, to pass this index.
+
+69
+00:06:29,450 --> 00:06:34,060
+Let's save this and see if this works as expected.
+
+70
+00:06:35,010 --> 00:06:42,050
+If we have a look at our console, no errors, let's click Add Hobby and we indeed see a new input,
+
+71
+00:06:42,300 --> 00:06:43,410
+no errors
+
+72
+00:06:43,430 --> 00:06:45,720
+still. Let's check it,
+
+73
+00:06:45,810 --> 00:06:46,650
+it's invalid,
+
+74
+00:06:46,650 --> 00:06:47,640
+this looks good,
+
+75
+00:06:47,790 --> 00:06:52,000
+so if I enter a hobby here, now it becomes valid.
+
+76
+00:06:52,440 --> 00:06:59,070
+And now if I enter the rest here and go to the console and hit submit,
+
+77
+00:06:59,250 --> 00:07:02,430
+you will see that in the value of this form,
+
+78
+00:07:02,650 --> 00:07:06,950
+we actually now have hobbies which is an array where we have cooking
+
+79
+00:07:07,120 --> 00:07:13,780
+and of course, we could also add sports and this newly submitted form, you would now find that this
+
+80
+00:07:13,780 --> 00:07:16,630
+array of course holds cooking and sports.
+
+81
+00:07:16,630 --> 00:07:21,910
+So this is how you can use a FormArray with the reactive approach very easily.
+
+82
+00:07:21,910 --> 00:07:28,000
+It's all about synchronizing it in the end and about knowing that you have to explicitly cast it to make
+
+83
+00:07:28,000 --> 00:07:28,580
+this work.
+

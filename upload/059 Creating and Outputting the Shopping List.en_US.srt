@@ -1,0 +1,112 @@
+1
+00:00:02,580 --> 00:00:05,130
+Let's use our newly created ingredient model,
+
+2
+00:00:05,130 --> 00:00:11,180
+so just like with recipe, we can now define the type for our ingredients array and this will be of type
+
+3
+00:00:11,220 --> 00:00:17,480
+ingredient array and of course for this, we have to import ingredient,
+
+4
+00:00:17,490 --> 00:00:20,010
+so let's quickly do this from
+
+5
+00:00:20,060 --> 00:00:25,710
+and now we have to move up one folder so that we are in the app folder and then we have to go into the
+
+6
+00:00:25,710 --> 00:00:32,010
+shared folder and there, it's in the ingredient.model file, without the file extension.
+
+7
+00:00:32,010 --> 00:00:35,570
+With that, we can now create one first ingredient,
+
+8
+00:00:35,610 --> 00:00:41,650
+so let's use our ingredient constructor and we have to pass name and amount here.
+
+9
+00:00:41,790 --> 00:00:51,200
+So the name could be apples and we want five let's say and then let's also say we want to have some
+
+10
+00:00:51,440 --> 00:00:55,500
+tomatoes, maybe 10.
+
+11
+00:00:55,750 --> 00:00:59,540
+That is our shopping list for now,
+
+12
+00:00:59,920 --> 00:01:06,580
+now we want to output it here in the component. So we get an anchor tag here which represents a single
+
+13
+00:01:06,580 --> 00:01:10,640
+item and now you could put this into its own component too
+
+14
+00:01:10,810 --> 00:01:17,590
+but since this is going to be such a straightforward easy item, I don't see much sense outsourcing it
+
+15
+00:01:17,590 --> 00:01:21,960
+into its own component, though it wouldn't necessarily be bad to do so
+
+16
+00:01:22,060 --> 00:01:24,170
+but I also don't see a great advantage,
+
+17
+00:01:24,220 --> 00:01:27,940
+there also isn't a lot of business logic attached to this.
+
+18
+00:01:27,940 --> 00:01:33,100
+So I will place ngFor on this anchor tag to loop through all the ingredients,
+
+19
+00:01:33,100 --> 00:01:41,630
+so ingredient of ingredients and now we can output the ingredient data here inside our anchor tag.
+
+20
+00:01:41,890 --> 00:01:47,570
+So it makes sense to output the ingredient name I believe
+
+21
+00:01:47,920 --> 00:01:54,090
+and then maybe in parentheses thereafter and these parentheses here are no Angular syntax, that is
+
+22
+00:01:54,130 --> 00:01:57,980
+normal text here I'm outputting, inside the parentheses,
+
+23
+00:01:58,090 --> 00:02:06,550
+I'm going to use string interpolation to also output ingredient amount. With that if we now save this,
+
+24
+00:02:06,700 --> 00:02:09,940
+we already see our shopping list here at the bottom,
+
+25
+00:02:10,090 --> 00:02:16,100
+the last missing piece I want to add is this shopping list edit section here which should display us
+
+26
+00:02:16,210 --> 00:02:22,480
+an input field which then allows us to actually edit our items or add new ones, at least later in the
+
+27
+00:02:22,480 --> 00:02:22,870
+course,
+
+28
+00:02:22,870 --> 00:02:25,110
+it will add this functionality.
+

@@ -1,0 +1,384 @@
+1
+00:00:02,410 --> 00:00:09,540
+If we have a look at our shopping-edit component here, we of course load data in ngOnInit from
+
+2
+00:00:09,540 --> 00:00:13,140
+the shopping lists service, to be precise,
+
+3
+00:00:13,160 --> 00:00:21,410
+we actually manage our current editing state in the shopping lists service as well and we get our ingredient
+
+4
+00:00:21,440 --> 00:00:24,700
+which we're editing here from the shopping list service.
+
+5
+00:00:25,070 --> 00:00:29,420
+We're getting it with get ingredient and then we're setting this on the form,
+
+6
+00:00:29,900 --> 00:00:36,290
+so on the shopping list form. Hence the values we enter into the shopping list form are not coming
+
+7
+00:00:36,290 --> 00:00:40,810
+from our @ngrx/store but still from the shopping list service
+
+8
+00:00:41,180 --> 00:00:48,350
+and in addition to that, we also use the shopping list service to control whether we currently are editing
+
+9
+00:00:48,580 --> 00:00:51,340
+or not.
+
+10
+00:00:51,400 --> 00:00:57,670
+Now we do have that subscription to started editing which is managed in a shopping list service because
+
+11
+00:00:57,670 --> 00:01:02,860
+we do actually start the editing process from inside the shopping list component, not from inside the
+
+12
+00:01:02,860 --> 00:01:08,710
+shopping list edit component. From inside the shopping list component, we have the onEditItem function
+
+13
+00:01:08,710 --> 00:01:14,530
+where we can start editing. Now to translate this into the NgRx world,
+
+14
+00:01:14,530 --> 00:01:21,160
+it would make more sense if we dispatch an action here in the shopping list component to start editing,
+
+15
+00:01:21,700 --> 00:01:27,550
+then the @ngrx/store will automatically kind of use a subject behind the scenes to inform our entire
+
+16
+00:01:27,550 --> 00:01:29,050
+application about that
+
+17
+00:01:29,320 --> 00:01:36,250
+and then in the shopping-edit component, we could simply listen to our store and see if we started editing
+
+18
+00:01:36,490 --> 00:01:40,240
+and if we did, we can kind of run the same logic as here,
+
+19
+00:01:40,300 --> 00:01:44,620
+we would want to know which index, which item we are editing,
+
+20
+00:01:44,620 --> 00:01:47,990
+so what I'm also passing around as information right now,
+
+21
+00:01:48,010 --> 00:01:49,700
+I'm also sharing the index here.
+
+22
+00:01:49,810 --> 00:01:55,810
+So we would want to manage this in NgRx and then when we get our ingredient here which we want to
+
+23
+00:01:55,820 --> 00:02:02,590
+edit, then we also want to get this from our @ngrx/store,
+
+24
+00:02:02,720 --> 00:02:08,060
+that would be the idea here. Hence to implement this in an
+
+25
+00:02:08,190 --> 00:02:14,370
+easy to use way, we can go to our shopping list reducer and change our state for the first time.
+
+26
+00:02:14,370 --> 00:02:19,530
+We haven't done this before but now we need more than just the ingredients because now for a shopping
+
+27
+00:02:19,530 --> 00:02:25,060
+list to effectively update the different parts of our application that are involved here,
+
+28
+00:02:25,260 --> 00:02:34,290
+I also want to store the editedIngredient here which is of type ingredient and also the edited
+
+29
+00:02:34,680 --> 00:02:37,710
+ingredient index which is of type number,
+
+30
+00:02:37,740 --> 00:02:48,310
+so two new members, two new fields here in our initial state. Here however we don't need the types,
+
+31
+00:02:48,310 --> 00:02:52,800
+we need values because this is an object we're creating, not a type definition.
+
+32
+00:02:52,840 --> 00:02:58,620
+So the ingredient with which I start will be null and the number will be minus one,
+
+33
+00:02:58,690 --> 00:03:02,830
+it's not zero because zero would already be a valid index, minus one
+
+34
+00:03:02,830 --> 00:03:09,280
+is not. Now we'll automatically have one issue before we've done anything else,
+
+35
+00:03:09,320 --> 00:03:11,880
+we changed the structure of our state
+
+36
+00:03:12,170 --> 00:03:17,720
+and please remember that we have different places in our app, like the shopping list component where
+
+37
+00:03:17,720 --> 00:03:27,710
+we injected store and in all these places, we do share a print, a footprint, a definition of our store
+
+38
+00:03:27,830 --> 00:03:29,270
+or of the data in our store,
+
+39
+00:03:29,270 --> 00:03:37,000
+we define how the data in our store looks like, that it's having a shopping list part which holds our ingredients.
+
+40
+00:03:37,280 --> 00:03:42,880
+Now this is the part which won't really work anymore because now it's not just ingredients,
+
+41
+00:03:42,890 --> 00:03:49,040
+now we also have the editedIngredient and the editedIngredientsIndex and of course, we could now
+
+42
+00:03:49,100 --> 00:03:53,460
+add this here but that would be pretty cumbersome,
+
+43
+00:03:53,460 --> 00:04:00,660
+we would have to add this everywhere in our application and if we ever change the structure of our state,
+
+44
+00:04:00,780 --> 00:04:07,710
+of our shopping list state again, we again have to edit that everywhere and therefore, we can use a simpler
+
+45
+00:04:07,770 --> 00:04:15,980
+pattern which makes managing this a bit easier and more convenient. We can export an interface here to
+
+46
+00:04:15,980 --> 00:04:25,020
+create our own type definition which we can name state and that describes how our state for this
+
+47
+00:04:25,020 --> 00:04:34,800
+reducer looks like, that it has an ingredients property which holds an array of ingredients, that it has
+
+48
+00:04:34,800 --> 00:04:43,980
+an editedIngredient which is a single ingredient and that it has an editedIngredientIndex which is
+
+49
+00:04:43,980 --> 00:04:46,020
+a number.
+
+50
+00:04:46,290 --> 00:04:51,900
+Now we know that this initial state will be of that type, so we can already add that type assignment
+
+51
+00:04:51,900 --> 00:04:52,230
+here,
+
+52
+00:04:52,260 --> 00:04:55,080
+so this is now type state, of this state here
+
+53
+00:04:58,040 --> 00:05:01,220
+and the state we're getting here also will be of that type,
+
+54
+00:05:01,220 --> 00:05:11,010
+just to be super clear. Now with that state defined here, we can use that in the shopping list component
+
+55
+00:05:11,100 --> 00:05:13,170
+and all the other components here
+
+56
+00:05:13,170 --> 00:05:19,720
+instead of this state or type definition but we can even take it a step further.
+
+57
+00:05:19,860 --> 00:05:23,000
+This is just the state for the shopping list reducer.
+
+58
+00:05:23,140 --> 00:05:25,960
+Now right now that's the only reducer we have
+
+59
+00:05:26,160 --> 00:05:31,770
+but in the future, we'll have multiple reducers and then this shopping list part here is only a part
+
+60
+00:05:31,770 --> 00:05:33,090
+of our global state.
+
+61
+00:05:33,150 --> 00:05:38,850
+In the app module, we can see that the shopping list reducer is registered under the shopping list key
+
+62
+00:05:39,420 --> 00:05:46,050
+and indeed, in the places where we do inject our store, we do reference that shopping list key too.
+
+63
+00:05:46,110 --> 00:05:52,740
+So since we're already merging states into our own objects, we can export another interface here, App
+
+64
+00:05:52,740 --> 00:05:57,980
+State, to describe the application-wide state, not just the state for this reducer
+
+65
+00:05:58,110 --> 00:06:09,810
+and that would be shopping list which then in turn holds a reference to this state, maybe order it
+
+66
+00:06:09,810 --> 00:06:13,460
+like this though it doesn't matter, would have worked the other way around too
+
+67
+00:06:13,470 --> 00:06:19,290
+but now we're clear that our entire application state is about an object which has a shopping list area
+
+68
+00:06:19,620 --> 00:06:23,330
+where it then in turn we have data of this type stored in.
+
+69
+00:06:23,700 --> 00:06:26,370
+And now we can go to the different places where we inject store,
+
+70
+00:06:30,130 --> 00:06:36,460
+like here in the shopping list component and reference this AppState and the convention for this, for the
+
+71
+00:06:36,460 --> 00:06:47,390
+import is that you import everything as from shopping list, from the store folder and there, the shopping
+
+72
+00:06:47,390 --> 00:06:48,800
+list reducer file.
+
+73
+00:06:48,800 --> 00:06:51,380
+Now why from shopping list?
+
+74
+00:06:51,380 --> 00:06:57,440
+It's just a convention you also find in the official NgRx docs, you typically use that for describing
+
+75
+00:06:57,440 --> 00:07:04,290
+an import to your reducer and/or your state for a certain part of your application.
+
+76
+00:07:04,460 --> 00:07:13,070
+And now from our shopping list part of the NgRx state so to say, we import something and we use that
+
+77
+00:07:13,070 --> 00:07:20,870
+here, when we inject the store our type is now from shopping list AppState because this is now describing
+
+78
+00:07:21,050 --> 00:07:28,970
+our whole application state as it is seen from inside the shopping list reducer and as it is relevant
+
+79
+00:07:29,030 --> 00:07:34,730
+for when we use the shopping list reducer to be precise. Our AppState might have more than just that
+
+80
+00:07:34,970 --> 00:07:40,250
+but from the shopping list reducer's point of view and in this file, we're interested in the shopping
+
+81
+00:07:40,250 --> 00:07:44,280
+list reducer in the end, the AppState looks like this.
+
+82
+00:07:44,490 --> 00:07:53,480
+Now we get other places where we injected the store, shopping-edit component for example. There, I now
+
+83
+00:07:53,490 --> 00:08:05,580
+also want to use that from shopping list import, so import as from shopping list, from the store folder
+
+84
+00:08:06,120 --> 00:08:11,670
+and then the shopping list reducer file and then it's just the same logic here, when we inject the store
+
+85
+00:08:11,760 --> 00:08:19,290
+we reference from shopping list AppState. Now the same in the recipes service, in the recipes service where
+
+86
+00:08:19,290 --> 00:08:21,530
+we also inject the store, here
+
+87
+00:08:21,570 --> 00:08:29,840
+I also want to import everything as from shopping list from my shopping list
+
+88
+00:08:29,840 --> 00:08:36,240
+part of the application, the store folder, the shopping list reducer file and in the injection of the
+
+89
+00:08:36,240 --> 00:08:46,180
+store, we now reference from shopping list AppState. With that, I think I replaced all the places where
+
+90
+00:08:46,180 --> 00:08:46,850
+we use that,
+
+91
+00:08:46,900 --> 00:08:53,980
+now we have a nicer type definition for our state that is more flexible because now if we add something
+
+92
+00:08:53,980 --> 00:08:59,620
+new, we only need to add it here in our state definition in the shopping lists reducer file and in
+
+93
+00:08:59,620 --> 00:09:04,960
+all the places where we inject that store, TypeScript will then know what's inside of that store.
+
+94
+00:09:05,050 --> 00:09:07,290
+But that was not the main problem
+
+95
+00:09:07,300 --> 00:09:13,090
+we tried to solve, the main problem was that we want to manage the editedIngredient and its index
+
+96
+00:09:13,090 --> 00:09:15,430
+here in NgRx and we'll do that next.
+

@@ -1,0 +1,148 @@
+1
+00:00:02,360 --> 00:00:07,610
+You're also not limited to interacting with the request in an interceptor,
+
+2
+00:00:07,610 --> 00:00:10,290
+you can also interact with the response.
+
+3
+00:00:10,610 --> 00:00:16,790
+You do this by adding something here to handle because handle actually gives you an observable, which
+
+4
+00:00:16,790 --> 00:00:22,640
+I guess makes sense because in the end, your request is an observable to which you subscribe in the end.
+
+5
+00:00:22,910 --> 00:00:26,830
+So this in the end is the request with the response in it
+
+6
+00:00:26,840 --> 00:00:33,320
+you could say, wrapped into an observable and therefore here, you can of course add pipe and do something
+
+7
+00:00:33,440 --> 00:00:35,470
+with the response if you want to.
+
+8
+00:00:35,510 --> 00:00:41,210
+You could add the map operator here, to change the response for example, of course you should be careful
+
+9
+00:00:41,210 --> 00:00:45,720
+with that and not change it in a way that the rest of your application breaks
+
+10
+00:00:45,740 --> 00:00:47,890
+or what I'll do here,
+
+11
+00:00:48,200 --> 00:00:55,940
+you use tap which you need to import from rxjs/operators to simply look into the response. Now here
+
+12
+00:00:55,940 --> 00:00:58,460
+in tap, you get an event and that's important,
+
+13
+00:00:58,460 --> 00:01:00,210
+you always get events here.
+
+14
+00:01:00,230 --> 00:01:06,200
+Remember I showed you that you can observe different kinds of responses with the Angular
+
+15
+00:01:06,290 --> 00:01:08,820
+HttpClient, no matter what you chose there,
+
+16
+00:01:08,870 --> 00:01:11,060
+here in the interceptor,
+
+17
+00:01:11,060 --> 00:01:17,330
+you always get an event so that you have the most granular access to the response you could possibly
+
+18
+00:01:17,330 --> 00:01:18,380
+have.
+
+19
+00:01:18,380 --> 00:01:24,560
+So here for example, we could check if the event type is equal to the HTTP event type which you
+
+20
+00:01:24,560 --> 00:01:33,620
+also need to import, of response, because here maybe I only care about that response,
+
+21
+00:01:33,620 --> 00:01:38,790
+I will log the event before that however, so that we can see all events
+
+22
+00:01:38,790 --> 00:01:53,310
+we got and then in here, we could say response arrived, body data and then simply console log the event body
+
+23
+00:01:53,310 --> 00:01:56,270
+which here is the response body of course.
+
+24
+00:01:57,460 --> 00:02:02,140
+Now here again, I'm just doing some logging but as I just mentioned, you could use other operators like
+
+25
+00:02:02,140 --> 00:02:06,860
+map here and even transform the response, that would be possible.
+
+26
+00:02:06,880 --> 00:02:11,440
+So now if we save that and we go back and we have a look at the console, we see a bunch of output there.
+
+27
+00:02:11,920 --> 00:02:15,540
+Let me clear that to make it a bit easier and fetch posts again
+
+28
+00:02:15,550 --> 00:02:17,320
+and now you see request is on its way,
+
+29
+00:02:17,350 --> 00:02:19,190
+then we have type 0 which is this,
+
+30
+00:02:19,330 --> 00:02:21,570
+the request is now sent event.
+
+31
+00:02:21,640 --> 00:02:23,250
+Then we got the response,
+
+32
+00:02:23,450 --> 00:02:29,290
+therefore we now got that response arrived log and there indeed, we now see the response body being
+
+33
+00:02:29,290 --> 00:02:31,740
+log because that is what I'm doing here.
+
+34
+00:02:31,810 --> 00:02:33,090
+So this is possible too,
+
+35
+00:02:33,090 --> 00:02:37,150
+you can not just interact with the request inside of your interceptor,
+
+36
+00:02:37,180 --> 00:02:40,240
+you can also interact with the response if you want to.
+
+37
+00:02:40,240 --> 00:02:44,200
+You can log it, you can manipulate it, whatever your requirements are.
+

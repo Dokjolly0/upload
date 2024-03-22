@@ -1,0 +1,204 @@
+1
+00:00:02,420 --> 00:00:07,700
+So as mentioned at the end of the last lecture, it would be nice if we could validate the user input,
+
+2
+00:00:07,700 --> 00:00:10,540
+something very important in any app you build.
+
+3
+00:00:10,800 --> 00:00:16,970
+Whilst you should still validate input on the server as the front-end can always be tricked, you can
+
+4
+00:00:16,970 --> 00:00:21,410
+greatly enhance user experience by also validating the input here,
+
+5
+00:00:21,470 --> 00:00:27,380
+for example we want to make sure that none of the fields here is empty and that the e-mail address
+
+6
+00:00:27,410 --> 00:00:30,030
+actually is a valid e-mail address.
+
+7
+00:00:30,050 --> 00:00:38,410
+So let's go back to our app component, to the HTML file, to the template and see how we can add such validators.
+
+8
+00:00:38,540 --> 00:00:43,730
+Now since we use the template driven approach, we can only add them in the template
+
+9
+00:00:43,910 --> 00:00:52,690
+and here we can for example add required to our username input. Now required is a default HTML attribute
+
+10
+00:00:52,730 --> 00:00:57,520
+you can add to an input, here however Angular will detect it,
+
+11
+00:00:57,530 --> 00:01:04,940
+so it acts as a selector for a built-in directive shipping with Angular and it will automatically configure
+
+12
+00:01:04,940 --> 00:01:12,050
+your form you could say, to take this into account, to make sure that now this will be treated as invalid
+
+13
+00:01:12,460 --> 00:01:13,050
+if
+
+14
+00:01:13,160 --> 00:01:14,810
+it is empty.
+
+15
+00:01:15,110 --> 00:01:20,390
+And on the e-mail, we can for example therefore also add required
+
+16
+00:01:20,540 --> 00:01:25,330
+and there also is an e-mail directive you can add.
+
+17
+00:01:25,380 --> 00:01:28,270
+Now e-mail is not a built-in HTML attribute,
+
+18
+00:01:28,310 --> 00:01:29,650
+it still is a directive
+
+19
+00:01:29,660 --> 00:01:35,900
+and keep in mind required is only treated as a selector for an Angular directive here.
+
+20
+00:01:35,990 --> 00:01:42,530
+An e-mail is simply another directive made available by Angular which makes sure that this is actually
+
+21
+00:01:42,530 --> 00:01:44,600
+a valid e-mail address.
+
+22
+00:01:44,630 --> 00:01:52,040
+So now if we save this and we have a look at our form here and I submit it, I can still submit it because
+
+23
+00:01:52,040 --> 00:01:55,370
+we haven't set up anything which would prevent us from doing so
+
+24
+00:01:55,580 --> 00:02:00,320
+but if we have a look at it and check the valid attributes, you see it is false.
+
+25
+00:02:00,770 --> 00:02:04,620
+And if I enter something here and I enter something here,
+
+26
+00:02:04,700 --> 00:02:08,320
+so it's filled but the e-mail address is still not valid,
+
+27
+00:02:08,570 --> 00:02:11,770
+you see that still valid is false.
+
+28
+00:02:11,870 --> 00:02:17,000
+Only if I turn this into a valid e-mail address here, only in this case,
+
+29
+00:02:17,040 --> 00:02:18,260
+now if we submit it,
+
+30
+00:02:18,290 --> 00:02:20,490
+now you see valid is true.
+
+31
+00:02:20,720 --> 00:02:27,170
+So now Angular tracks the state of this form and correctly informs us or gives us a chance of querying
+
+32
+00:02:27,170 --> 00:02:34,520
+it whether this form is valid or not and actually this does not only work on form level, if we dive into
+
+33
+00:02:34,520 --> 00:02:38,520
+the actual controls, you'll see that on the e-mail control,
+
+34
+00:02:38,570 --> 00:02:42,860
+we also have a valid attribute which is true.
+
+35
+00:02:43,160 --> 00:02:46,730
+So it tracks this on a per control level
+
+36
+00:02:46,730 --> 00:02:55,790
+and then also on a form level, now there also is another place where it tracks this and helps us.
+
+37
+00:02:56,420 --> 00:03:01,330
+If we inspect this e-mail element here in the HTML code,
+
+38
+00:03:01,760 --> 00:03:07,520
+you'll see that it adds a couple of classes because the form-control class here is by us, it's
+
+39
+00:03:07,520 --> 00:03:13,410
+a Bootstrap class to give it some styling but ng-dirty, ng-touched and ng-valid,
+
+40
+00:03:13,550 --> 00:03:19,040
+these are not classes added by us and the ng at the beginning makes it pretty clear who is responsible
+
+41
+00:03:19,040 --> 00:03:21,700
+for adding these classes.
+
+42
+00:03:22,010 --> 00:03:23,900
+Now watch these classes
+
+43
+00:03:24,080 --> 00:03:26,860
+if I remove the @ sign here,
+
+44
+00:03:27,170 --> 00:03:32,810
+you saw that ng-invalid was added and ng-valid was removed.
+
+45
+00:03:32,810 --> 00:03:40,070
+So Angular dynamically add some classes, giving us information, some CSS classes, giving us information
+
+46
+00:03:40,070 --> 00:03:44,960
+about the state of the individual control here whether it is dirty or not,
+
+47
+00:03:44,960 --> 00:03:50,060
+so whether we did change the initial value, whether it touched or not
+
+48
+00:03:50,060 --> 00:03:54,290
+so whether we clicked into it or not and whether it is valid or not.
+
+49
+00:03:54,290 --> 00:03:59,300
+Now with that information, we can style these inputs conditionally.
+
+50
+00:03:59,480 --> 00:04:05,170
+So let's in the next lecture take advantage of the fact that Angular tracks the state of the validity and
+
+51
+00:04:05,180 --> 00:04:11,540
+of the form overall and change the styling and the behavior the user experience with that form.
+

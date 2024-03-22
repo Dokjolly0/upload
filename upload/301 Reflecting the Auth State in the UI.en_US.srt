@@ -1,0 +1,500 @@
+1
+00:00:01,970 --> 00:00:08,850
+Let's start by forwarding the user to a different route once the user is logged in. Now since we always
+
+2
+00:00:08,850 --> 00:00:11,500
+want to redirect the user once we authenticate it,
+
+3
+00:00:11,520 --> 00:00:14,130
+we of course can do this in two different places - 
+
+4
+00:00:14,130 --> 00:00:20,640
+we can either do it here in handle authentication or we do it in the component, here inside of subscribe
+
+5
+00:00:20,700 --> 00:00:22,780
+in the success case only of course.
+
+6
+00:00:22,770 --> 00:00:25,310
+Now it's up to you when you do that,
+
+7
+00:00:25,410 --> 00:00:32,510
+if you prefer redirecting in the component or from inside a service. Both is valid
+
+8
+00:00:32,610 --> 00:00:37,920
+and if you need no data from either the service or the component and you have no strong reason for doing
+
+9
+00:00:37,920 --> 00:00:42,180
+it in one place or the other, it's totally up to you where you do that.
+
+10
+00:00:42,180 --> 00:00:46,710
+Now you could argue that you want to keep your service a bit cleaner and don't interact with the user
+
+11
+00:00:46,710 --> 00:00:53,610
+interface in the service, so don't directly influence the user interface and therefore, you maybe don't
+
+12
+00:00:53,610 --> 00:00:56,260
+want to interact with the router in here, though
+
+13
+00:00:56,370 --> 00:00:57,980
+I see no problem with doing that
+
+14
+00:00:57,990 --> 00:01:00,460
+and we did it before in the course as well.
+
+15
+00:01:00,510 --> 00:01:09,350
+Nonetheless, to mix things up, here I will do it in the component and I will inject the router, the Angular
+
+16
+00:01:09,350 --> 00:01:16,230
+router which is injected from @angular/router and with the router injected in the auth component, here in
+
+17
+00:01:16,230 --> 00:01:23,520
+subscribe but only in the success case of course, I want to use the router and navigate to
+
+18
+00:01:27,290 --> 00:01:29,650
+/recipes, like this.
+
+19
+00:01:31,570 --> 00:01:36,610
+This is a great example for programmatic navigation now where you couldn't use a link in the template
+
+20
+00:01:36,640 --> 00:01:41,530
+because you want to navigate once some action is done and you don't want to navigate when a user clicks
+
+21
+00:01:41,530 --> 00:01:45,250
+something but only once the user click the button and the login is done,
+
+22
+00:01:45,250 --> 00:01:50,590
+therefore we need to navigate from inside code because this is where we know once this is done.
+
+23
+00:01:50,710 --> 00:01:52,360
+So now, let's give this a try and
+
+24
+00:01:52,360 --> 00:01:53,840
+let's see if it works.
+
+25
+00:01:54,040 --> 00:01:57,840
+Let's try logging in and we go to recipes,
+
+26
+00:01:57,850 --> 00:01:58,530
+great,
+
+27
+00:01:58,600 --> 00:02:01,240
+let's now try to create a new user.
+
+28
+00:02:01,690 --> 00:02:05,090
+So here with test 2, switch to sign up and click sign up
+
+29
+00:02:05,320 --> 00:02:06,360
+and this works too.
+
+30
+00:02:06,400 --> 00:02:12,610
+So navigating works, of course we still can go back to authenticate because we still have it here in
+
+31
+00:02:12,700 --> 00:02:15,600
+the header and on the other hand if we're not authenticated,
+
+32
+00:02:15,600 --> 00:02:20,710
+for example if I reload the app, then all the previous state is lost and we are not authenticated because
+
+33
+00:02:20,710 --> 00:02:26,350
+the user object doesn't exist anymore in memory, we'll soon add something to persist it but for now, that's
+
+34
+00:02:26,350 --> 00:02:27,280
+how it is.
+
+35
+00:02:27,280 --> 00:02:31,990
+So even if we're not logged in, we still see recipes, even though we don't really want to be able to go
+
+36
+00:02:31,990 --> 00:02:32,720
+there.
+
+37
+00:02:32,740 --> 00:02:38,320
+So the next step will be that we correctly reflect our current status here in the UI and that in this
+
+38
+00:02:38,320 --> 00:02:46,660
+application mostly means in the header. In the header component, if we have a look at the HTML code, in the
+
+39
+00:02:46,660 --> 00:02:53,200
+end the goal will be to disable this recipes link if we are not logged in, to disable the authenticate link if
+
+40
+00:02:53,200 --> 00:02:55,270
+we are logged in because we,
+
+41
+00:02:55,390 --> 00:03:01,870
+there is no sense in logging in again if we are logged in, right? To always show the shopping list, to
+
+42
+00:03:01,990 --> 00:03:05,080
+disable the dropdown if we are not logged in
+
+43
+00:03:05,080 --> 00:03:08,690
+because saving and fetching data is only available if we are logged in
+
+44
+00:03:09,010 --> 00:03:13,520
+and to also show a logout button that allows us to logout.
+
+45
+00:03:13,630 --> 00:03:21,880
+Let me start with the logout button here, for that I'll add a new list item here and in there an anchor tag
+
+46
+00:03:24,960 --> 00:03:30,130
+where I say logout without any reference or router or link set, just like this.
+
+47
+00:03:30,150 --> 00:03:35,490
+Now let's also add this style here to make sure we get a nice cursor when hovering over that but that's
+
+48
+00:03:35,490 --> 00:03:37,820
+of course totally optional and
+
+49
+00:03:37,860 --> 00:03:44,520
+now we have that logout button here and now we need to make sure we get the current authentication status
+
+50
+00:03:44,790 --> 00:03:45,930
+into the header component,
+
+51
+00:03:45,960 --> 00:03:49,860
+so we basically find out, do we have a user with a valid token or not?
+
+52
+00:03:49,920 --> 00:03:56,390
+And we then also need to use that information to update the template correctly. Now for that first of
+
+53
+00:03:56,390 --> 00:03:58,370
+all, in the auth service,
+
+54
+00:03:58,430 --> 00:04:03,050
+right now we manage our user here through a subject.
+
+55
+00:04:03,050 --> 00:04:08,390
+This will inform all places in the application about when our user changes
+
+56
+00:04:08,390 --> 00:04:14,180
+and right now even though we haven't implemented all the logic for that yet, let's assume that it always
+
+57
+00:04:14,180 --> 00:04:16,640
+changes when the authentication status changes,
+
+58
+00:04:16,790 --> 00:04:23,000
+so even if the token expires, the user subject will emit a new value which is then null because then
+
+59
+00:04:23,000 --> 00:04:24,400
+the user is invalid,
+
+60
+00:04:24,410 --> 00:04:27,720
+we haven't added that logic yet but we will add it.
+
+61
+00:04:27,740 --> 00:04:33,590
+So let's assume that the subject here is our source of truth and therefore, the header component since
+
+62
+00:04:33,590 --> 00:04:39,740
+it's always there in our application, can subscribe to that subject to update correctly based on the
+
+63
+00:04:39,800 --> 00:04:41,630
+user status.
+
+64
+00:04:41,630 --> 00:04:48,890
+So in the header.component.ts file, we can now inject the auth service which is of type auth service
+
+65
+00:04:48,890 --> 00:04:59,000
+of course and you need to import auth service from that path and we can then add ngOnInit
+
+66
+00:04:59,020 --> 00:05:07,110
+by adding the onInit interface here which is also imported from @angular/core and inside of ngOnInit,
+
+67
+00:05:07,110 --> 00:05:14,350
+I want to set up a subscription to this auth service user. So we can set up a subscription here
+
+68
+00:05:14,520 --> 00:05:19,140
+and as you learned in the RxJS section, such subscriptions should be managed by you
+
+69
+00:05:19,200 --> 00:05:25,110
+so that you unsubscribe if it's not required anymore. For that, I'll add a new private property, user sub which
+
+70
+00:05:25,110 --> 00:05:30,210
+is of type subscription and subscription is imported from RxJS,
+
+71
+00:05:30,240 --> 00:05:38,320
+so this import needs to be added to the header component and with that added, we store the subscription
+
+72
+00:05:38,330 --> 00:05:46,050
+in that user sub property and now also add onDestroy here, which is also imported from
+
+73
+00:05:46,060 --> 00:05:46,910
+@angular/core
+
+74
+00:05:46,960 --> 00:05:52,000
+so that we are forced to add ngOnDestroy where we can clear that subscription.
+
+75
+00:05:52,060 --> 00:05:56,650
+So here I call this user sub unsubscribe.
+
+76
+00:05:56,950 --> 00:06:01,660
+The more interesting part for us of course happens inside of subscribe here because there, we get a user
+
+77
+00:06:01,660 --> 00:06:09,370
+object and now as I mentioned, let's rely on the fact that this user is either null if we're not logged
+
+78
+00:06:09,370 --> 00:06:11,020
+in or exists,
+
+79
+00:06:11,020 --> 00:06:16,020
+so if the user object is not null but it's a concrete object, if we are logged in.
+
+80
+00:06:16,060 --> 00:06:18,060
+So if we have a user, we are logged in,
+
+81
+00:06:18,070 --> 00:06:23,790
+that's the core idea. Therefore let's add a new property here in this component which you could name
+
+82
+00:06:25,140 --> 00:06:26,550
+isAuthenticated,
+
+83
+00:06:26,550 --> 00:06:28,450
+of course the exact name is up to you
+
+84
+00:06:28,450 --> 00:06:30,690
+and let's assume by default that is not the case,
+
+85
+00:06:30,690 --> 00:06:35,630
+so it's false. isAuthenticated is false, here
+
+86
+00:06:36,920 --> 00:06:40,690
+in this subscribe function where we get a user,
+
+87
+00:06:40,810 --> 00:06:47,480
+we then set this isAuthenticated equal to a check, if not user,
+
+88
+00:06:47,620 --> 00:06:53,010
+then I want to set the value to false because then we are not authenticated
+
+89
+00:06:53,040 --> 00:06:56,380
+if we have no user object, otherwise it's true.
+
+90
+00:06:56,500 --> 00:06:58,910
+Now this is the check I want to have and we can actually shorten this,
+
+91
+00:06:58,910 --> 00:06:59,360
+we can write
+
+92
+00:06:59,360 --> 00:07:00,940
+!!user.
+
+93
+00:07:00,980 --> 00:07:07,670
+This might look strange but it's a little trick where we basically check if we not have a user, which
+
+94
+00:07:07,670 --> 00:07:10,200
+will be true
+
+95
+00:07:10,800 --> 00:07:17,520
+if the user is null and false if we have a user object but that is the opposite of what we need, hence
+
+96
+00:07:17,520 --> 00:07:22,950
+I add extra exclamation mark to then inverse this value and get true or false,
+
+97
+00:07:23,050 --> 00:07:28,350
+to be precise I get true when we have a user and false if we have no user.
+
+98
+00:07:28,500 --> 00:07:36,080
+And in case you want to see what's happening there, simply console log not user and then console log
+
+99
+00:07:36,200 --> 00:07:40,740
+not not user and you will see what's happening here.
+
+100
+00:07:40,790 --> 00:07:47,710
+So with that, we change isAuthenticated, now in the header component, we can use that property to update
+
+101
+00:07:47,700 --> 00:07:55,160
+it appropriately. Recipes should only be visible if we are authenticated and therefore with ngIf,
+
+102
+00:07:55,700 --> 00:07:59,570
+we can make sure it's only visible if is authenticated is true.
+
+103
+00:07:59,570 --> 00:08:05,750
+So ngIf isAuthenticated is added to this link or actually not just to the link but to the entire
+
+104
+00:08:05,750 --> 00:08:10,000
+list item here. On the authentication link here
+
+105
+00:08:10,040 --> 00:08:15,050
+on the other hand should only be added if we're not authenticated, so add an exclamation mark in front
+
+106
+00:08:15,050 --> 00:08:20,880
+of is authenticated. Shopping list should always be visible, so nothing needs to change here.
+
+107
+00:08:20,910 --> 00:08:26,460
+Logout should only be visible if we are authenticated because if we are not authenticated, we clearly
+
+108
+00:08:26,460 --> 00:08:27,740
+can't logout,
+
+109
+00:08:27,840 --> 00:08:31,050
+so this should only be visible if we are authenticated,
+
+110
+00:08:31,050 --> 00:08:33,330
+so without an exclamation mark here.
+
+111
+00:08:33,600 --> 00:08:39,420
+Now this dropdown here should also only be visible if we are authenticated because if we're not authenticated,
+
+112
+00:08:39,540 --> 00:08:42,010
+we can't fetch and store data anyways.
+
+113
+00:08:42,270 --> 00:08:46,680
+With that if you save this and this reloads, you should only see authenticate and shopping list as a
+
+114
+00:08:46,680 --> 00:08:49,930
+default because we start non-authenticated
+
+115
+00:08:50,130 --> 00:08:56,280
+but now if I do login here with valid credentials, this changes and you see the user interface also
+
+116
+00:08:56,280 --> 00:09:01,650
+changes, you see now we have recipes, we have shopping list, we have logout and so on and we don't see
+
+117
+00:09:01,650 --> 00:09:03,170
+the authenticate page anymore.
+
+118
+00:09:03,360 --> 00:09:09,630
+Clearly, we can reach it if we manually visit /auth and this reloads the app anyways and loses our
+
+119
+00:09:09,630 --> 00:09:12,750
+authentication status by the way but that's a different thing,
+
+120
+00:09:12,750 --> 00:09:16,440
+the important thing here is that the user interface updates correctly.
+
+121
+00:09:16,440 --> 00:09:24,240
+Now with the user interface updating correctly, before we work on things like storing the token and protecting
+
+122
+00:09:24,240 --> 00:09:30,060
+certain routes so that we can't visit them even if we directly enter the URL, before we dive into
+
+123
+00:09:30,060 --> 00:09:30,750
+that,
+
+124
+00:09:30,840 --> 00:09:37,620
+let's make sure we now actually can use our token to fetch data because that is still not working, even
+
+125
+00:09:37,620 --> 00:09:39,570
+though we are authenticated, why?
+

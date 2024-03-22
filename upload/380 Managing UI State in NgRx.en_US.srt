@@ -1,0 +1,376 @@
+1
+00:00:02,500 --> 00:00:07,690
+The solution to the problem we're facing here is that we need to manage more of our authentication related
+
+2
+00:00:07,690 --> 00:00:15,480
+state and also the state that only matters to this component here in our @ngrx/store, to be precise,
+
+3
+00:00:15,490 --> 00:00:19,010
+we should at least manage whether we succeeded or failed.
+
+4
+00:00:19,180 --> 00:00:25,750
+Well we are managing the success case, here with the login action which leads to the reducer creating
+
+5
+00:00:25,750 --> 00:00:26,980
+a user object,
+
+6
+00:00:27,010 --> 00:00:29,680
+we should also add a login fail
+
+7
+00:00:32,410 --> 00:00:33,100
+action.
+
+8
+00:00:33,250 --> 00:00:44,130
+Let's expert a new constant, LOGIN_FAIL, the value can be auth login fail here and let's create a new
+
+9
+00:00:44,130 --> 00:00:45,670
+class for that as well,
+
+10
+00:00:45,690 --> 00:00:48,780
+export class login fail implements
+
+11
+00:00:48,810 --> 00:00:49,990
+action
+
+12
+00:00:50,020 --> 00:00:52,260
+and here, the
+
+13
+00:00:52,420 --> 00:00:56,160
+readonly type will be equal to login fail.
+
+14
+00:00:56,160 --> 00:01:04,860
+We might also want to have an error message, so let's also add a constructor with a payload and the payload
+
+15
+00:01:04,860 --> 00:01:07,440
+here is just a string, it could just be our error message.
+
+16
+00:01:07,440 --> 00:01:12,310
+Of course you could always use an object with more data here if you wanted to, whatever you want.
+
+17
+00:01:13,240 --> 00:01:20,310
+With the login fail action added here, we also have to work on our reducer and what we managed in the
+
+18
+00:01:20,310 --> 00:01:24,610
+state here, a potential login error should be managed here
+
+19
+00:01:24,630 --> 00:01:33,680
+since we also have that login error action. Hence I will add a new property to my state here, auth
+
+20
+00:01:33,800 --> 00:01:36,820
+error, which should just be a string here,
+
+21
+00:01:36,830 --> 00:01:38,420
+just a message
+
+22
+00:01:38,420 --> 00:01:44,090
+and here in the initial state, auth error therefore could just be an empty string
+
+23
+00:01:44,090 --> 00:01:45,290
+but I will go with null,
+
+24
+00:01:45,380 --> 00:01:49,070
+so initially we have no error. Now in the reducer,
+
+25
+00:01:49,070 --> 00:01:54,770
+when we did login successfully, I also want to set auth error back to null in case it was something
+
+26
+00:01:54,770 --> 00:01:57,350
+different and I want to do the same
+
+27
+00:01:57,650 --> 00:02:05,960
+when we start logging in. So it's time for a new case where we access our auth actions and use login start
+
+28
+00:02:06,000 --> 00:02:12,380
+because whenever we start a new login process, I essentially want to copy my old state and I want to
+
+29
+00:02:12,380 --> 00:02:17,040
+set auth error back to null because we have a new chance of logging in,
+
+30
+00:02:17,060 --> 00:02:20,100
+of course we don't want to start with an error right away.
+
+31
+00:02:21,860 --> 00:02:26,660
+Now to avoid this error which I'm getting here, I have to go back to the auth actions and add all these
+
+32
+00:02:26,660 --> 00:02:32,120
+new actions to the union type down there so that they can be handled in the reducer without errors,
+
+33
+00:02:32,120 --> 00:02:42,780
+so here we have login start and we have login fail. With that added here, in the auth reducer we get no error
+
+34
+00:02:42,780 --> 00:02:43,350
+anymore,
+
+35
+00:02:43,380 --> 00:02:45,590
+we added login start, now of course
+
+36
+00:02:45,600 --> 00:02:48,040
+we also need to handle the fail case now,
+
+37
+00:02:48,270 --> 00:02:49,910
+so the login fail
+
+38
+00:02:49,920 --> 00:02:50,850
+case here.
+
+39
+00:02:50,850 --> 00:02:59,080
+In that case, we also should return a new state based on the old state, where we probably want to set
+
+40
+00:02:59,080 --> 00:03:01,390
+the user to null because logging in failed,
+
+41
+00:03:01,390 --> 00:03:10,240
+so I see no scenario where we have a user and then set auth error equal to action
+
+42
+00:03:10,600 --> 00:03:14,140
+payload like this because payload already is a string,
+
+43
+00:03:14,140 --> 00:03:17,010
+it already is the message I want to use.
+
+44
+00:03:17,080 --> 00:03:18,600
+So now we're handling that in the
+
+45
+00:03:18,610 --> 00:03:22,180
+reducer, this login fail case and the login start
+
+46
+00:03:22,180 --> 00:03:25,570
+case, we have an auth error property in our state
+
+47
+00:03:25,570 --> 00:03:27,100
+therefore, hence
+
+48
+00:03:27,130 --> 00:03:34,480
+now we can simply subscribe to that in the auth component to be informed about potential errors
+
+49
+00:03:34,480 --> 00:03:41,950
+we're getting. For this, instead of subscribing to our auth observable here, I'll comment this out, 
+
+50
+00:03:41,950 --> 00:03:48,640
+therefore signing up will for the moment not work but instead of doing that, I will select my auth part of
+
+51
+00:03:48,640 --> 00:03:51,520
+the store and subscribe to that
+
+52
+00:03:51,520 --> 00:03:59,770
+and of course here, we get our auth state object and we could use a map operator before that to extract
+
+53
+00:03:59,770 --> 00:04:09,780
+the data we want. In that auth state object here, we get the current user and we also get our error
+
+54
+00:04:09,790 --> 00:04:18,850
+if we have any. Now I will actually now revert a bit and actually manage the loading state here in the
+
+55
+00:04:18,850 --> 00:04:28,430
+reducer or in the NgRx state as well, so loading is a boolean here and initially, loading is false
+
+56
+00:04:29,030 --> 00:04:34,100
+and I'm managing it here now because this simply makes it easier and less error prone to update the
+
+57
+00:04:34,100 --> 00:04:35,160
+UI correctly
+
+58
+00:04:36,870 --> 00:04:38,580
+and now the idea simply is that
+
+59
+00:04:38,610 --> 00:04:43,490
+once we're done logging in, I'll set loading to false,
+
+60
+00:04:43,490 --> 00:04:47,620
+so when we are done, I will also set loading to false
+
+61
+00:04:47,630 --> 00:04:50,870
+if we are done with an error because even then, we're done,
+
+62
+00:04:50,870 --> 00:04:52,890
+we have an error but we're not loading anymore
+
+63
+00:04:52,970 --> 00:04:55,690
+and just when we started, I'll set loading to true.
+
+64
+00:04:55,700 --> 00:05:01,760
+So now loading is also managed in the NgRx state and that makes it now easier here in the auth component
+
+65
+00:05:01,790 --> 00:05:07,410
+to update the user interface correctly because then we should not subscribe to our store here
+
+66
+00:05:07,430 --> 00:05:14,870
+after we submitted the form but instead in ngOnInit. So let's implement onInit which needs to be
+
+67
+00:05:14,870 --> 00:05:22,730
+imported from @angular/core, so therefore we now have to add the ngOnInit
+
+68
+00:05:22,730 --> 00:05:24,350
+method here and in there,
+
+69
+00:05:24,350 --> 00:05:31,610
+I set up my subscription to the store and now we can set up this isLoading and set it equal to auth
+
+70
+00:05:32,520 --> 00:05:41,100
+state loading because in the auth state, we'll always have the latest loading state and an error can also
+
+71
+00:05:41,100 --> 00:05:43,320
+be set based on the auth state,
+
+72
+00:05:43,320 --> 00:05:48,330
+so here we have our auth error and I stored it in my error which I then use in the user interface.
+
+73
+00:05:51,790 --> 00:05:56,920
+Please note that for example is login mode would also be a state that affects the user interface,
+
+74
+00:05:57,010 --> 00:06:02,840
+that is not managed inside of NgRx because it doesn't affect any other part of the application,
+
+75
+00:06:02,890 --> 00:06:08,110
+logging in of course does but whether we're in the login or sign-up mode and which form to display,
+
+76
+00:06:08,290 --> 00:06:10,190
+that really only matters to this component,
+
+77
+00:06:10,270 --> 00:06:13,350
+so there is no sense in putting that into the @ngrx/store,
+
+78
+00:06:13,360 --> 00:06:16,300
+you could do it but you don't gain much by it.
+
+79
+00:06:16,300 --> 00:06:22,180
+Managing this entire auth flow in NgRx however is a different thing because that does impact the entire
+
+80
+00:06:22,180 --> 00:06:23,800
+application in the end
+
+81
+00:06:23,800 --> 00:06:24,860
+and therefore here,
+
+82
+00:06:24,880 --> 00:06:30,280
+now we're updating the UI based on the current state we have in our @ngrx/store,
+
+83
+00:06:30,280 --> 00:06:33,030
+we are dispatching our login start here.
+
+84
+00:06:33,130 --> 00:06:41,380
+The missing piece is that we redirect once we are logged in, so once we do have a user and where would
+
+85
+00:06:41,380 --> 00:06:43,540
+we now do that?
+
+86
+00:06:43,540 --> 00:06:50,650
+We could of course try redirecting whenever we have a user, so we check if auth state user, if that is
+
+87
+00:06:50,650 --> 00:06:58,150
+true-ish and then we use this router navigate and we navigate away but we could also end up in weird
+
+88
+00:06:58,150 --> 00:07:04,570
+scenarios where we kind of visit the page with a user, even though that shouldn't really be possible
+
+89
+00:07:04,570 --> 00:07:08,730
+and we have a strange redirection and you could and that's more important
+
+90
+00:07:08,740 --> 00:07:11,950
+also see navigation as a side effect.
+
+91
+00:07:12,010 --> 00:07:18,250
+Of course it impacts your application but it doesn't impact your state, the state of the application
+
+92
+00:07:18,250 --> 00:07:19,210
+and what the user sees,
+
+93
+00:07:19,270 --> 00:07:24,520
+yes but your data, your data state so to say, that's not really impacted.
+
+94
+00:07:24,640 --> 00:07:28,780
+So let's redirect with the help of @ngrx/effects as well.
+

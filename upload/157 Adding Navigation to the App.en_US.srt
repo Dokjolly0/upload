@@ -1,0 +1,80 @@
+1
+00:00:02,160 --> 00:00:08,100
+In the last lecture, we added routing, we set up our routes for this application and we can load them
+
+2
+00:00:08,370 --> 00:00:13,990
+but the links are not working as expected, so we should fix this. With our main routes set up,
+
+3
+00:00:14,070 --> 00:00:19,650
+we can go to the header component and here I want to change the way we navigate.
+
+4
+00:00:19,650 --> 00:00:22,580
+I no longer need the click listeners here
+
+5
+00:00:22,710 --> 00:00:29,700
+and also I don't need ref elements, so we should remove that so that our app doesn't reload because right
+
+6
+00:00:29,730 --> 00:00:34,170
+now if you click the links, it will simply send a request to the server and reload the page.
+
+7
+00:00:34,170 --> 00:00:40,980
+So I'll remove that and I can also remove the onSelect method here and remove the eventEmitter, the header
+
+8
+00:00:40,980 --> 00:00:41,570
+component,
+
+9
+00:00:41,610 --> 00:00:48,520
+so basically all that code, also the imports and now we can simply use routerLink
+
+10
+00:00:48,840 --> 00:00:56,670
+and here I want to create an absolute link to /recipes and for the shopping list, here I will
+
+11
+00:00:56,670 --> 00:01:00,560
+create an absolute link to /shopping-list.
+
+12
+00:01:00,900 --> 00:01:06,330
+And of course you could also use that alternative syntax taught in the last lectures, in the last course
+
+13
+00:01:06,330 --> 00:01:13,530
+section actually, where you would enclose routerLink into square brackets and then you would pass an array
+
+14
+00:01:13,530 --> 00:01:18,370
+between the double quotation marks here to configure the individual segments of your path.
+
+15
+00:01:18,570 --> 00:01:23,920
+But since here all I want is to go to these root routes, there is no need to do so
+
+16
+00:01:23,970 --> 00:01:27,010
+and that is the quickest way of setting up our paths here.
+
+17
+00:01:27,060 --> 00:01:33,030
+So with that, if we save this we should already see that navigation is working again and it is, that's
+
+18
+00:01:33,030 --> 00:01:34,050
+great
+
+19
+00:01:34,050 --> 00:01:37,180
+but I also want to mark the active route here.
+
+20
+00:01:37,230 --> 00:01:39,740
+So that's what I'll work on in the next lecture.
+

@@ -1,0 +1,144 @@
+1
+00:00:02,660 --> 00:00:09,240
+In the last lecture, we learned how we can subscribe to our params to update them or to react to any
+
+2
+00:00:09,240 --> 00:00:10,050
+changes to them and
+
+3
+00:00:10,080 --> 00:00:11,190
+update our page
+
+4
+00:00:11,280 --> 00:00:17,580
+if we already are on that page. Now we set up this subscription using observables and this works fine
+
+5
+00:00:17,670 --> 00:00:19,860
+and you don't have to change anything here,
+
+6
+00:00:20,130 --> 00:00:26,310
+I want to bring something to your attention though, the fact that you don't have to add anything else
+
+7
+00:00:26,310 --> 00:00:33,720
+to this component here simply is because Angular does something for you in the background which is super
+
+8
+00:00:33,720 --> 00:00:34,950
+important,
+
+9
+00:00:34,950 --> 00:00:42,120
+it cleans up the subscription you set up here whenever this component is destroyed because if it wouldn't
+
+10
+00:00:42,120 --> 00:00:47,340
+do this, what are you doing here? You're subscribing to parameter changes and let's say you then leave
+
+11
+00:00:47,390 --> 00:00:49,720
+this component and later you come back.
+
+12
+00:00:49,980 --> 00:00:52,460
+Well once you left, this component will be destroyed
+
+13
+00:00:52,500 --> 00:00:59,010
+and when you come back, a new one will be created but this subscription here will always live on in memory
+
+14
+00:00:59,070 --> 00:01:01,690
+because it's not closely tied to your component,
+
+15
+00:01:01,710 --> 00:01:08,580
+so if the component is destroyed, the subscription won't. Now it will be here because Angular handles this
+
+16
+00:01:08,790 --> 00:01:11,140
+destroying of the subscription for you
+
+17
+00:01:11,340 --> 00:01:18,750
+but theoretically, you might want to implement the onDestroy lifecycle hook, importing it from 
+
+18
+00:01:18,750 --> 00:01:19,740
+@angular/core,
+
+19
+00:01:20,100 --> 00:01:26,510
+therefore you have to implement ngOnDestroy and then you could store the subscription here in
+
+20
+00:01:26,510 --> 00:01:27,350
+some property,
+
+21
+00:01:27,390 --> 00:01:28,850
+let's name it
+
+22
+00:01:28,860 --> 00:01:37,920
+params subscription which will be of type subscription and subscription needs to be imported from
+
+23
+00:01:37,920 --> 00:01:39,580
+rxjs/subscription.
+
+24
+00:01:39,640 --> 00:01:45,570
+Rxjs is the package offering all these observables functionality, as I mentioned it's
+
+25
+00:01:45,570 --> 00:01:49,460
+not shipping with Angular but Angular is using this package.
+
+26
+00:01:49,860 --> 00:01:57,000
+So this type here, this subscription, this params subscription property is now bound to this subscription we're
+
+27
+00:01:57,000 --> 00:02:01,170
+setting up here when calling subscribe, this returns us the subscription
+
+28
+00:02:01,530 --> 00:02:07,490
+and once the component gets destroyed, we could now access the subscription and unsubscribe.
+
+29
+00:02:07,710 --> 00:02:13,410
+And again because it's important, you don't have to do this, you can leave it as it was before because
+
+30
+00:02:13,490 --> 00:02:17,170
+Angular will do this for you regarding these route observables
+
+31
+00:02:17,550 --> 00:02:22,260
+but if you add your own observables and I will come back to this in the observable section following
+
+32
+00:02:22,260 --> 00:02:25,560
+this section, you have to unsubscribe on your own
+
+33
+00:02:25,650 --> 00:02:30,600
+and I just wanted to bring it to your attention because it's always super important to understand what's
+
+34
+00:02:30,600 --> 00:02:31,950
+happening behind the scenes.
+
+35
+00:02:31,950 --> 00:02:36,530
+Again, it's not necessary here but it doesn't hurt to also do it manually too here,
+
+36
+00:02:36,570 --> 00:02:40,310
+it won't add anything bad to your app by doing it like this.
+

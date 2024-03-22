@@ -1,0 +1,52 @@
+1
+00:00:01,980 --> 00:00:07,080
+Welcome to a new Marshall indice course we had a look at a lot of functionalities Anglo to offer us
+
+2
+00:00:07,350 --> 00:00:11,480
+which allow us to create awesome single page applications.
+
+3
+00:00:11,490 --> 00:00:16,410
+Now what functionality we haven't covered yet and where an older want to give you a basic introduction
+
+4
+00:00:16,410 --> 00:00:22,110
+to it at least our animations and what use ships with its own animation system which we can use to for
+
+5
+00:00:22,110 --> 00:00:29,010
+example render da addition of items to a list or deconditioned all at hatching or detaching of elements
+
+6
+00:00:29,010 --> 00:00:29,950
+to the DOM.
+
+7
+00:00:29,970 --> 00:00:35,670
+So all these things which are kind of hard to handle with normal C as s transitions were animations
+
+8
+00:00:35,970 --> 00:00:42,240
+because if you add something to dom which isn't there before it's hard to handle this with a C S S transition
+
+9
+00:00:42,250 --> 00:00:43,320
+style.
+
+10
+00:00:43,380 --> 00:00:48,930
+Therefore in this modular will have a look at the two with a lot to offer us to turn this application
+
+11
+00:00:48,930 --> 00:00:56,040
+here which isn't too awesome but which has a list at least well to turn this into a nicer application
+
+12
+00:00:56,040 --> 00:01:01,100
+where we play around with a couple of any nations and see how the animation system in England works
+
+13
+00:01:01,120 --> 00:01:02,390
+.
+

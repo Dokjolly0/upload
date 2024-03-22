@@ -1,0 +1,128 @@
+1
+00:00:02,530 --> 00:00:08,530
+In the last lecture we learned that we have view child and how we can access it in our life cycle hooks
+
+2
+00:00:09,020 --> 00:00:17,090
+that there is one ever nice little addition in app component where we add our content which we then
+
+3
+00:00:17,090 --> 00:00:20,020
+project into our server element.
+
+4
+00:00:20,020 --> 00:00:23,840
+Let's say we also want to place a local reference on this paragraph.
+
+5
+00:00:24,010 --> 00:00:26,590
+So the content paragraph maybe.
+
+6
+00:00:26,800 --> 00:00:33,630
+But now we want to use that in our server element component which is where this content will end up
+
+7
+00:00:33,640 --> 00:00:35,080
+in the end.
+
+8
+00:00:35,080 --> 00:00:40,540
+Now in the app component which is where we currently placed us in the template we could use at The View
+
+9
+00:00:40,540 --> 00:00:46,300
+child because it's in the template of the app component even though it will be kind of passed on to
+
+10
+00:00:46,300 --> 00:00:48,550
+the server element component later.
+
+11
+00:00:49,030 --> 00:00:53,950
+Since we know that it will be there it would be nice if we could also access it from the server element
+
+12
+00:00:53,950 --> 00:00:54,430
+component.
+
+13
+00:00:54,700 --> 00:00:58,980
+But at the view child won't work because it's not part of the view.
+
+14
+00:00:59,080 --> 00:01:06,030
+It's part of the content which is why we also have separate hooks your content in it and view in it.
+
+15
+00:01:06,070 --> 00:01:09,260
+Great thing is we don't only have at view child.
+
+16
+00:01:09,460 --> 00:01:15,590
+We also have at content child which also needs to be imported from ad angular core.
+
+17
+00:01:15,640 --> 00:01:22,450
+There's not also allows us to pass a selector so the reference name content paragraph would be the selector
+
+18
+00:01:22,450 --> 00:01:30,700
+we chose here in the app component HDMI file and then just like with ET view child we get we can store
+
+19
+00:01:30,700 --> 00:01:37,270
+this in some property which will be of type element ref like this and now we can use it and just like
+
+20
+00:01:37,270 --> 00:01:44,490
+with view ref we of course can't access to value or anything before we reached content in it.
+
+21
+00:01:45,490 --> 00:01:53,050
+So that's something I just wanted to add at content child to get access to content which is stored in
+
+22
+00:01:53,050 --> 00:01:57,910
+another component but then passed on via energy content.
+
+23
+00:01:57,910 --> 00:02:03,690
+Now let me locked is and I will log it here and on in it to demonstrate that this is not there.
+
+24
+00:02:03,730 --> 00:02:12,030
+Here I will simply output text content of paragraph
+
+25
+00:02:14,610 --> 00:02:26,330
+whoops paragraph and access this paragraph native element text content and then I will copy this to
+
+26
+00:02:26,480 --> 00:02:28,810
+offer content in it.
+
+27
+00:02:28,850 --> 00:02:37,610
+Now once I save this reload the application you see that the first time we call it it's empty here after
+
+28
+00:02:37,610 --> 00:02:44,090
+on in it but there after an energy after content in it or after this has been called once this hook
+
+29
+00:02:44,090 --> 00:02:49,310
+has been called we see just a tests now it was initialized.
+
+30
+00:02:49,310 --> 00:02:51,350
+That is the missing piece.
+
+31
+00:02:51,350 --> 00:02:57,830
+Understanding how we can get access to elements in our dorm and how we can work with these lifecycle
+
+32
+00:02:57,890 --> 00:02:58,460
+hooks.
+

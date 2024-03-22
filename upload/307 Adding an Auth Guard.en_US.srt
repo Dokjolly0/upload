@@ -1,0 +1,480 @@
+1
+00:00:02,650 --> 00:00:04,610
+So how can we prevent that
+
+2
+00:00:04,620 --> 00:00:10,780
+users can visit /recipes if they are not authenticated?
+
+3
+00:00:10,780 --> 00:00:15,910
+Do you remember the routing section? There we had a look at route guards and that is exactly what we need
+
+4
+00:00:15,910 --> 00:00:23,530
+here. A route guard allows us to run logic right before a route is loaded and we can deny access if a
+
+5
+00:00:23,530 --> 00:00:25,230
+certain condition is not met
+
+6
+00:00:25,330 --> 00:00:29,260
+and this is exactly what we need here. For that in the auth folder,
+
+7
+00:00:29,260 --> 00:00:33,180
+let's create a new file and I'll name it auth.guard.ts
+
+8
+00:00:33,220 --> 00:00:40,030
+and that will be my, as the name suggests, authentication guard and in there,
+
+9
+00:00:40,040 --> 00:00:48,760
+let's export a class, auth guard which should implement the can activate interface.
+
+10
+00:00:48,760 --> 00:00:54,890
+Now this is imported, not from this path but from @angular/router
+
+11
+00:00:55,100 --> 00:00:57,290
+and since this technically is a service
+
+12
+00:00:57,290 --> 00:01:02,540
+and of course you could name it export class auth guard service therefore, since this is a service we
+
+13
+00:01:02,540 --> 00:01:09,250
+need @injectable here, injectable like this which is imported from @angular/core
+
+14
+00:01:09,380 --> 00:01:14,880
+and here you can use provided in root to provide this application-wide if you want
+
+15
+00:01:14,900 --> 00:01:19,650
+again you could also add it to providers in the app module. So that's the
+
+16
+00:01:19,730 --> 00:01:27,890
+auth guard, since we add the can activate interface here, we now have to add the can activate method. The can
+
+17
+00:01:27,890 --> 00:01:34,580
+activate method has to be implemented in a certain way, it receives the currently active route which is
+
+18
+00:01:34,580 --> 00:01:40,970
+of type activated route snapshot and you can by the way see this if you press command or control and
+
+19
+00:01:40,970 --> 00:01:44,440
+click on the interface, then you can see the definition here.
+
+20
+00:01:44,540 --> 00:01:51,200
+So we get two arguments, the activated route snapshot and the router state snapshot, so that's the second
+
+21
+00:01:51,200 --> 00:01:54,110
+thing here, router state snapshot,
+
+22
+00:01:54,110 --> 00:02:06,640
+both imported from @angular/router and can activate then has to return either a boolean or a promise
+
+23
+00:02:06,640 --> 00:02:15,070
+that eventually yields a boolean expressed here by using this generic promise notation or an observable
+
+24
+00:02:15,340 --> 00:02:22,850
+which eventually will yield a boolean and for that you also need to import observable from RxJS.
+
+25
+00:02:23,170 --> 00:02:30,010
+This is how can activate should look like and right now, we're getting an error because we are not returning
+
+26
+00:02:30,010 --> 00:02:35,440
+anything when we are expected to return a boolean, a promise or an observable.
+
+27
+00:02:35,560 --> 00:02:37,690
+Now what can we return here?
+
+28
+00:02:37,690 --> 00:02:44,880
+We want to return the status as we can derive it from our auth service.
+
+29
+00:02:45,080 --> 00:02:53,600
+So here, let's inject the auth service which is of type auth service and which you need to import from the
+
+30
+00:02:53,600 --> 00:03:01,130
+auth service file and then in there, we can find out whether the user is authenticated or not by looking
+
+31
+00:03:01,220 --> 00:03:04,160
+at that user behavior subject.
+
+32
+00:03:04,160 --> 00:03:08,490
+So here, we can access this auth service user
+
+33
+00:03:08,600 --> 00:03:11,460
+and now don't subscribe here but return it instead
+
+34
+00:03:11,570 --> 00:03:17,960
+because this already is an observable, it's a subject and therefore also an observable, however not an
+
+35
+00:03:17,960 --> 00:03:19,630
+observable that returns a boolean,
+
+36
+00:03:19,700 --> 00:03:25,710
+instead it is an observable that in the end returns a user object but this can be fixed easily,
+
+37
+00:03:25,820 --> 00:03:32,720
+we just add pipe and use the map operator which is imported from rxjs/operators to transform
+
+38
+00:03:32,750 --> 00:03:34,620
+the observable value here.
+
+39
+00:03:34,760 --> 00:03:40,760
+So we get our user and we want to return true or false, so we can simply return
+
+40
+00:03:40,760 --> 00:03:40,990
+!!user
+
+41
+00:03:40,990 --> 00:03:46,580
+which is that trick which converts a true-ish value, like an object,
+
+42
+00:03:46,580 --> 00:03:49,420
+so anything that is not null or undefined, to true,
+
+43
+00:03:49,460 --> 00:03:56,960
+so to a real boolean or that converts false-ish value like null or undefined to a true boolean, so
+
+44
+00:03:56,960 --> 00:03:58,150
+to false in this case.
+
+45
+00:03:58,730 --> 00:04:04,460
+So now we have an observable that really will return true or false and that should allow us to use that
+
+46
+00:04:04,520 --> 00:04:09,670
+activate guard in front of the routes that we want to protect.
+
+47
+00:04:09,670 --> 00:04:17,730
+So now with can activate added here, let's go to the app routing module and here of course, it's this
+
+48
+00:04:17,970 --> 00:04:21,790
+path here, the recipes path which I want to protect.
+
+49
+00:04:21,810 --> 00:04:27,960
+So in there, we can add the can activate key which is an array of all the can activate guards we want
+
+50
+00:04:27,960 --> 00:04:34,470
+to register for this route and here it's only one guard, it's the auth guard which
+
+51
+00:04:34,470 --> 00:04:42,780
+you also need to import of course. With that changed, let's save that and let's see if it works, that doesn't
+
+52
+00:04:42,780 --> 00:04:48,660
+look too bad, we are kind of stranded here and we should take care about that but at least, we can't access
+
+53
+00:04:48,660 --> 00:04:53,000
+/recipes, though is this really the right behavior?
+
+54
+00:04:53,130 --> 00:04:56,090
+Let's have a look at application. This is empty,
+
+55
+00:04:56,190 --> 00:05:01,610
+so let's try logging in now like this and we can visit recipe,
+
+56
+00:05:01,610 --> 00:05:04,360
+so here we are granted access, this is looking good
+
+57
+00:05:04,610 --> 00:05:08,670
+and now let's reload the recipes page and this also works.
+
+58
+00:05:08,720 --> 00:05:13,800
+So indeed, this works and it gives us the right data, the guard works correctly here.
+
+59
+00:05:14,090 --> 00:05:20,210
+What we should make sure though is that when we logout and we manually try to go to /recipes, that
+
+60
+00:05:20,420 --> 00:05:26,210
+we actually redirect the user to a page where he can do something, like the authenticate page and to
+
+61
+00:05:26,210 --> 00:05:33,390
+do that, we can go back to the guard, in there we are returning true or false
+
+62
+00:05:33,580 --> 00:05:39,370
+but now if we have a closer look at the can activate interface by command or control clicking on that, we
+
+63
+00:05:39,370 --> 00:05:44,020
+see we can actually return more than just observables or promises or booleans.
+
+64
+00:05:44,020 --> 00:05:50,960
+We can also return a URL tree or a promise or an observable that yields a URL tree.
+
+65
+00:05:51,070 --> 00:05:57,180
+This is a relatively new feature and it was added basically for this exact use case for authentication,
+
+66
+00:05:57,340 --> 00:06:04,180
+it was added so that you can redirect users when the URL they're trying to visit is blocked. So for
+
+67
+00:06:04,180 --> 00:06:11,560
+can activate, for this guard which you often use in connection with authentication, you have now a more
+
+68
+00:06:11,560 --> 00:06:18,640
+convenient way of redirecting users. In the past with older Angular versions, you had to manually redirect,
+
+69
+00:06:18,880 --> 00:06:25,810
+so for example here, you would have added a tap rxjs/operator which you need to import by
+
+70
+00:06:25,810 --> 00:06:27,420
+the way
+
+71
+00:06:27,570 --> 00:06:34,010
+and there you would get that isAuth information because map gives us true or false, is the user authenticated
+
+72
+00:06:34,020 --> 00:06:34,920
+or not
+
+73
+00:06:34,920 --> 00:06:35,950
+and then here you could check,
+
+74
+00:06:35,970 --> 00:06:37,920
+if not is auth, you know
+
+75
+00:06:37,920 --> 00:06:38,240
+OK
+
+76
+00:06:38,250 --> 00:06:41,880
+I don't want to grant access, then you would inject the router,
+
+77
+00:06:44,500 --> 00:06:52,810
+the router like this from @angular/router of course and with the router injected in here, you would
+
+78
+00:06:52,810 --> 00:06:59,900
+call this router navigate and go to /auth for example and this works. If I save that and the app reloads,
+
+79
+00:06:59,900 --> 00:07:04,260
+we see if I type recipes here, I automatically go to auth.
+
+80
+00:07:04,330 --> 00:07:11,140
+Nothing wrong with this but in some edge cases, this could lead to race conditions with multiple redirects
+
+81
+00:07:11,320 --> 00:07:18,880
+that kind of interfere with each other and therefore, instead of using this approach, you can now also
+
+82
+00:07:19,000 --> 00:07:25,930
+use a different one and not return true or false here but return true if you want to grant access but
+
+83
+00:07:25,930 --> 00:07:27,130
+not false otherwise
+
+84
+00:07:27,130 --> 00:07:28,790
+but this URL tree.
+
+85
+00:07:28,960 --> 00:07:34,930
+So here, I'll store the result of my conversion here in isAuth and if we have isAuth,
+
+86
+00:07:34,930 --> 00:07:40,210
+so if this is true-ish, then I will just return true,
+
+87
+00:07:40,460 --> 00:07:46,790
+otherwise I want to return a URL tree and now such a URL tree can be created with
+
+88
+00:07:46,790 --> 00:07:52,220
+the router which you still need to inject therefore but there, you can now call create URL tree
+
+89
+00:07:52,610 --> 00:07:57,170
+and there you can simply pass in your normal array of segments, of route segments you want to navigate
+
+90
+00:07:57,170 --> 00:07:57,620
+to,
+
+91
+00:07:57,710 --> 00:08:04,470
+so for example /auth. I'm getting an error here because the types I edit here don't include the URL
+
+92
+00:08:04,470 --> 00:08:10,920
+tree, we just need to update this to meet the specification of the interface and yes, a URL tree
+
+93
+00:08:10,920 --> 00:08:18,360
+is allowed there, you just need to import that type from @angular/router and then it is fine to return
+
+94
+00:08:18,900 --> 00:08:24,810
+an observable that either yields a boolean or a URL tree, the same for a promise and also instead
+
+95
+00:08:24,810 --> 00:08:31,110
+of a normal boolean. So returning a URL tree or promises or observable that yield URL trees
+
+96
+00:08:31,200 --> 00:08:37,890
+are OK, we're doing that here and therefore now if we save that, we get the same behavior as before. If
+
+97
+00:08:37,890 --> 00:08:45,810
+I visit /recipes, I'm forwarded to auth, if I just try to load localhost 4200,
+
+98
+00:08:46,110 --> 00:08:52,230
+we also go to auth because if we just try to load the page as it is there, first of all we get redirected
+
+99
+00:08:52,230 --> 00:08:57,010
+to recipes but there we then have the guard which then continuous redirecting us to auth.
+
+100
+00:08:57,090 --> 00:09:03,450
+So now we have an auth guard in place that should do its job and that makes sure that we really can only
+
+101
+00:09:03,450 --> 00:09:10,140
+reach the recipes page if we are logged in but there, we can reach it without issues even if we reload
+
+102
+00:09:10,140 --> 00:09:15,930
+the app because we're using auto login but also auto logout to clear everything once our token
+
+103
+00:09:15,930 --> 00:09:16,860
+expired.
+
+104
+00:09:16,950 --> 00:09:24,030
+Now with that, we're almost done with the guard but there is one thing I want to edit in this auth guard.
+
+105
+00:09:24,030 --> 00:09:29,940
+Right now, we're subscribing to our user service here, we're mapping that value into true or false and
+
+106
+00:09:29,940 --> 00:09:37,470
+we are returning a URL tree if it is false and if we want to redirect. The one issue we have here is that
+
+107
+00:09:37,470 --> 00:09:42,780
+we essentially set up an ongoing subscription here though. This user subject of course can emit
+
+108
+00:09:42,840 --> 00:09:45,780
+data more than once and I don't want that here,
+
+109
+00:09:45,780 --> 00:09:50,990
+this can lead to strange side effects if our guard keeps on listening to that subject,
+
+110
+00:09:51,150 --> 00:09:57,090
+instead we want to look inside the user value for one time only and then not care about it anymore unless
+
+111
+00:09:57,090 --> 00:10:04,440
+we run the guard again and therefore here just as in other places too, we should use take one to make
+
+112
+00:10:04,440 --> 00:10:12,240
+sure that we always just take the latest user value and then unsubscribe for this guard execution so that
+
+113
+00:10:12,240 --> 00:10:18,150
+we don't have an ongoing listener to that which we really don't need and therefore here, you need to
+
+114
+00:10:18,150 --> 00:10:24,060
+import the take operator, the take rxjs/operator and add it here in front of map so that we
+
+115
+00:10:24,060 --> 00:10:26,910
+don't have an ongoing user subscription.
+
+116
+00:10:26,910 --> 00:10:32,430
+With that if you save that, you see I can still visit recipes here after reloading, so the guard generally
+
+117
+00:10:32,430 --> 00:10:40,050
+still seems to work but now I have a logout and I try to access recipes, we fail as we should,
+
+118
+00:10:40,050 --> 00:10:42,660
+if I now login again, we succeed.
+
+119
+00:10:42,660 --> 00:10:50,580
+So the guard now still works as before but now, we avoid nasty bugs which could occur due to us rerunning
+
+120
+00:10:50,670 --> 00:10:54,120
+the logic in the guard when we really don't want to rerun it.
+

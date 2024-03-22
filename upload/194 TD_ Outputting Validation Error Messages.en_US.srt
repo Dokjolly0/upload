@@ -1,0 +1,108 @@
+1
+00:00:02,740 --> 00:00:07,660
+In the last lecture, we improve the user experience by taking advantage of the form state handled by
+
+2
+00:00:07,750 --> 00:00:09,070
+Angular.
+
+3
+00:00:09,070 --> 00:00:15,700
+Now let's improve this even more and let's say we want to output some help text below this input to assist
+
+4
+00:00:15,760 --> 00:00:18,520
+if there is an invalid value in there.
+
+5
+00:00:18,520 --> 00:00:26,200
+Now we can use a Bootstrap class here, help-block, to make sure that this has the appropriate styling
+
+6
+00:00:26,590 --> 00:00:29,760
+and then we could say please enter a valid e-mail.
+
+7
+00:00:29,770 --> 00:00:36,010
+We only want to show this if an invalid value has been entered into the control
+
+8
+00:00:36,010 --> 00:00:38,240
+associated with this input though.
+
+9
+00:00:38,680 --> 00:00:45,640
+Well, a quick and easy way of getting access to the control created by Angular automatically as we added
+
+10
+00:00:45,670 --> 00:00:52,600
+ngModel to the input is by adding a local reference to this input element here,
+
+11
+00:00:52,600 --> 00:00:59,800
+for example e-mail, any name you like and associating this now not with ngForm as we did for the overall
+
+12
+00:00:59,800 --> 00:01:02,340
+form but with ngModel.
+
+13
+00:01:02,350 --> 00:01:09,970
+So just like the form directive automatically added by Angular when it detects a form element, the
+
+14
+00:01:09,970 --> 00:01:16,780
+ngModel directive here also kind of exposes some additional information about the control it creates
+
+15
+00:01:16,780 --> 00:01:22,780
+for us on the overarching form by accessing ngModel.
+
+16
+00:01:22,780 --> 00:01:28,580
+So with this, we could simply check or say that we want to attach this span here
+
+17
+00:01:28,990 --> 00:01:34,600
+if e-mail is not valid, so add an exclamation mark at the beginning.
+
+18
+00:01:34,600 --> 00:01:39,740
+Now with this if this reloads, you'll see that help text
+
+19
+00:01:40,090 --> 00:01:43,940
+and of course you can improve this by also chaining another condition
+
+20
+00:01:44,000 --> 00:01:48,200
+that e-mail should have been touched to give the user a chance of changing it.
+
+21
+00:01:48,220 --> 00:01:52,810
+So now you don't see the warning but if you click in there and click out of there and it is invalid,
+
+22
+00:01:52,810 --> 00:01:54,170
+you see that warning
+
+23
+00:01:54,280 --> 00:01:58,360
+and if you now enter a valid data, it disappears.
+
+24
+00:01:58,360 --> 00:02:02,990
+So this is another way of taking advantage of the state managed by Angular
+
+25
+00:02:03,070 --> 00:02:08,820
+but this also shows you how you can get a quick and easy access to control added by Angular.
+
+26
+00:02:08,980 --> 00:02:15,670
+And with that, you should have tools to really provide a pleasant user experience showing the right errors,
+
+27
+00:02:15,670 --> 00:02:21,110
+the right warnings and styling the form correctly depending on the state of the form.
+

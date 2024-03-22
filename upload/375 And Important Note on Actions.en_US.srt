@@ -1,0 +1,300 @@
+1
+00:00:02,520 --> 00:00:10,170
+Before we tackle side effects and how we handle such effects with NgRx, two important things.
+
+2
+00:00:10,170 --> 00:00:15,200
+First, let's have a look at our reducer real quick and there, at this default return state case.
+
+3
+00:00:15,450 --> 00:00:19,980
+Thus far, I mentioned that this is important for initializing the state
+
+4
+00:00:20,220 --> 00:00:27,560
+and that is true. When NgRx starts up, thanks to us initializing the store module in the app module,
+
+5
+00:00:27,810 --> 00:00:35,070
+it essentially sends one initial action to all reducers and since this action has an identifier we
+
+6
+00:00:35,070 --> 00:00:40,400
+don't handle anywhere here and we'll soon see which identifier this is, no worries.
+
+7
+00:00:40,530 --> 00:00:44,820
+Since this is an identifier we don't explicitly handle, we make it into the default case,
+
+8
+00:00:44,820 --> 00:00:52,110
+therefore we return the state and since we have no prior state when this first action is emitted, we therefore
+
+9
+00:00:52,110 --> 00:00:53,370
+take this initial state.
+
+10
+00:00:53,640 --> 00:00:59,370
+So that's one important note but another thing about what I just said is also important.
+
+11
+00:00:59,430 --> 00:01:06,600
+This initial action dispatched automatically reaches all reducers. Well that is not just a case for
+
+12
+00:01:06,600 --> 00:01:08,070
+the initial action,
+
+13
+00:01:08,070 --> 00:01:12,090
+any action you dispatch, even your own ones, not just that initial one,
+
+14
+00:01:12,090 --> 00:01:18,140
+so any action you dispatch by calling dispatch always reaches all reducers.
+
+15
+00:01:18,150 --> 00:01:23,460
+It does not just reach the auth reducer because you are dispatching it in the auth service,
+
+16
+00:01:23,460 --> 00:01:26,160
+how would NgRx know that this is your intention?
+
+17
+00:01:26,160 --> 00:01:31,500
+It would be dangerous if that would be the result because that means you could never reach another
+
+18
+00:01:31,500 --> 00:01:37,410
+reducer with actions dispatched here in the auth service and there certainly are scenarios where you
+
+19
+00:01:37,410 --> 00:01:46,520
+might want to reach another reducer. So therefore, any action you dispatch always reaches all reducers.
+
+20
+00:01:46,560 --> 00:01:48,840
+This has an important implication,
+
+21
+00:01:48,870 --> 00:01:50,530
+it's even more important
+
+22
+00:01:50,640 --> 00:01:59,260
+that you always copy the old state here and it's super important that you return this default state here,
+
+23
+00:01:59,340 --> 00:02:05,490
+so the unchanged state because if a shopping list related action is dispatched, it still reaches the
+
+24
+00:02:05,490 --> 00:02:10,200
+auth reducer. In there of course, we have no case that would handle that action,
+
+25
+00:02:10,200 --> 00:02:16,800
+hence all these code snippets here don't kick in but therefore the default case kicks in and handles
+
+26
+00:02:16,800 --> 00:02:17,400
+this
+
+27
+00:02:17,400 --> 00:02:21,260
+and there, we absolutely have to return our current state,
+
+28
+00:02:21,300 --> 00:02:29,130
+otherwise we would lose that or cause an error and I can simply show that by adding a console
+
+29
+00:02:29,130 --> 00:02:34,760
+log here where I just print the state, so that we can see what's inside there.
+
+30
+00:02:34,840 --> 00:02:36,910
+And now let's go back to the application,
+
+31
+00:02:36,960 --> 00:02:38,570
+let's wait for it to reload
+
+32
+00:02:38,790 --> 00:02:42,290
+and please note I added console log in the auth reducer,
+
+33
+00:02:42,300 --> 00:02:45,300
+now let me do something related to the shopping list,
+
+34
+00:02:45,300 --> 00:02:47,810
+clear my console first then I delete.
+
+35
+00:02:48,030 --> 00:02:55,680
+You see I get my user printed here from the auth reducer but what we see here is that this is our auth
+
+36
+00:02:55,740 --> 00:02:56,610
+state slice.
+
+37
+00:02:56,610 --> 00:03:01,130
+Now this does not contain any information about the shopping list because the state slices,
+
+38
+00:03:01,170 --> 00:03:09,600
+so these state objects are managed on a per global state slice level, so the auth reducer is only caring
+
+39
+00:03:09,600 --> 00:03:12,840
+about its state which has a user property,
+
+40
+00:03:12,840 --> 00:03:18,120
+the shopping list reducer only cares about its state but actions reach all reducers and therefore,
+
+41
+00:03:18,270 --> 00:03:23,670
+it is important that we return our default state for this state slice here,
+
+42
+00:03:23,670 --> 00:03:28,050
+otherwise if we wouldn't do that, if we would return null here or anything like that, we would basically
+
+43
+00:03:28,050 --> 00:03:35,040
+drop our state here in the auth reducer when something is dispatched in another part of the app.
+
+44
+00:03:35,250 --> 00:03:37,070
+So that's the first important thing, 
+
+45
+00:03:37,170 --> 00:03:44,190
+the next important thing is that since our dispatched actions reach all reducers, you really have to
+
+46
+00:03:44,190 --> 00:03:52,800
+ensure that your identifiers here are login across the entire application because these auth related
+
+47
+00:03:53,040 --> 00:03:56,340
+actions here are not just handled by the auth reducer,
+
+48
+00:03:56,340 --> 00:03:59,550
+they also reach the shopping list reducer.
+
+49
+00:03:59,550 --> 00:04:05,190
+Now of course, we in this application we have identifiers that don't really interfere,
+
+50
+00:04:05,190 --> 00:04:13,110
+add ingredient and login are quite different but for bigger applications, it is of course possible that
+
+51
+00:04:13,110 --> 00:04:18,560
+you have duplicate identifiers across different parts of your app.
+
+52
+00:04:18,660 --> 00:04:24,270
+Now since they have to be unique for the entire application because actions reach the entire application,
+
+53
+00:04:24,840 --> 00:04:27,950
+I would recommend a technique called prefixing.
+
+54
+00:04:28,050 --> 00:04:34,590
+That means you edit your identifiers here a little bit to have one extra piece of information that
+
+55
+00:04:34,590 --> 00:04:37,860
+really makes them unique. In NgRx world,
+
+56
+00:04:37,860 --> 00:04:44,630
+you typically use square brackets and then you add the name of the feature you are dealing with, so in
+
+57
+00:04:44,630 --> 00:04:51,680
+this case, that would be shopping list and then you could still use the uppercase notation here or you
+
+58
+00:04:51,680 --> 00:04:55,070
+also use a normal text casing here
+
+59
+00:04:55,130 --> 00:05:01,980
+so to say. Now I will convert like this, it's not a must do but it is recommended especially for bigger
+
+60
+00:05:01,980 --> 00:05:04,280
+apps to avoid clashes,
+
+61
+00:05:04,290 --> 00:05:07,680
+now of course any prefix that ensures uniqueness would be fine
+
+62
+00:05:07,740 --> 00:05:09,530
+but here I'll just implement a pattern
+
+63
+00:05:09,530 --> 00:05:12,800
+you'll also find in the official NgRx docs.
+
+64
+00:05:12,930 --> 00:05:18,840
+So here I'll always use the feature name in square brackets first and then basically a plain English
+
+65
+00:05:18,840 --> 00:05:20,800
+description of what it does.
+
+66
+00:05:20,820 --> 00:05:24,800
+So let's quickly do that for all these actions here,
+
+67
+00:05:32,570 --> 00:05:37,610
+it's especially interesting here for start and stop edit because we could probably imagine that we
+
+68
+00:05:37,610 --> 00:05:40,960
+have different parts in the app where we also start and stop editing,
+
+69
+00:05:54,260 --> 00:05:57,750
+so that's my shopping list actions file updated
+
+70
+00:05:57,750 --> 00:06:02,900
+and now let's also be consistent and do the same for the auth actions even though it's very unlikely
+
+71
+00:06:02,900 --> 00:06:07,450
+that we use login and logout anywhere else in the app but still, doesn't hurt.
+
+72
+00:06:07,460 --> 00:06:13,060
+You don't need to change your constant name, so that stays uppercase login and uppercase logout,
+
+73
+00:06:13,070 --> 00:06:19,290
+it's really just about the values you store inside of these constants. And with that, we now enhance this
+
+74
+00:06:19,340 --> 00:06:20,090
+a little bit more,
+
+75
+00:06:20,090 --> 00:06:22,310
+now let's focus on these side effects.
+

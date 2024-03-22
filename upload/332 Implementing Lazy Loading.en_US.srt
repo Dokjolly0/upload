@@ -1,0 +1,620 @@
+1
+00:00:02,150 --> 00:00:07,670
+For this, this is the app without lazy loading, so the app as we currently have it, and if you go
+
+2
+00:00:07,670 --> 00:00:14,780
+to the network tab and you reload the app here on this off page, unauthenticated.
+
+3
+00:00:16,100 --> 00:00:22,400
+You see, we download a bunch of files here, we have our let me shrink this, we have our polie, Fuld's
+
+4
+00:00:22,400 --> 00:00:25,280
+Forestalls Jass, Vanderjagt Main Jass.
+
+5
+00:00:25,670 --> 00:00:31,820
+These are for JavaScript files and we're in development mode here, which is why they are extremely
+
+6
+00:00:31,820 --> 00:00:32,170
+big.
+
+7
+00:00:32,180 --> 00:00:33,590
+They will be smaller ones.
+
+8
+00:00:33,590 --> 00:00:37,460
+We built the app for production because this code is not optimized at all.
+
+9
+00:00:37,680 --> 00:00:39,860
+It contains many debark features.
+
+10
+00:00:40,010 --> 00:00:43,250
+So it will be way smaller later and we'll see that later.
+
+11
+00:00:43,850 --> 00:00:47,240
+But at the moment, you see we have pretty big files here.
+
+12
+00:00:47,240 --> 00:00:53,180
+Four megabytes, one hundred kilobytes, almost a megabyte, 236 kilobytes.
+
+13
+00:00:53,240 --> 00:00:55,490
+Now, again, this will shrink significantly.
+
+14
+00:00:55,490 --> 00:01:01,010
+But still, this is our current file size with lazy loading, we should be able to decrease that.
+
+15
+00:01:01,550 --> 00:01:03,230
+How do we add lazy loading, though?
+
+16
+00:01:03,680 --> 00:01:09,410
+Let's start with the recipes module, because, for example, here, when we're not authenticated,
+
+17
+00:01:09,800 --> 00:01:15,590
+we certainly don't need to load the recipes module code because we can't even access anything from the
+
+18
+00:01:15,590 --> 00:01:16,820
+recipes module here.
+
+19
+00:01:17,420 --> 00:01:21,980
+It might also not make sense to load the shopping list module even though we can access it, because
+
+20
+00:01:21,980 --> 00:01:25,060
+unless we do, there is no need to download that code.
+
+21
+00:01:25,670 --> 00:01:27,560
+So let's start with the recipes module.
+
+22
+00:01:27,560 --> 00:01:33,530
+Nonetheless, there we have the recipes module and we have its own roots here in the recipes routing
+
+23
+00:01:33,530 --> 00:01:34,060
+module.
+
+24
+00:01:34,610 --> 00:01:42,020
+Now, having the Rawat's registered here is an important starting point for a lazy loading to work,
+
+25
+00:01:42,020 --> 00:01:45,380
+your feature module needs to bring its own roots.
+
+26
+00:01:45,410 --> 00:01:48,510
+As we're doing it here, it needs to bring its own root config.
+
+27
+00:01:48,680 --> 00:01:53,200
+We're doing that here and it needs to bring that with Warchild, which is also what we're doing here.
+
+28
+00:01:54,020 --> 00:01:58,700
+Now, one thing we'll need to change, though, that path recipes here.
+
+29
+00:01:59,000 --> 00:02:05,180
+I will change it to an empty POV because now we need to add something to our app routing module for
+
+30
+00:02:05,180 --> 00:02:07,460
+lazy loading to work here.
+
+31
+00:02:07,670 --> 00:02:11,960
+I'll again add another route and that will be the route for recipes.
+
+32
+00:02:11,960 --> 00:02:15,320
+Soda pop I just removed from the recipes module.
+
+33
+00:02:16,200 --> 00:02:24,210
+Now, here I'm in the app routing module, important, I add that POF again here, but now I don't add
+
+34
+00:02:24,210 --> 00:02:28,650
+a component which I want to load, but instead you add load children.
+
+35
+00:02:28,950 --> 00:02:39,330
+That's a special property in a config which Angler understands as please only load the code content
+
+36
+00:02:39,330 --> 00:02:40,400
+or add a module.
+
+37
+00:02:40,410 --> 00:02:45,720
+I'm going to point you at when any one when the user visits this path.
+
+38
+00:02:45,720 --> 00:02:48,150
+Here, let me show you what this means.
+
+39
+00:02:48,750 --> 00:02:49,800
+We can now add.
+
+40
+00:02:51,000 --> 00:02:56,940
+A string here, not a type, not a component type you pointed, but a string, which is a payoff to
+
+41
+00:02:56,940 --> 00:03:01,980
+the model you want to load when dispatcher or when this path here is visited.
+
+42
+00:03:02,610 --> 00:03:07,950
+And I, of course, want to load relatively from the routing module.
+
+43
+00:03:09,540 --> 00:03:13,440
+My recipes folder, and they're the recipes.
+
+44
+00:03:14,730 --> 00:03:20,970
+Module, not the recipes routing module, but the recipes module, and now you also need to add something
+
+45
+00:03:20,970 --> 00:03:26,160
+here, it's not just a pop, but you also need to add the name of that module because Angular can't
+
+46
+00:03:26,160 --> 00:03:32,160
+know that and it needs to know the class name because technically it will go to that path and then try
+
+47
+00:03:32,160 --> 00:03:36,660
+to dynamically import a specific object from that file.
+
+48
+00:03:36,840 --> 00:03:38,940
+And theoretically that could be named anything.
+
+49
+00:03:39,150 --> 00:03:44,730
+We are, of course, following that naming convention of naming this recipe's module in this case and
+
+50
+00:03:44,730 --> 00:03:48,000
+here when the file name is named Recipe's Thought Module.
+
+51
+00:03:48,360 --> 00:03:51,270
+But no one is forcing us to follow that naming pattern.
+
+52
+00:03:51,390 --> 00:03:59,160
+And therefore we explicitly have to tell Angler what the name of the exporter class in that file is.
+
+53
+00:03:59,430 --> 00:04:06,060
+And you add that by adding a hash tag and then that name, so low children points at recipe's, recipes,
+
+54
+00:04:06,630 --> 00:04:12,060
+recipes, dot module dots and then hash tag and the name of that class.
+
+55
+00:04:12,840 --> 00:04:22,040
+The effect of that will be that now the code is split at that point and everything else this path here.
+
+56
+00:04:22,080 --> 00:04:26,130
+So this entire module and everything that module uses.
+
+57
+00:04:26,130 --> 00:04:32,820
+So all the declarations of that module will be put into a separate code bundle, which is then downloaded
+
+58
+00:04:32,820 --> 00:04:38,550
+and passed on the MOND as soon as a user visits this page, but not sooner.
+
+59
+00:04:40,390 --> 00:04:47,710
+And that is simply achieved by the angular Seelie, essentially analyzing this when we build our app
+
+60
+00:04:47,980 --> 00:04:55,090
+and it will then analyze the recipes module at which we point here and it will look at what we declare
+
+61
+00:04:55,090 --> 00:05:01,480
+in here and so on, and we'll post a code of all these things we declare here into that separate bundle,
+
+62
+00:05:01,480 --> 00:05:08,380
+which is now built separately, detached from our main bundle with which the app starts important.
+
+63
+00:05:08,380 --> 00:05:16,300
+For this to have a real effect and save code is that you have these import statements only in the recipes
+
+64
+00:05:16,300 --> 00:05:21,790
+module and you don't have any old import statements to, let's say, the recipes component in, let's
+
+65
+00:05:21,790 --> 00:05:27,580
+say, the app module, because ultimately for the build process, it's important what you import here
+
+66
+00:05:27,580 --> 00:05:28,240
+at the top.
+
+67
+00:05:28,600 --> 00:05:33,340
+What you import here like that forms module, which I should remove in the app module.
+
+68
+00:05:33,340 --> 00:05:37,380
+What you import here is all bundled together into one code bundle.
+
+69
+00:05:37,780 --> 00:05:43,750
+So in the recipes module, in the end the bill process will look at these imports which are required
+
+70
+00:05:43,750 --> 00:05:48,220
+for this to work, but it will look at these imports and whatever is included here will be included
+
+71
+00:05:48,220 --> 00:05:49,040
+in the same bundle.
+
+72
+00:05:49,330 --> 00:05:56,110
+So if you have another even unused import, add something like this lying around in your app module,
+
+73
+00:05:56,290 --> 00:06:02,350
+then this part would be included into the app module code bundle, even though you're not using it there.
+
+74
+00:06:02,570 --> 00:06:08,170
+So to have the biggest effect and save the most code, make sure your imports are at the top are correct.
+
+75
+00:06:08,380 --> 00:06:15,760
+If they are, then you'll get the biggest possible effect from that code splitting now into recipe's
+
+76
+00:06:15,760 --> 00:06:16,620
+routing module.
+
+77
+00:06:16,630 --> 00:06:21,280
+It's important that you have an empty path because you have to keep in mind that we now changed the
+
+78
+00:06:21,280 --> 00:06:27,190
+route conflict to include the path here in the app routing module and it will load the recipes module
+
+79
+00:06:27,190 --> 00:06:31,540
+whenever we visit recipes and therefore into recipes module.
+
+80
+00:06:31,550 --> 00:06:38,350
+We now already are at recipes and hence here in the recipes routing module, which is only kicking in.
+
+81
+00:06:38,350 --> 00:06:45,730
+Once we do visit this module, we should start with nothing because again, we already are at recipes.
+
+82
+00:06:46,710 --> 00:06:54,060
+Now, save all that and quit your build process and restart energy serve because after adding lazy loading,
+
+83
+00:06:54,180 --> 00:07:00,460
+you will need to restart that to ensure that it really has an effect and is taken into account.
+
+84
+00:07:01,110 --> 00:07:06,630
+Now here I'm getting an error and the issue is that we should remove the dots.
+
+85
+00:07:07,260 --> 00:07:10,230
+Now, one note about this syntax.
+
+86
+00:07:10,230 --> 00:07:17,730
+In newer versions of ANGULAR, you have an alternative syntax and this syntax might even fail in your
+
+87
+00:07:17,730 --> 00:07:18,440
+project.
+
+88
+00:07:18,750 --> 00:07:24,660
+So if you are getting an error like module cannot be found when trying this out, which we'll do in
+
+89
+00:07:24,660 --> 00:07:30,930
+a second, or if you want to switch to that, more modern, different syntax for any other reason here
+
+90
+00:07:30,930 --> 00:07:32,640
+is that obvious syntax you could use.
+
+91
+00:07:32,790 --> 00:07:39,540
+Instead of having this string here to identify the module which should be loaded, you can add a function
+
+92
+00:07:39,540 --> 00:07:46,890
+here and anonymous eral function and in the function Bordo you call import like a function so you don't
+
+93
+00:07:46,890 --> 00:07:54,240
+use import as we do it up there to import modules, but you call it dynamically as a function to import
+
+94
+00:07:54,240 --> 00:07:56,540
+you then pass the path to the module.
+
+95
+00:07:56,550 --> 00:08:05,850
+So slash recipe's recipes module and now you don't add a hashtag thereafter to identify the module,
+
+96
+00:08:06,090 --> 00:08:09,160
+but instead import resolves a promise.
+
+97
+00:08:09,480 --> 00:08:15,750
+So now you call, then there and in this promise or in this, then lock, you pass in a function which
+
+98
+00:08:15,750 --> 00:08:18,630
+receives in the end the module which was loaded here.
+
+99
+00:08:18,780 --> 00:08:27,030
+Hence I named the argument M and on this module object you can extract your modules to recipe's module
+
+100
+00:08:27,030 --> 00:08:27,870
+in this case.
+
+101
+00:08:29,460 --> 00:08:33,240
+So this here is the end, an alternative, Syntex.
+
+102
+00:08:34,180 --> 00:08:40,480
+You could use for loading routes lazily instead of using the string you see in the video store after
+
+103
+00:08:40,480 --> 00:08:42,140
+you can use this function.
+
+104
+00:08:42,350 --> 00:08:47,200
+Now, generally, it doesn't matter which of the two approaches you use, but this is the more modern
+
+105
+00:08:47,200 --> 00:08:47,470
+one.
+
+106
+00:08:47,470 --> 00:08:52,420
+And if you are getting errors with the approach, I'm showing the lectures with just a string based
+
+107
+00:08:52,420 --> 00:08:54,430
+one switch to this one instead.
+
+108
+00:08:56,660 --> 00:09:04,550
+Let's restart, and she served thereafter, and this looks good, however, now when it loads, you
+
+109
+00:09:04,550 --> 00:09:05,900
+should get an error like this.
+
+110
+00:09:06,380 --> 00:09:09,620
+And do you have an idea what might be causing that?
+
+111
+00:09:10,790 --> 00:09:16,290
+Well, in the model, I'm still importing the recipes module.
+
+112
+00:09:16,490 --> 00:09:20,530
+Now, the recipes module is the module we're now trying to load lazily.
+
+113
+00:09:20,870 --> 00:09:26,200
+So we should only have this part here, this route where we use low children.
+
+114
+00:09:26,420 --> 00:09:29,270
+We must not import recipes module anymore.
+
+115
+00:09:29,480 --> 00:09:33,320
+Otherwise we're importing it both eagerly and lazily at the same time.
+
+116
+00:09:33,320 --> 00:09:37,550
+And that will cause an error, of course, all the remove that import statement.
+
+117
+00:09:37,730 --> 00:09:39,920
+Otherwise it will technically work.
+
+118
+00:09:39,920 --> 00:09:42,220
+But you won't save anything in code size.
+
+119
+00:09:42,980 --> 00:09:47,180
+Now, if that's saved, you should be able to save this again.
+
+120
+00:09:47,180 --> 00:09:47,930
+Recompile.
+
+121
+00:09:48,020 --> 00:09:49,070
+And now this looks good.
+
+122
+00:09:49,100 --> 00:09:49,870
+No error.
+
+123
+00:09:50,060 --> 00:09:53,590
+And now let's go to the network tab here and reload this page.
+
+124
+00:09:54,560 --> 00:09:58,820
+Now, the vendor file is still pretty big because that's just angular.
+
+125
+00:09:58,970 --> 00:10:02,180
+But Manges actually shrank previously.
+
+126
+00:10:02,180 --> 00:10:05,240
+That was, I think, 117 kilobyte.
+
+127
+00:10:05,330 --> 00:10:09,590
+So definitely above one hundred, now it's seventy five.
+
+128
+00:10:09,590 --> 00:10:13,280
+So this shrank and we can see where it went.
+
+129
+00:10:13,280 --> 00:10:21,590
+If we kaleen that here and we do login with valid credentials and now we are redirected to recipes.
+
+130
+00:10:21,590 --> 00:10:23,240
+And indeed here you now see.
+
+131
+00:10:25,750 --> 00:10:32,710
+That you have this recipe is recipes module Jaspal here, the naming might differ, but that has the
+
+132
+00:10:32,720 --> 00:10:39,490
+41 kilobytes by which our Bundall effectively shrink roundabout, and that is that lazy loaded code
+
+133
+00:10:39,490 --> 00:10:41,500
+snippet, that lazy loaded module.
+
+134
+00:10:41,800 --> 00:10:44,250
+And we can interact with that just as we could before.
+
+135
+00:10:44,350 --> 00:10:45,880
+So that is all working.
+
+136
+00:10:46,030 --> 00:10:51,310
+But now we're a lazy loading and this shrinks our initial bundle size.
+
+137
+00:10:51,610 --> 00:10:55,450
+Now, of course, the big bundled of for one megabyte bundle did not shrink.
+
+138
+00:10:55,460 --> 00:10:57,610
+But again, this will be optimized later.
+
+139
+00:10:58,240 --> 00:11:02,350
+And the bigger your app grows, the bigger the features are.
+
+140
+00:11:02,350 --> 00:11:05,140
+Your lazy loading, the bigger the effect will be.
+
+141
+00:11:05,140 --> 00:11:11,530
+Of course, if you have a large app with an entire area in that app that the user might never visit.
+
+142
+00:11:11,740 --> 00:11:17,930
+If you lazy load that, it might have a huge impact because you can save so much in that initial bundle.
+
+143
+00:11:18,610 --> 00:11:24,010
+Now, of course, it makes most sense to lazy load parts of the app where there is at least a slight
+
+144
+00:11:24,010 --> 00:11:28,130
+chance of the user never using it, for example, in this application.
+
+145
+00:11:28,150 --> 00:11:33,190
+You could argue that lazy loading the off page doesn't make too much sense because the user will always
+
+146
+00:11:33,190 --> 00:11:38,800
+see that, though I guess that's also only correct if you assume that the user is already locked in,
+
+147
+00:11:39,100 --> 00:11:45,430
+the user is not logged in, we can visit the recipes page and therefore will never the off page and
+
+148
+00:11:45,430 --> 00:11:48,370
+therefore even lazy loading the off page might make sense.
+
+149
+00:11:48,640 --> 00:11:54,490
+But if you have some page which will always be visited or with a very, very, very, very high chance,
+
+150
+00:11:54,730 --> 00:12:00,400
+then lazy loading that page or that module might not be worth it because you have to consider that lazy
+
+151
+00:12:00,400 --> 00:12:06,130
+loading, of course, comes with the downside of that extra code, Bonnel being downloaded later and
+
+152
+00:12:06,130 --> 00:12:11,410
+therefore once it's needed, there might be a slight delay in your app since that code needs to be downloaded
+
+153
+00:12:11,410 --> 00:12:12,010
+and parsed.
+
+154
+00:12:12,160 --> 00:12:16,960
+So you're basically just postponing that, though, while also showing optimization technique with that
+
+155
+00:12:16,960 --> 00:12:17,590
+in a second.
+

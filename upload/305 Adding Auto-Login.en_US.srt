@@ -1,0 +1,464 @@
+1
+00:00:02,210 --> 00:00:05,850
+We got the general authentication flow up and running,
+
+2
+00:00:05,870 --> 00:00:11,870
+we're not protecting unauthenticated access to the recipes route, we'll do so soon.
+
+3
+00:00:11,870 --> 00:00:17,360
+First of all though, I want to make sure that once we are authenticated, we don't just keep that status
+
+4
+00:00:17,420 --> 00:00:20,570
+as long as we're navigating around in the app
+
+5
+00:00:20,720 --> 00:00:27,710
+but that we also keep that status, that we also keep that token which we have once we reload the page
+
+6
+00:00:27,740 --> 00:00:32,480
+because at the moment when we reload the page we lose all that status because when you reload the
+
+7
+00:00:32,480 --> 00:00:37,890
+page, your Angular application restarts, the old one is basically dumped
+
+8
+00:00:38,090 --> 00:00:41,330
+and since right now, we're managing everything in memory,
+
+9
+00:00:41,330 --> 00:00:46,960
+remember that we're storing the token in a user model which happens in Javascript only and which therefore
+
+10
+00:00:46,970 --> 00:00:49,880
+happens in memory, since we manage that all in memory,
+
+11
+00:00:49,880 --> 00:00:55,250
+we'll lose all that state whenever the application restarts because that memory gets cleared automatically,
+
+12
+00:00:55,310 --> 00:01:00,020
+there is no connection between the last time we ran this Angular app on this web page and the current
+
+13
+00:01:00,020 --> 00:01:00,520
+time.
+
+14
+00:01:00,800 --> 00:01:03,830
+So there is no connection and the memory is lost,
+
+15
+00:01:03,830 --> 00:01:09,950
+so if we want to store that token, we have to store it somewhere else and not in a Javascript variable
+
+16
+00:01:09,950 --> 00:01:11,780
+or class property,
+
+17
+00:01:11,780 --> 00:01:15,150
+we have to store it in a persistent storage
+
+18
+00:01:15,230 --> 00:01:21,920
+that survives page reloads and browser restarts, that we can write to and that we can fetch data
+
+19
+00:01:21,950 --> 00:01:22,460
+from.
+
+20
+00:01:22,520 --> 00:01:29,000
+Now what would be such a storage? In a browser, you've got different storages, you can't access the normal
+
+21
+00:01:29,000 --> 00:01:37,080
+file system on your device but you can work with cookies or with local storage, which is an API exposed
+
+22
+00:01:37,160 --> 00:01:45,340
+by the browser to store simple key-value pairs basically on the filesystem but controlled by the browser
+
+23
+00:01:45,560 --> 00:01:53,960
+and we will use local storage here to store that token. To do that, let's go to the handle authentication
+
+24
+00:01:53,960 --> 00:02:00,200
+method in the auth service, which is where we do create our user object and emit it to our application
+
+25
+00:02:00,560 --> 00:02:01,340
+and there,
+
+26
+00:02:01,330 --> 00:02:07,700
+besides emitting it to the application, we also want to store it in our storage. Now for that, we can
+
+27
+00:02:07,700 --> 00:02:14,510
+simply use local storage and call set item,
+
+28
+00:02:14,510 --> 00:02:20,320
+this allows you to write an item to the local storage and to store data there.
+
+29
+00:02:20,420 --> 00:02:24,830
+Now there, I will give this a name of user data and this name is up to you,
+
+30
+00:02:24,830 --> 00:02:30,260
+this is basically the key by which you will be able to retrieve it later and then you have to write
+
+31
+00:02:30,260 --> 00:02:34,960
+some data to that key, you can store some data there.
+
+32
+00:02:35,000 --> 00:02:40,600
+Now the data I want to store there should just be that user object because that contains all the data
+
+33
+00:02:40,610 --> 00:02:44,660
+I want to save - the e-mail, the user ID, the token and the expiration date,
+
+34
+00:02:44,660 --> 00:02:50,630
+these are the pieces of data I want to store. So we can write the user to the local storage, though
+
+35
+00:02:50,660 --> 00:02:53,720
+not like that, not as a Javascript object,
+
+36
+00:02:53,720 --> 00:02:56,810
+instead we have to convert it to a string.
+
+37
+00:02:56,810 --> 00:03:02,120
+We can do that with the JSON object and the stringify method, that is built into Javascript
+
+38
+00:03:02,360 --> 00:03:05,600
+and it simply serializes a Javascript object,
+
+39
+00:03:05,690 --> 00:03:10,520
+it converts a Javascript object to a string version of it
+
+40
+00:03:10,520 --> 00:03:15,440
+so to say, so to text and that text is getting stored in the local storage.
+
+41
+00:03:15,470 --> 00:03:16,780
+Let me show you how this works.
+
+42
+00:03:16,850 --> 00:03:23,450
+If we save that and the application therefore restarts, if we go to authenticate and we do login here,
+
+43
+00:03:24,860 --> 00:03:31,290
+it works as before but now in the Chrome dev tools, if you go to the application tab there, you can
+
+44
+00:03:31,290 --> 00:03:37,920
+go to local storage and expand this and there, pick your storage and you should see that user data key
+
+45
+00:03:37,920 --> 00:03:38,590
+there now
+
+46
+00:03:38,670 --> 00:03:42,810
+and in there, you find that data you just saved to the storage
+
+47
+00:03:42,930 --> 00:03:49,590
+and this is all text, it's the Javascript object converted to a text, hence you there see the e-mail, you
+
+48
+00:03:49,590 --> 00:03:57,900
+see the long token, you see token expiration date, all of that is stored in there. Now and with all of
+
+49
+00:03:57,900 --> 00:04:03,150
+that being stored in there, we can of course also retrieve it from there when our application restarts.
+
+50
+00:04:03,660 --> 00:04:10,170
+For that we can add a new method which I will name auto login because it basically is a method that
+
+51
+00:04:10,170 --> 00:04:16,440
+will try to automatically set the user to login when the application starts and it will do so by looking
+
+52
+00:04:16,440 --> 00:04:23,220
+into the storage and checking whether there is an existing user snapshot stored. So in auto login,
+
+53
+00:04:23,220 --> 00:04:29,580
+the goal now will be to retrieve data from the local storage. For that we can access the local storage
+
+54
+00:04:29,940 --> 00:04:37,860
+and get our user data item and that is a synchronous method which gives us our user data like that, so
+
+55
+00:04:37,860 --> 00:04:44,100
+we can retrieve user data from local storage just like this. The first thing which I'll do then is I
+
+56
+00:04:44,100 --> 00:04:48,040
+will check whether that exists, if we don't have user data,
+
+57
+00:04:48,120 --> 00:04:53,000
+so if this is false-ish, we can return because in this case,
+
+58
+00:04:53,730 --> 00:04:55,440
+we can't log the user in,
+
+59
+00:04:55,440 --> 00:04:56,840
+there is no stored user data
+
+60
+00:04:56,870 --> 00:05:00,630
+so the user definitely needs to sign in on his own.
+
+61
+00:05:00,630 --> 00:05:07,020
+Otherwise if we make it past this check, user data is set and there is some snapshot we were able to
+
+62
+00:05:07,020 --> 00:05:10,150
+retrieve from that local storage.
+
+63
+00:05:10,350 --> 00:05:15,330
+Now important, the snapshot we're retrieving here is also a string because we're saving it as a string
+
+64
+00:05:15,330 --> 00:05:21,090
+down there and therefore if we want to work with that as a normal Javascript object, we have to convert
+
+65
+00:05:21,090 --> 00:05:28,440
+it back by calling JSON.parse here and this will simply just take the string in JSON format and convert it
+
+66
+00:05:28,440 --> 00:05:35,310
+back into a Javascript object. Not into our user model though, it will not have this token getter for
+
+67
+00:05:35,310 --> 00:05:41,550
+example but into a simple object literal which has all the keys that we stored in that storage,
+
+68
+00:05:41,550 --> 00:05:50,110
+so basically this string here converted back to an object literal in Javascript. With that, here in auto
+
+69
+00:05:50,110 --> 00:05:55,750
+login, we can create a new loaded user by calling new user
+
+70
+00:05:56,010 --> 00:06:00,640
+and there, we now can pass in data from that user snapshot we're loading.
+
+71
+00:06:00,840 --> 00:06:06,420
+Now we can add a type annotation here to be more specific about which type of data we'll have in that
+
+72
+00:06:06,420 --> 00:06:10,670
+snapshot and that we'll have an e-mail which is of type string,
+
+73
+00:06:10,740 --> 00:06:16,970
+we'll have an ID which is of type string, we'll have _token which is a string and we'll have 
+
+74
+00:06:16,970 --> 00:06:27,280
+_tokenExpirationDate, is that what I named it? This key here, we'll have that in here as well
+
+75
+00:06:27,350 --> 00:06:31,910
+and this will also be a string, not a date object, we'll have to convert this manually.
+
+76
+00:06:31,970 --> 00:06:37,040
+So that's the data we're fetching from the local storage and therefore now when we create a new user,
+
+77
+00:06:37,310 --> 00:06:45,770
+we can pass in user data e-mail, we can pass in user data ID, we can pass in user data _token,
+
+78
+00:06:46,370 --> 00:06:52,670
+_token because our token getter as I mentioned is part of the user model but we can't save
+
+79
+00:06:52,680 --> 00:06:57,770
+methods in a JSON snapshot and therefore it only contains the properties we had in there which are
+
+80
+00:06:57,770 --> 00:06:59,500
+these four properties.
+
+81
+00:06:59,870 --> 00:07:04,520
+So we retrieve the _token and also the expiration date,
+
+82
+00:07:04,520 --> 00:07:09,590
+we just need to convert this to a date object again which you can do with the built-in date constructor
+
+83
+00:07:09,590 --> 00:07:16,100
+to which we simply pass our token expiration date string because that string is basically a date format
+
+84
+00:07:16,100 --> 00:07:21,290
+string, you can see it here at the bottom and Javascript is smart enough to convert this back into a
+
+85
+00:07:21,290 --> 00:07:22,820
+date object.
+
+86
+00:07:22,820 --> 00:07:28,670
+This is now the loaded user with whom we can interact and there, we first of all need to check if
+
+87
+00:07:28,670 --> 00:07:36,230
+this user has a valid token. So we can simply check if loaded user token, if that's true-ish.
+
+88
+00:07:36,350 --> 00:07:42,140
+Now remember, token now is a getter because now we're working with the model again and in that token
+
+89
+00:07:42,140 --> 00:07:46,920
+getter, we are comparing the token expiration date that was stored with the current date.
+
+90
+00:07:46,970 --> 00:07:54,260
+So this will return null which is a false-ish value if there is an invalid token, if
+
+91
+00:07:54,260 --> 00:07:56,360
+the token expiration date is in the past.
+
+92
+00:07:56,900 --> 00:08:02,630
+So this will only be true-ish if it is a valid token which still has an expiration date in the future
+
+93
+00:08:03,050 --> 00:08:09,470
+and therefore only when we make it into this if check, we want to emit this loaded user as the currently
+
+94
+00:08:09,650 --> 00:08:10,700
+active user.
+
+95
+00:08:10,730 --> 00:08:18,230
+So in here, we can then access this user, our subject, call next and forward the loaded user as our new
+
+96
+00:08:18,320 --> 00:08:24,110
+authenticated user because at this point of time, we know we have a user with all the data we loaded
+
+97
+00:08:24,380 --> 00:08:26,390
+and the token also still is valid,
+
+98
+00:08:26,390 --> 00:08:33,330
+so this is our logged in user. This is the auto login function,
+
+99
+00:08:33,360 --> 00:08:40,170
+now let's see if it works, let's go to a place that runs early in our application lifecycle and that
+
+100
+00:08:40,170 --> 00:08:45,180
+would be the app component because this runs as soon as the app starts, we don't need these functions in
+
+101
+00:08:45,180 --> 00:08:49,790
+there. Let's now implement onInit here
+
+102
+00:08:49,800 --> 00:08:52,650
+so that we are forced to add ngOnInit, we
+
+103
+00:08:55,640 --> 00:08:59,690
+can also get rid of that feature selected part here in the app header by the way,
+
+104
+00:08:59,690 --> 00:09:01,580
+this is all something we don't need anymore,
+
+105
+00:09:01,580 --> 00:09:03,690
+we're not using that function anymore.
+
+106
+00:09:03,710 --> 00:09:08,360
+So back to the app component, here in ngOnInit, in the app component,
+
+107
+00:09:08,390 --> 00:09:10,930
+I want to use the auth service,
+
+108
+00:09:11,000 --> 00:09:15,790
+so it's time to inject it here, auth service like that,
+
+109
+00:09:15,810 --> 00:09:20,220
+make sure to add the import path at the top so that this gets imported correctly
+
+110
+00:09:22,570 --> 00:09:31,290
+and with that injected in ngOnInit, let's call this auth service auto login to see whether that works.
+
+111
+00:09:31,810 --> 00:09:33,150
+If I now save this,
+
+112
+00:09:33,180 --> 00:09:37,360
+theoretically we should log the user in automatically because we have a saved snapshot
+
+113
+00:09:37,590 --> 00:09:43,410
+and indeed if I reload, this looks good. The entire user interface, the entire header signals that
+
+114
+00:09:43,410 --> 00:09:44,950
+the user is logged in,
+
+115
+00:09:44,970 --> 00:09:50,760
+otherwise we would not be seeing the recipes page and the logout button here. So automatically, logging
+
+116
+00:09:50,760 --> 00:09:52,890
+the user in seems to work correctly here.
+

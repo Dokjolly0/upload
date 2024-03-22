@@ -1,0 +1,164 @@
+1
+00:00:02,350 --> 00:00:05,710
+In the last lecture, we added our array,
+
+2
+00:00:05,720 --> 00:00:08,530
+now I want to clean up how it looks,
+
+3
+00:00:08,540 --> 00:00:16,680
+some styling but mainly, I want to add a button which allows us to add a new ingredient to that array.
+
+4
+00:00:17,300 --> 00:00:21,770
+Well to work on the styling, all I really want to do is I want to have some spacing between the
+
+5
+00:00:21,770 --> 00:00:22,760
+rows.
+
+6
+00:00:23,160 --> 00:00:31,790
+Well, there are a couple of ways of getting this style, what I will simply do is I will add an inline style,
+
+7
+00:00:31,880 --> 00:00:36,750
+a normal style, no Angular style, no ngStyle directive, a
+
+8
+00:00:36,920 --> 00:00:43,610
+normal style where I say margin top and set this to 10 pixels maybe
+
+9
+00:00:43,940 --> 00:00:46,710
+and with that, it looks much better.
+
+10
+00:00:46,790 --> 00:00:48,910
+So that's all I wanted to do for now,
+
+11
+00:00:49,810 --> 00:00:57,970
+the more important part is that we're able to add new ingredients and for this, I'll simply add a new
+
+12
+00:00:57,970 --> 00:01:02,340
+button at the end of this array area,
+
+13
+00:01:02,340 --> 00:01:10,360
+so outside of the div which is responsible for my individual form groups, I'll add a new row with a new
+
+14
+00:01:10,360 --> 00:01:11,840
+column inside of it
+
+15
+00:01:14,090 --> 00:01:22,550
+and here, I will simply add a button which says add ingredient which will be of type or which will get
+
+16
+00:01:22,550 --> 00:01:26,530
+a class of btn btn-success maybe.
+
+17
+00:01:26,600 --> 00:01:29,390
+So now it sits directly at the bottom,
+
+18
+00:01:29,440 --> 00:01:34,810
+maybe let's simply add a horizontal line between rows and that looks pretty good.
+
+19
+00:01:35,150 --> 00:01:38,810
+So now we get this button, let's now also hook it up.
+
+20
+00:01:38,810 --> 00:01:42,500
+I will add a click listener, onAddIngredient
+
+21
+00:01:42,740 --> 00:01:50,120
+and here in this method which I'll add to the TypeScript file, I want to add new control to this array
+
+22
+00:01:50,120 --> 00:01:52,190
+of form controls.
+
+23
+00:01:52,190 --> 00:02:03,500
+Now I can simply do this by accessing my recipe form, there I can get my ingredients control and I know
+
+24
+00:02:03,500 --> 00:02:09,750
+that this will be a formArray but Angular or TypeScript to be precise doesn't know this.
+
+25
+00:02:09,830 --> 00:02:18,020
+So I will explicitly cast it with this cast command here basically by enclosing the type I want to convert
+
+26
+00:02:18,020 --> 00:02:24,990
+it to between smaller and greater than signs and then enclosing this all in parentheses
+
+27
+00:02:25,310 --> 00:02:31,160
+and now the part here between the parentheses is treated like a formArray because I know that it
+
+28
+00:02:31,160 --> 00:02:32,910
+indeed is one.
+
+29
+00:02:32,960 --> 00:02:40,940
+So here I can call push and I want to push a new FormGroup because remember, we don't push a control
+
+30
+00:02:40,940 --> 00:02:42,630
+here, we need two inputs,
+
+31
+00:02:42,650 --> 00:02:49,850
+so a group of inputs and there again, I will have a name which is a new FormControl and I will have
+
+32
+00:02:49,940 --> 00:02:57,230
+an amount which will be a new FormControl and we don't need to provide any initial values because I
+
+33
+00:02:57,230 --> 00:02:58,600
+don't want to have any.
+
+34
+00:02:58,910 --> 00:03:05,650
+So if I save this and we go back to the application, we should indeed see that once this reloads here, if I
+
+35
+00:03:05,660 --> 00:03:08,970
+click add ingredient, we add a new line,
+
+36
+00:03:09,140 --> 00:03:14,030
+however I also submit the form with each click as you can see here on the right.
+
+37
+00:03:14,030 --> 00:03:21,070
+This is quickly fixed by making sure that this button receives the type button
+
+38
+00:03:21,140 --> 00:03:23,460
+and now it shouldn't submit the form anymore,
+
+39
+00:03:23,690 --> 00:03:29,120
+so now it just adds ingredients. This is all working, this is great,
+
+40
+00:03:29,120 --> 00:03:35,240
+now before we make this form submittable or we do something upon submission, let's make sure that we
+
+41
+00:03:35,240 --> 00:03:36,940
+add some validation to it.
+

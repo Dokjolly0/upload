@@ -1,0 +1,196 @@
+1
+00:00:02,050 --> 00:00:04,800
+Now, that we have learned about those base types
+
+2
+00:00:04,800 --> 00:00:08,450
+before I dive into functions and parameters,
+
+3
+00:00:08,450 --> 00:00:11,500
+I wanna talk about type inference.
+
+4
+00:00:11,500 --> 00:00:14,360
+In all those examples, which are listed here,
+
+5
+00:00:14,360 --> 00:00:18,450
+I always declared a variable with a type assigned.
+
+6
+00:00:18,450 --> 00:00:22,600
+And then in a second step, I set a value.
+
+7
+00:00:22,600 --> 00:00:26,320
+Now, often in programming, you do that in one step.
+
+8
+00:00:26,320 --> 00:00:28,500
+You create a variable
+
+9
+00:00:28,500 --> 00:00:31,983
+and you then already immediately assign an initial value.
+
+10
+00:00:32,950 --> 00:00:36,480
+So therefore here let's talk about type inference.
+
+11
+00:00:36,480 --> 00:00:38,960
+And let me show you what that is.
+
+12
+00:00:38,960 --> 00:00:41,350
+Let's say we have another variable down here.
+
+13
+00:00:41,350 --> 00:00:45,260
+The course variable. And in that course variable,
+
+14
+00:00:45,260 --> 00:00:47,490
+I wanna store the name of a course
+
+15
+00:00:47,490 --> 00:00:50,840
+like react the complete guide.
+
+16
+00:00:50,840 --> 00:00:52,330
+Like this.
+
+17
+00:00:52,330 --> 00:00:55,850
+Now, if I create this variable like this, and thereafter
+
+18
+00:00:55,850 --> 00:00:59,972
+I try to store a number for an example, the course ID
+
+19
+00:00:59,972 --> 00:01:03,130
+then you will see that I get an error,
+
+20
+00:01:03,130 --> 00:01:06,573
+because the type number is not assignable to type string.
+
+21
+00:01:07,500 --> 00:01:10,400
+But why am I getting this error?
+
+22
+00:01:10,400 --> 00:01:13,970
+After all, I don't define a type anywhere.
+
+23
+00:01:13,970 --> 00:01:17,910
+Well, here TypeScript used its powerful feature
+
+24
+00:01:17,910 --> 00:01:20,200
+of type inference.
+
+25
+00:01:20,200 --> 00:01:24,040
+By default, TypeScript tries to infer
+
+26
+00:01:24,040 --> 00:01:26,230
+as many types as possible.
+
+27
+00:01:26,230 --> 00:01:29,770
+So it tries to know which types are used
+
+28
+00:01:29,770 --> 00:01:34,110
+where, without you explicitly stating those types.
+
+29
+00:01:34,110 --> 00:01:36,763
+Which means that you need to write less code.
+
+30
+00:01:37,620 --> 00:01:42,030
+I could also set my type here as we learned it.
+
+31
+00:01:42,030 --> 00:01:45,570
+That would not be wrong, but it's redundant
+
+32
+00:01:45,570 --> 00:01:49,070
+because if you immediately initialize this variable
+
+33
+00:01:49,070 --> 00:01:53,400
+with a type TypeScript, will look at the value type here.
+
+34
+00:01:53,400 --> 00:01:57,320
+So it will see that we stored a string in that variable.
+
+35
+00:01:57,320 --> 00:02:00,190
+And it will then use that value type
+
+36
+00:02:00,190 --> 00:02:03,970
+as an inferred type for this variable.
+
+37
+00:02:03,970 --> 00:02:08,340
+And if you then try to assign a different type thereafter
+
+38
+00:02:08,340 --> 00:02:12,510
+you'll get an error, because of type inference.
+
+39
+00:02:12,510 --> 00:02:14,810
+And it is considered a good practice
+
+40
+00:02:14,810 --> 00:02:19,310
+and a good idea to embrace that type inference feature.
+
+41
+00:02:19,310 --> 00:02:23,250
+So to not unnecessarily specify the type
+
+42
+00:02:23,250 --> 00:02:26,710
+in addition, you can do that you can explicitly
+
+43
+00:02:26,710 --> 00:02:29,570
+state to type, but it's really redundant.
+
+44
+00:02:29,570 --> 00:02:32,660
+It just means more word from your side and therefore
+
+45
+00:02:32,660 --> 00:02:34,180
+you should not do that.
+
+46
+00:02:34,180 --> 00:02:35,830
+You should instead stick
+
+47
+00:02:35,830 --> 00:02:40,240
+to that type inference and use it whenever possible.
+
+48
+00:02:40,240 --> 00:02:43,360
+And that's another super important feature
+
+49
+00:02:43,360 --> 00:02:45,313
+which I wanted to highlight here.
+

@@ -1,0 +1,244 @@
+1
+00:00:02,210 --> 00:00:06,650
+First of all, we of course have to understand how authentication works
+
+2
+00:00:06,650 --> 00:00:12,440
+and with that, I don't mean that users have to enter their e-mail and password and login
+
+3
+00:00:12,440 --> 00:00:19,100
+but how it technically works behind the scenes. For that, it helps if we think about how our web application
+
+4
+00:00:19,310 --> 00:00:21,890
+or how any web application works.
+
+5
+00:00:22,070 --> 00:00:27,850
+We have a client, which would be our browser, the user using the browser and we have a server.
+
+6
+00:00:27,890 --> 00:00:34,160
+Now when the user enters his credentials, so the e-mail and password, then this authentication data is
+
+7
+00:00:34,160 --> 00:00:37,250
+sent to a server where that data is validated.
+
+8
+00:00:37,250 --> 00:00:42,650
+We can't do that validation in the browser because all the Javascript code in the browser is exposed
+
+9
+00:00:42,680 --> 00:00:46,190
+to our users and therefore not stored securely
+
+10
+00:00:46,310 --> 00:00:49,280
+and the logic there could be changed as well,
+
+11
+00:00:49,310 --> 00:00:55,310
+users can edit or even disable the Javascript in the browser. So we can use that to create a nice user
+
+12
+00:00:55,310 --> 00:00:56,250
+experience
+
+13
+00:00:56,390 --> 00:01:02,630
+and to kind of show different parts of our application based on the authentication status but we can't
+
+14
+00:01:02,630 --> 00:01:06,960
+control or validate the authentication status in the browser,
+
+15
+00:01:07,070 --> 00:01:09,080
+that has to happen on the server,
+
+16
+00:01:09,080 --> 00:01:12,960
+so in a place where the users of our application can't do anything.
+
+17
+00:01:13,070 --> 00:01:19,760
+Now if you think about a traditional web application, where the server would render pages for different
+
+18
+00:01:20,030 --> 00:01:21,010
+URLs you enter,
+
+19
+00:01:21,020 --> 00:01:26,210
+so where the server would render different HTML pages for the different URLs, you would
+
+20
+00:01:26,210 --> 00:01:31,780
+work with a session but remember that with Angular, we built single page applications.
+
+21
+00:01:31,850 --> 00:01:38,630
+That means we also decouple the front-end, the Angular application from the back-end. For the different
+
+22
+00:01:38,630 --> 00:01:45,110
+pages we visit, that all gets handled by Angular and its router. Javascript in the browser takes
+
+23
+00:01:45,110 --> 00:01:51,230
+over and re-renders pages or parts of pages as our user interface and the current state of the user
+
+24
+00:01:51,230 --> 00:01:52,240
+requires it.
+
+25
+00:01:52,340 --> 00:01:56,510
+We still reach out to the back-end as you learned in the HTTP modules,
+
+26
+00:01:56,510 --> 00:02:03,740
+we can still interact with a server but that server will be a RESTful API and therefore we'll not use
+
+27
+00:02:03,740 --> 00:02:06,560
+a session because RESTful APIs are stateless,
+
+28
+00:02:06,590 --> 00:02:09,110
+the same would be true for GraphQL API
+
+29
+00:02:09,110 --> 00:02:09,950
+by the way.
+
+30
+00:02:10,040 --> 00:02:13,910
+The core thing is that our back-end, our server will be an API.
+
+31
+00:02:13,910 --> 00:02:19,160
+It will not be a server that renders the HTML pages we're on and therefore sessions can't be used
+
+32
+00:02:19,310 --> 00:02:25,040
+because our server doesn't care about the client. Client and server are decoupled from each other,
+
+33
+00:02:25,160 --> 00:02:31,180
+they communicate through the HttpClient Angular offers but besides that, there is no connection,
+
+34
+00:02:31,250 --> 00:02:37,620
+the server doesn't know our client so to say. And therefore, a session is no solution,
+
+35
+00:02:37,730 --> 00:02:43,130
+a session would be stored on the server and as I just said, the server doesn't care about our client.
+
+36
+00:02:43,130 --> 00:02:48,560
+Instead we'll use a different approach, where the server will validate the user e-mail and password and
+
+37
+00:02:48,560 --> 00:02:55,850
+if all that data is valid, the server will send the client a token, a JSON Web Token typically. That
+
+38
+00:02:55,880 --> 00:03:03,170
+is an encoded string which contains a lot of metadata and that string is encoded not encrypted, that's
+
+39
+00:03:03,170 --> 00:03:03,950
+important,
+
+40
+00:03:03,950 --> 00:03:08,120
+which means this string could be unpacked and read by the client.
+
+41
+00:03:08,120 --> 00:03:15,140
+More importantly though, that string, that token is generated on the server with a certain algorithm
+
+42
+00:03:15,170 --> 00:03:22,580
+and a certain secret which only the server knows and only the server can validate incoming tokens for
+
+43
+00:03:22,580 --> 00:03:28,700
+their validity because the idea is that the client, which is our browser, our Angular App, stores that
+
+44
+00:03:28,700 --> 00:03:35,870
+token in some storage, like a local storage of the browser and attaches the token to any request that
+
+45
+00:03:35,870 --> 00:03:40,130
+thereafter is sent to the server which needs to be authenticated.
+
+46
+00:03:40,130 --> 00:03:46,760
+So let's say we need to be authenticated to store recipes, we then need to attach that token in the header
+
+47
+00:03:46,760 --> 00:03:51,080
+or as a query parameter to that request we're sending to the server,
+
+48
+00:03:51,110 --> 00:03:54,020
+so to that store recipes request.
+
+49
+00:03:54,020 --> 00:04:00,020
+Now the server is able to validate that token because the server did create that token with a certain
+
+50
+00:04:00,020 --> 00:04:03,980
+algorithm and a certain private key, which is only known to the server,
+
+51
+00:04:04,160 --> 00:04:10,340
+that is how the token is secured. We can't generate or edit the token on the client because as soon as
+
+52
+00:04:10,340 --> 00:04:16,210
+we do that, it will not fit the algorithm and private key used on the server and the server is therefore
+
+53
+00:04:16,220 --> 00:04:21,030
+able to determine that that token is invalid and the server can therefore block access.
+
+54
+00:04:21,050 --> 00:04:26,030
+This is why this is secure, because the server knows more than the client but we give the client one
+
+55
+00:04:26,030 --> 00:04:32,030
+important piece which is required to authenticate subsequent requests but that piece is given by the
+
+56
+00:04:32,030 --> 00:04:36,550
+server, it can't be generated on the client for the security reasons I just stated.
+
+57
+00:04:37,460 --> 00:04:38,770
+Now that's the theory,
+
+58
+00:04:38,830 --> 00:04:42,040
+it will become clearer if we simply start implementing it
+
+59
+00:04:42,040 --> 00:04:48,130
+and that of course starts with offering a user interface where users can enter their credentials, where
+
+60
+00:04:48,130 --> 00:04:54,130
+they can sign up and where they can login and thereafter, we'll step-by-step add the logic to create
+
+61
+00:04:54,130 --> 00:04:58,660
+such a token, store such a token, attach such a token to requests and so on.
+

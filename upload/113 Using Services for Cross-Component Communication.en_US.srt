@@ -1,0 +1,192 @@
+1
+00:00:02,890 --> 00:00:09,910
+We talked a lot about services in this module and I hope you saw how services can clean our app up, make
+
+2
+00:00:09,910 --> 00:00:13,870
+the code a bit leaner, more centralized, easier to maintain,
+
+3
+00:00:13,870 --> 00:00:21,550
+you don't have to build these complex output input chains where you pass events and properties to get
+
+4
+00:00:21,550 --> 00:00:24,300
+data from component A to component B,
+
+5
+00:00:24,550 --> 00:00:30,510
+it's much leaner now. Let me show you how much we actually saved.
+
+6
+00:00:30,850 --> 00:00:39,430
+Let's say that if we click on the button here in the account component, for some reason, we want to output
+
+7
+00:00:39,430 --> 00:00:41,700
+something in the new account component.
+
+8
+00:00:42,130 --> 00:00:49,600
+Normally without services, we would have to emit an event in the code component, that something was clicked
+
+9
+00:00:49,600 --> 00:00:51,760
+or something happened so that we change the status
+
+10
+00:00:51,760 --> 00:00:56,670
+for example, we would have to catch the event here in app account.
+
+11
+00:00:56,980 --> 00:00:59,980
+As a side note, we can of course remove these events here,
+
+12
+00:01:00,090 --> 00:01:02,770
+they aren't triggered anymore.
+
+13
+00:01:03,160 --> 00:01:10,540
+So we would have to catch these events here and then we would have to pass the new data down via property
+
+14
+00:01:10,540 --> 00:01:18,310
+binding to the component where we wanted to handle it, pretty complicated and building these chains
+
+15
+00:01:18,310 --> 00:01:22,240
+of property and event binding is not the most convenient way of writing code,
+
+16
+00:01:22,630 --> 00:01:27,110
+it's so much easier with services. Let's say in our accounts service here,
+
+17
+00:01:27,250 --> 00:01:34,280
+we want to provide some event which we can trigger in one component and listen to in another.
+
+18
+00:01:34,720 --> 00:01:44,970
+So we could simply add the status updated event which could be a new event emitter which we import from
+
+19
+00:01:44,970 --> 00:01:46,030
+@angular/core,
+
+20
+00:01:46,050 --> 00:01:53,380
+so make sure to add this import at the top which will pass on the new event, excuse me, the new status,
+
+21
+00:01:53,400 --> 00:01:56,010
+so a string and yes we could trigger it
+
+22
+00:01:56,010 --> 00:02:02,130
+now here in the update status method but we can also since we inject the account service here
+
+23
+00:02:02,130 --> 00:02:11,490
+where we set a new status, call account service, status updated and emit this with the new status.
+
+24
+00:02:11,490 --> 00:02:12,840
+So now I'm emitting any event
+
+25
+00:02:12,860 --> 00:02:19,230
+I set up in the service and as a side note later in the observable section, you will learn about another
+
+26
+00:02:19,230 --> 00:02:27,350
+construct you can use to submit or to emit events and subscribe to it instead of
+
+27
+00:02:27,350 --> 00:02:28,710
+using the event emitter
+
+28
+00:02:28,880 --> 00:02:31,070
+but for now, it's absolutely fine.
+
+29
+00:02:31,070 --> 00:02:37,210
+So here we are emitting an event, again the event emitter lives in our service and in the new account,
+
+30
+00:02:37,220 --> 00:02:38,920
+I now want to listen to it.
+
+31
+00:02:39,200 --> 00:02:41,740
+So here, let's say I want to throw an alert.
+
+32
+00:02:42,110 --> 00:02:47,470
+So I will do this in the constructor for now, access my account service
+
+33
+00:02:47,480 --> 00:02:53,490
+and now for the status updated event here, I will subscribe to it because event emitter in the end just
+
+34
+00:02:53,490 --> 00:02:55,660
+kind of wraps an observable.
+
+35
+00:02:56,060 --> 00:03:02,030
+So here, I could then receive the new status which I know will be a string and then it will simply throw
+
+36
+00:03:02,030 --> 00:03:08,660
+an alert where I say new status, status, something like that.
+
+37
+00:03:08,670 --> 00:03:13,530
+So now, I'm not building any chain of property and event binding,
+
+38
+00:03:13,530 --> 00:03:21,300
+I do have cross-component communication through a service with the event emitter. And you can see this if
+
+39
+00:03:21,300 --> 00:03:28,270
+I click a button here, it actually got opened on another window but you see this alert was thrown,
+
+40
+00:03:28,360 --> 00:03:30,280
+with the new status unknown,
+
+41
+00:03:30,460 --> 00:03:33,450
+same here in active, active.
+
+42
+00:03:33,760 --> 00:03:40,720
+So now we're communicating between components through a service which really can save you a lot of time
+
+43
+00:03:40,750 --> 00:03:46,630
+and with that, I hope you saw a lot of reasons why services can be very helpful and how you can use them
+
+44
+00:03:46,630 --> 00:03:47,540
+to your advantages.
+
+45
+00:03:47,540 --> 00:03:51,320
+Make sure to use the right amount of instances
+
+46
+00:03:51,520 --> 00:03:57,130
+and if you inject services into services, make sure to provide the service on the app module level
+
+47
+00:03:57,220 --> 00:04:02,190
+and to add @injectable to a service where you want to inject it in.
+
+48
+00:04:02,590 --> 00:04:04,600
+Let's move on to some assignments now.
+

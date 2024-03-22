@@ -1,0 +1,208 @@
+1
+00:00:02,130 --> 00:00:07,590
+Back in the instruction page here, we can see what we have to add to compile our Servatius file to
+
+2
+00:00:07,590 --> 00:00:14,400
+JavaScript, we will use Web pack, the built tool, which is also used to compile the client side typescript
+
+3
+00:00:14,400 --> 00:00:14,760
+script code.
+
+4
+00:00:15,660 --> 00:00:17,610
+We can't just copy that configuration.
+
+5
+00:00:17,970 --> 00:00:21,120
+Let's copy it and add it directly in the root folder.
+
+6
+00:00:21,420 --> 00:00:25,710
+There I will add a web pack dot server, dot config dot.
+
+7
+00:00:25,710 --> 00:00:30,210
+Just not just file and paste in that code.
+
+8
+00:00:30,750 --> 00:00:34,550
+Now Peg is a tool and I will not go in great detail through that.
+
+9
+00:00:34,890 --> 00:00:42,090
+We're basically saying take the Servatius file, build it for no chance, be aware of node modules and
+
+10
+00:00:42,090 --> 00:00:49,050
+so on and include any dependencies we need in that Servatius file and then output it into the desert
+
+11
+00:00:49,050 --> 00:00:52,620
+folder and keep the original file name, which is server.
+
+12
+00:00:52,620 --> 00:01:00,510
+In our case, we then add a so-called module loader to add extra features and here we add the T.
+
+13
+00:01:00,510 --> 00:01:06,570
+S loader, which we installed earlier, which will basically do the typescript to JavaScript compilation.
+
+14
+00:01:07,410 --> 00:01:13,050
+We then have some plug ins which are basically extra tools running over decompiled code, which will
+
+15
+00:01:13,050 --> 00:01:16,950
+do some adjustments which are required right now to fix something.
+
+16
+00:01:16,950 --> 00:01:19,480
+Chances are they will not be required in the future.
+
+17
+00:01:20,670 --> 00:01:28,860
+With that, we can run our build process and to run it, copy that Web server line you find here at
+
+18
+00:01:28,860 --> 00:01:33,590
+the bottom and add it to your package to chase and fall to the scripts section.
+
+19
+00:01:33,900 --> 00:01:39,060
+I add a new script here, which is this Web server script, and that is a script which will use WPEC
+
+20
+00:01:39,270 --> 00:01:45,180
+the built tool, which is available because it's used by the Seelie anyways, and it will take our WPX
+
+21
+00:01:45,180 --> 00:01:48,780
+to a conflict file, which then will compile the Servatius file.
+
+22
+00:01:49,320 --> 00:01:58,140
+We can run the script by running NPM Run, not engy but NPM run WPEC Colan server and this should compile
+
+23
+00:01:58,140 --> 00:02:00,000
+our Servatius file to a server.
+
+24
+00:02:00,000 --> 00:02:06,390
+Jaspal Now when you run this the first time, it asks us whether we want to install the webpage Seelie
+
+25
+00:02:06,570 --> 00:02:07,020
+entry.
+
+26
+00:02:07,020 --> 00:02:07,350
+Yes.
+
+27
+00:02:07,350 --> 00:02:11,610
+Here because you need that tool to be able to run that webpage build process.
+
+28
+00:02:11,970 --> 00:02:13,320
+So let it install that.
+
+29
+00:02:14,200 --> 00:02:17,410
+And once it is installed, it'll start with compilation.
+
+30
+00:02:19,230 --> 00:02:25,060
+Now, you may ignore the wording here, and you should now find a server jazz file in your dist folder.
+
+31
+00:02:25,590 --> 00:02:31,500
+We can now test this fall by running note this command is available since you have no choice installed
+
+32
+00:02:31,500 --> 00:02:36,450
+on your machine disk slash server, not just no.
+
+33
+00:02:36,480 --> 00:02:42,090
+Make sure you have both the browser and the server subfolder there with their build packages and hit
+
+34
+00:02:42,090 --> 00:02:42,600
+enter.
+
+35
+00:02:44,870 --> 00:02:50,030
+Now, we got a note server listening on localhost four thousand, so let's grab that link and let's
+
+36
+00:02:50,030 --> 00:02:56,660
+open it and then you tap into that URL and hit enter and I get an error here.
+
+37
+00:02:57,350 --> 00:03:03,020
+I get an error, which is telling me that something failed regarding the static injector.
+
+38
+00:03:03,560 --> 00:03:07,320
+Now, you might not be getting that error when you're watching this right now.
+
+39
+00:03:07,340 --> 00:03:13,760
+This is an error you'll always get and you can fix it by going to that Web server config file and by
+
+40
+00:03:13,760 --> 00:03:15,140
+setting the mode here.
+
+41
+00:03:16,320 --> 00:03:19,410
+Mode, a new property you have to add to.
+
+42
+00:03:20,740 --> 00:03:21,340
+Non.
+
+43
+00:03:22,810 --> 00:03:30,880
+Hit, enter and run that NPRM run WPX to recommend again to rebuild it again, and once it is done again,
+
+44
+00:03:30,880 --> 00:03:36,000
+rerun note disturber and revisit this localhost four thousand page.
+
+45
+00:03:36,610 --> 00:03:39,550
+And now you should see the recipe book here for you.
+
+46
+00:03:39,550 --> 00:03:42,760
+Now go to recipes and you reload.
+
+47
+00:03:43,710 --> 00:03:49,620
+You should see that if you inspect the page source, it actually contains the real content and not just
+
+48
+00:03:49,620 --> 00:03:51,420
+your app root node.
+
+49
+00:03:52,080 --> 00:03:59,610
+So this now is the content of your page pre rendered on the server, and it should work just as it works
+
+50
+00:03:59,610 --> 00:04:00,440
+on the client.
+
+51
+00:04:00,600 --> 00:04:08,130
+But now everything is pre rendered on the fly by the notorious server and desists angular universal
+
+52
+00:04:08,130 --> 00:04:08,880
+in action.
+

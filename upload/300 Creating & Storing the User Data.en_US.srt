@@ -1,0 +1,476 @@
+1
+00:00:02,420 --> 00:00:08,840
+Let's start storing data about the user, whether the user is authenticated and so on and for that, I
+
+2
+00:00:08,840 --> 00:00:13,590
+think it makes sense to start off by creating a user model.
+
+3
+00:00:13,670 --> 00:00:18,380
+So in the auth folder, I'll add a new user.model.ts file
+
+4
+00:00:18,380 --> 00:00:24,440
+and the idea here is that this model stores all the core data that makes up a user and even helps
+
+5
+00:00:24,440 --> 00:00:28,160
+us with validating whether that token is still valid
+
+6
+00:00:28,190 --> 00:00:34,280
+because remember, I said that the token would expire after one hour and we'll need to therefore also
+
+7
+00:00:34,280 --> 00:00:37,490
+find out not only if a token exists but if it is still valid
+
+8
+00:00:37,520 --> 00:00:40,400
+and I want to manage this in this model.
+
+9
+00:00:40,400 --> 00:00:47,650
+Therefore I export a class here with a name of user, which I guess is a fitting name for a user model
+
+10
+00:00:47,840 --> 00:00:53,950
+and in there, we can use a constructor so that we can create a user with the new keyword
+
+11
+00:00:54,100 --> 00:01:01,070
+and there again, I'll use the TypeScript shortcut of automatically storing arguments of the constructor in
+
+12
+00:01:01,070 --> 00:01:06,470
+properties of the class by adding an accessor in front of the argument
+
+13
+00:01:06,470 --> 00:01:09,980
+name which will then also be used as the property name
+
+14
+00:01:09,980 --> 00:01:13,310
+and there, a user should have an e-mail which is of type string.
+
+15
+00:01:13,310 --> 00:01:17,890
+A user also should have an ID which is of type string and we need that token
+
+16
+00:01:18,020 --> 00:01:25,250
+and this I will store as a private property, _token which is a string and also a token expiration
+
+17
+00:01:25,250 --> 00:01:34,120
+date which should be a private property, _tokenExpirationDate which will be a date object,
+
+18
+00:01:34,130 --> 00:01:35,510
+so of type date.
+
+19
+00:01:35,510 --> 00:01:42,440
+Now why underscore and why private? Private because the token should not be retrievable like this, instead
+
+20
+00:01:42,440 --> 00:01:48,110
+when the user or you as a developer want to get access to the token, you should actually be required
+
+21
+00:01:48,110 --> 00:01:53,540
+to do that in a way that will automatically check the validity and this can be achieved by adding a
+
+22
+00:01:53,540 --> 00:01:57,530
+getter here with the get keyword which I'll name token now.
+
+23
+00:01:57,530 --> 00:02:04,310
+Now what is a getter? A getter here looks like a function, we add parentheses and then a function body
+
+24
+00:02:04,670 --> 00:02:10,640
+but you actually access it like a property, so you will be able to do something like user.token.
+
+25
+00:02:10,640 --> 00:02:16,990
+This is how you will be able to access this because it's a getter, it's a special type of property
+
+26
+00:02:16,990 --> 00:02:23,020
+you could say, it's a property where you can write code that runs when you try to access this property,
+
+27
+00:02:23,110 --> 00:02:29,680
+so it's property plus plus you could say. A getter also means that the user can't overwrite this,
+
+28
+00:02:29,800 --> 00:02:35,770
+so setting user token to something new, this will throw an error because it's only a getter not a setter.
+
+29
+00:02:35,770 --> 00:02:38,800
+There are setters too but we don't need them here,
+
+30
+00:02:38,800 --> 00:02:43,990
+you set a token and you create a new user object and we will always create a new user object when a
+
+31
+00:02:43,990 --> 00:02:48,480
+user logs in. So therefore we have that getter named token
+
+32
+00:02:48,480 --> 00:02:54,720
+and the idea here is that we of course return this _token here but before we do that, we can
+
+33
+00:02:54,720 --> 00:02:57,600
+add certain checks or to be precise,
+
+34
+00:02:57,600 --> 00:02:59,150
+I want to add one check,
+
+35
+00:02:59,160 --> 00:03:06,000
+I want to check if this token expiration date does not exist,
+
+36
+00:03:06,270 --> 00:03:14,010
+so if this does not exist or if the current date which we get with new date, that's a Javascript feature,
+
+37
+00:03:14,040 --> 00:03:19,470
+that's the current timestamp, not just a date but also the current time, if the current timestamp is greater
+
+38
+00:03:19,560 --> 00:03:22,200
+than this token expiration date,
+
+39
+00:03:22,200 --> 00:03:27,040
+so if it does exist but it is smaller than the current timestamp, then we know that the token expired,
+
+40
+00:03:27,060 --> 00:03:27,330
+right?
+
+41
+00:03:27,360 --> 00:03:32,010
+Because if the token expiration date is smaller than the current date, then it's in the past
+
+42
+00:03:32,100 --> 00:03:37,900
+and that means even if we have a token, it's not valid anymore and therefore in that case, I will return
+
+43
+00:03:37,970 --> 00:03:43,020
+null even though we might have a token.
+
+44
+00:03:43,060 --> 00:03:50,250
+That's the logic I want to add in this user object for now or in that user class for now.
+
+45
+00:03:50,500 --> 00:03:58,210
+With that created, in the auth service, I want to store the authenticated user and I will actually store
+
+46
+00:03:58,210 --> 00:04:00,070
+it as a subject.
+
+47
+00:04:00,100 --> 00:04:09,100
+So for that, let's add a user subject with new subject, the subject here is of course imported from
+
+48
+00:04:09,100 --> 00:04:17,860
+RxJS and this will be a generic type where we store the user in the subject in the end, so the user
+
+49
+00:04:17,860 --> 00:04:24,530
+needs to be imported from the user model and now with that, the idea of course is that we emit a new user,
+
+50
+00:04:24,540 --> 00:04:24,990
+we
+
+51
+00:04:24,990 --> 00:04:26,750
+next a new user,
+
+52
+00:04:26,820 --> 00:04:32,580
+whenever we have one we login or also when we logout, when we clear the user, when the user becomes
+
+53
+00:04:32,610 --> 00:04:35,370
+invalid or the token expired.
+
+54
+00:04:35,370 --> 00:04:42,750
+So now here, for example for signing up, we know that when we succeed, if we don't have an error, we get
+
+55
+00:04:42,750 --> 00:04:48,150
+the auth response data which contains that token we need for the user, which contains the e-mail and the
+
+56
+00:04:48,420 --> 00:04:49,570
+expiry date
+
+57
+00:04:49,800 --> 00:04:56,430
+and therefore, I want to add a new operator, a new rxjs/operator to that pipe here, to that observable
+
+58
+00:04:56,430 --> 00:04:57,620
+pipe,
+
+59
+00:04:57,750 --> 00:05:01,370
+this will be the tap operator. Now the tap operator,
+
+60
+00:05:01,380 --> 00:05:05,480
+just like catch error, needs to be imported from rxjs/operators
+
+61
+00:05:05,480 --> 00:05:11,660
+and if you remember, tap was an operator that allows us to perform some action without changing the response.
+
+62
+00:05:11,700 --> 00:05:17,220
+So it steps into that observable chain but it doesn't stop it, block it or change it, it just run some
+
+63
+00:05:17,220 --> 00:05:22,800
+code with the data you get back from the observable, so with the response in this case. Therefore here
+
+64
+00:05:22,800 --> 00:05:24,290
+we get our response data
+
+65
+00:05:24,930 --> 00:05:31,410
+and here, I then want to create my new user. For that I'll create a new constant, user, where I call new
+
+66
+00:05:31,470 --> 00:05:39,300
+user, using that user model and we need to forward that e-mail because we expect that as our argument
+
+67
+00:05:39,300 --> 00:05:45,330
+here in the constructor. We need to forward the ID which is the resData local ID, that's the generated
+
+68
+00:05:45,330 --> 00:05:52,920
+user ID generated by Firebase. We need to forward the token which is our ID token and we need the
+
+69
+00:05:52,920 --> 00:05:55,490
+expiration date which should be a date object.
+
+70
+00:05:55,500 --> 00:05:57,640
+Now that's not part of our response,
+
+71
+00:05:57,690 --> 00:06:00,410
+that is something we have to generate
+
+72
+00:06:00,840 --> 00:06:09,990
+and for that I'll add a new constant here, expiration date, where I create a new Javascript date object
+
+73
+00:06:10,710 --> 00:06:18,730
+based on that expiresIn time we get back from Firebase. Now expires in, if you check the Firebase docs
+
+74
+00:06:18,730 --> 00:06:27,160
+here, is a string but in the end, it holds a number, the number of seconds until the ID token expires.
+
+75
+00:06:27,180 --> 00:06:31,940
+So therefore here, all we have to do is we have to get the current date
+
+76
+00:06:32,010 --> 00:06:34,460
+and on that, we can call get time,
+
+77
+00:06:34,500 --> 00:06:40,530
+that's the current timestamp in milliseconds since the beginning of time, which in Javascript was in
+
+78
+00:06:40,530 --> 00:06:42,120
+1970.
+
+79
+00:06:42,180 --> 00:06:44,900
+So we have the current timestamp in milliseconds
+
+80
+00:06:45,030 --> 00:06:53,370
+and to that, we add resData expires in, which we have to convert to a number by adding extra plus in
+
+81
+00:06:53,370 --> 00:06:54,320
+front of it.
+
+82
+00:06:54,510 --> 00:07:01,060
+So we add resData expires in times 1000 because expires in, that is in seconds,
+
+83
+00:07:01,080 --> 00:07:08,040
+this is the timestamp in milliseconds, here therefore we need to multiply the seconds with 1000 to convert
+
+84
+00:07:08,040 --> 00:07:09,750
+this to milliseconds as well
+
+85
+00:07:09,840 --> 00:07:13,290
+and this gives us the expiration date in milliseconds
+
+86
+00:07:13,410 --> 00:07:18,510
+and by wrapping this with new date as I'm doing it, this will convert it back to a date object which
+
+87
+00:07:18,510 --> 00:07:26,400
+is a concrete timestamp in a date object form and not in milliseconds anymore.
+
+88
+00:07:26,420 --> 00:07:32,720
+So this is the expiration date which we now can pass as a fourth argument here to that user constructor,
+
+89
+00:07:34,980 --> 00:07:36,460
+here it is.
+
+90
+00:07:36,540 --> 00:07:42,890
+So this constructs the user with the data we get back from the back-end and with our expiration date,
+
+91
+00:07:42,960 --> 00:07:46,280
+now we can use the subject to next
+
+92
+00:07:46,380 --> 00:07:55,090
+that user, so to set this or emit this as our now currently logged in user in this application. Now just as
+
+93
+00:07:55,090 --> 00:07:56,890
+before with the error handling,
+
+94
+00:07:56,890 --> 00:08:02,290
+we need to exact same logic for logging users in and therefore we can use the same approach as for the
+
+95
+00:08:02,290 --> 00:08:03,100
+error handling.
+
+96
+00:08:03,250 --> 00:08:09,950
+I'll add a new private method, handle authentication or whatever you want to name it
+
+97
+00:08:09,960 --> 00:08:18,330
+and there, I expect to get the e-mail, I expect to get the token, I expect to get expires in let's say as
+
+98
+00:08:18,330 --> 00:08:27,190
+a number and now we can grab that code we just wrote here in tap and move that here into handle authentication.
+
+99
+00:08:29,290 --> 00:08:34,030
+Now use expires in which it's not coming from response data and which does not have to be converted
+
+100
+00:08:34,030 --> 00:08:39,660
+to a number because we already expect it as a number, use the e-mail here,
+
+101
+00:08:39,760 --> 00:08:48,190
+we also need the user ID so let's expect that as a string as well, so use the user ID here and also
+
+102
+00:08:48,340 --> 00:08:51,040
+use the token here.
+
+103
+00:08:51,040 --> 00:08:57,010
+Now we have handle authentication, that would do everything we need related to authentication, here in
+
+104
+00:08:57,010 --> 00:09:04,450
+tap when we get the response data, we now just have to call this handle authentication and forward resData
+
+105
+00:09:04,450 --> 00:09:05,240
+e-mail,
+
+106
+00:09:08,810 --> 00:09:17,370
+resData local ID, resData expires in as a number, so let's add a plus in front of that
+
+107
+00:09:17,600 --> 00:09:20,860
+and before we add this, we also need res
+
+108
+00:09:20,850 --> 00:09:23,700
+data token, ID token excuse me.
+
+109
+00:09:23,750 --> 00:09:28,580
+So we basically call handle authentication with all the data this function needs
+
+110
+00:09:28,580 --> 00:09:31,590
+and now we can just copy that tap
+
+111
+00:09:31,700 --> 00:09:38,360
+operator here and move it into the pipe for our login route, so that there, we now also call this
+
+112
+00:09:38,360 --> 00:09:44,810
+handle authentication, we forward all that data and in here, in handle authentication, we then use that
+
+113
+00:09:44,810 --> 00:09:48,630
+data to create a new user and log the user in.
+
+114
+00:09:48,680 --> 00:09:55,520
+Now that's creating the user, that's logging us in, the next step of course will be to also redirect
+
+115
+00:09:55,550 --> 00:10:01,990
+user in the user interface and navigate us away and also to then update the UI
+
+116
+00:10:02,000 --> 00:10:08,630
+and for example, show a logout button in our header and only show the managed buttons here if we are
+
+117
+00:10:08,630 --> 00:10:09,120
+logged in.
+
+118
+00:10:09,170 --> 00:10:11,870
+So update the entire header based on the auth status
+
+119
+00:10:11,870 --> 00:10:14,570
+and as I just said, forward us when we do login.
+

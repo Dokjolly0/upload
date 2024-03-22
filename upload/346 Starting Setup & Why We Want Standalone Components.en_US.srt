@@ -1,0 +1,432 @@
+1
+00:00:02,270 --> 00:00:04,280
+Now, to understand what exactly
+
+2
+00:00:04,280 --> 00:00:05,880
+Standalone Components are
+
+3
+00:00:05,880 --> 00:00:08,090
+and which problem is solved by them,
+
+4
+00:00:08,090 --> 00:00:10,610
+I prepared a basic demo project,
+
+5
+00:00:10,610 --> 00:00:13,690
+which you find attached to this video.
+
+6
+00:00:13,690 --> 00:00:16,440
+Now, this is a standard Angular project,
+
+7
+00:00:16,440 --> 00:00:18,860
+nothing spectacular about it.
+
+8
+00:00:18,860 --> 00:00:20,040
+What's important though
+
+9
+00:00:20,040 --> 00:00:25,040
+is that this project uses Angular version 14 or higher.
+
+10
+00:00:25,280 --> 00:00:28,510
+What I teach you will also work with higher versions.
+
+11
+00:00:28,510 --> 00:00:30,270
+Here I'm using the release candidate
+
+12
+00:00:30,270 --> 00:00:31,640
+because I'm recording this
+
+13
+00:00:31,640 --> 00:00:35,080
+before version 14 stable was released
+
+14
+00:00:35,080 --> 00:00:37,410
+but, of course, everything I explain is true
+
+15
+00:00:37,410 --> 00:00:39,690
+for the stable version as well.
+
+16
+00:00:39,690 --> 00:00:41,440
+I also again wanna emphasize
+
+17
+00:00:41,440 --> 00:00:43,840
+that this is not the only way of building Angular.
+
+18
+00:00:43,840 --> 00:00:45,710
+Instead, it's a preview feature,
+
+19
+00:00:45,710 --> 00:00:48,180
+so you should use NgModules,
+
+20
+00:00:48,180 --> 00:00:50,200
+you should use everything I taught you
+
+21
+00:00:50,200 --> 00:00:51,850
+in my Complete Guide course.
+
+22
+00:00:51,850 --> 00:00:54,810
+This might become the future of Angular though.
+
+23
+00:00:54,810 --> 00:00:56,460
+Maybe some details will change.
+
+24
+00:00:56,460 --> 00:00:58,640
+We'll see in the future.
+
+25
+00:00:58,640 --> 00:01:01,480
+But what exactly are Standalone Components?
+
+26
+00:01:01,480 --> 00:01:04,080
+And which problem is solved by them?
+
+27
+00:01:04,080 --> 00:01:08,000
+Well, for this, let's take a look at this demo application.
+
+28
+00:01:08,000 --> 00:01:10,500
+It is a very simple application in the end
+
+29
+00:01:10,500 --> 00:01:12,590
+but it does have a couple of components,
+
+30
+00:01:12,590 --> 00:01:15,230
+it does have a custom directive and a service
+
+31
+00:01:15,230 --> 00:01:18,860
+and a shared module where I make this directive available
+
+32
+00:01:18,860 --> 00:01:22,190
+to all other modules that are interested.
+
+33
+00:01:22,190 --> 00:01:23,560
+I've got my app.module
+
+34
+00:01:23,560 --> 00:01:26,010
+where I'm declaring various components,
+
+35
+00:01:26,010 --> 00:01:28,180
+where I'm importing the SharedModule
+
+36
+00:01:28,180 --> 00:01:31,610
+so that these components can use the directive,
+
+37
+00:01:31,610 --> 00:01:35,230
+exported and declared in that SharedModule.
+
+38
+00:01:35,230 --> 00:01:37,912
+And then in those components which I have,
+
+39
+00:01:37,912 --> 00:01:40,430
+I'm using the other components.
+
+40
+00:01:40,430 --> 00:01:43,120
+So in the app.component, I'm using the welcome.component.
+
+41
+00:01:43,120 --> 00:01:44,300
+In the welcome.component,
+
+42
+00:01:44,300 --> 00:01:46,000
+I'm using the details.component
+
+43
+00:01:46,000 --> 00:01:47,520
+and in the details.component,
+
+44
+00:01:47,520 --> 00:01:49,260
+I'm using my custom directive.
+
+45
+00:01:49,260 --> 00:01:51,630
+And I'm also using my service.
+
+46
+00:01:51,630 --> 00:01:55,500
+And if you would install all the dependencies
+
+47
+00:01:55,500 --> 00:01:57,210
+with npm install,
+
+48
+00:01:57,210 --> 00:02:00,070
+and you then would start the development server
+
+49
+00:02:00,070 --> 00:02:01,770
+with ng serve,
+
+50
+00:02:01,770 --> 00:02:05,670
+then you would get an application that looks like this
+
+51
+00:02:05,670 --> 00:02:09,240
+and please note that the navigation won't work yet.
+
+52
+00:02:09,240 --> 00:02:12,490
+We'll add routing in a couple of minutes.
+
+53
+00:02:12,490 --> 00:02:14,460
+But then if you open the console,
+
+54
+00:02:14,460 --> 00:02:16,770
+you'll also note that if you click on this area here
+
+55
+00:02:16,770 --> 00:02:19,540
+at the bottom, those clicks are registered
+
+56
+00:02:19,540 --> 00:02:21,120
+because of our service.
+
+57
+00:02:21,120 --> 00:02:24,100
+You see the custom directive in action here.
+
+58
+00:02:24,100 --> 00:02:27,070
+It highlights this last paragraph.
+
+59
+00:02:27,070 --> 00:02:30,920
+And it is a standard Angular app therefore.
+
+60
+00:02:30,920 --> 00:02:32,900
+However, standard apps like this,
+
+61
+00:02:32,900 --> 00:02:37,750
+and all Angular apps in the end can have one problem.
+
+62
+00:02:37,750 --> 00:02:41,850
+There's quite a lot of boilerplate code you have to write.
+
+63
+00:02:41,850 --> 00:02:45,100
+You specifically have to add all these modules,
+
+64
+00:02:45,100 --> 00:02:47,670
+like the app.module, or the shared.module
+
+65
+00:02:47,670 --> 00:02:50,830
+to organize and declare your directives
+
+66
+00:02:50,830 --> 00:02:54,890
+and components to import and export modules
+
+67
+00:02:54,890 --> 00:02:55,980
+into each other.
+
+68
+00:02:55,980 --> 00:02:59,780
+And whist this is not really difficult,
+
+69
+00:02:59,780 --> 00:03:01,680
+it can be annoying.
+
+70
+00:03:01,680 --> 00:03:04,050
+It's a lot of boilerplate code you have to write,
+
+71
+00:03:04,050 --> 00:03:05,600
+it's a lot of extra work
+
+72
+00:03:05,600 --> 00:03:08,740
+and it can make refactoring rather difficult.
+
+73
+00:03:08,740 --> 00:03:11,440
+And it's, of course, not something you have to do
+
+74
+00:03:11,440 --> 00:03:14,963
+in other libraries or frameworks like React.
+
+75
+00:03:16,090 --> 00:03:19,300
+Now, Angular needs those modules internally.
+
+76
+00:03:19,300 --> 00:03:21,970
+It needs to know which components are available
+
+77
+00:03:21,970 --> 00:03:24,070
+in which other component and so on,
+
+78
+00:03:24,070 --> 00:03:25,910
+and that's why this feature exists.
+
+79
+00:03:25,910 --> 00:03:29,110
+It's not there to make your life more difficult.
+
+80
+00:03:29,110 --> 00:03:32,650
+Instead, it's needed internally by Angular.
+
+81
+00:03:32,650 --> 00:03:34,410
+Nonetheless, it would be nice
+
+82
+00:03:34,410 --> 00:03:37,417
+if you could get rid of these NgModules
+
+83
+00:03:37,417 --> 00:03:39,920
+and it turns out that this is exactly
+
+84
+00:03:39,920 --> 00:03:42,433
+what Standalone Components will achieve.
+
+85
+00:03:43,290 --> 00:03:45,350
+The Angular team worked hard
+
+86
+00:03:45,350 --> 00:03:49,070
+to build a way of using Angular
+
+87
+00:03:49,070 --> 00:03:52,040
+that allows us to get rid of NgModule,
+
+88
+00:03:52,040 --> 00:03:54,320
+to use Standalone Components
+
+89
+00:03:54,320 --> 00:03:56,350
+and standalone directives instead,
+
+90
+00:03:56,350 --> 00:03:59,930
+which don't need to be declared in some module.
+
+91
+00:03:59,930 --> 00:04:03,420
+And the best part is that this new mode,
+
+92
+00:04:03,420 --> 00:04:05,100
+which is in preview right now
+
+93
+00:04:05,100 --> 00:04:07,890
+can be mixed with the old way
+
+94
+00:04:07,890 --> 00:04:10,790
+or the current way of building Angular apps.
+
+95
+00:04:10,790 --> 00:04:13,420
+So you can mix Standalone Components
+
+96
+00:04:13,420 --> 00:04:14,910
+and directives and so on
+
+97
+00:04:14,910 --> 00:04:19,000
+with NgModules as you will see over the next minutes.
+
+98
+00:04:19,000 --> 00:04:19,910
+So that's the problem.
+
+99
+00:04:19,910 --> 00:04:21,480
+We have this boilerplate code
+
+100
+00:04:21,480 --> 00:04:23,130
+and we wanna get rid of it.
+
+101
+00:04:23,130 --> 00:04:27,430
+How can we now use those Standalone Components though?
+
+102
+00:04:27,430 --> 00:04:32,090
+Well, let's build our first Standalone Component here
+
+103
+00:04:32,090 --> 00:04:34,810
+at the example of the details.component.
+
+104
+00:04:34,810 --> 00:04:36,550
+This is a regular component,
+
+105
+00:04:36,550 --> 00:04:38,980
+which is declared in the app.module.
+
+106
+00:04:38,980 --> 00:04:42,200
+Now we wanna convert it to a Standalone Component
+
+107
+00:04:42,200 --> 00:04:43,140
+so that we can see
+
+108
+00:04:43,140 --> 00:04:45,953
+how we can build such Standalone Components.
+

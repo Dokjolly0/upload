@@ -1,0 +1,636 @@
+1
+00:00:02,250 --> 00:00:03,600
+We're almost done,
+
+2
+00:00:03,600 --> 00:00:09,930
+time to add the rest of the recipe feature set here to the NgRx world
+
+3
+00:00:09,930 --> 00:00:15,940
+and for that, why don't we start by making sure that we can also edit and delete recipes. Thus far, that
+
+4
+00:00:15,960 --> 00:00:18,090
+still happens in the recipes service,
+
+5
+00:00:18,120 --> 00:00:25,200
+here we have add and update and delete recipe and these three things now should also be handled with 
+
+6
+00:00:25,290 --> 00:00:26,160
+NgRx.
+
+7
+00:00:26,160 --> 00:00:28,110
+So let's go to the recipe actions and
+
+8
+00:00:28,230 --> 00:00:31,470
+let's export some new identifiers here,
+
+9
+00:00:32,800 --> 00:00:38,500
+ADD_RECIPE, where our string is add
+
+10
+00:00:38,500 --> 00:00:43,570
+recipe, then also uUPDATE_RECIPE,
+
+11
+00:00:47,160 --> 00:00:49,040
+update recipe here
+
+12
+00:00:49,140 --> 00:00:53,070
+and also DELETE_RECIPE,
+
+13
+00:00:57,070 --> 00:00:59,500
+delete recipe, like this.
+
+14
+00:00:59,500 --> 00:01:00,730
+These are the identifiers,
+
+15
+00:01:00,730 --> 00:01:04,360
+now of course we need the classes that meet them,
+
+16
+00:01:04,360 --> 00:01:14,000
+so we have AddRecipe which implements action and there the readonly type will be ADD_RECIPE of course.
+
+17
+00:01:14,000 --> 00:01:21,230
+Now there, we also need a constructor with a payload because obviously when we add a recipe, we need
+
+18
+00:01:21,230 --> 00:01:26,240
+to know which recipe to add and if we have a look at the recipe service, we see that we expect a recipe
+
+19
+00:01:26,240 --> 00:01:26,930
+here.
+
+20
+00:01:26,990 --> 00:01:30,180
+So let's do the same in our action,
+
+21
+00:01:30,260 --> 00:01:34,540
+we just assume that the payload is the recipe that should be added.
+
+22
+00:01:34,580 --> 00:01:45,380
+We also have our UpdateRecipe class that implements action and there the readonly type is UPDATE_RECIPE.
+
+23
+00:01:45,380 --> 00:01:49,040
+And now, just as before, here we also need a constructor,
+
+24
+00:01:49,040 --> 00:01:50,940
+let's check the recipes service,
+
+25
+00:01:51,050 --> 00:01:55,550
+there we expected the index of the recipe to be updated and that new recipe,
+
+26
+00:01:55,640 --> 00:01:58,940
+let's expect the same here on this action.
+
+27
+00:01:59,000 --> 00:02:04,940
+So our public payload here would be an object with the index which is a number
+
+28
+00:02:05,030 --> 00:02:14,870
+and with the new recipe which is a recipe. And we also of course have our DeleteRecipe action which implements
+
+29
+00:02:14,930 --> 00:02:21,130
+action and there, we also have the readonly type set to DELETE_RECIPE
+
+30
+00:02:21,170 --> 00:02:27,830
+and we also need some data here because for deleting, we also need to know which recipe to delete and
+
+31
+00:02:27,840 --> 00:02:32,510
+therefore, our payload is just a number, the index of the recipe that should be deleted
+
+32
+00:02:32,540 --> 00:02:37,070
+and that again is in line with the recipe service where we also get that index.
+
+33
+00:02:37,070 --> 00:02:40,970
+Now let's add all these newly added classes to that union type,
+
+34
+00:02:40,970 --> 00:02:51,780
+we can also add fetch recipes there and then it's AddRecipe, UpdateRecipe and DeleteRecipe, like that.
+
+35
+00:02:51,860 --> 00:02:53,940
+This is now all added here to the actions, 
+
+36
+00:02:53,960 --> 00:03:02,850
+the next step is to work on the reducer because all these actions we just added result in synchronous
+
+37
+00:03:02,910 --> 00:03:03,660
+state updates,
+
+38
+00:03:03,660 --> 00:03:10,980
+none of those actions requires us to send an HTTP request or perform any side effect and therefore,
+
+39
+00:03:11,730 --> 00:03:20,240
+we can simply add a couple of new cases here in our reducer, for example for adding a recipe. In there,
+
+40
+00:03:20,240 --> 00:03:27,800
+we'll return a new state which is based on the old state and where we basically have an updated list
+
+41
+00:03:27,800 --> 00:03:32,610
+of recipes which is our old list of recipes plus the new recipe.
+
+42
+00:03:32,720 --> 00:03:39,380
+We can easily add this by first of all copying all the old recipes and then simply adding action.payload
+
+43
+00:03:39,410 --> 00:03:46,640
+as a new element because the payload for AddRecipe, so for this action here, is just a recipe that should
+
+44
+00:03:46,640 --> 00:03:47,110
+be added. 
+
+45
+00:03:50,410 --> 00:03:54,460
+So that's the first new thing we added, the first new case,
+
+46
+00:03:54,460 --> 00:04:03,300
+now let's of course also handled a case that we update a recipe. In this scenario here,
+
+47
+00:04:03,310 --> 00:04:11,110
+we first of all have to find the recipe we want to update, then copy it, then change it, then copy the
+
+48
+00:04:11,260 --> 00:04:17,380
+list of recipes and then replace the updated recipe in that copied list with the updated recipe and
+
+49
+00:04:17,380 --> 00:04:22,280
+then use that copied and changed list as a new list of recipes.
+
+50
+00:04:22,300 --> 00:04:28,570
+So here first of all, we copy the old state and then we need to do all the things I just described, which
+
+51
+00:04:28,570 --> 00:04:30,900
+sounds more complicated than it is.
+
+52
+00:04:31,030 --> 00:04:39,910
+Let's first of all fetch the updated recipe by reaching out to our state recipes
+
+53
+00:04:39,910 --> 00:04:48,460
+and there, we use the action.payload.index to get the recipe with the index we want to change.
+
+54
+00:04:48,550 --> 00:04:52,540
+Now of course that would just be a pointer at the original object,
+
+55
+00:04:52,690 --> 00:04:59,800
+so let's wrap this in curly braces instead and use the spread operator to pull out all the properties
+
+56
+00:04:59,920 --> 00:05:07,420
+of that recipe, so now we created a copy of that old recipe and thereafter, let me split this into two
+
+57
+00:05:07,420 --> 00:05:16,210
+lines, thereafter I want to overwrite some properties and basically I want to use my action.payload new
+
+58
+00:05:16,210 --> 00:05:22,300
+recipe and with the spread operator, I extract all the properties from that new recipe and basically
+
+59
+00:05:22,300 --> 00:05:25,760
+merge them into this object which is my copy of the old recipe,
+
+60
+00:05:25,840 --> 00:05:31,050
+hence this will overwrite all the values of the old recipe with the updated values.
+
+61
+00:05:31,090 --> 00:05:32,860
+So that's the updated recipe,
+
+62
+00:05:32,890 --> 00:05:40,540
+now we just need the updated recipes, so the entire list. For that, I first of all copy my old recipe list
+
+63
+00:05:40,960 --> 00:05:42,800
+so that we have a new list
+
+64
+00:05:43,000 --> 00:05:50,950
+and then on the updated recipes, let's select the right recipe through the index here and set this
+
+65
+00:05:50,950 --> 00:05:56,250
+equal to the updated recipe to overwrite that element at this index in the copied list
+
+66
+00:05:56,350 --> 00:06:04,870
+and now we can use that copied list down there, updatedRecipes, like that. Now last but not least, the
+
+67
+00:06:04,910 --> 00:06:07,040
+delete case, for that
+
+68
+00:06:07,040 --> 00:06:11,390
+we have RecipeActions.DELETE_RECIPE,
+
+69
+00:06:11,420 --> 00:06:20,150
+we also return a new state object here where I copy my old state and then recipes here will be my old
+
+70
+00:06:20,270 --> 00:06:20,970
+recipes
+
+71
+00:06:20,990 --> 00:06:23,710
+but without the recipe I want to remove.
+
+72
+00:06:23,900 --> 00:06:30,160
+We can easily do that by referring to state recipes filter, filter will always return a new list,
+
+73
+00:06:30,260 --> 00:06:36,110
+so we don't mutate the old list and filter takes a function which gives us access to each element and
+
+74
+00:06:36,110 --> 00:06:42,080
+the index of that element and the index is important for us because we want to return index not equal
+
+75
+00:06:42,080 --> 00:06:44,680
+to action.payload.
+
+76
+00:06:44,690 --> 00:06:45,200
+Now why?
+
+77
+00:06:45,620 --> 00:06:48,960
+Because the action.payload here is the index of the element we want to remove
+
+78
+00:06:49,070 --> 00:06:54,050
+and if that's not equal to the index we're currently looking at and this function runs for every element
+
+79
+00:06:54,140 --> 00:06:55,220
+in the recipe list,
+
+80
+00:06:55,220 --> 00:07:01,100
+if these do not match, then we're not looking at the element with the index we want to remove. Therefore,
+
+81
+00:07:01,130 --> 00:07:03,870
+we will return true here and that means we keep it,
+
+82
+00:07:04,070 --> 00:07:10,130
+only if these do match, then we return false thanks to our not equal comparison and then we will remove
+
+83
+00:07:10,220 --> 00:07:14,210
+the matching element. That's the reducer,
+
+84
+00:07:14,220 --> 00:07:19,530
+these are the actions, the missing thing of course is to dispatch these actions.
+
+85
+00:07:19,890 --> 00:07:22,610
+For that, let's go to the recipe-edit component
+
+86
+00:07:22,860 --> 00:07:34,110
+and in there, in onSubmit, we emit update and add recipe. Let's no longer use the recipe service for that
+
+87
+00:07:34,140 --> 00:07:42,790
+but the store instead to dispatch a new recipes action and for that, we need to import these actions first,
+
+88
+00:07:42,880 --> 00:07:46,510
+so import as recipes actions from
+
+89
+00:07:51,570 --> 00:07:54,150
+store recipes actions
+
+90
+00:07:54,280 --> 00:07:58,430
+and with that imported, here I can use recipes actions
+
+91
+00:07:58,470 --> 00:08:04,860
+and here we're editing an action hence I want to dispatch a new update recipe action
+
+92
+00:08:04,860 --> 00:08:12,810
+and this requires this ID which is the index of the to be updated recipe wrapped in an object
+
+93
+00:08:12,810 --> 00:08:20,710
+though, so we set index equal to this ID and we set that new recipe equal to this recipe form value.
+
+94
+00:08:22,190 --> 00:08:25,200
+So now we're dispatching the update action,
+
+95
+00:08:25,430 --> 00:08:36,430
+let's do the same for adding a recipe, for this I'll dispatch a new recipes action,
+
+96
+00:08:36,580 --> 00:08:38,620
+add recipe like that
+
+97
+00:08:38,830 --> 00:08:47,200
+and here we now need to forward this recipe form value. Let's also make sure we can delete recipes, that
+
+98
+00:08:47,200 --> 00:08:53,380
+happens in the recipe-detail component. There, we have onDeleteRecipe, I no longer will use
+
+99
+00:08:53,380 --> 00:08:54,800
+the recipe service for that,
+
+100
+00:08:54,910 --> 00:09:03,130
+instead we use the store dispatch, a new recipes action, for that again we need to import everything
+
+101
+00:09:03,190 --> 00:09:12,490
+as recipes actions from this store folder and there from the recipe actions file and with that imported,
+
+102
+00:09:12,760 --> 00:09:23,020
+here we also use RecipeActions.DELETE_RECIPE, dispatch this and of course, add the information which
+
+103
+00:09:23,200 --> 00:09:30,610
+index the recipe has we want to remove and with all of that added, let's reload
+
+104
+00:09:30,610 --> 00:09:33,730
+our application and let's give this a try,
+
+105
+00:09:33,760 --> 00:09:42,960
+let's edit this, change the title. Now the changed title is not reflected because if we inspect Redux again, what
+
+106
+00:09:42,960 --> 00:09:50,070
+happens is that we do call update recipe here and indeed, if we have a look at the differences, we see that
+
+107
+00:09:50,790 --> 00:09:56,850
+one recipe was changed and got the new title but thereafter, we navigated and that kicked off the server
+
+108
+00:09:56,940 --> 00:10:04,440
+again which simply loaded new recipes from the server and that overwrites our change here. To fix that,
+
+109
+00:10:05,040 --> 00:10:13,650
+we can go back to our resolver and in here, we simply select our recipes from the store and add
+
+110
+00:10:13,650 --> 00:10:14,870
+pipe.
+
+111
+00:10:15,240 --> 00:10:21,770
+Now first of all, I add a map operator here which is imported from rxjs/operators of course and
+
+112
+00:10:21,850 --> 00:10:27,940
+here we get our recipesState and I return recipesState
+
+113
+00:10:27,990 --> 00:10:31,260
+recipes and
+
+114
+00:10:31,530 --> 00:10:34,050
+this now either is an empty array
+
+115
+00:10:34,050 --> 00:10:41,190
+if we haven't fetched any recipes yet or it is a filled array and therefore in the next operator I add
+
+116
+00:10:41,190 --> 00:10:54,330
+to this observable chain here, I'll add switchMap where I get my recipes. Now if recipes length is
+
+117
+00:10:54,330 --> 00:11:01,890
+equal to zero, then I know I have no recipes, in this case I'll dispatch this and in this case,
+
+118
+00:11:06,740 --> 00:11:14,210
+I'll return this observable with its own pipe, otherwise we'd still need to return an observable but otherwise
+
+119
+00:11:14,210 --> 00:11:19,760
+I just return of, using the of operator imported from rxjs
+
+120
+00:11:23,930 --> 00:11:28,100
+and I simply return my recipes in here.
+
+121
+00:11:28,100 --> 00:11:36,770
+So this means I don't send any request if we already have recipes. Now this overall observable here
+
+122
+00:11:37,310 --> 00:11:39,700
+is returned, now
+
+123
+00:11:39,720 --> 00:11:48,890
+I also first of all want to add take one here, to ensure we don't do this multiple times and with that if
+
+124
+00:11:48,890 --> 00:11:51,730
+we reload here, our data is fetched
+
+125
+00:11:51,920 --> 00:11:58,860
+and now if I edit this, this also persists because now we're not refetching data because I already
+
+126
+00:11:58,860 --> 00:12:01,410
+do have data in my storage.
+
+127
+00:12:01,620 --> 00:12:04,650
+Now let's also test the other things, deleting,
+
+128
+00:12:04,650 --> 00:12:11,520
+here we get an error, cannot read property name of undefined in the recipe-edit component. This error occurs
+
+129
+00:12:11,610 --> 00:12:16,740
+if I go into edit mode and then I cancel and then I delete this recipe,
+
+130
+00:12:20,210 --> 00:12:27,870
+reason for that is that in the recipe-edit component here, I never clean up my subscription for selecting
+
+131
+00:12:27,870 --> 00:12:39,110
+data from the store and we should do that here. So let's add a private storeSub which is of type subscription
+
+132
+00:12:39,110 --> 00:12:41,290
+which needs to be imported from rxjs,
+
+133
+00:12:41,300 --> 00:12:45,340
+like this
+
+134
+00:12:45,400 --> 00:12:50,020
+and now let's go to the place where we set up this subscription which is here,
+
+135
+00:12:53,110 --> 00:12:59,110
+like this and in ngOnDestroy which I now also want to add and hence we should add the onDestroy
+
+136
+00:12:59,140 --> 00:13:03,190
+interface here and implement this, import it from @angular/core,
+
+137
+00:13:03,220 --> 00:13:10,640
+now we add ngOnDestroy maybe here and in there,
+
+138
+00:13:10,640 --> 00:13:19,910
+I call this storeSub unsubscribe and if we do that and I now fetch data again, if I go into edit mode
+
+139
+00:13:20,480 --> 00:13:22,940
+and then I cancel and then I delete,
+
+140
+00:13:22,950 --> 00:13:27,800
+now this works because now we don't have any old subscription that tries to fetch data which isn't there
+
+141
+00:13:27,800 --> 00:13:28,760
+anymore.
+
+142
+00:13:28,820 --> 00:13:31,280
+Now in the recipe detail page, we don't need to do that,
+
+143
+00:13:31,280 --> 00:13:37,610
+so if I delete here without editing first, we get no error because in a recipe detail page, we set this
+
+144
+00:13:37,610 --> 00:13:45,050
+subscription up as part of our route parent subscription and there, Angular takes responsibility for
+
+145
+00:13:45,050 --> 00:13:50,270
+us and unsubscribes for us and hence we don't have any ongoing old subscription here.
+
+146
+00:13:50,540 --> 00:13:53,500
+Let me reload and fetch again,
+
+147
+00:13:53,600 --> 00:14:00,080
+let's now also try adding a new recipe, test some image,
+
+148
+00:14:00,080 --> 00:14:06,940
+this is a test and add an ingredient, like buns one. Save this
+
+149
+00:14:07,580 --> 00:14:14,620
+and here we also get an error, cannot read property unsubscribe of undefined.
+
+150
+00:14:14,710 --> 00:14:26,030
+Now the problem here is stemming from that unsubscribe we just added in the recipe edit page, if we never
+
+151
+00:14:26,150 --> 00:14:33,540
+were in edit mode in init form here, then we never set up the subscription and hence when we tried
+
+152
+00:14:33,540 --> 00:14:40,020
+to unsubscribe, we fail, so we should check if this storeSub even exists and we can only unsubscribe
+
+153
+00:14:40,020 --> 00:14:41,030
+if it does.
+
+154
+00:14:41,170 --> 00:14:47,490
+So that's an improvement we have to make here and with that, let's try creating a new recipe
+
+155
+00:14:47,490 --> 00:14:48,000
+again,
+
+156
+00:14:52,090 --> 00:14:57,480
+test, add an ingredient, buns one and hit save
+
+157
+00:14:57,580 --> 00:15:02,140
+and now this looks way better and we can view it here as well. We can fetch our data which will overwrite
+
+158
+00:15:02,170 --> 00:15:06,100
+that existing ingredient but that all looks pretty good now.
+
+159
+00:15:06,100 --> 00:15:09,070
+So these core mechanisms now all seem to work.
+

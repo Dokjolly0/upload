@@ -1,0 +1,412 @@
+1
+00:00:01,610 --> 00:00:08,580
+For debt I created a brand new project with the Selye again at the end of this module you'll find a
+
+2
+00:00:08,580 --> 00:00:14,490
+lecture where they also link to the official docs actually which we have a great article on testing
+
+3
+00:00:14,670 --> 00:00:20,310
+and not only does this article dive really deep into it and explore some use cases for a lot of use
+
+4
+00:00:20,310 --> 00:00:20,730
+cases.
+
+5
+00:00:20,730 --> 00:00:22,250
+I don't cover here.
+
+6
+00:00:22,320 --> 00:00:29,670
+It also will give you a set of instructions how to set up the well testing and wireman for example with
+
+7
+00:00:29,670 --> 00:00:32,430
+System chair as well.
+
+8
+00:00:32,430 --> 00:00:38,070
+Back to the Selye case though we do have this app component and by default we do have the app component
+
+9
+00:00:38,070 --> 00:00:41,960
+spec file which is not empty which has this code instead.
+
+10
+00:00:42,270 --> 00:00:48,240
+This is a unit test for actually it are a couple of tests each block beginning with it.
+
+11
+00:00:48,240 --> 00:00:52,910
+Here is a test and the before each at the beginning.
+
+12
+00:00:52,920 --> 00:00:59,030
+Well as you might guess execute some code which should be run before running each test.
+
+13
+00:00:59,040 --> 00:01:02,720
+Now we're seeing a lot of code here which we haven't seen before.
+
+14
+00:01:02,730 --> 00:01:08,190
+We're using a couple of Angua to specific test utilities here to make our tests work.
+
+15
+00:01:08,430 --> 00:01:13,870
+But before diving into them let's understand how should a test theoretically work.
+
+16
+00:01:13,890 --> 00:01:20,100
+If we think about it logically we do have are and what you application with the Marchal and the up component
+
+17
+00:01:20,100 --> 00:01:20,160
+.
+
+18
+00:01:20,160 --> 00:01:21,530
+And that runs in the browser.
+
+19
+00:01:22,020 --> 00:01:26,850
+Somehow we need to run the same in the testing environment and the testing environment in the end is
+
+20
+00:01:26,850 --> 00:01:29,690
+just just a script running over it.
+
+21
+00:01:30,250 --> 00:01:36,570
+So that order to simulate the same behavior we also need to bootstrap our application we need to set
+
+22
+00:01:36,570 --> 00:01:44,700
+up the app module and then we need to execute certain tasks the user might do or see and that is what's
+
+23
+00:01:44,700 --> 00:01:50,950
+happening here and then I think it's a great start to simply analyze this file to understand how Anglo
+
+24
+00:01:50,960 --> 00:01:53,030
+to unit tests work.
+
+25
+00:01:53,460 --> 00:02:01,380
+So at the top we import two things from at angular core testing that's the testing packaging let's you
+
+26
+00:02:01,380 --> 00:02:07,260
+shifts with which has a couple of utility tools for example test bed and async.
+
+27
+00:02:07,260 --> 00:02:10,400
+I'll explain both of them in a second.
+
+28
+00:02:10,590 --> 00:02:19,700
+Then we describe our to be tested unit in this case which is our app here we want to test the Abdy up
+
+29
+00:02:19,770 --> 00:02:22,390
+component at Marchal of course.
+
+30
+00:02:22,590 --> 00:02:26,240
+We then have a closure does function executed here.
+
+31
+00:02:26,250 --> 00:02:33,480
+This is part of the described function here and that will all be executed by the task runner we're using
+
+32
+00:02:33,570 --> 00:02:38,250
+and we'll use the Selye with a command I'll show you in a second to run these tests.
+
+33
+00:02:38,250 --> 00:02:45,450
+But you could set up any testing and Larpent typical test rather is karma simply a package you install
+
+34
+00:02:45,450 --> 00:02:45,470
+.
+
+35
+00:02:45,470 --> 00:02:47,990
+It is installed here which runs our tests.
+
+36
+00:02:48,010 --> 00:02:49,870
+The script was referring to.
+
+37
+00:02:50,220 --> 00:02:56,400
+Well then we first execute before each so we do something before each of these blocks here is executed
+
+38
+00:02:56,790 --> 00:02:58,110
+because important.
+
+39
+00:02:58,230 --> 00:03:05,760
+Even though these blocks here follow well after each other each block is executed totally independent
+
+40
+00:03:05,820 --> 00:03:07,420
+of the block before it.
+
+41
+00:03:07,440 --> 00:03:12,690
+So this block is not influenced by the code in this block and this block doesn't care about the first
+
+42
+00:03:12,690 --> 00:03:13,980
+two blocks.
+
+43
+00:03:13,980 --> 00:03:19,560
+Therefore before each is the only thing which will be executed before each individual block.
+
+44
+00:03:19,940 --> 00:03:27,060
+And here we configure a testing module estus method on the test bed and test bed is basically the main
+
+45
+00:03:27,450 --> 00:03:30,410
+angle or two tasks and utility object.
+
+46
+00:03:30,600 --> 00:03:37,140
+So this allows us to configure the modules for our testing and what we do here is simply declare which
+
+47
+00:03:37,140 --> 00:03:42,000
+components we want to have in this testing environment which is our rap component.
+
+48
+00:03:42,030 --> 00:03:48,130
+So this clearly looks like the app marshal with the declarations but it doesn't have the imports provide
+
+49
+00:03:48,140 --> 00:03:49,660
+us or the bootstrap.
+
+50
+00:03:50,070 --> 00:03:53,840
+And that makes sense because you know we want to focus on part of the application.
+
+51
+00:03:53,850 --> 00:03:55,730
+We're not really running it in the browser.
+
+52
+00:03:55,830 --> 00:04:01,500
+We only want to focus on the app component and the rest will be simulated by our testing environment
+
+53
+00:04:01,510 --> 00:04:02,050
+.
+
+54
+00:04:02,580 --> 00:04:08,090
+So this is declared and initialized therefore And then we got a couple of tests.
+
+55
+00:04:08,100 --> 00:04:16,010
+The first one checks of Diablo's properly created we always need to create a component in each block
+
+56
+00:04:16,080 --> 00:04:18,560
+since each block is contained in itself.
+
+57
+00:04:18,660 --> 00:04:25,110
+We do this by using create component on the test bed and then we store this new component in this fixture
+
+58
+00:04:25,170 --> 00:04:25,710
+variable.
+
+59
+00:04:25,710 --> 00:04:28,730
+That's just a name you'll commonly see fixture.
+
+60
+00:04:28,740 --> 00:04:35,880
+For this created component this testing unit we were looking at Woller trading component and of course
+
+61
+00:04:35,880 --> 00:04:40,620
+we passed as an argument which component we want to create the up component here of course.
+
+62
+00:04:41,070 --> 00:04:48,810
+Well then we can get our app by using this fixture which holds our created component the debug element
+
+63
+00:04:48,810 --> 00:04:48,840
+.
+
+64
+00:04:48,850 --> 00:04:54,540
+That's just a property we can access to get access or to a couple of well elements we can now have a
+
+65
+00:04:54,540 --> 00:05:00,000
+look at for example the instance of the component which was created which is our application in the
+
+66
+00:05:00,000 --> 00:05:00,650
+end.
+
+67
+00:05:00,900 --> 00:05:07,380
+And then we always end our block here by using the expect method.
+
+68
+00:05:07,380 --> 00:05:11,730
+No that's not coming from English to as is before each and it by the way.
+
+69
+00:05:11,730 --> 00:05:18,090
+These are all testing packaged so karma related or Jesmond to be precise which is the testing package
+
+70
+00:05:18,480 --> 00:05:21,120
+testing package related methods.
+
+71
+00:05:21,270 --> 00:05:26,260
+So expect basically says we expect whatever we pass years or app.
+
+72
+00:05:26,370 --> 00:05:35,010
+We expect our app to be Driffield which means yet to kind of exist and this is how we can read it.
+
+73
+00:05:35,010 --> 00:05:36,550
+We have it then.
+
+74
+00:05:36,570 --> 00:05:43,650
+This string is purely up to your choice so it should create the APIs basically human readable and then
+
+75
+00:05:43,770 --> 00:05:49,950
+we tell what do we expect when we should create the app while we expect the app to be Truefit to be
+
+76
+00:05:50,010 --> 00:05:53,810
+somehow existent in the next block.
+
+77
+00:05:54,030 --> 00:06:00,450
+We check if we say it should have a title which says app works because as the set up right we got the
+
+78
+00:06:00,450 --> 00:06:04,010
+app works property which we output here with stringin tribulation.
+
+79
+00:06:04,380 --> 00:06:07,940
+So it should have this title and we check it here again Ettridge component.
+
+80
+00:06:08,040 --> 00:06:14,060
+We get access to the instance and then we say well we expect this app to have a title property.
+
+81
+00:06:14,220 --> 00:06:18,900
+So this property here which equals app works.
+
+82
+00:06:18,960 --> 00:06:24,540
+This string of course is only true as long as we don't change or remove this title.
+
+83
+00:06:24,540 --> 00:06:26,180
+So that is how you write your test.
+
+84
+00:06:26,180 --> 00:06:29,050
+You have to reflect your actual application.
+
+85
+00:06:29,400 --> 00:06:36,630
+Well finally deferred or already existing tax year is instead it should render and age one tech.
+
+86
+00:06:36,630 --> 00:06:38,080
+We created again.
+
+87
+00:06:38,130 --> 00:06:41,610
+Now we call detect changes to trigger change detection.
+
+88
+00:06:41,640 --> 00:06:43,100
+That's the only way to do it.
+
+89
+00:06:43,110 --> 00:06:46,540
+It won't run automatically since it doesn't run in the browser.
+
+90
+00:06:46,710 --> 00:06:53,460
+So we detect or we trigger change direction manually so that the template gets rendered gear the native
+
+91
+00:06:53,490 --> 00:06:56,020
+element which gives us access to our template.
+
+92
+00:06:56,290 --> 00:07:02,370
+And then we basically say well Andaz compiled template we expect D.H. one element we get in with a normal
+
+93
+00:07:02,370 --> 00:07:09,310
+javascript query select or since this is a normal javascript object decompiled variable here we expect
+
+94
+00:07:09,310 --> 00:07:14,030
+to change one element to have a text content which contains app works.
+
+95
+00:07:14,070 --> 00:07:20,930
+These are the three already existing apps and this is the logic how this file gets executed how it uses
+
+96
+00:07:20,930 --> 00:07:25,060
+the what to testing utilities with test bed and a sink.
+
+97
+00:07:25,060 --> 00:07:33,690
+I will come back to this second and the default testing environment method slide it and expect to well
+
+98
+00:07:33,690 --> 00:07:38,100
+basically describe what we would like to see and how it should work.
+
+99
+00:07:38,130 --> 00:07:41,670
+Now this is the theory in the next videos.
+
+100
+00:07:41,700 --> 00:07:48,630
+I want to dive deeper into this show some examples for testing a pipe testing a number a component which
+
+101
+00:07:48,630 --> 00:07:51,130
+also has a service and check that into it.
+
+102
+00:07:51,270 --> 00:07:57,990
+And what is a sync thing here actually does as well as what our utilities Jagland to testing package
+
+103
+00:07:58,050 --> 00:07:58,980
+offers us
+

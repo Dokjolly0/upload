@@ -1,0 +1,428 @@
+1
+00:00:02,240 --> 00:00:08,240
+So here is the course project in the state we last left it, ng serve is already running in a terminal
+
+2
+00:00:08,560 --> 00:00:10,370
+and now I want to add routing.
+
+3
+00:00:10,390 --> 00:00:16,120
+Now let's start with the root routes, with the routes for our overall application before we then dive
+
+4
+00:00:16,120 --> 00:00:22,460
+into the child routes. You learned how to add such routes and therefore, here's a challenge for you,
+
+5
+00:00:22,510 --> 00:00:29,800
+try implementing the main routes of your application, so to load the recipe page and the shopping list
+
+6
+00:00:29,800 --> 00:00:31,860
+page on your own.
+
+7
+00:00:31,870 --> 00:00:36,510
+So right now, I will give you a couple of seconds to pause the video and try this on your own,
+
+8
+00:00:36,550 --> 00:00:41,660
+then we'll implement this together.
+
+9
+00:00:41,690 --> 00:00:44,100
+So were you successful?
+
+10
+00:00:44,120 --> 00:00:47,930
+Here is my solution. For the root routes,
+
+11
+00:00:47,930 --> 00:00:52,350
+I will add an AppRoutingModule as shown in the routing section.
+
+12
+00:00:52,520 --> 00:00:59,040
+So let's add it in the app folder, the app-routing.module.ts file.
+
+13
+00:00:59,240 --> 00:01:05,450
+Now in there as you learned it, we're going to export a TypeScript class which is called AppRoutingModule
+
+14
+00:01:05,690 --> 00:01:08,140
+and this module has only one purpose,
+
+15
+00:01:08,180 --> 00:01:10,810
+it will provide the routing to our application,
+
+16
+00:01:10,820 --> 00:01:13,970
+it will bundle all the routing functionality so to say.
+
+17
+00:01:13,970 --> 00:01:20,120
+Now here, we need to add @NgModule to this class to transform it from a normal TypeScript class into
+
+18
+00:01:20,360 --> 00:01:21,860
+an Angular module
+
+19
+00:01:22,130 --> 00:01:26,540
+and for this we also need to import @NgModule here at the top.
+
+20
+00:01:26,630 --> 00:01:32,230
+Now @NgModule takes a Javascript object in which we can configure it in greater detail,
+
+21
+00:01:32,330 --> 00:01:36,260
+however we won't need to configure that much for our app routing module,
+
+22
+00:01:36,320 --> 00:01:39,150
+mainly we will need to register our routes.
+
+23
+00:01:39,200 --> 00:01:41,320
+So let's set them up first.
+
+24
+00:01:41,480 --> 00:01:48,310
+I'll add a constant named appRoutes and this will be of type routes, just like that.
+
+25
+00:01:48,350 --> 00:01:54,800
+Now routes needs to be imported from @angular/router and as you learned, routes simply is just an array
+
+26
+00:01:54,800 --> 00:01:59,530
+of Javascript objects where each object represents a route,
+
+27
+00:01:59,570 --> 00:02:01,700
+so let's add the first route.
+
+28
+00:02:01,910 --> 00:02:04,020
+Now which routes do we need?
+
+29
+00:02:04,280 --> 00:02:11,020
+As mentioned, a route which loads our recipe section and a route which loads our shopping lists section,
+
+30
+00:02:11,390 --> 00:02:13,290
+so let's start with the recipes.
+
+31
+00:02:13,490 --> 00:02:18,680
+I'll set up a path of which will be displayed in the URL and which will allow us to go to that route
+
+32
+00:02:19,160 --> 00:02:21,550
+and let's say recipes
+
+33
+00:02:21,590 --> 00:02:28,730
+sounds like a good path for this, so that you can visit your domain and then /recipes to reach
+
+34
+00:02:28,760 --> 00:02:29,790
+this route.
+
+35
+00:02:30,260 --> 00:02:38,770
+Now when we visit recipes, I want to load the recipes component. So I'll assign that component here,
+
+36
+00:02:38,990 --> 00:02:41,940
+the recipes component
+
+37
+00:02:42,260 --> 00:02:45,680
+and of course we need to add the import of that component.
+
+38
+00:02:45,680 --> 00:02:51,200
+So make sure to add this at the top pointing to the recipes folder and then the recipes.component
+
+39
+00:02:51,200 --> 00:02:51,850
+file.
+
+40
+00:02:51,980 --> 00:02:53,690
+That's our first route added,
+
+41
+00:02:53,720 --> 00:02:56,660
+of course one route is not everything we need here,
+
+42
+00:02:56,660 --> 00:03:00,870
+we also need a second route. So I'll quickly duplicate this
+
+43
+00:03:01,190 --> 00:03:04,910
+and here, I now want to target shopping list,
+
+44
+00:03:04,910 --> 00:03:06,850
+so let's set up this route too.
+
+45
+00:03:07,250 --> 00:03:12,470
+And here of course the goal is not to target the recipes component but instead, we want to target the
+
+46
+00:03:12,680 --> 00:03:14,810
+shopping list component,
+
+47
+00:03:14,810 --> 00:03:20,780
+our second main route and as the recipes component, we need to import this and add the import statement
+
+48
+00:03:20,810 --> 00:03:21,620
+at the top.
+
+49
+00:03:21,620 --> 00:03:24,060
+With that, we get two routes to load
+
+50
+00:03:24,290 --> 00:03:28,940
+and we also get a problem. When we first visit the page,
+
+51
+00:03:28,940 --> 00:03:31,400
+we will navigate to neither of the two,
+
+52
+00:03:31,550 --> 00:03:35,270
+we will just visit the path with basically an empty path,
+
+53
+00:03:35,300 --> 00:03:38,060
+so just our domain slash nothing,
+
+54
+00:03:38,300 --> 00:03:44,750
+therefore we should add another path here, another route. Here I want to target an empty path,
+
+55
+00:03:44,780 --> 00:03:51,980
+so basically the path we will reach when we load the app for the first time and here, we could now either also
+
+56
+00:03:51,980 --> 00:03:56,030
+load the recipes component but that's not really what I want to do,
+
+57
+00:03:56,210 --> 00:04:05,350
+instead here I want to redirect to /recipes. So I will redirect to and now /recipes,
+
+58
+00:04:05,370 --> 00:04:10,740
+now let's try implementing it like this. In my @NgModule here,
+
+59
+00:04:10,790 --> 00:04:15,280
+I now will import the router module, like that.
+
+60
+00:04:15,290 --> 00:04:22,670
+You have to import it from @angular/router. On the router module, we can call forRoot and here, we should
+
+61
+00:04:22,670 --> 00:04:29,360
+pass our appRoutes to configure this router module Angular ships with. With that, our routes are now
+
+62
+00:04:29,450 --> 00:04:32,490
+configured and added to the @angular/router.
+
+63
+00:04:32,540 --> 00:04:39,110
+Now since we are in an extra module here and we want to get this into our main module, into our app
+
+64
+00:04:39,110 --> 00:04:43,220
+module, I need to export this readily configured router.
+
+65
+00:04:43,430 --> 00:04:48,620
+So I will add the exports array here and simply export router module.
+
+66
+00:04:48,620 --> 00:04:53,010
+Now important, here without calling forRoot because we already did that,
+
+67
+00:04:53,120 --> 00:04:59,690
+now its really all about exporting this configured router. With that configured and exported here,
+
+68
+00:04:59,780 --> 00:05:07,520
+we can go to the app module and here in the imports array, we should import our AppRoutingModule and
+
+69
+00:05:07,520 --> 00:05:15,450
+of course also add this import here at the top, so that you make sure to import AppRoutingModule from
+
+70
+00:05:15,480 --> 00:05:22,130
+./app-routing.module, from this file. With this, routing was added to the application,
+
+71
+00:05:22,130 --> 00:05:25,520
+now we need a place for Angular to render our routes.
+
+72
+00:05:25,670 --> 00:05:33,290
+So that is something I will set up right now in the app component, here where we currently use our ngIf
+
+73
+00:05:33,290 --> 00:05:36,290
+trick to decide which route should be loaded,
+
+74
+00:05:36,500 --> 00:05:44,360
+well here I will remove this approach and instead add the router outlet to mark the place where the Angular
+
+75
+00:05:44,450 --> 00:05:49,180
+router should render the component we should load depending on the path we are at.
+
+76
+00:05:49,340 --> 00:05:52,870
+With that, we get a place to load our routes.
+
+77
+00:05:52,890 --> 00:05:54,900
+Now we get no links as of now,
+
+78
+00:05:54,920 --> 00:05:56,330
+we will add them soon
+
+79
+00:05:56,330 --> 00:05:58,640
+but let's first check if this all works.
+
+80
+00:05:58,640 --> 00:06:05,000
+So with ng serve running, I will save this to trigger the recompilation and then I will have a look
+
+81
+00:06:05,000 --> 00:06:13,050
+at the running app. Here we get an error and the error message gives us a hint on how to fix this
+
+82
+00:06:13,070 --> 00:06:14,470
+but what's the issue?
+
+83
+00:06:14,870 --> 00:06:22,010
+The way we configured it, we will always redirect the router because the default matching strategy of
+
+84
+00:06:22,010 --> 00:06:30,200
+the router is for the path, it will see if it's a prefix of the current path and the empty path which
+
+85
+00:06:30,470 --> 00:06:33,200
+is our redirect route if you check it here,
+
+86
+00:06:33,320 --> 00:06:41,090
+this route here uses an empty path and therefore, this is part of any route we visit because again, the default matching
+
+87
+00:06:41,090 --> 00:06:42,680
+strategy is prefix,
+
+88
+00:06:42,680 --> 00:06:47,590
+so it will check if this empty path is a part of the total path
+
+89
+00:06:47,660 --> 00:06:48,510
+and of course it is,
+
+90
+00:06:48,530 --> 00:06:50,570
+it's part of every path.
+
+91
+00:06:50,660 --> 00:06:56,270
+So that wasn't a problem when we were redirecting from, let's say something to somewhere else because
+
+92
+00:06:56,270 --> 00:07:02,780
+now we had a very specific path and of course, we would also redirect something/anything else but
+
+93
+00:07:02,900 --> 00:07:05,190
+it would not be part of every route.
+
+94
+00:07:05,390 --> 00:07:08,800
+Well, an empty path is the path of every route.
+
+95
+00:07:08,900 --> 00:07:09,970
+It's easy to be fixed
+
+96
+00:07:09,980 --> 00:07:13,110
+and actually the error message told us how to do that,
+
+97
+00:07:13,250 --> 00:07:20,840
+we have to add the pathMatch property here and set this to full, this overrides the default of prefix
+
+98
+00:07:20,840 --> 00:07:25,200
+and says now only redirect if the full path is empty,
+
+99
+00:07:25,310 --> 00:07:33,160
+so we won't redirect on any other paths. With this if we save this and we reload the page,
+
+100
+00:07:33,220 --> 00:07:33,860
+here we see
+
+101
+00:07:33,880 --> 00:07:34,620
+this now works
+
+102
+00:07:34,630 --> 00:07:36,980
+and we were redirected to recipes.
+
+103
+00:07:37,060 --> 00:07:41,180
+I can demonstrate this if we reload the page, again we're gone to recipes
+
+104
+00:07:41,290 --> 00:07:47,430
+and if I try loading the shopping list path, that also works.
+
+105
+00:07:47,470 --> 00:07:49,500
+So navigation works,
+
+106
+00:07:49,510 --> 00:07:55,420
+now the goal is to hook up the links in our navigation because that of course right now is not working
+
+107
+00:07:55,420 --> 00:07:56,160
+anymore.
+

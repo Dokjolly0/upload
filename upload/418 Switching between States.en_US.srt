@@ -1,0 +1,116 @@
+1
+00:00:01,530 --> 00:00:08,480
+Right now in our application we are at the place that we are able to display one state normal year.
+
+2
+00:00:08,700 --> 00:00:14,760
+Or of course if I were to change this two highlighted and related recompile this should get blue and
+
+3
+00:00:14,820 --> 00:00:17,320
+move to the right like this.
+
+4
+00:00:17,550 --> 00:00:22,180
+But now we want to animate the transition between both states.
+
+5
+00:00:22,290 --> 00:00:27,930
+Now with that said back to normal right now we have no way to move to or change the state from our code
+
+6
+00:00:27,940 --> 00:00:28,030
+.
+
+7
+00:00:28,200 --> 00:00:34,100
+But we do have this animate button and we try to execute on any made method there.
+
+8
+00:00:34,410 --> 00:00:39,040
+So let's hook up to you on any made method here on animate.
+
+9
+00:00:39,420 --> 00:00:42,250
+And what do we want to do in this on any major method.
+
+10
+00:00:42,450 --> 00:00:44,480
+I simply want to switch to state.
+
+11
+00:00:44,670 --> 00:00:49,140
+So here I want to check if this state equals normal.
+
+12
+00:00:49,290 --> 00:00:57,310
+Then I want to set this state equal to highlighted.
+
+13
+00:00:57,840 --> 00:01:03,090
+Otherwise I want to set this state to normal.
+
+14
+00:01:03,120 --> 00:01:09,420
+Now if this implies if I save this lad the application reload.
+
+15
+00:01:09,420 --> 00:01:11,880
+Now you see it's gone.
+
+16
+00:01:12,120 --> 00:01:18,120
+Well that's simply a bug because I'm using Baghran color as a string and then like this year we actually
+
+17
+00:01:18,120 --> 00:01:19,730
+have to use the very same.
+
+18
+00:01:19,740 --> 00:01:21,000
+And I think the should get fixed.
+
+19
+00:01:21,000 --> 00:01:24,080
+To be honest I just wanted to bring this to your awareness.
+
+20
+00:01:24,090 --> 00:01:28,440
+If you're mixing the way you were setting up your properties even though it should theoretically word
+
+21
+00:01:28,650 --> 00:01:32,490
+work it doesn't make sure to use the same type of property name.
+
+22
+00:01:32,610 --> 00:01:37,740
+But if I switched gears and I now have the function to change my state you can now see I can switch
+
+23
+00:01:37,740 --> 00:01:40,680
+between those states and toggle between them.
+
+24
+00:01:40,680 --> 00:01:47,160
+But now we want to animate the transmission so that we not instantly switch to state as we already are
+
+25
+00:01:47,160 --> 00:01:48,260
+able to do with that.
+
+26
+00:01:48,390 --> 00:01:54,390
+But now that we animate this otherwise we wouldn't need these animation to here at all because just
+
+27
+00:01:54,480 --> 00:01:56,690
+appending different styles WOODER.
+
+28
+00:01:56,790 --> 00:01:59,150
+Well that's something we learned from the course.
+
+29
+00:01:59,160 --> 00:02:02,900
+So next do let's have a look at implementing this transition.
+

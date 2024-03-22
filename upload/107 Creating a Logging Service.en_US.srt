@@ -1,0 +1,176 @@
+1
+00:00:02,970 --> 00:00:08,370
+As mentioned at the end of the last lecture, I want to start by building our first service here, a service
+
+2
+00:00:08,370 --> 00:00:11,420
+which takes over this logging task here,
+
+3
+00:00:11,460 --> 00:00:13,890
+so a service where we can log data.
+
+4
+00:00:14,010 --> 00:00:20,220
+Now how do we create a new service, how does this service look like in Angular? Creating it is super simple.
+
+5
+00:00:20,220 --> 00:00:21,960
+First we have to choose a fitting place
+
+6
+00:00:21,960 --> 00:00:26,760
+now since this service will do some generic task, I will place it in the app folder,
+
+7
+00:00:26,760 --> 00:00:29,900
+you could also create a shared subfolder there,
+
+8
+00:00:29,900 --> 00:00:37,500
+I will again place it right in the app main folder and I will simply name it logging and the file name
+
+9
+00:00:37,500 --> 00:00:42,570
+should be logging.service.ts to follow this convention of being pretty clear about what's
+
+10
+00:00:42,660 --> 00:00:43,730
+in a file.
+
+11
+00:00:43,740 --> 00:00:48,220
+So here, this file will hold a service so that's why I'll name it like this.
+
+12
+00:00:48,230 --> 00:00:55,230
+There, I will export a TypeScript class and I will name this class LoggingService to again to be explicit
+
+13
+00:00:55,230 --> 00:00:57,080
+about what this class does.
+
+14
+00:00:57,420 --> 00:01:03,440
+Now a component becomes a component because we attached this @component decorator,
+
+15
+00:01:03,450 --> 00:01:07,110
+a directive becomes a directive because we attach @directive,
+
+16
+00:01:07,410 --> 00:01:11,110
+you could think that we now simply add @service right
+
+17
+00:01:11,310 --> 00:01:16,170
+but we don't do that. A service is just the normal TypeScript class, like this,
+
+18
+00:01:16,170 --> 00:01:18,750
+this can already be used as a service.
+
+19
+00:01:18,750 --> 00:01:26,210
+So here, we could create a helper method, logToConsole and simply pass the message
+
+20
+00:01:26,370 --> 00:01:35,200
+but since we know that we simply want to log the change of account status here, I will simply say log
+
+21
+00:01:35,460 --> 00:01:42,430
+status change like this and take the new status which will be a string as an argument.
+
+22
+00:01:42,690 --> 00:01:45,650
+Here, I can then simply copy the code
+
+23
+00:01:45,660 --> 00:01:52,800
+I do have in one of my components right now, this console log code here and copy it into my logging
+
+24
+00:01:52,800 --> 00:01:57,230
+service here, of course account status now is just status here,
+
+25
+00:01:57,240 --> 00:01:59,640
+this argument we're getting.
+
+26
+00:01:59,640 --> 00:02:02,060
+So with that, remove the semi-colon,
+
+27
+00:02:02,250 --> 00:02:05,280
+with that I centralized this code,
+
+28
+00:02:05,340 --> 00:02:09,920
+now we need to use the service in our other components,
+
+29
+00:02:09,960 --> 00:02:12,460
+so everywhere where we console log.
+
+30
+00:02:12,750 --> 00:02:17,900
+Now you could think that we simply use it by importing it at the top of our file,
+
+31
+00:02:17,910 --> 00:02:22,980
+so here we could import the loggingService from
+
+32
+00:02:22,980 --> 00:02:25,460
+and now let's move up to the main folder
+
+33
+00:02:25,590 --> 00:02:31,170
+and then here from the logging.service.ts file and then we could simply create our service like this,
+
+34
+00:02:31,170 --> 00:02:39,930
+new logging service and on our service here, we could call log status change and pass the new account status.
+
+35
+00:02:40,350 --> 00:02:44,300
+And actually, if I get rid of this code here,
+
+36
+00:02:47,150 --> 00:02:50,680
+this will work, let it recompile
+
+37
+00:02:50,900 --> 00:02:57,060
+and if I now create a new service here, you see I do log it to the console.
+
+38
+00:02:57,200 --> 00:03:02,690
+So this would work and still, this is wrong, this is not and this is super important, this is not how you
+
+39
+00:03:02,690 --> 00:03:05,440
+use a service in Angular.
+
+40
+00:03:05,450 --> 00:03:08,790
+The reason for this will become more clear throughout this module
+
+41
+00:03:08,790 --> 00:03:16,340
+but generally, Angular provides a much better way of getting access to your services and therefore, you
+
+42
+00:03:16,340 --> 00:03:19,700
+should not create the instances manually.
+
+43
+00:03:19,820 --> 00:03:26,240
+So let's get rid of that import and of that instantiation and let's learn in the next video which tool
+
+44
+00:03:26,330 --> 00:03:30,370
+Angular offers us to get access to our services.
+

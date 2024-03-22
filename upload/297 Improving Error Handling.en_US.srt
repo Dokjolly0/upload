@@ -1,0 +1,256 @@
+1
+00:00:02,240 --> 00:00:06,210
+Would be nice to be more specific about that error message here.
+
+2
+00:00:06,320 --> 00:00:11,750
+Now if you inspect the response we're getting back, you can of course see that on the response object,
+
+3
+00:00:11,750 --> 00:00:13,860
+we have that error field and
+
+4
+00:00:14,040 --> 00:00:16,700
+if we dig into that, there is another error field,
+
+5
+00:00:16,790 --> 00:00:21,500
+so unless that error error field and if we dig into that, we see we have a message.
+
+6
+00:00:21,710 --> 00:00:24,190
+That's a message provided by Firebase
+
+7
+00:00:24,290 --> 00:00:30,230
+and if you have a look at the Firebase REST API documentation and you scroll down a bit, you'll see common
+
+8
+00:00:30,230 --> 00:00:32,810
+error codes that are thrown by that endpoint
+
+9
+00:00:32,930 --> 00:00:35,690
+and that would be, for example e-mail exists.
+
+10
+00:00:35,690 --> 00:00:42,950
+So in the end, we just have to check for these codes and we can output a more helpful error message.
+
+11
+00:00:42,950 --> 00:00:48,070
+Now we could do that here in our component, here where we get that error
+
+12
+00:00:48,080 --> 00:00:56,360
+we could check with a switch statement for example if my error response, maybe we should name this error
+
+13
+00:00:56,360 --> 00:01:02,210
+response to be more specific about what this is because it's the full response object and on there, we have
+
+14
+00:01:02,210 --> 00:01:08,690
+an error key and we have an error key and there we have a message key and we switch on that message and then we have
+
+15
+00:01:08,690 --> 00:01:18,620
+a case where this is e-mail exists for example and now we set this error to this e-mail exists already
+
+16
+00:01:18,860 --> 00:01:25,340
+for example, like this, instead of doing it like that. And if we would save that code here, it already should
+
+17
+00:01:25,340 --> 00:01:26,330
+do its job
+
+18
+00:01:27,080 --> 00:01:31,330
+and if I try signing up with that e-mail address, I get the e-mail exists already.
+
+19
+00:01:31,340 --> 00:01:38,000
+Now we could do that here but handling everything of that here in the component is not necessarily the
+
+20
+00:01:38,000 --> 00:01:39,860
+best possible way of doing that,
+
+21
+00:01:39,950 --> 00:01:46,430
+it moves too much logic into the component, which should primarily focus on updating the UI and not
+
+22
+00:01:46,430 --> 00:01:48,990
+so much about handling the response correctly
+
+23
+00:01:49,250 --> 00:01:55,580
+and that therefore screams for the usage of an rxjs/operator that allows us to handle errors here
+
+24
+00:01:55,880 --> 00:01:59,540
+in the service, in our observable chain we're setting up here,
+
+25
+00:01:59,540 --> 00:02:07,540
+so on this observable. For that, we can simply pipe on this observable and add rxjs/operators and
+
+26
+00:02:07,540 --> 00:02:07,850
+here
+
+27
+00:02:07,880 --> 00:02:13,400
+I am interested in one operator and that is the catch error operator.
+
+28
+00:02:13,670 --> 00:02:21,680
+Now catch error needs to be imported from rxjs/operators to be available in that file and
+
+29
+00:02:21,680 --> 00:02:24,530
+we will also need one other thing
+
+30
+00:02:24,530 --> 00:02:32,660
+and that will be the throw error function from just RxJS which will create a new observable that
+
+31
+00:02:32,660 --> 00:02:38,870
+wraps an error because if you remember the earlier sections of this course, RxJS always needs
+
+32
+00:02:38,870 --> 00:02:44,120
+to return an observable down there and catch error catches the error but you still then need to return
+
+33
+00:02:44,120 --> 00:02:50,090
+a new observable and that observable should still wrap the error so that it still ends up here in that
+
+34
+00:02:50,150 --> 00:02:52,010
+error case in our subscription
+
+35
+00:02:52,010 --> 00:02:53,500
+and we do want to end up there,
+
+36
+00:02:53,510 --> 00:02:59,570
+I just want to move more logic from there into the observable chain. And indeed therefore, we can grab
+
+37
+00:02:59,570 --> 00:03:04,160
+that switch statement and move it into here, in catch error,
+
+38
+00:03:04,160 --> 00:03:11,120
+we get that same error response we previously got in the subscribe function and therefore in here, we
+
+39
+00:03:11,120 --> 00:03:18,780
+can switch on that error response, error error message and set the error, though a bit differently,
+
+40
+00:03:18,950 --> 00:03:26,660
+we can add a new variable, error message maybe, an unknown error occurred, that could be our default message
+
+41
+00:03:26,660 --> 00:03:29,570
+in case we can't identify a more specific error
+
+42
+00:03:29,630 --> 00:03:35,150
+and then here, I'll just set the error message to this e-mail exists already.
+
+43
+00:03:35,240 --> 00:03:40,520
+Now important, this switch statement here will fail if the error we're getting doesn't have that format
+
+44
+00:03:40,760 --> 00:03:41,830
+and that could be the case,
+
+45
+00:03:41,830 --> 00:03:52,530
+for example if we have a network error. So therefore here, I'll check if the error response does not,
+
+46
+00:03:52,540 --> 00:03:58,380
+and therefore the exclamation mark at the beginning, have an error key or if it does not
+
+47
+00:04:01,260 --> 00:04:08,580
+have an error key on the error key to avoid that this axis here fails because if it has either no error key
+
+48
+00:04:08,820 --> 00:04:10,720
+or then no nested error key,
+
+49
+00:04:10,770 --> 00:04:15,510
+then we know we can't access that message because the error we are getting seems to be in a different format
+
+50
+00:04:15,810 --> 00:04:23,370
+and therefore in this case, I immediately want to return throw error and wrap my error message here, so
+
+51
+00:04:23,370 --> 00:04:27,330
+that we'll throw an observable that in the end just wraps that message,
+
+52
+00:04:27,330 --> 00:04:31,110
+otherwise we'll make it into that switch statement here and there,
+
+53
+00:04:31,140 --> 00:04:34,970
+we have only one case, we'll add more cases later, here
+
+54
+00:04:35,080 --> 00:04:42,330
+I then also in the end want to return throw error with my error message.
+
+55
+00:04:42,430 --> 00:04:48,730
+So now that error message conversion logic happens in the auth service which is a better place for that
+
+56
+00:04:49,260 --> 00:04:57,160
+and in the auth component, here in the error case, we now just get the error message because we subscribe
+
+57
+00:04:57,160 --> 00:05:01,870
+to an observable here which here in the error case will be an observable that only contains a message
+
+58
+00:05:01,930 --> 00:05:07,250
+because we throw an error observable that just includes that message.
+
+59
+00:05:07,350 --> 00:05:14,040
+So we know that we get the error message here as a data point, we can print it here but more importantly,
+
+60
+00:05:14,040 --> 00:05:17,430
+of course we can now set this error equal to that error message
+
+61
+00:05:18,110 --> 00:05:24,990
+and this should now have the effect that if we go back and we try creating that same user again, we
+
+62
+00:05:24,990 --> 00:05:31,200
+get this e-mail exists already here which is of course the same behavior as before but now with the logic
+
+63
+00:05:31,200 --> 00:05:34,590
+moved into the service which is the place where that logic should be
+
+64
+00:05:34,590 --> 00:05:36,990
+so that our component is way leaner.
+

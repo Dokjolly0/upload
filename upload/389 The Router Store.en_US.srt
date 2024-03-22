@@ -1,0 +1,92 @@
+1
+00:00:02,520 --> 00:00:10,350
+Now with the store devtools added, I can also show you another package that might come in handy in some
+
+2
+00:00:10,350 --> 00:00:12,000
+application
+
+3
+00:00:12,000 --> 00:00:17,750
+and for that, I quit my ng serve process and again, I will install it with npm install --save
+
+4
+00:00:17,820 --> 00:00:24,030
+and then it's NgRx, @ngrx/router-store.
+
+5
+00:00:24,090 --> 00:00:31,710
+Now that's also an official package, part of the NgRx suite and that helps you with reacting to routing
+
+6
+00:00:31,710 --> 00:00:32,530
+actions.
+
+7
+00:00:32,550 --> 00:00:38,100
+It basically dispatches some actions automatically based on the Angular router and that would allow
+
+8
+00:00:38,100 --> 00:00:45,930
+you to then write code in your reducer or with @ngrx/effects that runs when such a routing action occurs.
+
+9
+00:00:45,930 --> 00:00:51,870
+For that, let me restart ng serve and let me show you how to add this. Now for adding this NgRx router
+
+10
+00:00:52,110 --> 00:00:58,080
+actions functionality, we will have to add another import unsurprisingly,
+
+11
+00:00:58,080 --> 00:01:05,520
+where are you again import something from that newly added @ngrx/router-store package and that something
+
+12
+00:01:05,520 --> 00:01:14,910
+here is the store router connecting module and you add that after your store module and so on,
+
+13
+00:01:14,910 --> 00:01:21,690
+here you add your store router connecting module. For root, just like this you don't need to pass any
+
+14
+00:01:21,690 --> 00:01:29,530
+arguments to for root and now with that added, if you save everything and you go back to your application
+
+15
+00:01:29,550 --> 00:01:30,390
+and let it reload,
+
+16
+00:01:31,110 --> 00:01:34,220
+now you see there are more actions being dispatched.
+
+17
+00:01:34,350 --> 00:01:40,230
+We have the router store request, router store navigation and if you have a look at these actions, you
+
+18
+00:01:40,230 --> 00:01:41,520
+see they have a payload,
+
+19
+00:01:41,520 --> 00:01:48,210
+for example here for router store navigation, we get the router state, we get the URL we're trying
+
+20
+00:01:48,210 --> 00:01:57,680
+to navigate to and we get detailed information about our routing action and also once this is done. Now
+
+21
+00:01:57,680 --> 00:02:02,630
+we don't need this in our application but of course, if you're building an app, this could be convenient
+
+22
+00:02:02,840 --> 00:02:08,480
+and could give you a quick and easy way of reacting to different routing events and different data attached
+
+23
+00:02:08,480 --> 00:02:09,450
+to these events.
+

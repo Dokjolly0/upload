@@ -1,0 +1,132 @@
+1
+00:00:02,310 --> 00:00:07,550
+It is important to understand that dynamic components in general just means that
+
+2
+00:00:07,560 --> 00:00:08,310
+you want to
+
+3
+00:00:08,340 --> 00:00:10,890
+display some component dynamically,
+
+4
+00:00:11,040 --> 00:00:14,850
+which means it's not always there but it's there once
+
+5
+00:00:14,880 --> 00:00:17,830
+something specific happens in your code.
+
+6
+00:00:18,120 --> 00:00:23,490
+Therefore, you typically want to control programmatically when that component should be loaded, when it
+
+7
+00:00:23,490 --> 00:00:27,580
+should be displayed and you already learned about a way of doing that
+
+8
+00:00:27,660 --> 00:00:33,930
+and we're currently using that way and that way is ngIf. ngIf is awesome because it allows you to
+
+9
+00:00:33,930 --> 00:00:40,650
+use a declarative approach, which means you simply add that component selector in your template and then
+
+10
+00:00:40,650 --> 00:00:46,650
+you use ngIf to still only load it upon a certain condition, so you use ngIf to control whether
+
+11
+00:00:46,650 --> 00:00:53,700
+the DOM really has that component or not and therefore ngIf definitely is a great approach of loading
+
+12
+00:00:53,700 --> 00:00:55,220
+a component dynamically.
+
+13
+00:00:55,350 --> 00:00:59,880
+It saves you a lot of extra work which you will have to do with the alternative approach you're about
+
+14
+00:00:59,880 --> 00:01:04,950
+to learn and it's definitely worth a thought and has no major downsides
+
+15
+00:01:04,950 --> 00:01:10,170
+and at the moment as I mentioned, we are using ngIf here in this project, we're using it in many
+
+16
+00:01:10,170 --> 00:01:16,170
+places and we're also using it for this alert box and I'll show you how to finish the entire alert flow
+
+17
+00:01:16,350 --> 00:01:19,440
+before we then have a look at that alternative.
+
+18
+00:01:19,440 --> 00:01:22,030
+Nonetheless, what would be the alternative?
+
+19
+00:01:22,080 --> 00:01:28,350
+The alternative is that you use something which in the past was named dynamic component loader.
+
+20
+00:01:28,350 --> 00:01:34,290
+Now this was a helper utility that doesn't exist anymore or that you shouldn't use anymore but in the
+
+21
+00:01:34,290 --> 00:01:41,850
+end, it's now about a general concept you could say of creating a component in code and then manually
+
+22
+00:01:41,850 --> 00:01:42,990
+attaching it to the DOM.
+
+23
+00:01:43,470 --> 00:01:50,820
+So there, you have to control, in your code by yourself, how that component is instantiated, that data is
+
+24
+00:01:50,820 --> 00:01:53,980
+passed into it and also that it is removed.
+
+25
+00:01:54,090 --> 00:01:56,390
+So everything ngIf does for you,
+
+26
+00:01:56,430 --> 00:01:58,800
+you have to do on your own there. Still,
+
+27
+00:01:58,800 --> 00:02:00,980
+this approach can be useful,
+
+28
+00:02:00,980 --> 00:02:08,190
+it also of course allows you to control it entirely from code and you don't have to touch the template.
+
+29
+00:02:08,190 --> 00:02:13,440
+Sometimes you might not want to do that or you have no real way of adding the component to the template
+
+30
+00:02:13,860 --> 00:02:16,590
+and therefore, this is also an interesting approach.
+
+31
+00:02:16,590 --> 00:02:18,540
+Now we'll have a look at both here,
+
+32
+00:02:18,570 --> 00:02:23,730
+we started with ngIf, let's finish it up with that approach before we then dive into creating
+
+33
+00:02:23,730 --> 00:02:26,400
+components and managing components from code.
+

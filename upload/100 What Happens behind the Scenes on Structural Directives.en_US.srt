@@ -1,0 +1,140 @@
+1
+00:00:02,750 --> 00:00:08,180
+So now that we had a closer look at attribute directives and created our own one, before creating our
+
+2
+00:00:08,240 --> 00:00:10,300
+own structural directive,
+
+3
+00:00:10,610 --> 00:00:14,570
+let me explain why this star is actually required.
+
+4
+00:00:14,570 --> 00:00:18,680
+This star indicates to Angular that this is a structural directive,
+
+5
+00:00:18,680 --> 00:00:25,700
+the question is why does it need to know? Because structural directives with that star actually are just
+
+6
+00:00:25,730 --> 00:00:31,030
+a nicer way for us to use them basically. Behind the scenes,
+
+7
+00:00:31,040 --> 00:00:40,820
+Angular will transform them into something else because there is no star in Angular syntax when using
+
+8
+00:00:40,820 --> 00:00:44,440
+directives or when using property binding or anything like that,
+
+9
+00:00:44,510 --> 00:00:49,160
+there is only property binding, event binding, two-way binding and string interpolation
+
+10
+00:00:49,160 --> 00:00:53,900
+and there is no star operator or something like that.
+
+11
+00:00:53,930 --> 00:01:01,100
+So behind the scenes, Angular needs to transform this ngIf usage into something where we end up with
+
+12
+00:01:01,100 --> 00:01:03,470
+these tools, properly binding and so on
+
+13
+00:01:03,650 --> 00:01:04,830
+and it does,
+
+14
+00:01:05,210 --> 00:01:08,760
+I can write the same list here differently.
+
+15
+00:01:09,170 --> 00:01:16,250
+So if I try to write this onlyOdd block differently, I would end up with the following,
+
+16
+00:01:16,430 --> 00:01:23,910
+I would have an ng-template element, that is provided by Angular as the ng indicates
+
+17
+00:01:24,440 --> 00:01:30,930
+and inside this element, we have the content we conditionally want to render.
+
+18
+00:01:31,130 --> 00:01:39,400
+So in this case here, we would have a div inside of this and in this div, our list item.
+
+19
+00:01:39,620 --> 00:01:45,480
+Now you probably see that it's basically the same but that it's wrapped in ng-template,
+
+20
+00:01:45,480 --> 00:01:52,080
+the reason for this is that ng-template is an element which itself is not rendered but which allows
+
+21
+00:01:52,080 --> 00:01:54,870
+us to define a template in the end
+
+22
+00:01:54,870 --> 00:02:01,710
+for Angular to use once it determines that this template, some element needs to be rendered because this
+
+23
+00:02:01,710 --> 00:02:03,790
+condition is true in this case.
+
+24
+00:02:04,200 --> 00:02:11,400
+So on the ng-template, we place ngIf and now not with the star because this is the form to which
+
+25
+00:02:11,400 --> 00:02:14,360
+it will get transformed due to the star
+
+26
+00:02:14,610 --> 00:02:23,770
+but instead with the tool we already know, with property binding and here, we simply bind not onlyOdd,
+
+27
+00:02:24,120 --> 00:02:25,420
+so the condition.
+
+28
+00:02:25,590 --> 00:02:28,340
+So now we're back to the tools we know without the star
+
+29
+00:02:28,440 --> 00:02:35,160
+and that's why we have the star because obviously that's the more intuitive syntax to use, directly placing
+
+30
+00:02:35,160 --> 00:02:37,810
+it on the element we want to conditionally render
+
+31
+00:02:38,010 --> 00:02:43,800
+but that would be the real content behind the scenes to which it gets transformed.
+
+32
+00:02:43,800 --> 00:02:48,400
+Now you don't need to use that but I find it super important to be aware of this.
+
+33
+00:02:48,420 --> 00:02:54,330
+Now therefore if we save this, we see the list twice and we see it disappear and appear twice because
+
+34
+00:02:54,330 --> 00:02:56,370
+it works exactly the same,
+
+35
+00:02:56,460 --> 00:03:02,460
+it is exactly the same code, behind the scenes this is what the star transforms it to.
+

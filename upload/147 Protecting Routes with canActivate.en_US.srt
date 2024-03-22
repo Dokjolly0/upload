@@ -1,0 +1,392 @@
+1
+00:00:02,980 --> 00:00:09,190
+As mentioned in the last lecture, we want to maybe protect some of our routes and we can use a feature
+
+2
+00:00:09,550 --> 00:00:15,590
+offered by Angular which allows us to run some code at a point of time defined by us.
+
+3
+00:00:15,970 --> 00:00:23,260
+I will add a new file in our root folder and I will name it auth-guard.service.ts because the
+
+4
+00:00:23,260 --> 00:00:26,830
+code we run there is stored in such a service.
+
+5
+00:00:26,830 --> 00:00:27,340
+I'll name it
+
+6
+00:00:27,340 --> 00:00:34,540
+auth guard though because the feature of the @angular/router is called guards, it guards certain actions
+
+7
+00:00:34,540 --> 00:00:37,560
+like navigating to, around or away from it.
+
+8
+00:00:38,200 --> 00:00:43,690
+But in the end, it is a normal service and therefore as such, I will export a class which I'll name
+
+9
+00:00:43,690 --> 00:00:44,240
+AuthGuard,
+
+10
+00:00:44,250 --> 00:00:48,300
+now you could add service here to be fully in line with all the other services
+
+11
+00:00:48,430 --> 00:00:54,040
+but since we will only use this as a guard, I will leave it at the auth guard name
+
+12
+00:00:54,040 --> 00:00:59,070
+and now here, I will implement the canActivate interface.
+
+13
+00:00:59,080 --> 00:01:02,540
+This interface is provided by the @angular/router package,
+
+14
+00:01:02,560 --> 00:01:10,790
+so you need to import it and it forces you to have a canActivate method in this class.
+
+15
+00:01:10,870 --> 00:01:16,060
+The canActivate method now will receive two arguments, the
+
+16
+00:01:16,100 --> 00:01:25,700
+ActivatedRouteSnapshot and the state of the router, so the RouterStateSnapshot.
+
+17
+00:01:25,890 --> 00:01:32,790
+So make sure to also add these imports at the top here from an @angular/router and to add them here
+
+18
+00:01:32,790 --> 00:01:36,370
+as types for the two parameters we get in canActivate.
+
+19
+00:01:36,480 --> 00:01:39,900
+Now you might ask, where are we getting these arguments from?
+
+20
+00:01:39,900 --> 00:01:45,770
+Keep in mind, we'll soon define that Angular should execute this code before a route is loaded,
+
+21
+00:01:45,870 --> 00:01:52,920
+so it will give us this data and we simply need to be able to handle the data. So that is canActivate
+
+22
+00:01:52,980 --> 00:02:01,260
+with the arguments it requires, canActivate also returns something, it either returns an observable,
+
+23
+00:02:01,260 --> 00:02:07,020
+so make sure to import observable, from rxjs/Observable is the correct path
+
+24
+00:02:07,020 --> 00:02:12,010
+in this case. This observable then will wrap a boolean,
+
+25
+00:02:12,080 --> 00:02:15,660
+so it will in the end resolve to a true or false value.
+
+26
+00:02:15,950 --> 00:02:24,100
+Alternatively this route returns a promise, also returning the boolean in the end or it returns just
+
+27
+00:02:24,100 --> 00:02:31,840
+a boolean. So canActivate can run both asynchronously, returning an observable or a promise or synchronously
+
+28
+00:02:32,270 --> 00:02:37,230
+because you might have some guards which execute some code which runs completely on the client,
+
+29
+00:02:37,240 --> 00:02:43,430
+therefore it runs synchronously or you might have some code which takes a couple of seconds to finish
+
+30
+00:02:43,490 --> 00:02:46,590
+because you use a timeout in there or you reach out to a server,
+
+31
+00:02:46,640 --> 00:02:50,620
+so it runs asynchronously and both is possible with canActivate,
+
+32
+00:02:50,630 --> 00:02:52,730
+you'll see an example in a second.
+
+33
+00:02:53,090 --> 00:02:58,280
+So here, we want to be able to login or out. For this,
+
+34
+00:02:58,280 --> 00:03:04,950
+let's say we have another service, the auth service and this is just a fake service here.
+
+35
+00:03:05,180 --> 00:03:11,540
+So I will name it auth service and in a real application, this might reach out to a server and allow
+
+36
+00:03:11,540 --> 00:03:15,930
+us to login or logout and check our current authentication state.
+
+37
+00:03:16,310 --> 00:03:22,190
+I will track the state here too with the loggedIn property which is set to false initially and then
+
+38
+00:03:22,190 --> 00:03:29,750
+I'll add a login method which will set loggedIn to true just like this and a logout method
+
+39
+00:03:29,960 --> 00:03:36,980
+which was set loggedIn to false, to again fake this behavior. And I will have a method which allows
+
+40
+00:03:36,980 --> 00:03:40,030
+us to check the state, authenticated
+
+41
+00:03:40,070 --> 00:03:45,650
+and here I want to simulate that this takes some time to finish because maybe we reach out to a server.
+
+42
+00:03:45,650 --> 00:03:54,350
+Therefore here, I will return a promise, a new promise therefore, this promise will as always take a
+
+43
+00:03:54,350 --> 00:04:00,810
+method, a function as an argument with the resolve and reject methods we can execute
+
+44
+00:04:01,130 --> 00:04:08,180
+and in this promise, here I will execute setTimeout to wait let's say 800 milliseconds and then
+
+45
+00:04:08,180 --> 00:04:14,820
+execute another method in which I will resolve the promise and return this loggedIn, again just to
+
+46
+00:04:14,830 --> 00:04:19,490
+fake that this takes a couple of seconds to finish or some time to finish.
+
+47
+00:04:19,490 --> 00:04:27,500
+So with this auth service added, I now want to use it in my auth guard and as this is also just a service,
+
+48
+00:04:27,800 --> 00:04:34,520
+we need to add @injectable to be able to reach out to the other service, to inject that service into this guard.
+
+49
+00:04:34,640 --> 00:04:41,480
+So make sure to import @injectable from @angular/core and then I will add a constructor to my auth guard
+
+50
+00:04:41,810 --> 00:04:46,560
+where I reach out to my fake auth service here, of type auth service,
+
+51
+00:04:46,580 --> 00:04:54,050
+therefore make sure to add this import too and now in the canActivate guard, I simply want to check
+
+52
+00:04:54,050 --> 00:04:56,580
+whether the user is logged in or not.
+
+53
+00:04:57,480 --> 00:05:05,670
+So here, I can reach out to my auth service, to the isAuthenticates method which again keep in mind returns
+
+54
+00:05:05,670 --> 00:05:06,430
+a promise,
+
+55
+00:05:06,480 --> 00:05:09,370
+well therefore we should return this promise here I guess.
+
+56
+00:05:09,480 --> 00:05:16,620
+So it returns us this promise and here, I then want to be able to handle that whenever this promise in the
+
+57
+00:05:16,620 --> 00:05:18,660
+auth service resolves,
+
+58
+00:05:19,230 --> 00:05:24,290
+I know that there, I will get back a boolean,
+
+59
+00:05:24,430 --> 00:05:30,620
+so this authentication state, this loggedIn boolean is what we resolve here in the end
+
+60
+00:05:30,850 --> 00:05:32,530
+and this could be false or true.
+
+61
+00:05:32,800 --> 00:05:39,520
+So I know that I will get back a boolean and here, I then want to check if this is true, in which case
+
+62
+00:05:39,520 --> 00:05:47,580
+I want to return true and otherwise, I want to navigate away because I don't want to allow the user access
+
+63
+00:05:47,580 --> 00:05:50,460
+to the route you wanted to go to originally,
+
+64
+00:05:50,490 --> 00:05:54,630
+I will navigate away to force the user to go somewhere else.
+
+65
+00:05:54,810 --> 00:06:00,560
+So I will inject the Angular router for this because this is how we can navigate with the navigate method,
+
+66
+00:06:00,600 --> 00:06:07,830
+make sure to add the import from @angular/router and then here, we can navigate with the navigate
+
+67
+00:06:07,830 --> 00:06:12,430
+method and let's say we just want to go back to our root page with just slash.
+
+68
+00:06:12,450 --> 00:06:21,390
+So in this case, our canActivate method will navigate away and I will now simply return this promise it
+
+69
+00:06:21,390 --> 00:06:26,230
+still is in the end because if we return something inside of the promise, it will give us back another
+
+70
+00:06:26,230 --> 00:06:27,160
+promise.
+
+71
+00:06:27,390 --> 00:06:33,440
+So now we're returning a promise here which gives us back true or simply navigates us away, canceling
+
+72
+00:06:33,510 --> 00:06:36,040
+the old navigation anyways therefore.
+
+73
+00:06:36,120 --> 00:06:42,840
+So this now allows us to control access to whatever is controlled by this canActivate guard
+
+74
+00:06:42,860 --> 00:06:43,470
+here.
+
+75
+00:06:43,920 --> 00:06:46,470
+Now we're still not using this guard of course. 
+
+76
+00:06:46,950 --> 00:06:54,330
+So to use it, I'll go to my app-routing.module and now we want to define which route or routes should
+
+77
+00:06:54,330 --> 00:06:59,200
+be protected by this guard and we do so by going to that route,
+
+78
+00:06:59,250 --> 00:07:08,940
+it's the servers route and all its child routes and adding canActivate, this property to it.
+
+79
+00:07:09,800 --> 00:07:16,810
+Now canActivate takes an array of all the code basically, all the guards you want to apply to this route
+
+80
+00:07:17,120 --> 00:07:24,660
+and it will automatically get applied to all the child routes. So here, canActivate will use my
+
+81
+00:07:24,900 --> 00:07:26,230
+auth guard,
+
+82
+00:07:26,360 --> 00:07:33,710
+make sure to add the import here pointing to your file and this will make sure that servers is now only
+
+83
+00:07:33,710 --> 00:07:43,100
+accessible and all the child routes, only accessible if the auth guard canActivate method returns true in
+
+84
+00:07:43,100 --> 00:07:48,870
+the end which will only happen if in the auth service, loggedIn is set to true.
+
+85
+00:07:49,070 --> 00:07:53,250
+Since this is set to false and right now we never call login,
+
+86
+00:07:53,260 --> 00:07:56,410
+this should always deny us access.
+
+87
+00:07:56,480 --> 00:08:03,170
+Now before trying this, we need to go to our app module and add to the two new services we added.
+
+88
+00:08:03,320 --> 00:08:08,200
+So add the auth service and the auth guard which also is a service,
+
+89
+00:08:08,230 --> 00:08:11,350
+otherwise Angular won't be able to inject them for us.
+
+90
+00:08:11,420 --> 00:08:18,770
+So with that set up, let's go to our application, click on servers and I can click there as often as I
+
+91
+00:08:18,770 --> 00:08:19,160
+want,
+
+92
+00:08:19,160 --> 00:08:20,600
+I can't reach it.
+
+93
+00:08:20,690 --> 00:08:31,490
+Users works but servers always navigates us back to home after this 800 milliseconds because that is
+
+94
+00:08:31,490 --> 00:08:36,170
+how long it takes to resolve the information whether we are authenticated or not,
+
+95
+00:08:36,170 --> 00:08:42,740
+we defined these 800 seconds here. So our guard is working,
+
+96
+00:08:42,860 --> 00:08:46,740
+however on our whole servers tab.
+
+97
+00:08:46,980 --> 00:08:51,690
+Now I want to be able to see the list of servers and only protected child routes,
+
+98
+00:08:51,690 --> 00:08:53,010
+how can we do this?
+

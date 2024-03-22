@@ -1,0 +1,336 @@
+1
+00:00:02,360 --> 00:00:10,220
+So let's start implementing NgRx in our course project and I chose the course project for that because
+
+2
+00:00:10,220 --> 00:00:15,800
+I think you'll learn the most if you really see how it's implemented in a real application.
+
+3
+00:00:15,800 --> 00:00:20,600
+Now again, I stressed this on the slides already but it is important to me,
+
+4
+00:00:20,720 --> 00:00:23,960
+you could definitely leave the app as it is.
+
+5
+00:00:24,050 --> 00:00:25,370
+It's not bad,
+
+6
+00:00:25,370 --> 00:00:27,570
+not a bad practice or anything like that
+
+7
+00:00:27,620 --> 00:00:33,050
+if you manage your state with services and with RxJS subjects,
+
+8
+00:00:33,050 --> 00:00:38,300
+this is absolutely fine and there is no reason to change this if you don't want to or if you see no
+
+9
+00:00:38,300 --> 00:00:44,450
+advantage in NgRx but my recommendation would be that you go through this module where we have a look
+
+10
+00:00:44,450 --> 00:00:49,670
+at NgRx in great detail and you then simply decide for yourself,
+
+11
+00:00:49,790 --> 00:00:51,200
+do you like that pattern?
+
+12
+00:00:51,200 --> 00:00:56,630
+Do you maybe see its advantages in larger apps and do you want to use it there and then you will already
+
+13
+00:00:56,630 --> 00:00:57,500
+have learned it
+
+14
+00:00:57,620 --> 00:01:01,510
+and that of course is what this module and this course is all about.
+
+15
+00:01:01,550 --> 00:01:07,090
+So to get started, we first of all need to install NgRx because it is an extra package which
+
+16
+00:01:07,100 --> 00:01:09,380
+you need to install through NPM,
+
+17
+00:01:09,380 --> 00:01:14,730
+as I mentioned, it is maintained by parts of the Angular team and also by the community.
+
+18
+00:01:15,080 --> 00:01:21,800
+So you install it by running npm install in your project folder, --save to also add an entry
+
+19
+00:01:21,800 --> 00:01:27,230
+to package.json and then it's @ngrx/store.
+
+20
+00:01:27,230 --> 00:01:29,360
+This is the first package we need
+
+21
+00:01:29,360 --> 00:01:33,130
+and I say first package because we'll later also need some other packages
+
+22
+00:01:33,200 --> 00:01:39,620
+but this is the core of NgRx which you always need and which gives you the core features you need to
+
+23
+00:01:39,620 --> 00:01:41,270
+get started.
+
+24
+00:01:41,450 --> 00:01:49,980
+So let's now hit enter and let's wait for this installation to complete. With the installation finished,
+
+25
+00:01:49,990 --> 00:01:55,960
+you can restart ng serve to bring your development server back up and this development process
+
+26
+00:01:56,830 --> 00:02:00,320
+and now we can get started adding NgRx.
+
+27
+00:02:00,430 --> 00:02:06,280
+Now if you recall that slide from earlier, you see that the core parts that we will probably need right
+
+28
+00:02:06,310 --> 00:02:12,160
+now to get started are the store, the reducers and the actions.
+
+29
+00:02:12,580 --> 00:02:16,120
+Now store and reducers are tightly coupled together,
+
+30
+00:02:16,120 --> 00:02:23,200
+so let's get started by implementing a reducer and for that in that shopping list folder here,
+
+31
+00:02:23,200 --> 00:02:28,630
+I will simply add a new file next to the shopping list service and so on, which I'll name
+
+32
+00:02:30,300 --> 00:02:41,700
+shopping-list.reducer.ts. So the shopping list reducer file here is the file I added and in there,
+
+33
+00:02:41,710 --> 00:02:44,440
+we have to provide such a reducer.
+
+34
+00:02:44,470 --> 00:02:51,380
+Now how does such an NgRx Redux reducer look like? As I said, it's just a function,
+
+35
+00:02:51,910 --> 00:02:58,210
+so you should export a function here which you can give any name you want and I'll name mine shopping
+
+36
+00:02:58,270 --> 00:03:06,800
+list reducer and that function and that's now important receives two arguments automatically because
+
+37
+00:03:06,800 --> 00:03:15,290
+we will soon add it such that it's automatically managed by the NgRx package and this NgRx package
+
+38
+00:03:15,290 --> 00:03:20,000
+will in the end be the part that calls this function, not right now but soon
+
+39
+00:03:20,150 --> 00:03:27,680
+and the NgRx package will therefore pass these arguments into this function. So we can rely on two arguments
+
+40
+00:03:27,680 --> 00:03:29,510
+being passed into this function
+
+41
+00:03:29,840 --> 00:03:30,880
+and that's the state,
+
+42
+00:03:30,890 --> 00:03:37,010
+so the current state before it was changed, it's changed by the reducer so obviously we get it before
+
+43
+00:03:37,010 --> 00:03:38,130
+it was changed
+
+44
+00:03:38,270 --> 00:03:44,840
+and the second argument is the action because keep in mind, it's the action that triggers the reducer
+
+45
+00:03:44,870 --> 00:03:46,900
+and in the end, the state update,
+
+46
+00:03:46,910 --> 00:03:51,700
+so these two things are passed in by NgRx. Now inside of that function,
+
+47
+00:03:51,700 --> 00:03:57,360
+we can now find out which kind of action it is and update the state.
+
+48
+00:03:57,710 --> 00:04:05,260
+Now for this, we also can set up an initial state because if you have a look at your shopping list service
+
+49
+00:04:05,270 --> 00:04:10,730
+which of course is the thing we're trying to replace here, you would say the ingredients, that basically
+
+50
+00:04:10,730 --> 00:04:11,390
+is our state,
+
+51
+00:04:11,390 --> 00:04:11,690
+right,
+
+52
+00:04:11,690 --> 00:04:13,890
+that is the data we're managing here,
+
+53
+00:04:14,180 --> 00:04:18,710
+that also is initialized with the default value, we started with two ingredients.
+
+54
+00:04:18,710 --> 00:04:20,200
+Now of course you don't have to do that
+
+55
+00:04:20,210 --> 00:04:21,860
+but here in this app, we are.
+
+56
+00:04:22,280 --> 00:04:27,950
+So this would be our current state and this would be our initial state and therefore, it would make sense
+
+57
+00:04:27,950 --> 00:04:35,830
+to have a similar initial state here when we switch to NgRx instead of using our own service. Hence
+
+58
+00:04:35,830 --> 00:04:41,110
+here in the shopping list reducer, we can create a new constant which you can name initial state, that
+
+59
+00:04:41,110 --> 00:04:44,980
+name is totally up to you, just like this function name here by the way.
+
+60
+00:04:44,980 --> 00:04:50,380
+So here I'll name it initial state and this should be a Javascript object, your state should be a
+
+61
+00:04:50,380 --> 00:04:51,820
+Javascript object,
+
+62
+00:04:51,820 --> 00:04:58,150
+it actually doesn't necessarily need to be one but for anything but very trivial lapse or very specific
+
+63
+00:04:58,150 --> 00:05:04,240
+cases, it probably will be a Javascript object because that simply allows you to group more different
+
+64
+00:05:04,240 --> 00:05:05,830
+data together.
+
+65
+00:05:05,830 --> 00:05:11,050
+So here we have a shopping list service object and in there, it would make sense to have an ingredients
+
+66
+00:05:11,050 --> 00:05:12,320
+property.
+
+67
+00:05:12,340 --> 00:05:20,080
+So let me copy that ingredients property including the type and the two ingredients and add this here
+
+68
+00:05:20,170 --> 00:05:22,810
+to this newly added object.
+
+69
+00:05:22,920 --> 00:05:25,270
+Now the ingredients type is missing here,
+
+70
+00:05:25,270 --> 00:05:31,850
+so we have to add this import to this file and I used my IDE to automatically add it.
+
+71
+00:05:31,970 --> 00:05:35,740
+Now we need to edit this a little bit since we're in a Javascript object,
+
+72
+00:05:35,750 --> 00:05:41,720
+we don't assign values with an equal sign but with a colon like this and TypeScript is able to infer
+
+73
+00:05:41,720 --> 00:05:46,880
+the type automatically because this is an array of ingredients and hence TypeScript automatically assumes
+
+74
+00:05:47,030 --> 00:05:50,330
+that it is an array of ingredients.
+
+75
+00:05:50,330 --> 00:05:53,420
+So that is our initial state here,
+
+76
+00:05:53,420 --> 00:06:00,740
+now we can set that initial state by giving this first argument we're getting here in that function
+
+77
+00:06:01,190 --> 00:06:03,500
+initial state as a default value.
+
+78
+00:06:03,500 --> 00:06:06,960
+Now that's a TypeScript or next-gen Javascript feature,
+
+79
+00:06:07,130 --> 00:06:13,490
+you can assign default values to function arguments, which means if that function argument is not set
+
+80
+00:06:13,490 --> 00:06:19,570
+or would be null otherwise, then this initial state is passed in instead.
+
+81
+00:06:19,790 --> 00:06:26,110
+So the first time this reducer will run, it will receive that initial state for subsequent actions,
+
+82
+00:06:26,120 --> 00:06:30,650
+so once the state has been initialized for the first time and it will be initialized globally
+
+83
+00:06:30,650 --> 00:06:36,940
+by NgRx, once it has been initialized, state will always be the previous state only for the first time,
+
+84
+00:06:36,950 --> 00:06:41,660
+so when NgRx is initializing the application state, it will be our initial state.
+

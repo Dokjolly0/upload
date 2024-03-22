@@ -1,0 +1,168 @@
+1
+00:00:02,310 --> 00:00:04,170
+We created all these components,
+
+2
+00:00:04,290 --> 00:00:05,860
+let's start using them.
+
+3
+00:00:05,880 --> 00:00:12,680
+I will start using them in the app.component.html file, here where I say I'm working, here I want
+
+4
+00:00:12,690 --> 00:00:15,180
+to display my app recipes component,
+
+5
+00:00:15,360 --> 00:00:21,950
+so the one we created here in the recipes folder and below it, the app shopping list component,
+
+6
+00:00:22,050 --> 00:00:28,040
+so this component here. If we save this, we see recipes works and shopping list works,
+
+7
+00:00:28,110 --> 00:00:29,900
+which of course are the default strings
+
+8
+00:00:29,900 --> 00:00:31,830
+the CLI gave us here.
+
+9
+00:00:32,040 --> 00:00:38,130
+So with these added and working here, let's now also work on the individual components here,
+
+10
+00:00:38,160 --> 00:00:42,950
+starting with recipes maybe. In my recipes component,
+
+11
+00:00:43,170 --> 00:00:48,310
+as I said in my set up, I want to have a recipes list and detail next to each other.
+
+12
+00:00:48,330 --> 00:00:56,760
+So for this, I'll add a row div here and in this row, I'll add a div with the class col-md-5
+
+13
+00:00:57,000 --> 00:01:04,280
+to have a smaller column on the left and then another one with col-md-7, using these Bootstrap columns
+
+14
+00:01:04,280 --> 00:01:07,800
+sizing classes to have a broader column on the right,
+
+15
+00:01:07,800 --> 00:01:09,820
+so two columns next to each other.
+
+16
+00:01:10,020 --> 00:01:15,880
+Now in the first column, I want to have my app recipe-list component,
+
+17
+00:01:16,110 --> 00:01:22,710
+in the second one I want to have my app recipe detail component, just like that.
+
+18
+00:01:22,770 --> 00:01:25,870
+So that should place these two components next to each other,
+
+19
+00:01:25,890 --> 00:01:33,000
+if we save this and have a look at our app, we indeed see list and detail below each other simply because
+
+20
+00:01:33,050 --> 00:01:39,250
+due to the console, the viewport was so small and then it automatically wraps them below each other.
+
+21
+00:01:39,420 --> 00:01:44,370
+So if you have a normal page, they sit next to each other and I actually want them to wrap below each
+
+22
+00:01:44,370 --> 00:01:46,160
+other on smaller pages.
+
+23
+00:01:46,620 --> 00:01:52,270
+So this is now working too. Now in my recipe-list component here,
+
+24
+00:01:52,380 --> 00:01:56,120
+as I said, I somehow want to include that recipe-item.
+
+25
+00:01:56,160 --> 00:02:02,040
+So here I will later output a list of items, for now I will simply include the recipe-item here, app
+
+26
+00:02:02,040 --> 00:02:07,710
+recipe item, so only the selector, which should now ensure that we no longer see recipe-list works
+
+27
+00:02:07,710 --> 00:02:13,210
+but recipe-item works because that's the only content of our recipe-list component for now.
+
+28
+00:02:13,560 --> 00:02:14,910
+So that's looking great,
+
+29
+00:02:14,940 --> 00:02:21,960
+now for the shopping list, I'll do pretty much the same. In my shopping list component, here I want to display
+
+30
+00:02:21,970 --> 00:02:28,910
+the list and above it this shopping edit area, so I'll add a row here too and in this row, so let's say with
+
+31
+00:02:28,920 --> 00:02:33,610
+col-xs-10 to create a very wide column here, I'll first
+
+32
+00:02:33,650 --> 00:02:39,990
+add my shopping edit component to have this editing area at the top where we can add new ingredients
+
+33
+00:02:39,990 --> 00:02:41,570
+or edit existing ones
+
+34
+00:02:41,970 --> 00:02:48,660
+and then I want to have a horizontal line here and somehow output my list below this.
+
+35
+00:02:48,660 --> 00:02:51,930
+So that's the rough setup I want to have in this component.
+
+36
+00:02:52,230 --> 00:02:53,610
+So it should work like this,
+
+37
+00:02:53,610 --> 00:02:57,630
+that will be the recipe-list component, later on we're going to fill this with more life
+
+38
+00:02:57,630 --> 00:03:00,750
+but for now, I'm very happy with how that looks.
+
+39
+00:03:00,750 --> 00:03:02,640
+Talking about how it looks,
+
+40
+00:03:02,770 --> 00:03:06,680
+the header really kind of destroys our whole layout here.
+
+41
+00:03:06,720 --> 00:03:12,780
+So let's work on the header in the next lecture and let's actually bring it into its almost final form
+
+42
+00:03:12,780 --> 00:03:13,520
+already.
+

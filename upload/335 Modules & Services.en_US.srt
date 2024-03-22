@@ -1,0 +1,268 @@
+1
+00:00:02,220 --> 00:00:04,500
+Now that we learn about lazy loading,
+
+2
+00:00:04,560 --> 00:00:10,650
+I can finally dive into what's special about services and modules because I mentioned that there is something
+
+3
+00:00:10,650 --> 00:00:13,190
+special about that but I could only explain it
+
+4
+00:00:13,290 --> 00:00:19,680
+after diving into lazy loading because it's strongly related to that. I want to dive into where you can
+
+5
+00:00:19,680 --> 00:00:24,870
+provide services and how that affects the instances of the services you're working with.
+
+6
+00:00:25,710 --> 00:00:32,490
+Now we can provide services in the app module, we can provide services in the app component or other
+
+7
+00:00:32,490 --> 00:00:33,160
+components,
+
+8
+00:00:33,180 --> 00:00:38,280
+if you'll remember the services section, there you also could add a providers key to the component
+
+9
+00:00:38,280 --> 00:00:39,930
+decorator.
+
+10
+00:00:39,990 --> 00:00:47,460
+We can also load services or add services to providers of any eager loaded module,
+
+11
+00:00:47,550 --> 00:00:53,700
+so in the recipes module before we added lazy loading for example and we're also of course able to add
+
+12
+00:00:53,700 --> 00:01:01,620
+services to providers of lazy loaded modules. Of course, we can also provide services by adding the provided
+
+13
+00:01:01,620 --> 00:01:08,700
+in root configuration in the @injectable decorator and that would be recommended for all services
+
+14
+00:01:08,700 --> 00:01:12,200
+that you planned on providing in app module otherwise.
+
+15
+00:01:12,480 --> 00:01:19,650
+Now when you provide a service in the app module or with provided in root in @injectable, the service is
+
+16
+00:01:19,770 --> 00:01:26,100
+available application-wide and with the service, I also mean the same instance of that service is
+
+17
+00:01:26,100 --> 00:01:27,390
+available application-wide,
+
+18
+00:01:27,390 --> 00:01:35,490
+you're always working with the same single instance. If you provide a service in a component, no matter
+
+19
+00:01:35,490 --> 00:01:40,530
+if that's the app component or another component, then that service is only available for dependency
+
+20
+00:01:40,530 --> 00:01:41,080
+injection
+
+21
+00:01:41,100 --> 00:01:48,270
+inside of that component tree and then all these components will again share the same instance but we're
+
+22
+00:01:48,270 --> 00:01:53,730
+talking only about that component tree and you provide the service in multiple sibling components of
+
+23
+00:01:53,730 --> 00:01:54,630
+your application,
+
+24
+00:01:54,720 --> 00:01:59,970
+then all these sibling component trees have access to the service but each component tree has access
+
+25
+00:01:59,970 --> 00:02:05,610
+to its own service instance and I mentioned this and showed this in the services module of this course
+
+26
+00:02:05,610 --> 00:02:07,590
+already.
+
+27
+00:02:07,630 --> 00:02:14,350
+Now the interesting thing is if you do add a service to providers of an eager loaded module, you might
+
+28
+00:02:14,350 --> 00:02:21,310
+think that that service is only available inside of that module and that every module where you add
+
+29
+00:02:21,310 --> 00:02:27,080
+a service to its providers has its own instance of that service but actually, that's not the case.
+
+30
+00:02:27,220 --> 00:02:33,400
+If a module is eager loaded, everything is bundled together initially and therefore, any services you
+
+31
+00:02:33,400 --> 00:02:36,390
+add to providers in an eager loaded module,
+
+32
+00:02:36,400 --> 00:02:42,280
+let's say the recipes module would be not lazy loaded but still eagerly loaded by importing it into
+
+33
+00:02:42,280 --> 00:02:43,660
+the app module,
+
+34
+00:02:43,810 --> 00:02:49,000
+any service added there will be available application-wide with one and the same instance.
+
+35
+00:02:49,000 --> 00:02:57,040
+So adding a service to providers of an eagerly loaded module has the exact same effect as adding a service
+
+36
+00:02:57,040 --> 00:03:04,990
+to providers of the app module or as adding provided in root in @injectable. A huge difference
+
+37
+00:03:04,990 --> 00:03:11,530
+can be seen if you add a service to providers of a lazy loaded module though. There the service is only
+
+38
+00:03:11,530 --> 00:03:17,290
+available in that loaded module and it gets its own instance. If you do provide a service both in the
+
+39
+00:03:17,290 --> 00:03:22,570
+app module and in the lazy loaded module, then the service is of course available application-wide
+
+40
+00:03:22,810 --> 00:03:27,970
+but the lazy loaded module will get a separate instance, not the same instance you use in the rest of
+
+41
+00:03:27,970 --> 00:03:28,920
+the app.
+
+42
+00:03:28,960 --> 00:03:34,540
+Sometimes this can be desirable but in other cases, it might lead to a strange behaviour where you would
+
+43
+00:03:34,540 --> 00:03:38,080
+have expected to work with one and the same instance when you didn't.
+
+44
+00:03:38,200 --> 00:03:44,500
+The reason for that is that when you do provide in the app module or in @injectable, you use the so-called
+
+45
+00:03:44,500 --> 00:03:51,580
+root injector, so the root dependency injection mechanism of Angular. When you do provide it in a component,
+
+46
+00:03:51,580 --> 00:03:56,500
+you use the component specific injector, which is not the root injector and therefore not the entire application
+
+47
+00:03:56,500 --> 00:03:59,590
+has access to that. In an eagerly loaded module,
+
+48
+00:03:59,590 --> 00:04:03,940
+again the root injector is used automatically, with a lazy loaded module,
+
+49
+00:04:03,940 --> 00:04:10,360
+a separate child injector is created by Angular for that module and therefore, that module has its own
+
+50
+00:04:10,360 --> 00:04:16,900
+instance of that service. Therefore, the default should be that you use the app module or again,
+
+51
+00:04:16,960 --> 00:04:24,130
+provided in root in @injectable. You of course might have scenarios where a component tree needs its
+
+52
+00:04:24,130 --> 00:04:25,030
+own service,
+
+53
+00:04:25,030 --> 00:04:31,630
+for example if that component tree somehow has a service that only matters for these components, it doesn't
+
+54
+00:04:31,630 --> 00:04:36,670
+matter application-wide, then there is no need to provide the service application-wide, you can instead
+
+55
+00:04:36,670 --> 00:04:45,120
+provide it in that component. Eagerly loaded modules should pretty much never provide services,
+
+56
+00:04:45,150 --> 00:04:50,520
+you should avoid this because the effect is the same as in the app module but it's kind of unexpected
+
+57
+00:04:50,520 --> 00:04:56,880
+and it's harder to detect services there and therefore other developers diving into your code might
+
+58
+00:04:57,330 --> 00:05:03,120
+look for a certain service, might look for it in the app module, not find it there and therefore be confused
+
+59
+00:05:03,360 --> 00:05:09,210
+whether this service is now intended to be available to the entire app or only to that module.
+
+60
+00:05:09,210 --> 00:05:15,480
+Now in a lazy loaded module, you can of course add a service to providers but only do this if you deliberately
+
+61
+00:05:15,510 --> 00:05:18,630
+want to have a separate instance of that service there,
+
+62
+00:05:18,850 --> 00:05:25,650
+otherwise you can have strange bugs. So as a rule, generally you want to ensure that services are always
+
+63
+00:05:25,650 --> 00:05:31,890
+available application-wide by using @injectable, provided in root or by adding them to providers in
+
+64
+00:05:31,890 --> 00:05:38,880
+the app module unless you have a strong reason for adding them only in a component tree or in a lazy loaded
+
+65
+00:05:38,880 --> 00:05:39,540
+module,
+
+66
+00:05:39,630 --> 00:05:43,190
+never add services in an eager loaded module.
+
+67
+00:05:43,200 --> 00:05:44,700
+Now let's see that in practice.
+

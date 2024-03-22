@@ -1,0 +1,252 @@
+1
+00:00:02,560 --> 00:00:05,720
+Almost done, we covered a lot in this module.
+
+2
+00:00:05,770 --> 00:00:10,990
+This has been a very long section in this course but it has been so important because routing is such a
+
+3
+00:00:10,990 --> 00:00:14,560
+key task in any application.
+
+4
+00:00:14,560 --> 00:00:21,190
+Now if you have a look at our application, we get a couple of routes in there, /users, /servers
+
+5
+00:00:21,310 --> 00:00:22,890
+and much more.
+
+6
+00:00:23,410 --> 00:00:24,910
+Now here's one important thing,
+
+7
+00:00:24,910 --> 00:00:32,190
+it works fine here on our local setup but actually, this is not something you should take for granted.
+
+8
+00:00:32,710 --> 00:00:40,030
+If you have a route like this, your domain/servers and you're hosting this on a real server somewhere
+
+9
+00:00:40,060 --> 00:00:49,010
+in the web, this might not work out of the box because there, routes, the URL is always, this is how the
+
+10
+00:00:49,010 --> 00:00:58,640
+web works, is always parsed handled by the server first, so by that server which hosts your application.
+
+11
+00:00:58,640 --> 00:01:03,890
+Now here on the local environment in our development environment, we're also using a development server
+
+12
+00:01:04,220 --> 00:01:07,040
+but this server has one special configuration
+
+13
+00:01:07,040 --> 00:01:14,020
+your real life server also has to have and I will come back to this this in the deployment section. The
+
+14
+00:01:14,030 --> 00:01:21,080
+server hosting your Angular single page application has to be configured such that in a case of a
+
+15
+00:01:21,140 --> 00:01:22,520
+404 error,
+
+16
+00:01:22,640 --> 00:01:28,750
+it returns the index.html file, so the file starting and containing your Angular app.
+
+17
+00:01:28,800 --> 00:01:30,600
+Why?
+
+18
+00:01:30,630 --> 00:01:34,840
+Because as I mentioned, all your URLs are parsed by the server first,
+
+19
+00:01:34,860 --> 00:01:37,210
+so not by Angular, by the server.
+
+20
+00:01:37,530 --> 00:01:44,220
+Now if you have /servers here, it will look for a /servers route on your server,
+
+21
+00:01:44,220 --> 00:01:50,190
+on the real server hosting your web app. Now chances are you don't have that route here because you only
+
+22
+00:01:50,190 --> 00:01:57,390
+have one file there, index.html containing your Angular app and you want Angular to take over and
+
+23
+00:01:57,390 --> 00:01:58,700
+to parse this route
+
+24
+00:01:58,740 --> 00:02:00,420
+but it will never get a chance
+
+25
+00:02:00,480 --> 00:02:05,060
+if your server, the server hosting your app decides no, I don't know the route,
+
+26
+00:02:05,070 --> 00:02:07,790
+here's your 404 error page.
+
+27
+00:02:07,830 --> 00:02:15,110
+Therefore you need to make sure that in such a case, your web server returns the index.html file.
+
+28
+00:02:15,570 --> 00:02:22,230
+If for some reason, you can't get this to work or you need to support very old browsers which are
+
+29
+00:02:22,230 --> 00:02:26,160
+not able to parse paths like this in the client which Angular does
+
+30
+00:02:26,160 --> 00:02:29,900
+then, you have an alternative approach to using this
+
+31
+00:02:29,940 --> 00:02:30,540
+nice
+
+32
+00:02:30,570 --> 00:02:37,050
+URLs which look like all the URLs in the web. You can fallback to our older technique which was
+
+33
+00:02:37,050 --> 00:02:41,390
+used a couple of years ago, using a hash sign in your routes.
+
+34
+00:02:41,640 --> 00:02:42,760
+Let's see how we enable it
+
+35
+00:02:42,780 --> 00:02:45,160
+and then I will explain what it does.
+
+36
+00:02:45,280 --> 00:02:50,940
+You can enable it in your app-routing.module where you register your routes,
+
+37
+00:02:50,950 --> 00:02:56,980
+here with the forRoot method. You can pass a second argument, a Javascript object to this method
+
+38
+00:02:56,980 --> 00:02:58,980
+configuring the set up of the routes.
+
+39
+00:02:59,020 --> 00:03:00,570
+So besides the routes itself,
+
+40
+00:03:00,610 --> 00:03:02,240
+now we can configure them
+
+41
+00:03:02,470 --> 00:03:08,910
+and one important configuration is the useHash configuration which you can set to true,
+
+42
+00:03:08,920 --> 00:03:12,240
+the default is false which is why we didn't have to pass it.
+
+43
+00:03:12,670 --> 00:03:16,710
+If we do this and we save that, let's see what happens.
+
+44
+00:03:16,740 --> 00:03:21,430
+You out of the box see that now we have this hashtag in our URL and if I click on servers,
+
+45
+00:03:21,550 --> 00:03:27,670
+you see there is this hashtag in between and that's no bug, that belongs here because this is hash
+
+46
+00:03:27,670 --> 00:03:29,010
+mode routing.
+
+47
+00:03:29,020 --> 00:03:33,330
+What this hashtag will do is, it informs your web server,
+
+48
+00:03:33,400 --> 00:03:36,940
+hey only care about the part in this URL
+
+49
+00:03:36,990 --> 00:03:38,980
+before this hashtag,
+
+50
+00:03:39,130 --> 00:03:43,600
+so all the parts thereafter will be ignored by your web server.
+
+51
+00:03:43,900 --> 00:03:51,150
+Therefore this will run even on servers which don't return the index.html file in case of 404 errors
+
+52
+00:03:51,490 --> 00:03:54,680
+because they will only care about the part in front of the hashtag.
+
+53
+00:03:54,730 --> 00:03:55,930
+That's how it works
+
+54
+00:03:55,930 --> 00:04:04,740
+by default and the part after the hashtag can now be parsed by your client, by Angular.
+
+55
+00:04:04,760 --> 00:04:05,990
+So this is the solution
+
+56
+00:04:06,170 --> 00:04:12,940
+if you can't get the other approach to work, however I will say that definitely you should try to use
+
+57
+00:04:12,940 --> 00:04:20,930
+the more prettier routes, using the HTML history mode as it is called with the normal slash routes without
+
+58
+00:04:20,930 --> 00:04:21,780
+the hashtag.
+
+59
+00:04:21,890 --> 00:04:23,530
+So this is how you would enable it,
+
+60
+00:04:23,750 --> 00:04:28,860
+I'm going to duplicate this so to comment this out, to have it there for reference but I will fallback
+
+61
+00:04:28,880 --> 00:04:35,570
+to the other mode which gives us cleaner routes which really look a lot nicer and more like you're used
+
+62
+00:04:35,570 --> 00:04:38,260
+to seeing routes from other web apps.
+
+63
+00:04:38,660 --> 00:04:41,300
+And this is the last piece of the section.
+

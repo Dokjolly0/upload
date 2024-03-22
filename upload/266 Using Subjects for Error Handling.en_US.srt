@@ -1,0 +1,124 @@
+1
+00:00:02,240 --> 00:00:08,660
+This other way of handling errors could be interesting in cases like when you send a request and don't
+
+2
+00:00:08,660 --> 00:00:10,760
+subscribe to it in your component.
+
+3
+00:00:10,760 --> 00:00:14,610
+It's easy for us to react to an error in the component here
+
+4
+00:00:14,960 --> 00:00:20,150
+if we do return the observable and we subscribe in the component because then we can pass this second
+
+5
+00:00:20,150 --> 00:00:24,020
+argument to subscribe which is this error handling function
+
+6
+00:00:24,020 --> 00:00:26,180
+but what about creating a post? There,
+
+7
+00:00:26,180 --> 00:00:28,080
+I subscribe in the service.
+
+8
+00:00:28,190 --> 00:00:33,540
+Now obviously, you could just return the observable there too and simply subscribe in the component instead
+
+9
+00:00:33,620 --> 00:00:40,250
+and that would not be wrong but you can of course also implement a different pattern of handling that
+
+10
+00:00:40,250 --> 00:00:41,060
+error,
+
+11
+00:00:41,210 --> 00:00:46,490
+you could use a subject and that is especially useful if you have multiple places in the application
+
+12
+00:00:46,490 --> 00:00:48,700
+that might be interested in your error.
+
+13
+00:00:48,710 --> 00:00:58,220
+So for example here, you could have your error property which is a new subject and subject needs to
+
+14
+00:00:58,220 --> 00:01:05,920
+be imported from RxJS and that will let's say eventually give us a string, that error message
+
+15
+00:01:05,940 --> 00:01:09,300
+but of course you can store in there whatever you want
+
+16
+00:01:09,300 --> 00:01:16,550
+and the idea then simply is that here where we subscribe, where we get that error, we now use that subject.
+
+17
+00:01:16,590 --> 00:01:21,030
+So this error, we call next and we pass on error message
+
+18
+00:01:21,030 --> 00:01:26,700
+and now the remaining step is that we subscribe to that subject in all the places we're interested
+
+19
+00:01:26,700 --> 00:01:28,330
+in that error message.
+
+20
+00:01:28,350 --> 00:01:37,870
+So here in this example, we would subscribe in ngOnInit for example, like this and whenever we get
+
+21
+00:01:37,870 --> 00:01:42,760
+our error message here, we could set this error equal to the error message.
+
+22
+00:01:42,760 --> 00:01:47,170
+Now of course as you learned, it's a good and recommended practice to unsubscribe
+
+23
+00:01:47,260 --> 00:01:55,520
+if you get rid of this component, so I'll add a new property error sub which is a subscription and therefore,
+
+24
+00:01:55,520 --> 00:02:04,700
+we need to import subscription from RxJS, like this and now we can store our subscription in that
+
+25
+00:02:04,700 --> 00:02:05,480
+property
+
+26
+00:02:09,780 --> 00:02:11,210
+here in ngOnInit
+
+27
+00:02:11,310 --> 00:02:17,610
+and now we just need to add onDestroy here, this interface and import that from @angular/core as
+
+28
+00:02:17,610 --> 00:02:25,810
+well and add ngOnDestroy therefore, maybe here at the end of the component and there, we now just
+
+29
+00:02:25,810 --> 00:02:26,920
+want to unsubscribe,
+
+30
+00:02:26,980 --> 00:02:31,840
+so this error sub unsubscribe.
+
+31
+00:02:32,020 --> 00:02:36,480
+Now we use a subject-based strategy for forwarding the error and that is fine too.
+

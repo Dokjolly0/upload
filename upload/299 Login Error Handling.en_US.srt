@@ -1,0 +1,204 @@
+1
+00:00:02,160 --> 00:00:05,160
+The problem of course is that for logging in,
+
+2
+00:00:05,400 --> 00:00:12,840
+we don't use the error handling logic we use for signing up and therefore, we get the full error response
+
+3
+00:00:12,870 --> 00:00:14,400
+which we tried to output as a message,
+
+4
+00:00:14,520 --> 00:00:16,890
+hence we see object object here.
+
+5
+00:00:16,890 --> 00:00:25,030
+Now actually it would be nice to share that error handling logic between both observables, so between
+
+6
+00:00:25,030 --> 00:00:32,040
+the sign up and the login observable and that of course is possible. We can create a new private method
+
+7
+00:00:32,040 --> 00:00:37,530
+here in the auth service, private because we'll only use it in that service, which we could name handle
+
+8
+00:00:37,620 --> 00:00:46,680
+error and where we get an error response which is of type error response, HTTP error response to be precise
+
+9
+00:00:46,890 --> 00:00:55,620
+and that is imported from @angular/common/http. So I get that response here and in there,
+
+10
+00:00:56,130 --> 00:00:59,000
+I want to have that code,
+
+11
+00:00:59,080 --> 00:01:06,810
+so I want to basically dive into the response, check it and then throw a new error observable.
+
+12
+00:01:06,810 --> 00:01:13,530
+So I copy that entire code into the handle error method, where I set up let error message, then check
+
+13
+00:01:13,530 --> 00:01:22,170
+the error response for the error field and then for the nested error field, then we have that switch
+
+14
+00:01:22,170 --> 00:01:32,380
+statement and we in the end return a new thrown error in an observable, either here or here. Now instead
+
+15
+00:01:32,440 --> 00:01:42,370
+of setting up this anonymous method up there, we can pass this handle error into catch error and this
+
+16
+00:01:42,370 --> 00:01:46,040
+handle error refers to this private method here.
+
+17
+00:01:46,060 --> 00:01:53,440
+So now we have this central place for handling errors or this central function and we use that here,
+
+18
+00:01:53,440 --> 00:02:00,280
+we can now use that same pipe with catch error on our login observable here,
+
+19
+00:02:00,280 --> 00:02:03,440
+so there I add that exact same pipe.
+
+20
+00:02:03,460 --> 00:02:08,440
+This means that this handle error function now runs for both of observables that are related to signing
+
+21
+00:02:08,440 --> 00:02:13,990
+up, as well as for observables that are related to logging in and therefore now if we save this, we should
+
+22
+00:02:13,990 --> 00:02:15,320
+see a different error message
+
+23
+00:02:15,460 --> 00:02:21,820
+if we try to login with a user that doesn't exist. Now we see an unknown error occurred and it makes
+
+24
+00:02:21,820 --> 00:02:28,720
+sense that we see this message because in our handle error function, we only handle the e-mail exists
+
+25
+00:02:28,750 --> 00:02:31,830
+error here in this switch case statement.
+
+26
+00:02:31,930 --> 00:02:38,470
+Now we can simply add more cases because for logging in, you see common error codes are e-mail not found
+
+27
+00:02:38,710 --> 00:02:40,210
+or invalid password
+
+28
+00:02:40,210 --> 00:02:45,070
+and I guess it would make sense to handle these two cases since they look relatively common.
+
+29
+00:02:45,070 --> 00:02:50,770
+Important of course, if you don't want to give any hints away whether the e-mail or the password was the
+
+30
+00:02:50,770 --> 00:02:55,660
+wrong thing, you can of course also handle both with the same error message that doesn't give any hints. 
+
+31
+00:02:56,260 --> 00:02:56,770
+Here,
+
+32
+00:02:56,800 --> 00:03:00,160
+I will be more specific to practice this a bit better,
+
+33
+00:03:00,160 --> 00:03:01,140
+so let's break here
+
+34
+00:03:01,150 --> 00:03:08,860
+after this case and then handle the e-mail not found case where I will set my error message to this
+
+35
+00:03:08,950 --> 00:03:21,640
+e-mail was or does not exist, then break and then add another case for invalid password, like this where
+
+36
+00:03:21,640 --> 00:03:24,010
+we can set the error message equal
+
+37
+00:03:24,010 --> 00:03:27,490
+this password is not correct.
+
+38
+00:03:27,520 --> 00:03:33,620
+Again, you could use the same error message for wrong password and wrong e-mail to give no hint away
+
+39
+00:03:33,700 --> 00:03:34,420
+for what
+
+40
+00:03:34,420 --> 00:03:40,570
+of the two things was wrong to enhance security but here, I want to be specific because this allows us
+
+41
+00:03:40,570 --> 00:03:43,200
+to better practice this all, I guess.
+
+42
+00:03:43,420 --> 00:03:49,000
+Now with this tiny change in place, which I guess already shows the magic of using that central error
+
+43
+00:03:49,000 --> 00:03:52,130
+handling logic, we don't need to change anything anywhere else,
+
+44
+00:03:52,150 --> 00:03:56,890
+we only added two new cases to this handle error function and we're done.
+
+45
+00:03:56,890 --> 00:04:04,030
+So with this simple change, if I now try to login for a user where the e-mail address doesn't exist, we
+
+46
+00:04:04,030 --> 00:04:08,790
+get the e-mail does not exist and now if I take the existing e-mail address but a wrong password,
+
+47
+00:04:08,980 --> 00:04:10,790
+I get the password is not correct.
+
+48
+00:04:10,900 --> 00:04:12,740
+So our error handling is working and
+
+49
+00:04:12,760 --> 00:04:15,370
+we get the sign up and the login route in place.
+
+50
+00:04:15,370 --> 00:04:22,480
+The next step of course is to finally start using that login data, start storing that token and adjust
+
+51
+00:04:22,510 --> 00:04:26,710
+our user interface to the current authentication status of the user.
+

@@ -1,0 +1,44 @@
+1
+00:00:02,290 --> 00:00:06,080
+One important note at this point, my IDE changed slightly here.
+
+2
+00:00:06,100 --> 00:00:12,220
+The only reason for that is that I switched the IDE because I had to re-record these modules where you
+
+3
+00:00:12,220 --> 00:00:16,720
+see the new IDE, which does not mean that the other modules are old or outdated,
+
+4
+00:00:16,720 --> 00:00:22,350
+it just means these modules here needed an update to be up to the quality standards
+
+5
+00:00:22,360 --> 00:00:28,350
+I want to enforce and to teach you the latest of Angular. If you see videos with a different IDE, then
+
+6
+00:00:28,360 --> 00:00:30,520
+these videos still are perfectly fine,
+
+7
+00:00:30,520 --> 00:00:32,610
+that's the only reason for that change.
+
+8
+00:00:32,650 --> 00:00:34,100
+I hope it's no big problem,
+
+9
+00:00:34,120 --> 00:00:36,400
+the project of course is exactly the same,
+
+10
+00:00:36,400 --> 00:00:38,680
+the folder structure is exactly the same,
+
+11
+00:00:38,760 --> 00:00:41,320
+you will only have some tiny visual changes.
+

@@ -1,0 +1,268 @@
+1
+00:00:02,370 --> 00:00:05,280
+In the last video, we had a look at the basic set up of our form,
+
+2
+00:00:05,280 --> 00:00:11,850
+now let's understand how Angular creates such a Javascript object representing our form in the template
+
+3
+00:00:11,850 --> 00:00:12,800
+driven approach.
+
+4
+00:00:12,990 --> 00:00:18,080
+The great thing is you don't have to do anything, well almost anything,
+
+5
+00:00:18,150 --> 00:00:25,350
+make sure that in your app module, you actually import the forms module, add it here to your imports array
+
+6
+00:00:25,560 --> 00:00:29,150
+and have the import at the top of this file. As the name implies,
+
+7
+00:00:29,310 --> 00:00:36,240
+this built-in module shipping with Angular includes a lot of forms related functionalities and it's
+
+8
+00:00:36,240 --> 00:00:43,320
+actually needed to get this template driven approach to work, to get this form creation by Angular to
+
+9
+00:00:43,320 --> 00:00:49,300
+work. Now by default in a CLI project, this should already be imported so it should work fine
+
+10
+00:00:49,320 --> 00:00:54,750
+but again, I'm just highlighting it because it's super important that you have this import, otherwise the following
+
+11
+00:00:54,750 --> 00:01:02,870
+steps will not work. With this imported, Angular will actually automatically create a form for you,
+
+12
+00:01:02,910 --> 00:01:09,900
+so a Javascript representations of the form when it detects a form element in HTML code, like it does
+
+13
+00:01:09,900 --> 00:01:10,620
+here.
+
+14
+00:01:10,680 --> 00:01:18,600
+So you can think of that form element serving as a selector for some Angular directive, which then creates
+
+15
+00:01:18,600 --> 00:01:22,260
+such a Javascript representation of the form for you.
+
+16
+00:01:22,260 --> 00:01:30,540
+Of course, you can't see that form representation as of now and it would be very empty because one thing
+
+17
+00:01:30,540 --> 00:01:37,230
+does not happen automatically, Angular will not automatically detect your inputs in this form
+
+18
+00:01:37,350 --> 00:01:42,330
+and the simple reason for this is that whilst you could argue that it should be able to scan your HTML
+
+19
+00:01:42,330 --> 00:01:48,360
+code and detect that you have an input here and here and that you have a select dropdown here, you
+
+20
+00:01:48,360 --> 00:01:55,560
+still might not want to add all these elements as controls to your form, so with control I'm referring
+
+21
+00:01:55,560 --> 00:01:58,080
+to what is in the Javascript object
+
+22
+00:01:58,080 --> 00:02:04,170
+and again not every input in your HTML code might be a control you want to have in your Javascript form.
+
+23
+00:02:04,470 --> 00:02:11,550
+Maybe you have a dropdown which values only changes something you view on the UI but the input
+
+24
+00:02:11,550 --> 00:02:14,670
+should not actually be part of what gets submitted,
+
+25
+00:02:14,670 --> 00:02:21,120
+maybe you use some third-party package which adds some custom form controls which are not labeled input,
+
+26
+00:02:21,120 --> 00:02:26,130
+which don't use input as a selector and then Angular would have no chance of detecting that this is a
+
+27
+00:02:26,130 --> 00:02:27,680
+control of your form.
+
+28
+00:02:27,690 --> 00:02:30,880
+So you still need to register controls manually,
+
+29
+00:02:30,990 --> 00:02:38,240
+you need to tell Angular hey within that form element, what should be an actual control of my form?
+
+30
+00:02:38,400 --> 00:02:39,720
+And this is what we're going to do
+
+31
+00:02:39,720 --> 00:02:43,240
+now, tell Angular how does our form look like,
+
+32
+00:02:43,260 --> 00:02:46,750
+which controls do we want to have? In the template driven approach,
+
+33
+00:02:46,770 --> 00:02:48,630
+this is super simple.
+
+34
+00:02:48,630 --> 00:02:53,520
+You simply pick the input which you want to add as a control, like this input here
+
+35
+00:02:53,730 --> 00:02:58,860
+and I'm just going to structure it a bit different to split it up over multiple lines to make it easier
+
+36
+00:02:58,860 --> 00:03:03,870
+to read and then you add ngModel, like this.
+
+37
+00:03:03,870 --> 00:03:10,770
+Now you might already know ngModel from the two-way binding, two-way data binding and it actually is
+
+38
+00:03:10,770 --> 00:03:15,180
+the same directive. In two-way data binding though,
+
+39
+00:03:15,180 --> 00:03:20,230
+you saw that we use that with square brackets and parentheses wrapped in ngModel.
+
+40
+00:03:20,370 --> 00:03:23,330
+Now we will have a look at this later again
+
+41
+00:03:23,340 --> 00:03:29,730
+but for now, let's add it without any parentheses, without any square brackets just like this.
+
+42
+00:03:29,730 --> 00:03:39,360
+This will be enough to tell Angular, hey this input is actually a control of my form, so ngModel in
+
+43
+00:03:39,360 --> 00:03:47,400
+the end is a directive made available in the forms module, something I mentioned earlier in the course
+
+44
+00:03:47,400 --> 00:03:49,590
+when we had a look at two-way data binding.
+
+45
+00:03:49,830 --> 00:03:51,440
+This is key to understand,
+
+46
+00:03:51,510 --> 00:03:58,380
+you can use it to get two-way data binding but it actually is part of a bigger module with more features
+
+47
+00:03:58,620 --> 00:04:01,610
+giving you full control over forms.
+
+48
+00:04:01,620 --> 00:04:08,880
+Now for this to work, for this to be recognized as a control in your form, we need to give Angular one other
+
+49
+00:04:08,910 --> 00:04:12,840
+piece of information, the name of this control.
+
+50
+00:04:12,840 --> 00:04:19,020
+Right now, it would see OK this input should be part of the Javascript object representation of this
+
+51
+00:04:19,020 --> 00:04:19,800
+form,
+
+52
+00:04:20,010 --> 00:04:26,610
+so whatever the user enters here as a value should be the value of this control, of what's
+
+53
+00:04:26,610 --> 00:04:27,960
+the name of that control.
+
+54
+00:04:28,110 --> 00:04:34,920
+We need to give that information to Angular and we do this by adding the normal HTML attribute, name. So
+
+55
+00:04:34,920 --> 00:04:38,730
+name is nothing Angular 2 specific, name is the default attribute
+
+56
+00:04:38,820 --> 00:04:42,200
+you can add to any HTML control.
+
+57
+00:04:42,300 --> 00:04:46,620
+Now here, the name might be username because that is what we can enter in this input
+
+58
+00:04:46,620 --> 00:04:53,970
+and with this, this control will be registered in this Javascript representation of the form.
+
+59
+00:04:53,970 --> 00:05:01,470
+Now I'll do the same for the email, restructure it so that it's easier to read, add ngModel and add
+
+60
+00:05:01,530 --> 00:05:05,470
+a name, like for example email here.
+
+61
+00:05:05,970 --> 00:05:11,890
+Well and the same is true for the select here which is just another type of HTML input.
+
+62
+00:05:12,110 --> 00:05:19,450
+Here we can also add ngModel and we can add a name, like secret because I'm asking for a secret question
+
+63
+00:05:19,450 --> 00:05:23,470
+here and with that, we registered all the controls,
+
+64
+00:05:23,470 --> 00:05:27,170
+of course we can't see that much though.
+
+65
+00:05:27,280 --> 00:05:32,350
+Well that is something we're going to have a look at in the next lecture when we see how we can submit
+
+66
+00:05:32,350 --> 00:05:39,460
+such a form and therefore, how we can see these key-value pairs representing what the user entered into
+
+67
+00:05:39,460 --> 00:05:40,330
+which input.
+

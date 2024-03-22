@@ -1,0 +1,284 @@
+1
+00:00:02,430 --> 00:00:08,820
+So we spent quite some time here on the sign up process but therefore we already got a nice error handling
+
+2
+00:00:09,900 --> 00:00:12,670
+step here in place and which is not too bad
+
+3
+00:00:12,990 --> 00:00:16,860
+but now it's of course also time to sign users in and not just up
+
+4
+00:00:16,860 --> 00:00:20,760
+and of course our UI doesn't change on whether the user sign up or in at the moment,
+
+5
+00:00:20,760 --> 00:00:22,590
+that's also something we'll take care about
+
+6
+00:00:22,590 --> 00:00:28,560
+but first of all, let's make sure we can send a request to login endpoint as well. For that in the
+
+7
+00:00:28,560 --> 00:00:29,710
+auth service,
+
+8
+00:00:29,730 --> 00:00:37,110
+let's start by adding a new login method and login also takes an e-mail and also takes a password
+
+9
+00:00:37,110 --> 00:00:39,040
+which should also be a string
+
+10
+00:00:39,210 --> 00:00:43,710
+unsurprisingly and in login,
+
+11
+00:00:43,820 --> 00:00:45,280
+we still have to send a request,
+
+12
+00:00:45,290 --> 00:00:50,120
+let's check out which URL we should send it to, here in the Firebase Auth REST API,
+
+13
+00:00:50,180 --> 00:00:52,160
+if we want to sign in.
+
+14
+00:00:52,160 --> 00:00:53,230
+This is the request,
+
+15
+00:00:53,300 --> 00:00:57,050
+the URL we should send a request to, it should be a POST request
+
+16
+00:00:57,080 --> 00:01:03,530
+as you can tell and therefore in the logging method, in the auth service, let's use the Angular HttpClient
+
+17
+00:01:04,010 --> 00:01:07,330
+and send a post request to that URL.
+
+18
+00:01:07,400 --> 00:01:13,610
+Now again, that API key needs to be replaced and therefore obviously, we use the same API key as up there
+
+19
+00:01:13,610 --> 00:01:15,020
+for signing up,
+
+20
+00:01:15,020 --> 00:01:22,280
+let's grab that and replace it down there, including the square brackets, just like this and this login
+
+21
+00:01:22,280 --> 00:01:31,430
+request also takes an e-mail, a password and this return secure token key as a request body and that
+
+22
+00:01:31,430 --> 00:01:36,500
+of course is the exact same body as we have here for signing up, so I can just copy and paste it from
+
+23
+00:01:36,500 --> 00:01:36,980
+there,
+
+24
+00:01:37,100 --> 00:01:44,310
+just like that. This will now send such a HTTP request, let's see which data we get back. For that
+
+25
+00:01:44,310 --> 00:01:52,350
+in the official docs, we see we get almost the same response as we got it for signing up but there
+
+26
+00:01:52,350 --> 00:01:58,890
+is one extra field, the registered field which is a boolean and therefore to able to use that same auth
+
+27
+00:01:58,890 --> 00:02:05,730
+response data interface, I'll add registered here but add a question mark to indicate that this is optional
+
+28
+00:02:06,090 --> 00:02:12,240
+and a boolean because the sign up requests will actually not yield it but the login request will
+
+29
+00:02:12,440 --> 00:02:13,980
+yield it.
+
+30
+00:02:14,100 --> 00:02:21,340
+So now here on logging in, I will also add the angled brackets after post and inform TypeScript about
+
+31
+00:02:21,340 --> 00:02:29,110
+the request response data we'll get back, that this is of type auth response data. Now just as for signing
+
+32
+00:02:29,110 --> 00:02:36,220
+up, I want to return this observable so that we only prepare it here but we can then subscribe in our auth
+
+33
+00:02:36,220 --> 00:02:44,330
+component and therefore now in the auth component, here, we have our logic for sending that sign up request.
+
+34
+00:02:45,020 --> 00:02:51,350
+In the isLogin mode, we therefore now can reach out to auth service login and also forward
+
+35
+00:02:51,410 --> 00:02:55,880
+e-mail and password here and then we have pretty much the same logic as down there.
+
+36
+00:02:55,910 --> 00:02:59,410
+So I can grab this subscribe
+
+37
+00:02:59,420 --> 00:03:05,330
+block here and also use it up here because in the end, I want to control my loading state and the error
+
+38
+00:03:05,870 --> 00:03:13,610
+and since it is the same subscribe block, of course we can write this a bit differently and not repeat ourselves
+
+39
+00:03:13,610 --> 00:03:24,470
+here, we can simply create a new variable, authObs for auth observable which will in the end be of type observable,
+
+40
+00:03:25,010 --> 00:03:33,290
+a type you need to import from RxJS and that observable is a generic type which means we also have
+
+41
+00:03:33,290 --> 00:03:37,270
+to identify which kind of data this will yield eventually
+
+42
+00:03:37,430 --> 00:03:40,480
+and that data will of course be our auth response data
+
+43
+00:03:40,640 --> 00:03:47,030
+and therefore now, we actually need to export this auth response data interface, so that we can import
+
+44
+00:03:47,030 --> 00:03:53,900
+it into the auth component and be really clear that this auth response data will be yielded here by that
+
+45
+00:03:53,990 --> 00:03:55,270
+auth observable
+
+46
+00:03:55,270 --> 00:04:01,350
+and for that, you of course also need to import auth response data from the auth service file. Now,
+
+47
+00:04:01,360 --> 00:04:04,600
+why do I create that auth observable variable here though?
+
+48
+00:04:04,900 --> 00:04:13,000
+The idea is that we simply change the observable this variable holds in our two branches of this if check
+
+49
+00:04:13,000 --> 00:04:13,540
+here
+
+50
+00:04:13,540 --> 00:04:18,730
+but at the end after this if check, at least one of the two observables will be stored in there or
+
+51
+00:04:18,820 --> 00:04:19,950
+exactly one of the two
+
+52
+00:04:19,990 --> 00:04:24,220
+but we know that there will be an observable stored in that variable and therefore we can then just
+
+53
+00:04:24,220 --> 00:04:34,900
+subscribe on that observable here after this if block, like this and only change what's in the observable
+
+54
+00:04:35,110 --> 00:04:36,520
+inside of the if block.
+
+55
+00:04:36,520 --> 00:04:42,850
+So for example, here for logging in, we could set authObs equal to this auth service login without calling
+
+56
+00:04:42,850 --> 00:04:50,050
+subscribe here and for signing up, we set authObs equal to this auth service sign up without subscribing
+
+57
+00:04:50,050 --> 00:04:56,300
+here, we can get rid of that code here because the subscription code now lives below the
+
+58
+00:04:56,470 --> 00:05:03,010
+if else statement because we know that after the if else statement, at least one of the two observables
+
+59
+00:05:03,010 --> 00:05:09,730
+or exactly one of the two but certainly one of the two will be stored in authObs and therefore subscribing
+
+60
+00:05:09,730 --> 00:05:11,300
+to it is safe
+
+61
+00:05:11,380 --> 00:05:16,600
+and then since we want to do the exact same things upon subscribing, control the loading state and set
+
+62
+00:05:16,600 --> 00:05:21,490
+the error, we can share the code and reduce the code we write here.
+
+63
+00:05:22,570 --> 00:05:26,870
+So now, we should also have our login route in place,
+
+64
+00:05:26,950 --> 00:05:27,860
+let's give it a try.
+
+65
+00:05:28,480 --> 00:05:34,950
+So here for the user which I already created, let me enter the credentials and click login and this
+
+66
+00:05:34,960 --> 00:05:36,970
+response looks quite good.
+
+67
+00:05:36,970 --> 00:05:38,350
+Now let's try a user
+
+68
+00:05:38,350 --> 00:05:47,040
+we haven't created yet, test 2 and now I get object object here as as an error.
+
+69
+00:05:47,040 --> 00:05:53,200
+Now that doesn't look too helpful, so we certainly need to work on the error handling logic
+
+70
+00:05:53,400 --> 00:05:55,210
+but besides that it's working,
+
+71
+00:05:55,230 --> 00:05:57,960
+so let's now take care about the error handling logic.
+

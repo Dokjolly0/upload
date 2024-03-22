@@ -1,0 +1,92 @@
+1
+00:00:02,290 --> 00:00:07,840
+In the last lecture, we added navigation and we are now able to switch between our pages here,
+
+2
+00:00:07,870 --> 00:00:09,280
+that's great.
+
+3
+00:00:09,280 --> 00:00:16,570
+Now I want to mark the active route and actually Bootstrap, the CSS framework we're using gives us a
+
+4
+00:00:16,570 --> 00:00:22,790
+class to mark the active route. If we add this class to the list item which holds the link,
+
+5
+00:00:22,960 --> 00:00:24,950
+it's the active class there,
+
+6
+00:00:25,000 --> 00:00:28,140
+if we save this, now this is marked as active.
+
+7
+00:00:28,240 --> 00:00:34,060
+Of course it doesn't change because I hardcoded it into there but this is the class we dynamically
+
+8
+00:00:34,060 --> 00:00:35,140
+need to add.
+
+9
+00:00:35,590 --> 00:00:37,420
+Well and you learned how to do this,
+
+10
+00:00:37,420 --> 00:00:39,670
+we got a helpful directive for this,
+
+11
+00:00:39,700 --> 00:00:42,030
+the routerLinkActive directive.
+
+12
+00:00:42,160 --> 00:00:47,000
+Here we simply define the class we want to conditionally attach to this element
+
+13
+00:00:47,150 --> 00:00:52,650
+whenever the link on this element or nested inside of it, like it's the case here, gets active.
+
+14
+00:00:52,810 --> 00:00:56,310
+So here, that would be the active class as we just saw
+
+15
+00:00:56,500 --> 00:00:58,520
+and the same of course for shopping list,
+
+16
+00:00:58,660 --> 00:01:02,420
+so routerLinkActive should also be placed on this one
+
+17
+00:01:02,650 --> 00:01:08,260
+and with this you see it's still active but now it switches because now this CSS class gets applied
+
+18
+00:01:08,440 --> 00:01:09,810
+to the correct route.
+
+19
+00:01:09,940 --> 00:01:11,380
+So that's now working,
+
+20
+00:01:11,440 --> 00:01:17,520
+with that let's make sure that when I click a recipe here, we don't actually reload the app as we do
+
+21
+00:01:17,530 --> 00:01:24,370
+now if you watch this reload icon next to the browser URL bar, that happens because we have this ref
+
+22
+00:01:24,400 --> 00:01:25,500
+element on it.
+
+23
+00:01:25,630 --> 00:01:28,780
+So we will fix this and then think about the next steps of our app.
+

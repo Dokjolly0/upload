@@ -1,0 +1,492 @@
+1
+00:00:02,500 --> 00:00:06,080
+In the last lecture, we learned how to pass static data,
+
+2
+00:00:06,340 --> 00:00:12,360
+now let's say we have some dynamic data we have to fetch before a route can be displayed or can be rendered.
+
+3
+00:00:12,550 --> 00:00:15,410
+For example here on the servers, let's say the servers
+
+4
+00:00:15,430 --> 00:00:22,360
+already have been loaded but once we click a server here and maybe I should login to demonstrate this,
+
+5
+00:00:23,040 --> 00:00:27,230
+I want to load the individual server from some back-end,
+
+6
+00:00:27,250 --> 00:00:32,410
+so we are going to simulate that this takes a couple of milliseconds or seconds.
+
+7
+00:00:32,740 --> 00:00:39,250
+So how could this work? If we have such a use case, we need a resolver,
+
+8
+00:00:39,280 --> 00:00:46,870
+this also is a service, just like canActivate or canDeactivate which will allow us to run some code
+
+9
+00:00:47,070 --> 00:00:48,900
+before a route is rendered.
+
+10
+00:00:48,910 --> 00:00:54,880
+Now the difference to canActivate is that the resolver will not decide whether this route should be
+
+11
+00:00:54,880 --> 00:00:58,150
+rendered or not, whether the component should be loaded or not,
+
+12
+00:00:58,150 --> 00:00:58,720
+the resolver
+
+13
+00:00:58,720 --> 00:01:04,960
+will always render the component in the end but it will do some pre-loading, you could say, it will
+
+14
+00:01:04,990 --> 00:01:08,220
+fetch some data the component will then need later on.
+
+15
+00:01:08,380 --> 00:01:15,420
+Of course the alternative is to render the component or the target page instantly and in the onInit
+
+16
+00:01:15,460 --> 00:01:21,100
+method of this page, you could then fetch the data and display some spinner whilst you are doing so.
+
+17
+00:01:21,130 --> 00:01:26,800
+So that is an alternative but if you want to load it before actually displaying the route, this is how
+
+18
+00:01:26,800 --> 00:01:28,360
+you would add such a resolver.
+
+19
+00:01:28,420 --> 00:01:37,260
+So let's say for the single server here, I will add it in the server file, my server-resolver
+
+20
+00:01:37,300 --> 00:01:44,080
+and again this will be technically just be a service, so I'll export my class here which I'll name
+
+21
+00:01:44,230 --> 00:01:45,380
+ServerResolver
+
+22
+00:01:45,700 --> 00:01:54,940
+and now this has to implement the resolve interface provided by @angular/router. Resolve is a generic
+
+23
+00:01:54,940 --> 00:02:02,270
+type and it should wrap whichever item or data field you will get here, will fetch here in the end.
+
+24
+00:02:02,590 --> 00:02:07,750
+So we will fetch a server here and therefore we should define the type here,
+
+25
+00:02:07,750 --> 00:02:12,010
+now you could outsource thist into an interface or a model in general,
+
+26
+00:02:12,070 --> 00:02:18,310
+so we will know that a server will have an ID which is of type number, that it will have a name which
+
+27
+00:02:18,310 --> 00:02:20,980
+is a string and a status which is a string.
+
+28
+00:02:20,980 --> 00:02:28,570
+So this is simply a type definition of the thing this resolver will give us in the end, to what it will
+
+29
+00:02:28,620 --> 00:02:30,600
+resolve in the end.
+
+30
+00:02:30,610 --> 00:02:38,380
+Now the resolve interface requires us to implement the resolve method and this resolve method here now
+
+31
+00:02:38,650 --> 00:02:41,100
+takes two arguments, the route,
+
+32
+00:02:41,140 --> 00:02:46,850
+so the activated route snapshot which you already know, which you need to import from @angular/core 
+
+33
+00:02:47,560 --> 00:02:50,770
+and it will also provide us the state snapshot,
+
+34
+00:02:50,770 --> 00:02:57,780
+so the router state snapshot which also needs to be imported from @angular/router.
+
+35
+00:02:58,270 --> 00:03:05,260
+These are the two information pieces the resolve method gets by Angular and in the end,
+
+36
+00:03:05,290 --> 00:03:13,450
+this then also has to return either an observable which you need to import from rxjs/observable.
+
+37
+00:03:14,150 --> 00:03:20,830
+This observable will then also return this type here, so we can copy this but since we're creating a
+
+38
+00:03:20,830 --> 00:03:25,570
+lot of overhead here, we can also quickly define an interface here
+
+39
+00:03:25,630 --> 00:03:29,440
+and it would of course be better to outsource this in its own file
+
+40
+00:03:29,440 --> 00:03:31,240
+but let's quickly do it here.
+
+41
+00:03:31,420 --> 00:03:39,580
+So the interface for the server which has an ID of type number and then the name which is a string and
+
+42
+00:03:39,580 --> 00:03:41,630
+the status which is a string
+
+43
+00:03:41,670 --> 00:03:47,560
+and now this allows us to simply use server here as a shortcut for this type.
+
+44
+00:03:47,590 --> 00:03:51,220
+So the observable should in the end give us back such a server
+
+45
+00:03:51,270 --> 00:03:59,880
+or we get a promise which in the end will return such a server or well, just such a server
+
+46
+00:04:00,090 --> 00:04:01,760
+synchronously.
+
+47
+00:04:01,770 --> 00:04:04,700
+So this is what we will get back here in resolve,
+
+48
+00:04:04,740 --> 00:04:08,690
+so now we need to implement the logic to get this back.
+
+49
+00:04:08,700 --> 00:04:17,350
+Now we have our servers service here and there, we have the getServer method which will give us back
+
+50
+00:04:17,350 --> 00:04:18,610
+a server.
+
+51
+00:04:18,640 --> 00:04:20,950
+Now this clearly is some synchronous code,
+
+52
+00:04:20,950 --> 00:04:22,700
+it will run instantly here,
+
+53
+00:04:22,720 --> 00:04:25,800
+so there is nothing wrong with this code,
+
+54
+00:04:25,870 --> 00:04:28,970
+we will resolve this instantly
+
+55
+00:04:29,080 --> 00:04:31,710
+and as you saw in your resolver, that's fine,
+
+56
+00:04:31,720 --> 00:04:35,320
+one return possibility is to instantly return the data.
+
+57
+00:04:35,350 --> 00:04:40,840
+So the easiest thing we can do here is reach out to our serversService and for this, we need to inject
+
+58
+00:04:40,840 --> 00:04:41,190
+it,
+
+59
+00:04:41,230 --> 00:04:47,360
+so we should provide our serversService like this,
+
+60
+00:04:47,380 --> 00:04:49,000
+that's a real hard word for me,
+
+61
+00:04:49,000 --> 00:04:55,070
+ServersService, like this
+
+62
+00:04:55,070 --> 00:05:01,660
+and of course if you want to inject a service into another service, you have to add @injectable to it,
+
+63
+00:05:01,670 --> 00:05:04,260
+make sure to import this from @angular/core,
+
+64
+00:05:04,280 --> 00:05:11,230
+also make sure to import your own servers service and with this, the easiest way to use this resolve
+
+65
+00:05:11,240 --> 00:05:16,000
+function is to reach out to your service and there, we call getServer
+
+66
+00:05:16,010 --> 00:05:18,850
+and now we need to know the ID of the server
+
+67
+00:05:18,890 --> 00:05:24,730
+we have to fetch because that is what we do in the server component here in the end, right? There in
+
+68
+00:05:24,730 --> 00:05:24,950
+onInit
+
+69
+00:05:24,960 --> 00:05:26,920
+we're getting this server right now.
+
+70
+00:05:26,930 --> 00:05:31,730
+So now we want to outsource this because let's say we want to do it before it loads,
+
+71
+00:05:31,760 --> 00:05:39,100
+the good thing is we do get the route here, it only is snapshot but this service here will actually run
+
+72
+00:05:39,110 --> 00:05:40,890
+each time we rerender the route,
+
+73
+00:05:40,940 --> 00:05:42,750
+so the snapshot is all we need. 
+
+74
+00:05:42,890 --> 00:05:49,610
+Unlike the component itself, again this is executed each time, so no need to set up an observable or something
+
+75
+00:05:49,610 --> 00:05:50,870
+like that.
+
+76
+00:05:50,870 --> 00:05:57,650
+So here, we can access our route and there the params and then the ID and make sure to cast it with a plus
+
+77
+00:05:57,650 --> 00:06:05,060
+sign in front of it to an integer. This is the easiest way of using this resolver which will do the
+
+78
+00:06:05,060 --> 00:06:11,120
+loading of our data in advance and now this would also work if this were to return an observable or
+
+79
+00:06:11,120 --> 00:06:11,740
+a promise,
+
+80
+00:06:11,780 --> 00:06:15,760
+so with asynchronous code, for example an HTTP request.
+
+81
+00:06:16,340 --> 00:06:20,650
+So this is our resolver, with this resolver in place,
+
+82
+00:06:20,690 --> 00:06:22,870
+we of course now have to add it.
+
+83
+00:06:22,910 --> 00:06:32,840
+So first thing is in app module, we should add it to our providers, our ServerResolver, like this,
+
+84
+00:06:32,840 --> 00:06:36,950
+make sure to also add the import at the top and with that added
+
+85
+00:06:36,950 --> 00:06:43,390
+now, we want to add it to our routing module. Here for the route where we want to use it,
+
+86
+00:06:43,430 --> 00:06:50,690
+so let's say for this component here, we add another property, the resolve property.
+
+87
+00:06:50,760 --> 00:06:55,820
+This takes a Javascript object and here, we map all the resolvers.
+
+88
+00:06:56,090 --> 00:07:00,460
+This is different to the other guards, there we use arrays
+
+89
+00:07:00,720 --> 00:07:05,580
+but for resolve, a different approach is taken and you will see why in a second.
+
+90
+00:07:05,970 --> 00:07:09,380
+So here, we have key-value pairs of the resolvers
+
+91
+00:07:09,390 --> 00:07:10,390
+we want to use, 
+
+92
+00:07:10,410 --> 00:07:15,180
+so for the server and this name of the property is totally up to you,
+
+93
+00:07:15,240 --> 00:07:17,820
+we will use our ServerResolver,
+
+94
+00:07:20,810 --> 00:07:21,380
+like this,
+
+95
+00:07:21,380 --> 00:07:24,570
+make sure to import it here at the top.
+
+96
+00:07:24,680 --> 00:07:26,720
+This will now map the data
+
+97
+00:07:26,720 --> 00:07:32,440
+this resolver gives us back and remember, it gives us back some data with this resolve method.
+
+98
+00:07:32,450 --> 00:07:39,200
+it had to implement, this method will be called by Angular when this router is loaded. So the data it gives us
+
+99
+00:07:39,200 --> 00:07:44,630
+back here will be stored in this server object
+
+100
+00:07:44,630 --> 00:07:50,360
+we will then have available or in the server property we will have available in this to be loaded
+
+101
+00:07:50,360 --> 00:07:56,160
+component. So in this to be loaded component, in our server component,
+
+102
+00:07:56,180 --> 00:07:59,580
+right now we get the server like this, using the params.
+
+103
+00:07:59,960 --> 00:08:04,430
+Well I will comment this out because now we use a resolver for this,
+
+104
+00:08:04,430 --> 00:08:05,780
+that's the goal of the resolver
+
+105
+00:08:05,820 --> 00:08:09,570
+and it makes even more sense if this is some asynchronous task of course,
+
+106
+00:08:09,950 --> 00:08:18,350
+so here we can easily get our server by binding the data observable.
+
+107
+00:08:18,380 --> 00:08:26,000
+So just like static data which you passed with this data object here, with this data property you could
+
+108
+00:08:26,000 --> 00:08:33,590
+add to a route, the data returned by your resolver will also go into this data baggage in this data
+
+109
+00:08:33,680 --> 00:08:37,430
+object you have in your to be loaded component.
+
+110
+00:08:37,880 --> 00:08:43,130
+So here, we can listen to any changes and I'm setting up an observable here or I'm using the observable
+
+111
+00:08:43,130 --> 00:08:49,550
+here I should say because the server can change while we already are on the page, as we have this side
+
+112
+00:08:49,550 --> 00:08:50,030
+menu,
+
+113
+00:08:50,030 --> 00:08:53,900
+this is why we also had to set up our route params here dynamically
+
+114
+00:08:54,350 --> 00:08:59,140
+and here, we know we will get back our data of type data as learned before,
+
+115
+00:08:59,150 --> 00:09:06,840
+make sure to import data from Angular router and now, we know that we can simply assign our server, this
+
+116
+00:09:06,840 --> 00:09:13,850
+server property in this component by binding to data server and now this name here is important,
+
+117
+00:09:14,040 --> 00:09:20,870
+this server here, this name here of course has to match the name you use here
+
+118
+00:09:20,940 --> 00:09:23,550
+when you assign your resolver to some property,
+
+119
+00:09:23,560 --> 00:09:27,650
+so if you change the name here, you have to change it when you retrieve the data.
+
+120
+00:09:28,020 --> 00:09:33,390
+Well with this in place, if we save this with ng serve still running, if we login and go to
+
+121
+00:09:33,390 --> 00:09:37,440
+servers and we click on a server, you see this still works as intended,
+
+122
+00:09:37,440 --> 00:09:44,340
+it still loads the server, like before but now not using the params here in the server component but
+
+123
+00:09:44,340 --> 00:09:50,760
+instead using a resolver before this, again of course especially important when using asynchronous data.
+

@@ -1,0 +1,196 @@
+1
+00:00:02,230 --> 00:00:04,940
+First of all, let's understand what side effects are
+
+2
+00:00:05,110 --> 00:00:11,200
+and we can best see this in the auth service. Side effects are basically parts in your code where you
+
+3
+00:00:11,200 --> 00:00:15,120
+run some logic that of course is important for your application,
+
+4
+00:00:15,130 --> 00:00:16,480 
+otherwise you wouldn't do it
+
+5
+00:00:16,480 --> 00:00:22,090
+but that's not so important for the immediate update of the current state.
+
+6
+00:00:22,090 --> 00:00:24,400
+So for example here, this HTTP request,
+
+7
+00:00:24,400 --> 00:00:26,560
+of course the result of that matters,
+
+8
+00:00:26,560 --> 00:00:30,810
+it decides whether we did successfully create a new user or not
+
+9
+00:00:30,820 --> 00:00:36,150
+but for this process, where we start the sign-up process, this is not important.
+
+10
+00:00:36,160 --> 00:00:38,720
+So we could basically split this up into two actions - 
+
+11
+00:00:38,800 --> 00:00:40,840
+start sign-up and sign-up
+
+12
+00:00:40,840 --> 00:00:43,770
+success for example or even three actions,
+
+13
+00:00:43,780 --> 00:00:47,320
+start sign-up, sign-up success and sign-up error.
+
+14
+00:00:47,320 --> 00:00:52,390
+So the start sign-up action would then be an action where the response here doesn't matter and this
+
+15
+00:00:52,390 --> 00:00:54,500
+is just a side effect for us.
+
+16
+00:00:54,670 --> 00:00:59,830
+The sign-up success action also is one where the response matters but where we don't want to deal with
+
+17
+00:00:59,830 --> 00:01:00,810
+sending this,
+
+18
+00:01:00,910 --> 00:01:04,070
+so the request is kind of in-between the different actions,
+
+19
+00:01:04,120 --> 00:01:10,450
+each action only cares about a part of that this request while it's on its way, it's not really something
+
+20
+00:01:10,450 --> 00:01:14,020
+our state cares about or our store cares about,
+
+21
+00:01:14,020 --> 00:01:20,560
+we don't want to save that, it's just some side effect code we run. The same for local storage,
+
+22
+00:01:20,560 --> 00:01:26,950
+this actually does not happen asynchronously. Accessing local storage happens synchronicity so it's done
+
+23
+00:01:26,950 --> 00:01:32,380
+instantly and we could therefore do it in the reducer, only async code is forbidden in there and it will
+
+24
+00:01:32,380 --> 00:01:33,160
+break it.
+
+25
+00:01:33,310 --> 00:01:38,980
+This, adding this line to a reducer wouldn't break the reducer but it would be considered a bad practice
+
+26
+00:01:39,310 --> 00:01:45,370
+because again, accessing the local storage and writing something to it or getting something from there
+
+27
+00:01:45,700 --> 00:01:48,390
+is really just a side effect of the application.
+
+28
+00:01:48,430 --> 00:01:52,950
+Of course the result of that, especially when you're getting data, matters to us
+
+29
+00:01:53,050 --> 00:01:57,950
+but the process itself is not that interesting to us.
+
+30
+00:01:57,970 --> 00:02:03,430
+So things like that are side effects and whilst we could manage some of them, like local storage in the
+
+31
+00:02:03,430 --> 00:02:09,400
+reducer, others like async coordinate or HTTP requests can't even be managed there and either of
+
+32
+00:02:09,400 --> 00:02:15,640
+the two things would be a bad practice, even if we could technically handle HTTP requests in there.
+
+33
+00:02:15,640 --> 00:02:21,820
+That's why there is a separate package, also provided and maintained by the NgRx team that helps us
+
+34
+00:02:21,820 --> 00:02:27,420
+with dealing such side effects while still staying in this NgRx world
+
+35
+00:02:27,640 --> 00:02:33,490
+and this package now has to be installed of course. We do that with npm install --save and the
+
+36
+00:02:33,490 --> 00:02:36,700
+name is @ngrx/effects.
+
+37
+00:02:39,360 --> 00:02:45,750
+@ngrx/effects is a package that gives us tools for elegantly working with side effects between
+
+38
+00:02:45,750 --> 00:02:51,450
+actions which we dispatch and receive so that we can keep our reducers clean and still have a good
+
+39
+00:02:51,450 --> 00:02:53,890
+place for managing these side effects,
+
+40
+00:02:53,900 --> 00:02:55,250
+now let's restart ng serve
+
+41
+00:02:55,290 --> 00:03:02,040
+after installing this. It is important to me here to point out that of course you could also go for an
+
+42
+00:03:02,040 --> 00:03:08,070
+approach where you still have a service for sending the HTTP request and for working with local storage
+
+43
+00:03:08,490 --> 00:03:12,800
+and then you have your reducer and NgRx for managing your current state,
+
+44
+00:03:12,810 --> 00:03:15,070
+so basically the setup we already have here.
+
+45
+00:03:15,180 --> 00:03:21,300
+You could also keep that and as so much else with NgRx, it comes down to your personal preference and
+
+46
+00:03:21,300 --> 00:03:22,250
+likings
+
+47
+00:03:22,380 --> 00:03:26,460
+but here I think it is good, especially for learning about NgRx
+
+48
+00:03:26,460 --> 00:03:33,210
+if we move as much as possible into the NgRx world and therefore if we use @ngrx/effects for managing
+
+49
+00:03:33,210 --> 00:03:36,120
+our HTTP requests and local storage access.
+

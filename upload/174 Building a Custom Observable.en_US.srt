@@ -1,0 +1,256 @@
+1
+00:00:02,230 --> 00:00:08,080
+So I promised you a custom observable, to understand its internals and what I gave you was interval.
+
+2
+00:00:08,080 --> 00:00:14,350
+Now it's closer to a custom observable because it's not coming from some Angular feature but still, this
+
+3
+00:00:14,350 --> 00:00:20,140
+of course is kind of a utility function that gives us a predefined observable that fires a number every
+
+4
+00:00:20,140 --> 00:00:21,410
+second.
+
+5
+00:00:21,430 --> 00:00:24,830
+Well actually, we can rebuild this manually.
+
+6
+00:00:25,300 --> 00:00:30,050
+Let's comment out this code and let's build a real custom observable now.
+
+7
+00:00:30,160 --> 00:00:38,710
+I'll store that in a constant and I'll name it custom observable or custom interval observable,
+
+8
+00:00:39,520 --> 00:00:43,200
+you can of course pick any name you want and to create a new observable,
+
+9
+00:00:43,360 --> 00:00:50,380
+we can simply import observable, the type itself from RxJS.
+
+10
+00:00:50,490 --> 00:00:55,980
+Now you can use observable and call a create method on that and this will do what it sounds like,
+
+11
+00:00:55,980 --> 00:00:57,990
+it creates a new observable.
+
+12
+00:00:58,440 --> 00:01:06,360
+Now create actually takes a function and I'll pass in an anonymous arrow function here, like this which
+
+13
+00:01:06,360 --> 00:01:10,950
+will get an argument automatically, RxJS will pass in that argument for us
+
+14
+00:01:11,370 --> 00:01:13,950
+and that argument is a so-called observer.
+
+15
+00:01:13,950 --> 00:01:15,610
+Now what's an observer?
+
+16
+00:01:15,930 --> 00:01:22,650
+Now you heard about the observer in the first video of this module. The observer in the end is a part
+
+17
+00:01:22,680 --> 00:01:30,420
+that is interested in being informed about new data, about errors or about the observable being completed.
+
+18
+00:01:30,420 --> 00:01:37,890
+Now our job here is to tell the observer about new data, about an error or about the observable being
+
+19
+00:01:37,890 --> 00:01:39,360
+completed. Here,
+
+20
+00:01:39,360 --> 00:01:43,250
+we're not responsible for listening because the observer is the listener, here
+
+21
+00:01:43,260 --> 00:01:47,190
+we get that listening part as an argument and we need to tell it
+
+22
+00:01:47,430 --> 00:01:50,990
+once we're done, once new data is there and so on.
+
+23
+00:01:51,000 --> 00:01:58,260
+So in this anonymous function, we can now use the regular set interval method and set an interval of
+
+24
+00:01:58,260 --> 00:02:00,360
+one second let's say as before.
+
+25
+00:02:00,360 --> 00:02:02,460
+Now this again receives an anonymous function,
+
+26
+00:02:02,460 --> 00:02:08,940
+it's the normal set interval method, nothing special about that and inside of set interval here, we can now
+
+27
+00:02:09,720 --> 00:02:12,420
+call console log or do whatever we want
+
+28
+00:02:12,450 --> 00:02:14,250
+or simply use our observer
+
+29
+00:02:14,250 --> 00:02:21,390
+and there, we now got methods like next. We can call next here to emit a new value
+
+30
+00:02:21,690 --> 00:02:22,590
+and that is important.
+
+31
+00:02:22,590 --> 00:02:25,040
+The observer has a couple of important methods,
+
+32
+00:02:25,050 --> 00:02:26,570
+next is one of them,
+
+33
+00:02:26,700 --> 00:02:32,190
+error is another of them, so that would be the one you use to throw an error and complete is one
+
+34
+00:02:32,190 --> 00:02:39,030
+to let the observer know that you're done. Here however, we use next and to also have an incrementing
+
+35
+00:02:39,030 --> 00:02:40,210
+number here,
+
+36
+00:02:40,290 --> 00:02:48,860
+we can simply introduce a variable, count which starts at 0, inside of our set interval,
+
+37
+00:02:48,860 --> 00:02:58,080
+we then simply pass this on to next and we then increment count by 1.
+
+38
+00:02:58,550 --> 00:03:04,000
+So now here count starts at zero, we increment it by 1 whenever set interval fires and we let our observer
+
+39
+00:03:04,000 --> 00:03:06,920
+know about that new data here.
+
+40
+00:03:06,940 --> 00:03:12,660
+Now we can also subscribe to our custom observable and I'll do this in the same place here, 
+
+41
+00:03:12,670 --> 00:03:13,150
+in ngOnInit,
+
+42
+00:03:13,180 --> 00:03:15,280
+of course you could do this in other places too
+
+43
+00:03:15,280 --> 00:03:22,440
+if this were stored in a service or in a property of that component simply. So here I can call subscribe
+
+44
+00:03:23,650 --> 00:03:24,610
+and to subscribe,
+
+45
+00:03:24,610 --> 00:03:30,280
+you pass the same thing as before, a function that simply accepts that data we're emitting.
+
+46
+00:03:30,310 --> 00:03:34,900
+So in this case, we could name it count again or to avoid naming confusion, simply name it data, whatever
+
+47
+00:03:34,900 --> 00:03:35,820
+you want
+
+48
+00:03:35,890 --> 00:03:40,520
+and here I will now console log that data, just as before.
+
+49
+00:03:40,570 --> 00:03:44,500
+Now let's save that all and let's wait for this page to reload
+
+50
+00:03:44,500 --> 00:03:46,810
+and again you see the same result as before
+
+51
+00:03:46,840 --> 00:03:52,750
+but now we built our own interval observable and this is roughly what's happening under the hood here
+
+52
+00:03:52,750 --> 00:03:54,930
+for the built-in interval observable too.
+
+53
+00:03:55,370 --> 00:04:03,400
+It's giving us an observable, which will essentially fire for every x milliseconds we defined and it
+
+54
+00:04:03,400 --> 00:04:07,530
+lets our observer know about that new data and that's what's happening here too
+
+55
+00:04:07,570 --> 00:04:13,660
+and if I navigate away, then we got a problem here because I tried to call unsubscribe of undefined
+
+56
+00:04:13,900 --> 00:04:16,960
+because I don't store my subscription of course that should be done here,
+
+57
+00:04:17,440 --> 00:04:24,220
+so in my firstObsSubscription, I'll now store that subscription again, simply by storing the result of
+
+58
+00:04:24,220 --> 00:04:26,180
+subscribe and its subscription again.
+
+59
+00:04:26,200 --> 00:04:29,030
+So now with that, if that reloads and I navigate away,
+
+60
+00:04:29,170 --> 00:04:30,850
+that works without issues again,
+
+61
+00:04:30,850 --> 00:04:33,520
+if I go back, a new observable starts.
+
+62
+00:04:33,700 --> 00:04:39,790
+So this is working and this is a real custom observable and this shows us how to emit new data
+
+63
+00:04:39,820 --> 00:04:42,910
+but what about errors and completing the observable?
+
+64
+00:04:42,910 --> 00:04:44,450
+I mentioned this as well.
+

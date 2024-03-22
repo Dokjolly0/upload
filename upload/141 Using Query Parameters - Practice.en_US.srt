@@ -1,0 +1,268 @@
+1
+00:00:02,600 --> 00:00:09,250
+In the last lecture, we added child routing, let's now improve this app a little bit more. In our servers
+
+2
+00:00:09,250 --> 00:00:10,300
+component,
+
+3
+00:00:10,570 --> 00:00:13,900
+we have our links loading to individual servers,
+
+4
+00:00:13,900 --> 00:00:21,540
+so the single server component, this component here with this allowEdit query parameter. So now in the
+
+5
+00:00:21,550 --> 00:00:29,230
+server component, we should add some button where we say edit server because right now, we get no way
+
+6
+00:00:29,230 --> 00:00:31,810
+of reaching the edit-server.component
+
+7
+00:00:31,810 --> 00:00:38,880
+besides manually typing this route here, this path here into our URL.
+
+8
+00:00:39,010 --> 00:00:41,590
+So let's add a button to the server component,
+
+9
+00:00:41,890 --> 00:00:47,140
+I'll add some CSS classes to make this look nice and of course, I'll add a click listener where
+
+10
+00:00:47,140 --> 00:00:52,670
+I say onEdit. Now again, this is on a single server component.
+
+11
+00:00:52,990 --> 00:00:56,770
+So here I'll add the onEdit method
+
+12
+00:00:57,200 --> 00:01:02,170
+and in here, I now want to navigate to the edit-server.component.
+
+13
+00:01:02,380 --> 00:01:07,090
+We learned how to do this, we need to get access to the router so that we are able to call the navigate
+
+14
+00:01:07,090 --> 00:01:07,830
+method,
+
+15
+00:01:08,050 --> 00:01:09,950
+so let's inject it,
+
+16
+00:01:10,200 --> 00:01:14,710
+make sure to also add the import from @angular/router
+
+17
+00:01:15,300 --> 00:01:21,720
+and with that injected in onEdit, we can navigate. You learned how to do this, so maybe a time to pause
+
+18
+00:01:21,720 --> 00:01:23,430
+the video and try it on your own.
+
+19
+00:01:25,220 --> 00:01:26,770
+This is how I would do it,
+
+20
+00:01:26,930 --> 00:01:29,340
+I would call my router,
+
+21
+00:01:29,600 --> 00:01:35,630
+then of course we have the navigate method and here we need to pass an array and we simply want to append
+
+22
+00:01:35,970 --> 00:01:38,910
+edit to the end of the currently loaded route.
+
+23
+00:01:39,170 --> 00:01:45,980
+So you could of course also use /servers, the relative path, then use the ID of the currently
+
+24
+00:01:46,110 --> 00:01:50,090
+loaded server again, server ID and then append edit
+
+25
+00:01:50,180 --> 00:01:57,110
+but since we already are on this path, why not just use a relative route and just use edit?
+
+26
+00:01:57,140 --> 00:02:04,280
+Now you learned if you want to use a relative path here, when using the navigate method,
+
+27
+00:02:04,730 --> 00:02:11,810
+you need to set up the relativeTo property here on the second argument, on this object you can pass
+
+28
+00:02:11,810 --> 00:02:18,770
+to navigate and reference the currently loaded route, so that the @angular/router knows to which route
+
+29
+00:02:18,800 --> 00:02:21,630
+you want to navigate relatively.
+
+30
+00:02:22,160 --> 00:02:28,280
+So with this, we should load the /edit route, we should append it to the end of our currently loaded
+
+31
+00:02:28,280 --> 00:02:29,230
+route,
+
+32
+00:02:29,240 --> 00:02:34,540
+let's see if this works. If we go to servers, click on a server and I click on edit,
+
+33
+00:02:34,820 --> 00:02:37,520
+we load the edit server page
+
+34
+00:02:37,880 --> 00:02:44,870
+and now here, we want to control on where the user is allowed to update, to edit the server or not.
+
+35
+00:02:44,870 --> 00:02:53,600
+The issue is, you see we theoretically have our query params here, allowEdit always set to one in
+
+36
+00:02:53,600 --> 00:02:59,190
+this case but we lose this information as soon as we click edit server,
+
+37
+00:02:59,450 --> 00:03:04,520
+so that is something we need to fix before we can use the information there.
+
+38
+00:03:04,550 --> 00:03:10,010
+We will fix that in the next lecture, before doing so let's implement the rest of the logic though. Let's
+
+39
+00:03:10,010 --> 00:03:15,740
+say here on the server component where we set the allowEdit query parameter, we don't always want
+
+40
+00:03:15,740 --> 00:03:17,530
+to set this to 1, to true
+
+41
+00:03:17,540 --> 00:03:23,480
+therefore, we want to decide on whether we want to allow the editing depending on the server ID let's
+
+42
+00:03:23,480 --> 00:03:24,170
+say.
+
+43
+00:03:24,170 --> 00:03:32,120
+So only if the server ID equals three let's say, only in this case we want to allow edit, so we want to set
+
+44
+00:03:32,120 --> 00:03:35,010
+it to 1, otherwise we will set it to zero.
+
+45
+00:03:35,330 --> 00:03:37,260
+So that's just a ternary expression,
+
+46
+00:03:37,280 --> 00:03:41,570
+checking the server ID and if it's not equal to 3, we will set it to zero,
+
+47
+00:03:41,570 --> 00:03:44,430
+so we will set the allowEdit parameter to zero.
+
+48
+00:03:44,540 --> 00:03:45,950
+That's the first step.
+
+49
+00:03:45,950 --> 00:03:51,320
+Now in edit server of course, we want to be able to retrieve our query params.
+
+50
+00:03:51,380 --> 00:03:56,700
+So here, we already get the subscribe method on the query params,
+
+51
+00:03:56,720 --> 00:04:00,450
+now here I want to determine on whether we are allowed to edit or not.
+
+52
+00:04:00,710 --> 00:04:08,130
+So I will add a new allowEdit property here and set it to false initially but whenever this
+
+53
+00:04:08,240 --> 00:04:16,820
+changes here in the query parameters, I want to get my query params which are also of type params to
+
+54
+00:04:16,820 --> 00:04:19,400
+be imported from @angular/router
+
+55
+00:04:20,490 --> 00:04:29,790
+and then here in the method body, I will set this allowEdit equal to my query params here equal
+
+56
+00:04:29,810 --> 00:04:34,590
+to the allowEdit ID or property we set there
+
+57
+00:04:34,830 --> 00:04:42,210
+and now this either is one, string of one, of course you could also pass true as a string here, in which
+
+58
+00:04:42,210 --> 00:04:48,340
+case I want to set allowEdit to true. If it is not one, I will set it to false though
+
+59
+00:04:48,660 --> 00:04:58,020
+and in the template of this component, we could simply add a heading let's say where we say you're not
+
+60
+00:04:58,040 --> 00:05:07,940
+allowed to edit if and we can use ngIf for this, if allowEdit is false, so if not allowEdit and we
+
+61
+00:05:08,030 --> 00:05:10,450
+wrap all the rest in a new div,
+
+62
+00:05:10,760 --> 00:05:16,380
+so all this part here only if it is true.
+
+63
+00:05:16,820 --> 00:05:18,930
+And now all of a sudden, we would control this
+
+64
+00:05:19,050 --> 00:05:24,150
+but again the issue is if you click on edit server, our query params disappear,
+
+65
+00:05:24,150 --> 00:05:27,470
+so it is always in the you're not allowed to edit mode.
+
+66
+00:05:27,510 --> 00:05:29,160
+Let's fix it in the next lecture,
+
+67
+00:05:29,190 --> 00:05:34,510
+let's see how we can actually preserve our query params once we navigate again.
+

@@ -1,0 +1,304 @@
+1
+00:00:02,310 --> 00:00:08,640
+Now, this fall is actually not that long, it's a Jason fall Jason format, and first of all, we have
+
+2
+00:00:08,640 --> 00:00:09,450
+the index page.
+
+3
+00:00:09,540 --> 00:00:14,250
+This indicates what is the root page of our app we want to cash and load.
+
+4
+00:00:14,370 --> 00:00:20,880
+And that, of course, is the index HTML file sitting directly in the root server folder we're serving
+
+5
+00:00:20,880 --> 00:00:21,210
+from.
+
+6
+00:00:22,020 --> 00:00:25,470
+And then we get a so-called asset group or actually asset groups.
+
+7
+00:00:25,470 --> 00:00:26,580
+It's an array.
+
+8
+00:00:26,580 --> 00:00:28,530
+And in there we got two asset groups.
+
+9
+00:00:28,680 --> 00:00:35,130
+These objects, which we have in there now, asset groups are configurations that define which static
+
+10
+00:00:35,130 --> 00:00:38,040
+assets should be cached and how they should be cached.
+
+11
+00:00:38,340 --> 00:00:42,170
+Dynamic assets, for example, would be the data from the API.
+
+12
+00:00:42,180 --> 00:00:45,630
+So data were fetching, which might change on that API.
+
+13
+00:00:45,660 --> 00:00:48,210
+So it's not static, it changes frequently.
+
+14
+00:00:48,570 --> 00:00:55,050
+Our HTML file, our JavaScript code will also change with every build, but after to build it static,
+
+15
+00:00:55,050 --> 00:00:57,540
+it's not changing in some database or anything like that.
+
+16
+00:00:58,140 --> 00:00:59,700
+So that's what asset group is.
+
+17
+00:00:59,700 --> 00:01:04,650
+We can give such a group a name, whichever name you like, and you can then define how is should these
+
+18
+00:01:04,650 --> 00:01:05,820
+assets be loaded.
+
+19
+00:01:06,270 --> 00:01:12,780
+Prefect means that when your page loads angular will go ahead or the service worker will go ahead and
+
+20
+00:01:12,780 --> 00:01:18,270
+already pre fetch all the assets which are specified in this asset group, which means that puts it
+
+21
+00:01:18,270 --> 00:01:20,700
+into cash even if you haven't needed them yet.
+
+22
+00:01:21,210 --> 00:01:23,550
+The alternative to pre fetch is lazy.
+
+23
+00:01:24,000 --> 00:01:25,170
+You can use that too.
+
+24
+00:01:25,170 --> 00:01:28,380
+And Dad would only load them once you needed them at least once.
+
+25
+00:01:28,890 --> 00:01:33,600
+The advantage of lazy is, of course, that you don't occupy all the bandwidth right at the beginning.
+
+26
+00:01:33,840 --> 00:01:37,310
+The downside is that if you need it for the first time, it will not be there.
+
+27
+00:01:37,440 --> 00:01:43,240
+So if the user loses the Internet connection before the asset, let's say this successful is required
+
+28
+00:01:43,240 --> 00:01:47,790
+to first time, it will not work because it will not be cached with pre fetch.
+
+29
+00:01:47,820 --> 00:01:50,010
+It will be cached even before you need it.
+
+30
+00:01:51,240 --> 00:01:53,010
+There also is update mode.
+
+31
+00:01:53,260 --> 00:01:54,770
+I guess you can see it down there.
+
+32
+00:01:55,020 --> 00:02:00,540
+Now, this is important for the case that you're pushing a new version of your angular app and data
+
+33
+00:02:00,540 --> 00:02:03,120
+for all of your service worker to your server.
+
+34
+00:02:03,450 --> 00:02:09,630
+And the user is already browsing on that server and it will get informed about the new service worker.
+
+35
+00:02:09,780 --> 00:02:15,810
+And now the service worker can already pre fetch the updated assets or also load them, Lezley, when
+
+36
+00:02:15,810 --> 00:02:16,940
+they are required.
+
+37
+00:02:17,970 --> 00:02:21,210
+Now, the assets which should be loaded are the resource.
+
+38
+00:02:21,360 --> 00:02:25,320
+Then resources has one key property, the files.
+
+39
+00:02:25,560 --> 00:02:29,160
+And there you have an array pointing to the files you want to cache.
+
+40
+00:02:29,670 --> 00:02:35,280
+You can point at something like the HTML file and this is always seen relative from the dist folder.
+
+41
+00:02:35,280 --> 00:02:38,010
+So from the folder you will have in the end once you deploy this.
+
+42
+00:02:38,580 --> 00:02:44,430
+But you can also set up patterns like every successful or every JavaScript following the root folder,
+
+43
+00:02:44,820 --> 00:02:48,930
+or you could say every successful in any subfolder.
+
+44
+00:02:48,960 --> 00:02:50,490
+This is what this pattern would say.
+
+45
+00:02:50,940 --> 00:02:56,580
+So you can also set up patterns like this or directly point at the file you want to use without the
+
+46
+00:02:56,580 --> 00:02:59,220
+hash because you can't know the hash in advance.
+
+47
+00:02:59,460 --> 00:03:05,250
+Angular will generate that automatically, will take the unhatched file names here and then automatically
+
+48
+00:03:05,250 --> 00:03:08,850
+generate a service worker which will take the hashes into account.
+
+49
+00:03:09,690 --> 00:03:15,030
+Now you we get a second assist group for well basically all images we got and so on.
+
+50
+00:03:15,810 --> 00:03:21,330
+It differs from the first one in regarding the fact that it's only preloading that if we need them,
+
+51
+00:03:21,330 --> 00:03:27,480
+if we visited them or used them at least once, and this is leading to the behavior we have right now.
+
+52
+00:03:27,780 --> 00:03:33,330
+Now we got one allostatic essid, which is not included here, and that is our external front.
+
+53
+00:03:33,570 --> 00:03:36,270
+It's not changing or at least not regularly.
+
+54
+00:03:36,300 --> 00:03:41,820
+So we can treat it as static, but it's not included here because it's not one of our files.
+
+55
+00:03:42,390 --> 00:03:49,080
+But we can take it from the file by just copying that entire link, which will be requested eventually.
+
+56
+00:03:49,500 --> 00:03:52,470
+And then we can go back to the end GSW conflict file.
+
+57
+00:03:52,590 --> 00:03:55,500
+And there we tell Engelhard that we also want to cache this.
+
+58
+00:03:55,830 --> 00:03:59,220
+Now, we don't added to files because this is for local files.
+
+59
+00:03:59,550 --> 00:04:05,790
+There is an additional resource type can define and that is you or else it's also an array of strings.
+
+60
+00:04:06,060 --> 00:04:11,730
+But here we put you or else like this one, which are reaching out to our servers to then fetch resources
+
+61
+00:04:11,730 --> 00:04:12,240
+from there.
+
+62
+00:04:12,810 --> 00:04:15,120
+With that added, let's save that file.
+
+63
+00:04:15,510 --> 00:04:22,770
+Quit your server down there and let's go back into our route project folder and let's create another
+
+64
+00:04:22,770 --> 00:04:26,160
+build with energy build KROT like this.
+
+65
+00:04:26,490 --> 00:04:33,240
+And once this is done and we revisit the disk folder and served that again, we should see that the
+
+66
+00:04:33,240 --> 00:04:37,440
+font is also loaded in an offline mode.
+
+67
+00:04:37,740 --> 00:04:45,180
+So we go into the disk folder into ANGULAR, a rerun that HP server command and let's reload that page.
+
+68
+00:04:46,520 --> 00:04:52,790
+And with it reloaded, and you might also close it and open a new tab to ensure that the new service
+
+69
+00:04:52,790 --> 00:04:59,240
+worker gets really loaded and it's not still using an old one with that loaded, you can take that offline
+
+70
+00:04:59,240 --> 00:05:05,570
+box here again, or since I always needed to do that, simply turn wi fi off, go to the network tab
+
+71
+00:05:05,570 --> 00:05:07,640
+to see all requests and reload the page.
+
+72
+00:05:07,910 --> 00:05:14,450
+And now you should see that the font here all is not marked as red, but is actually loading the font
+
+73
+00:05:14,630 --> 00:05:15,450
+as it should.
+
+74
+00:05:15,920 --> 00:05:17,270
+So this is now also working.
+
+75
+00:05:17,270 --> 00:05:23,900
+It's not all the fetching this and we're still or now again able to use it in offline mode, that font.
+
+76
+00:05:24,080 --> 00:05:25,580
+Now what about the API?
+

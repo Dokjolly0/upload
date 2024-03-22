@@ -1,0 +1,296 @@
+1
+00:00:02,220 --> 00:00:07,860
+Now I guess it makes sense to start with saving recipes because it's hard to fetch them if we never
+
+2
+00:00:07,860 --> 00:00:08,920
+save them
+
+3
+00:00:09,120 --> 00:00:16,890
+and for that, I will add a new method here to the data storage service which I'll name store recipes.
+
+4
+00:00:16,890 --> 00:00:19,270
+Now of course, you can name this method however you want
+
+5
+00:00:19,920 --> 00:00:26,970
+and now here, we get two possible routes we could take. We could accept the recipes we want to store here
+
+6
+00:00:27,240 --> 00:00:33,960
+as an argument, by importing our recipe module up here and then defining that
+
+7
+00:00:33,960 --> 00:00:38,880
+this should be of type recipe array and then here, we could just write the HTTP request where we
+
+8
+00:00:39,660 --> 00:00:46,230
+want to store these recipes on the back-end by sending some meaningful request to some URL.
+
+9
+00:00:46,230 --> 00:00:56,160
+Now we could do that, we could also inject the recipes service into our data storage service, that
+
+10
+00:00:56,160 --> 00:01:01,650
+would be the other way and then we could directly get our currently loaded recipes from that recipe
+
+11
+00:01:01,650 --> 00:01:05,730
+service and we avoid this extra argument and that is what I will do indeed.
+
+12
+00:01:06,480 --> 00:01:15,280
+So I will inject another service here, the recipes service which is of type recipe service, let's
+
+13
+00:01:15,330 --> 00:01:21,090
+name it recipe service here too. You need to add that import to the recipe service of course and now
+
+14
+00:01:21,090 --> 00:01:29,280
+with that injected, I get my recipes by reaching out to this recipe service and by simply getting the
+
+15
+00:01:29,280 --> 00:01:31,590
+recipes with get recipes.
+
+16
+00:01:31,770 --> 00:01:37,650
+So this retrieves our list of recipes which are now temporarily stored in that constant, therefore we
+
+17
+00:01:37,650 --> 00:01:41,470
+can remove that model import up there, we don't need it because we're not using the type
+
+18
+00:01:42,210 --> 00:01:47,130
+and now with the recipes loaded here in store recipes, we can make our HTTP request.
+
+19
+00:01:47,220 --> 00:01:50,510
+So here we can now use the Angular HttpClient
+
+20
+00:01:50,630 --> 00:01:56,850
+and now we could definitely make a post request if we would want to add one recipe but I want to store
+
+21
+00:01:57,030 --> 00:02:03,720
+all my recipes and I essentially want to overwrite any previous recipes I stored and for that, Firebase
+
+22
+00:02:03,720 --> 00:02:10,200
+gives us an endpoint which we read by using a put request and again, that strongly depends on the API
+
+23
+00:02:10,200 --> 00:02:15,990
+you were using on the back-end, here Firebase works such that we can send a put request to a specific
+
+24
+00:02:16,020 --> 00:02:22,110
+URL to overwrite all the data that is stored under that node, your back-end might work differently
+
+25
+00:02:22,230 --> 00:02:27,570
+if you're creating your own back-end, it might be working differently, it's always depending on the API
+
+26
+00:02:27,570 --> 00:02:34,290
+you're working with but Firebase works such that if we send the put request to a URL, any data that's
+
+27
+00:02:34,290 --> 00:02:35,750
+in there will be overwritten.
+
+28
+00:02:36,120 --> 00:02:39,420
+So let me copy that here, that URL and
+
+29
+00:02:39,420 --> 00:02:40,290
+let's add it here,
+
+30
+00:02:40,290 --> 00:02:44,430
+that's the URL I want to send this to, though that's not the entire URL,
+
+31
+00:02:44,610 --> 00:02:50,550
+instead it should be sent to /recipes.json. The .json is a Firebase characteristic,
+
+32
+00:02:50,670 --> 00:02:55,560
+you need to add this at the end of the URL, it has nothing to do with the data you are sending or with
+
+33
+00:02:55,590 --> 00:03:01,860
+Angular and /recipes, that's just how the Firebase real-time database works, it gives us a
+
+34
+00:03:01,920 --> 00:03:08,250
+REST API where we in the end define our own nodes, which will then be translated to folders you could say
+
+35
+00:03:08,400 --> 00:03:13,860
+where the data will be stored in. So now we're sending a put request there but a put request, just like
+
+36
+00:03:13,860 --> 00:03:21,210
+a post request, needs data to work, we need to tell Angular what to put on this URL so to say or
+
+37
+00:03:21,210 --> 00:03:27,090
+what to attach to this request and that will be our recipes here of course, I guess that makes sense.
+
+38
+00:03:28,440 --> 00:03:35,700
+Now as you learned, this alone will not send the HTTP request, instead that request will only be sent as
+
+39
+00:03:35,700 --> 00:03:43,740
+soon as we subscribe. Now we got two routes we could take here, we can return our observable here by
+
+40
+00:03:43,740 --> 00:03:50,370
+adding the return keyword and then we can subscribe in the component where we're calling store recipes.
+
+41
+00:03:50,910 --> 00:03:57,330
+Now in our case here, that will be the header component because that is where our buttons are and in the end,
+
+42
+00:03:57,360 --> 00:04:04,410
+I'm not interested in subscribing in that component because I don't want to show a loading spinner, though
+
+43
+00:04:04,410 --> 00:04:10,110
+of course you could do that but here I just don't want to and therefore, there is no need for me to subscribe
+
+44
+00:04:10,160 --> 00:04:16,260
+in the component because the component in this scenario will not be interested in whether that request
+
+45
+00:04:16,260 --> 00:04:21,960
+is done or not. If that's different in your application, obviously you can use the pattern I also showed
+
+46
+00:04:21,960 --> 00:04:27,210
+you in the last section where you do subscribe in the component that triggered that request or that
+
+47
+00:04:27,210 --> 00:04:28,260
+method.
+
+48
+00:04:28,260 --> 00:04:33,240
+So here instead, I will subscribe directly in the service because I have no interest in the response
+
+49
+00:04:33,330 --> 00:04:40,500
+in my component and I will get back a response here and we can console log that to have a look at
+
+50
+00:04:40,500 --> 00:04:46,530
+it, I will not do much else with it though here. Now with that, we just need to make sure that the store
+
+51
+00:04:46,560 --> 00:04:52,350
+recipes method is getting called and as I mentioned, that will happen from inside the header component.
+
+52
+00:04:52,830 --> 00:04:59,760
+There we have that save data button, let's add a click listener here and maybe call onSaveData or whatever
+
+53
+00:04:59,760 --> 00:05:05,160
+you want to call that method here and then let's add that method to the header component and in here,
+
+54
+00:05:05,160 --> 00:05:12,000
+we now have to call our newly added save recipes method in this data storage service. And for that of
+
+55
+00:05:12,000 --> 00:05:21,900
+course, we need to inject our data storage service here by using its type, make sure you import that type
+
+56
+00:05:22,170 --> 00:05:27,000
+from your file, from your data storage service file in the shared folder
+
+57
+00:05:27,190 --> 00:05:28,240
+and now with it
+
+58
+00:05:28,250 --> 00:05:30,330
+injected, in onSaveData,
+
+59
+00:05:30,330 --> 00:05:36,960
+we can use the data storage service and call store recipes and that should already be all.
+
+60
+00:05:36,970 --> 00:05:43,660
+Now let's go back to our application which should have reloaded and let's click manage, save data.
+
+61
+00:05:43,660 --> 00:05:46,140
+Here I'm getting back a response, that looks promising,
+
+62
+00:05:46,150 --> 00:05:50,650
+so basically Firebase in this case returns the data we did store. More interesting,
+
+63
+00:05:50,680 --> 00:05:56,020
+let's have a look at Firebase and there indeed, we see a new recipes node and in there, we have these
+
+64
+00:05:56,110 --> 00:05:56,950
+recipes.
+
+65
+00:05:56,950 --> 00:06:00,800
+Now if you watched the previous module which you absolutely should,
+
+66
+00:06:00,880 --> 00:06:05,660
+you saw that there Firebase created some cryptic keys for these recipes.
+
+67
+00:06:05,680 --> 00:06:10,570
+It always does that when you post data, when you attach one data piece at a time.
+
+68
+00:06:10,570 --> 00:06:15,880
+If you put data, it assumes that you know what you're putting there and therefore if you wanted IDs
+
+69
+00:06:15,880 --> 00:06:19,480
+here for these recipes, you would have to generate and add them on your own
+
+70
+00:06:19,510 --> 00:06:26,920
+but here, I'm fine with the normal array indexes here which I have, which will be all we need. That is
+
+71
+00:06:26,920 --> 00:06:27,670
+looking good,
+
+72
+00:06:27,670 --> 00:06:31,400
+our data is getting stored, including the ingredients as you can tell
+
+73
+00:06:31,450 --> 00:06:34,810
+and with that, we finished the part where we store data.
+
+74
+00:06:34,810 --> 00:06:37,060
+Now let's make sure we can also fetch data.
+

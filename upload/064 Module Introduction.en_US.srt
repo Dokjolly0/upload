@@ -1,0 +1,28 @@
+1
+00:00:02,550 --> 00:00:07,470
+Welcome to a new module. You learned the basics and we set up our first project,
+
+2
+00:00:07,470 --> 00:00:11,240
+additionally we had a look at how to find and fix errors.
+
+3
+00:00:11,250 --> 00:00:18,120
+Now I want to dive deeper into components and data binding and how you can connect both concepts even
+
+4
+00:00:18,120 --> 00:00:23,100
+closer to now make the next big step in your application.
+
+5
+00:00:23,100 --> 00:00:25,560
+Let's start with an example project,
+
+6
+00:00:25,560 --> 00:00:31,890
+you can find it attached to this in the next lecture and enhance this project to take advantage of components
+
+7
+00:00:31,980 --> 00:00:34,320
+and data binding to make it a better app.
+

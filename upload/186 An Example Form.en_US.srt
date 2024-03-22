@@ -1,0 +1,80 @@
+1
+00:00:02,490 --> 00:00:06,240
+So here I am on a simple example form just to get started,
+
+2
+00:00:06,330 --> 00:00:11,850
+the code responsible for it is this HTML code in the template of my app component here
+
+3
+00:00:12,120 --> 00:00:15,620
+and you can find this code attached to this lecture here.
+
+4
+00:00:15,900 --> 00:00:17,230
+Now it's a simple form,
+
+5
+00:00:17,250 --> 00:00:23,380
+we're going to expand it or enhance it with some features throughout this module, to get started,
+
+6
+00:00:23,400 --> 00:00:25,090
+this is just fine.
+
+7
+00:00:25,120 --> 00:00:27,200
+Now if we have a look at this HTML code,
+
+8
+00:00:27,210 --> 00:00:35,370
+you will quickly realize that on the form tag here, I don't have the action attribute pointing to some
+
+9
+00:00:35,370 --> 00:00:36,070
+route,
+
+10
+00:00:36,140 --> 00:00:40,740
+I'm also not specifying the method attribute which typically would be post.
+
+11
+00:00:40,860 --> 00:00:46,160
+The reason for this is that this form should not get submitted to a server,
+
+12
+00:00:46,200 --> 00:00:51,770
+I don't want a HTTP request to be the result of me clicking the submit button, instead
+
+13
+00:00:51,780 --> 00:00:58,260
+as mentioned earlier, Angular should handle this form and therefore, I don't have an action on it.
+
+14
+00:00:58,260 --> 00:01:02,820
+This of course means that right now if I hit the submit button, nothing happens,
+
+15
+00:01:02,910 --> 00:01:08,640
+if you have a look at the refresh icon up there, you see it's not spinning, nothing happens because we're
+
+16
+00:01:08,640 --> 00:01:10,640
+not actually sending a request.
+
+17
+00:01:10,920 --> 00:01:17,910
+Well we will work on this but first, let's understand what actually happens behind the scenes and how
+
+18
+00:01:17,910 --> 00:01:24,450
+Angular infers such forms, create such a Javascript object for us as it does when using the template
+
+19
+00:01:24,450 --> 00:01:25,250
+driven approach.
+
+20
+00:01:25,350 --> 00:01:30,460
+Let's understand how we get Angular to create this form object for us.
+

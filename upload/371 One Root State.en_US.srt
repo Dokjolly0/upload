@@ -1,0 +1,524 @@
+1
+00:00:02,240 --> 00:00:07,610
+Now that we worked on the shopping list, we could move on to the recipes but that's something I want
+
+2
+00:00:07,610 --> 00:00:09,220
+to save for later, 
+
+3
+00:00:09,320 --> 00:00:17,990
+for the moment, let's instead move on to the auth section here and let's implement NgRx there as well.
+
+4
+00:00:18,020 --> 00:00:24,560
+Now for this, I'll add a new folder in the auth folder and I'll name it store and just as with the shopping
+
+5
+00:00:24,560 --> 00:00:30,260
+list, I want to create a reducer and a file with the relevant actions for authenticating.
+
+6
+00:00:30,260 --> 00:00:36,340
+Now for authentication, you will also see that of course we interact with the web, here in the auth service
+
+7
+00:00:36,410 --> 00:00:42,320
+we send requests for signing users up and signing users in and that is something I'll also take care
+
+8
+00:00:42,320 --> 00:00:46,280
+about later because we can't send these requests from inside the reducer
+
+9
+00:00:46,280 --> 00:00:51,350
+but for the moment, we'll leave them in the service and we'll step-by-step moved them into the NgRx world
+
+10
+00:00:51,380 --> 00:00:52,600
+as well.
+
+11
+00:00:52,640 --> 00:01:01,520
+So back to the store then, let's add an auth.reducer.ts file and in that auth reducer file, what
+
+12
+00:01:01,520 --> 00:01:03,770
+do we need to export?
+
+13
+00:01:03,770 --> 00:01:06,430
+Well we definitely need our reducer function right
+
+14
+00:01:06,440 --> 00:01:10,220
+because keep in mind, a reducer is a function in the end.
+
+15
+00:01:10,280 --> 00:01:12,640
+So here, I have my authReducer function
+
+16
+00:01:12,650 --> 00:01:16,920
+and this again receives a state and an action.
+
+17
+00:01:17,180 --> 00:01:19,930
+Now for the moment, I'll just return state in there
+
+18
+00:01:20,000 --> 00:01:24,250
+but of course we'll soon also add a switch case statement in there.
+
+19
+00:01:24,320 --> 00:01:27,970
+Now this auth state of course will have some initial state,
+
+20
+00:01:28,010 --> 00:01:34,130
+so again I'll create an initial state object here and now let's have a look at what our authentication
+
+21
+00:01:34,130 --> 00:01:40,460
+state actually is. At the moment, we're managing it in auth service and if we take a closer look, in the
+
+22
+00:01:40,460 --> 00:01:47,840
+end it's just this user object here which we manage through behavior subject. The token expiration timer,
+
+23
+00:01:47,870 --> 00:01:52,580
+that is only required for our auto logout timer and we'll see how we handle this later
+
+24
+00:01:52,580 --> 00:01:58,640
+but it's not a core part of our auth state, we never use that from outside of the service and we can't
+
+25
+00:01:58,670 --> 00:02:00,650
+because it's a private property,
+
+26
+00:02:00,650 --> 00:02:05,960
+so the only state that we use is in other parts of the app is our user object here and therefore,
+
+27
+00:02:06,140 --> 00:02:08,490
+that has to be part of my initial state.
+
+28
+00:02:08,570 --> 00:02:18,120
+I have a user and initially, that user will be null. Now just as with the shopping list reducer, here
+
+29
+00:02:18,340 --> 00:02:24,280
+I want to define an interface that describes my state which will help us with injecting a store where
+
+30
+00:02:24,280 --> 00:02:30,850
+we want to access that user or that authentication state slice and therefore, let's export an interface
+
+31
+00:02:30,880 --> 00:02:35,860
+which we can also name state, we can name it state here even though I also named it state in the shopping
+
+32
+00:02:35,860 --> 00:02:40,710
+list reducer because these are two different files and therefore, these names don't clash
+
+33
+00:02:40,900 --> 00:02:50,530
+and there, I describe that my state for the auth part of my store will have the user key and that type
+
+34
+00:02:50,590 --> 00:02:55,600
+of that is user, using my user model for which you of course have to add an import therefore.
+
+35
+00:02:55,610 --> 00:03:00,240
+Now the initial state obviously is of type state,
+
+36
+00:03:00,240 --> 00:03:02,340
+so let's add this type assignment
+
+37
+00:03:02,470 --> 00:03:07,900
+and here, we want to initialize our state by setting it equal to the initial state or that should be
+
+38
+00:03:07,900 --> 00:03:12,150
+our default value for state to be precise in case we don't have a state yet,
+
+39
+00:03:12,160 --> 00:03:15,710
+so basically for when this store is created.
+
+40
+00:03:16,490 --> 00:03:16,770
+OK,
+
+41
+00:03:16,870 --> 00:03:21,080
+so now we have that very basic auth reducer setup,
+
+42
+00:03:21,100 --> 00:03:25,680
+of course we got no logic to set or remove our user here,
+
+43
+00:03:25,690 --> 00:03:32,740
+so that's something we'll have to work on. Before we continue working on that however, let's add our auth
+
+44
+00:03:32,920 --> 00:03:34,000
+state slice,
+
+45
+00:03:34,000 --> 00:03:39,370
+so this auth reducer at the state it reduces to our app module,
+
+46
+00:03:39,370 --> 00:03:43,540
+so there to the store module. Here to forRoot,
+
+47
+00:03:43,570 --> 00:03:49,360
+I'll add auth and you can name this however you want, I'll name it auth because it is about the auth part
+
+48
+00:03:49,360 --> 00:03:57,280
+of my application and there, I want to point at my auth reducer. So I can just call or set this equal
+
+49
+00:03:57,280 --> 00:04:03,630
+to auth reducer and of course add an import importing auth reducers from the auth folder store folder
+
+50
+00:04:03,730 --> 00:04:06,250
+and there, the auth reducer file.
+
+51
+00:04:06,310 --> 00:04:13,330
+Now we initialize our global store, our @ngrx/store and always keep in mind even if we have different
+
+52
+00:04:13,330 --> 00:04:18,970
+parts of the app where we manage the state with different reducers, we always have just one global
+
+53
+00:04:18,970 --> 00:04:23,650
+store and we're setting up this global store here by pointing at all these different parts that make
+
+54
+00:04:23,650 --> 00:04:25,640
+up the overall store.
+
+55
+00:04:25,660 --> 00:04:33,010
+So now we registered the auth reducer here which is a great first step but now I also want to make
+
+56
+00:04:33,010 --> 00:04:35,440
+one other adjustment.
+
+57
+00:04:35,440 --> 00:04:41,380
+If we take a look at the shopping list reducer, there we of course define how the state should look
+
+58
+00:04:41,380 --> 00:04:41,760
+like
+
+59
+00:04:41,800 --> 00:04:48,130
+for this shopping list part of the application and we also define how our application state should
+
+60
+00:04:48,130 --> 00:04:53,000
+look like, with this AppState interface here.
+
+61
+00:04:53,110 --> 00:05:00,250
+Now to be honest, that doesn't really belong into the shopping list reducer file because the AppState
+
+62
+00:05:00,460 --> 00:05:05,770
+is more than just a shopping list reducer. Now previously before we added the auth reducer,
+
+63
+00:05:05,770 --> 00:05:11,710
+we had only the shopping list but now we have the shopping list and the auth part and therefore, it's
+
+64
+00:05:11,710 --> 00:05:20,650
+time for a new global store folder which sits next to my shopping list recipes and so on folders.
+
+65
+00:05:20,650 --> 00:05:24,830
+So it's in the root app folder and in that store folder,
+
+66
+00:05:24,850 --> 00:05:31,780
+I want to add an app.reducer.ts file and the idea here is that it merges all my other
+
+67
+00:05:31,780 --> 00:05:33,580
+reducers together.
+
+68
+00:05:33,580 --> 00:05:43,420
+So in this app reducer file here, I want to import everything as from shopping list,
+
+69
+00:05:43,420 --> 00:05:47,350
+following that naming connection, from my
+
+70
+00:05:50,410 --> 00:05:56,230
+shopping list folder, there from the store and there from the shopping list reducer and do just the
+
+71
+00:05:56,230 --> 00:06:04,440
+same as from auth by importing from the auth folder and there, from store and the auth reducer.
+
+72
+00:06:04,450 --> 00:06:05,020
+Now why?
+
+73
+00:06:05,440 --> 00:06:12,840
+First of all because here I now want to create my interface, AppState, which now has that shopping list
+
+74
+00:06:12,850 --> 00:06:19,750
+key where I refer to from shopping list and point at my state not the AppState,
+
+75
+00:06:19,750 --> 00:06:26,980
+I will actually remove that AppState interface here from the shopping list reducer because again, this
+
+76
+00:06:26,980 --> 00:06:30,510
+is the wrong place for defining a global application-wide state,
+
+77
+00:06:30,550 --> 00:06:33,870
+it should only define the state for this part of the global state,
+
+78
+00:06:33,880 --> 00:06:39,060
+so for the shopping list part and then we'll have to fix some of the other imports and other files
+
+79
+00:06:39,070 --> 00:06:44,380
+but for now let's go back to the app reducer because there besides my shopping list slice,
+
+80
+00:06:44,380 --> 00:06:49,440
+I also will add auth and point at from auth state here.
+
+81
+00:06:49,480 --> 00:06:55,450
+So now I am importing these sub states of parts of my global store, so of the shopping list and
+
+82
+00:06:55,450 --> 00:07:01,450
+of the auth state and I'll import these, so of the shopping list and the auth part of my NgRx state
+
+83
+00:07:01,810 --> 00:07:05,710
+and I merged them together into one AppState interface.
+
+84
+00:07:05,710 --> 00:07:09,070
+And of course it's not just about merging these state definitions,
+
+85
+00:07:09,070 --> 00:07:16,060
+I also want to create a new constant, reducers or appReducer maybe is a better name and that will
+
+86
+00:07:16,060 --> 00:07:24,980
+be of type ActionReducerMap and ActionReducerMap is something you have to import from NgRx
+
+87
+00:07:25,030 --> 00:07:26,410
+store.
+
+88
+00:07:26,470 --> 00:07:32,980
+Now this type might be familiar to you because here in the app module, forRoot takes such an action
+
+89
+00:07:32,980 --> 00:07:34,040
+reducer map,
+
+90
+00:07:34,180 --> 00:07:40,060
+in the end what I create here is such an ActionReducerMap and now instead of dynamically creating
+
+91
+00:07:40,060 --> 00:07:46,330
+it in app module, I want to do that here in the app reducer simply to structure this in a bit cleaner
+
+92
+00:07:46,330 --> 00:07:53,380
+way, this so to say now is the one state, the one store we have in the entire app and we create it by
+
+93
+00:07:53,380 --> 00:07:58,620
+bringing together all these individual slices we have that make up this global state.
+
+94
+00:07:58,690 --> 00:08:04,000
+Previously, we did this here in app module but now since I also want to add my own type definition, my
+
+95
+00:08:04,000 --> 00:08:11,540
+own interface for that, I rather do it in a separate file. So appReducer is of type
+
+96
+00:08:11,550 --> 00:08:16,750
+ActionReducerMap and therefore it is basically a Javascript object. Now important,
+
+97
+00:08:16,750 --> 00:08:23,620
+this is a generic type and we need to define which kind of overall state will be the result of that
+
+98
+00:08:23,620 --> 00:08:26,900
+reducer map and that will be my AppState of course,
+
+99
+00:08:26,920 --> 00:08:32,470
+so reducer map will have a shopping list and an auth key and that's therefore what we have to add here,
+
+100
+00:08:32,800 --> 00:08:34,040
+shopping list
+
+101
+00:08:34,040 --> 00:08:36,600
+and here we point at from shopping list
+
+102
+00:08:36,730 --> 00:08:41,230
+and then at the shopping list reducer and for auth, we do the same,
+
+103
+00:08:41,230 --> 00:08:45,310
+we point at from auth and then at the auth reducer.
+
+104
+00:08:45,310 --> 00:08:50,950
+And now with this, we have our app reducer here in the app reducer file and in app module,
+
+105
+00:08:50,950 --> 00:08:58,210
+we now no longer create this object on the fly so to say, instead we can now get rid of these two imports.
+
+106
+00:08:58,210 --> 00:09:04,570
+So at the shopping list and at the auth reducer imports and instead, import everything as
+
+107
+00:09:04,660 --> 00:09:13,880
+from app or from root or however you want to call it, from the store folder and there, from the app reducer
+
+108
+00:09:13,890 --> 00:09:22,110
+and here to forRoot, we can now just pass from app, app reducer and that is now our merged reducer map. Might
+
+109
+00:09:22,110 --> 00:09:26,370
+seem a bit redundant but now it's a really cleaner setup.
+
+110
+00:09:26,370 --> 00:09:31,960
+Now what does this mean for the different parts of the app where we injected a store and where we pointed
+
+111
+00:09:31,960 --> 00:09:39,930
+at the AppState that previously was exported from that shopping list file? Well for example here,
+
+112
+00:09:40,320 --> 00:09:46,260
+in the shopping list component, instead of using from shopping list AppState,
+
+113
+00:09:46,260 --> 00:09:55,440
+I now want to remove that import and instead import everything as from app from my root store,
+
+114
+00:09:55,440 --> 00:10:01,380
+so in that root store folder from the app reducer and then we simply replace from shopping list with
+
+115
+00:10:01,470 --> 00:10:07,890
+from app and this will do the trick because this now gives us access to our overall state where we still
+
+116
+00:10:07,890 --> 00:10:09,600
+have a shopping list slice
+
+117
+00:10:09,720 --> 00:10:16,480
+but as you see, if you enter just quotes here, TypeScript should kick in and your IDE and give you auto
+
+118
+00:10:16,500 --> 00:10:23,250
+completion that you can either access the auth or the shopping list part because now we have two state
+
+119
+00:10:23,250 --> 00:10:29,490
+slices in our overall state, not just one. And therefore it's the same in the shopping-edit component,
+
+120
+00:10:29,490 --> 00:10:36,600
+we can get rid of the from shopping list import and instead import everything as from app from that
+
+121
+00:10:37,530 --> 00:10:44,490
+root store and there the app reducer and then instead of using from shopping list, we use from app,
+
+122
+00:10:44,790 --> 00:10:51,750
+AppState and it's of course the same for the recipe service. There if we remove from the shopping list,
+
+123
+00:10:52,110 --> 00:11:00,920
+we import everything as from app from our store folder here, from the app reducer and then again for
+
+124
+00:11:01,280 --> 00:11:05,390
+assigning this generic type, we use fromApp.AppState
+
+125
+00:11:05,390 --> 00:11:11,690
+and with that everything should compile and everything should still work as it did before.
+
+126
+00:11:11,690 --> 00:11:17,790
+Let's quickly check this, let's fetch recipes and add those ingredients to the shopping list,
+
+127
+00:11:17,900 --> 00:11:19,310
+that all works
+
+128
+00:11:19,310 --> 00:11:23,530
+but now with this slightly different setup.
+
+129
+00:11:23,840 --> 00:11:29,870
+So that was just some restructuring to have a cleaner code structure and have a store that works fine
+
+130
+00:11:29,870 --> 00:11:35,900
+with multiple state slices because now we have the shopping list and the auth part. With that, let's continue
+
+131
+00:11:35,900 --> 00:11:37,550
+working on that auth part though.
+

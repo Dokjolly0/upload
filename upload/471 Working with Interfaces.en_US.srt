@@ -1,0 +1,472 @@
+1
+00:00:02,236 --> 00:00:04,460
+Now, another important feature,
+
+2
+00:00:04,460 --> 00:00:08,230
+kind of related to classes and objects in general
+
+3
+00:00:08,230 --> 00:00:11,260
+is the interfaces feature
+
+4
+00:00:11,260 --> 00:00:15,440
+and that's a feature which only exists in TypeScript,
+
+5
+00:00:15,440 --> 00:00:19,550
+not in vanilla JavaScript and any interface code,
+
+6
+00:00:19,550 --> 00:00:21,950
+which you write, which you'll see in a second,
+
+7
+00:00:21,950 --> 00:00:25,363
+will therefore not be compiled to JavaScript.
+
+8
+00:00:26,340 --> 00:00:28,440
+Now, what are interfaces?
+
+9
+00:00:28,440 --> 00:00:30,140
+In their most basic form,
+
+10
+00:00:30,140 --> 00:00:34,600
+interfaces are really just object type definitions.
+
+11
+00:00:34,600 --> 00:00:38,720
+So we could say that we have a Human object
+
+12
+00:00:38,720 --> 00:00:40,880
+in our application.
+
+13
+00:00:40,880 --> 00:00:44,440
+And we can define it with the interface keyword.
+
+14
+00:00:44,440 --> 00:00:46,540
+Then curly braces thereafter
+
+15
+00:00:46,540 --> 00:00:49,700
+and now here, between those curly braces,
+
+16
+00:00:49,700 --> 00:00:52,610
+we can define the structure,
+
+17
+00:00:52,610 --> 00:00:57,610
+the type of any Human object we wanna create.
+
+18
+00:00:57,660 --> 00:00:59,880
+So we could say a human should have a firstName,
+
+19
+00:00:59,880 --> 00:01:01,170
+which is a string.
+
+20
+00:01:01,170 --> 00:01:04,920
+And should maybe have an age, which is a number.
+
+21
+00:01:04,920 --> 00:01:08,890
+And then let's say every human should also have a method
+
+22
+00:01:08,890 --> 00:01:11,330
+to greet other humans.
+
+23
+00:01:11,330 --> 00:01:12,920
+And for this, we can add greet here
+
+24
+00:01:12,920 --> 00:01:15,390
+but now, very important,
+
+25
+00:01:15,390 --> 00:01:18,620
+we don't add the method definition,
+
+26
+00:01:18,620 --> 00:01:21,110
+we don't add the actual code
+
+27
+00:01:21,110 --> 00:01:22,660
+that goes into that method
+
+28
+00:01:22,660 --> 00:01:25,695
+but instead, just the type of that method,
+
+29
+00:01:25,695 --> 00:01:29,653
+which we can do like this, for example.
+
+30
+00:01:30,890 --> 00:01:31,860
+Now we're saying
+
+31
+00:01:31,860 --> 00:01:34,620
+that every human should have a greet method,
+
+32
+00:01:34,620 --> 00:01:39,040
+which actually is a method that takes no parameters
+
+33
+00:01:39,040 --> 00:01:40,503
+and returns nothing.
+
+34
+00:01:41,840 --> 00:01:44,650
+Now, we can use this interfaces as I just said
+
+35
+00:01:44,650 --> 00:01:46,170
+as a object type.
+
+36
+00:01:46,170 --> 00:01:49,860
+So if we have a new variable named max,
+
+37
+00:01:49,860 --> 00:01:53,150
+because I wanna store information about myself in there,
+
+38
+00:01:53,150 --> 00:01:54,860
+then I could make it clear
+
+39
+00:01:54,860 --> 00:01:58,120
+that this should be of type Human, like this.
+
+40
+00:01:58,120 --> 00:01:59,980
+And now if I wanna assign a value,
+
+41
+00:01:59,980 --> 00:02:02,350
+I'm not allowed to store a number.
+
+42
+00:02:02,350 --> 00:02:04,260
+I am allowed to store a object
+
+43
+00:02:04,260 --> 00:02:06,110
+but only an object
+
+44
+00:02:06,110 --> 00:02:08,550
+that has this structure.
+
+45
+00:02:08,550 --> 00:02:10,690
+And I now also get auto completion.
+
+46
+00:02:10,690 --> 00:02:13,570
+And I have to make it clear that there is a firstName,
+
+47
+00:02:13,570 --> 00:02:17,910
+an age and now I have to add a greet method as well.
+
+48
+00:02:17,910 --> 00:02:20,530
+And here we now have the actual code,
+
+49
+00:02:20,530 --> 00:02:22,563
+not the type definition.
+
+50
+00:02:23,670 --> 00:02:24,840
+And now this works
+
+51
+00:02:24,840 --> 00:02:28,560
+because this object, which has stored in max fulfills
+
+52
+00:02:28,560 --> 00:02:32,450
+the requirements set forth by that interface.
+
+53
+00:02:32,450 --> 00:02:36,970
+So we can use interfaces to define object types.
+
+54
+00:02:36,970 --> 00:02:39,830
+But we could also do this with the type keyword
+
+55
+00:02:39,830 --> 00:02:41,443
+to create an alias.
+
+56
+00:02:42,490 --> 00:02:44,643
+Like this, that would work as well.
+
+57
+00:02:45,550 --> 00:02:47,610
+So why do we have interfaces then
+
+58
+00:02:47,610 --> 00:02:50,760
+if we can do the same with the type keyword?
+
+59
+00:02:50,760 --> 00:02:52,100
+Well, for one, of course,
+
+60
+00:02:52,100 --> 00:02:54,600
+interfaces are simply an alternative
+
+61
+00:02:54,600 --> 00:02:57,970
+and you can use interfaces instead of the type keyword
+
+62
+00:02:57,970 --> 00:03:00,760
+when you wanna define object types
+
+63
+00:03:00,760 --> 00:03:03,810
+but they also have one other extra feature,
+
+64
+00:03:03,810 --> 00:03:06,980
+which the type keyword does not give you.
+
+65
+00:03:06,980 --> 00:03:11,120
+Interfaces can be implemented by classes
+
+66
+00:03:11,120 --> 00:03:12,810
+and when they are,
+
+67
+00:03:12,810 --> 00:03:17,360
+they force classes to have that structure defined
+
+68
+00:03:17,360 --> 00:03:18,910
+by the interface.
+
+69
+00:03:18,910 --> 00:03:21,070
+Now, this might sound very abstract
+
+70
+00:03:21,070 --> 00:03:24,330
+but this can be helpful if you're building an application
+
+71
+00:03:24,330 --> 00:03:25,890
+with multiple developers
+
+72
+00:03:25,890 --> 00:03:28,320
+and you wanna ensure that a certain class written
+
+73
+00:03:28,320 --> 00:03:31,390
+by another developer has a certain structure
+
+74
+00:03:31,390 --> 00:03:35,380
+because you for your part you're working on need
+
+75
+00:03:35,380 --> 00:03:37,340
+that class to have that structure.
+
+76
+00:03:37,340 --> 00:03:41,000
+You need that class to have a certain method, for example.
+
+77
+00:03:41,000 --> 00:03:42,860
+And it's the same for Angular.
+
+78
+00:03:42,860 --> 00:03:45,430
+Angular, as you will see in this course,
+
+79
+00:03:45,430 --> 00:03:47,620
+also has a couple of interfaces,
+
+80
+00:03:47,620 --> 00:03:50,240
+which we will use from time to time in this course,
+
+81
+00:03:50,240 --> 00:03:53,910
+which then force us to add certain features
+
+82
+00:03:53,910 --> 00:03:55,800
+to the classes we define.
+
+83
+00:03:55,800 --> 00:03:58,200
+And we will work with a lot of classes
+
+84
+00:03:58,200 --> 00:04:00,360
+when working with Angular.
+
+85
+00:04:00,360 --> 00:04:03,040
+And Angular gives us interfaces
+
+86
+00:04:03,040 --> 00:04:06,750
+that force us to add certain features to our classes
+
+87
+00:04:06,750 --> 00:04:08,240
+so that it then is able
+
+88
+00:04:08,240 --> 00:04:11,330
+to use these classes correctly internally.
+
+89
+00:04:11,330 --> 00:04:14,600
+And you'll see all of that in action throughout the course.
+
+90
+00:04:14,600 --> 00:04:15,959
+Now, I'll give you an example.
+
+91
+00:04:15,959 --> 00:04:18,860
+Let's say I add a new class here,
+
+92
+00:04:18,860 --> 00:04:22,650
+Instructor, and I wanna make sure that this class
+
+93
+00:04:22,650 --> 00:04:24,760
+has this shape
+
+94
+00:04:24,760 --> 00:04:26,820
+because someone else who's working
+
+95
+00:04:26,820 --> 00:04:30,350
+on the team needs that class to have that shape.
+
+96
+00:04:30,350 --> 00:04:33,260
+Then we can add the implements keyword
+
+97
+00:04:33,260 --> 00:04:37,630
+and implement our interface before we add the curly braces
+
+98
+00:04:37,630 --> 00:04:40,350
+to start defining the class.
+
+99
+00:04:40,350 --> 00:04:43,230
+And now because I'm implementing this interface,
+
+100
+00:04:43,230 --> 00:04:45,410
+I'm getting some red squiggly lines here
+
+101
+00:04:45,410 --> 00:04:50,170
+and I'm being forced to correctly implement this interface,
+
+102
+00:04:50,170 --> 00:04:52,850
+which means I have to add the firstName property
+
+103
+00:04:52,850 --> 00:04:54,180
+of type string here.
+
+104
+00:04:54,180 --> 00:04:57,850
+I have to add a age property of type number here.
+
+105
+00:04:57,850 --> 00:05:00,050
+And I have to add a greet method here.
+
+106
+00:05:00,050 --> 00:05:02,210
+And only if I add all of that,
+
+107
+00:05:02,210 --> 00:05:04,810
+no matter which exact code I then have
+
+108
+00:05:04,810 --> 00:05:06,360
+in that greet method
+
+109
+00:05:06,360 --> 00:05:09,770
+but only after I add the general structure here,
+
+110
+00:05:09,770 --> 00:05:11,370
+this error goes away
+
+111
+00:05:11,370 --> 00:05:14,733
+because I'm now correctly implementing this interface.
+
+112
+00:05:15,680 --> 00:05:18,940
+And that's another key part of interfaces.
+
+113
+00:05:18,940 --> 00:05:21,960
+They don't just act as object types,
+
+114
+00:05:21,960 --> 00:05:26,250
+instead, they also force us to set up a certain structure
+
+115
+00:05:26,250 --> 00:05:28,380
+for our classes.
+
+116
+00:05:28,380 --> 00:05:30,990
+And that's what we're taking advantage of here.
+
+117
+00:05:30,990 --> 00:05:33,440
+And that's what we'll also see in action
+
+118
+00:05:33,440 --> 00:05:34,663
+throughout this course.
+
